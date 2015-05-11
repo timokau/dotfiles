@@ -1,0 +1,12 @@
+snippet beg
+BEGIN (* $1 *)
+	$0
+END;  (* $1 *)
+endsnippet
+
+snippet func
+FUNCTION $1.$2($3): $4;
+BEGIN (* FUNC $2 *)
+	$0
+END;  (* FUNC $2 *)
+endsnippet
