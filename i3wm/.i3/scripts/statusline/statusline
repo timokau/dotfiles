@@ -1,0 +1,6 @@
+#!/bin/bash
+scriptdir=$( cd $(dirname $0) ; pwd ) 
+echo '{"version":1}'
+echo '['
+echo '[],'
+exec conky --config="$scriptdir/conkyrc"

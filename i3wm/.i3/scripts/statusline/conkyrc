@@ -1,0 +1,94 @@
+### Conky configuration file
+## Output is printed to the console -> i3bar
+
+###
+# use_xft yes
+# xftfont Helvetica:size=15
+# xftalpha 0.9
+
+## No output to X <yes/no>
+out_to_x no
+
+## Create own window to draw <yes/no>
+own_window no
+
+## Print everything to console?
+out_to_console yes
+
+## Use double buffering (reduces flicker, not needed for console output)
+double_buffer yes
+
+## Set to yes if you want Conky to be forked in the background
+background no
+
+## This is the number of times Conky will update before quitting.
+## Set to zero to run forever.
+total_run_times 0
+
+## Shortens units to a single character (kiB->k, GiB->G, etc.). Default is off.
+short_units yes
+
+## How strict should if_up be when testing an interface for being up?
+## The value is one of up, link or address, to check for the interface
+## being solely up, being up and having link or being up, having link
+## and an assigned IP address. 
+if_up_strictness address
+
+## Add spaces to keep things from moving about?  This only affects certain objects.
+## use_spacer should have an argument of left, right, or none
+use_spacer left
+
+## Force UTF8? note that UTF8 support required XFT
+override_utf8_locale no
+
+## number of cpu samples to average
+## set to 1 to disable averaging
+cpu_avg_samples 2
+
+default_color FF0000
+
+update_interval 0.5
+
+## Sensors examples
+# Top Process: ${top name 1}
+# Root: {fs_used /}/${fs_size /} /home ${fs_free /home} /${fs_size /home}
+# Load: ${loadavg 1} ${loadavg 2} ${loadavg 3} 
+# Load: $loadavg
+# Swap: ${swap}/${swapmax} (${swapperc}%)
+# Processes: ${running_processes} / ${processes}
+# CPU: $cpu% 
+# HDD: $diskio_read :Read $diskio_write :Write
+# Temp: Core0: ${exec sensors | awk '/Core 0/ {print $3}'} Core1: ${exec sensors | awk '/Core 1/ {print $3}'}
+# Freq: ${freq cpu0}Mhz
+# Uptime: $uptime
+# Kernel:$kernel on $machine
+# Name: $nodename - $sysname
+# Battery: ${battery_percent BAT0}%
+
+## Stuff after 'TEXT' will be formatted on screen
+
+## Free space on /home
+#HDD ${fs_used /}/${fs_size /} | \
+## Ethernet status
+#${if_up eth0}eth0 ${addr eth0} | ${endif}\
+## Wireless status
+#${if_up wls1}WIFI ${addr wls1} | ${endif}\
+#${color lightgray}TEST | \
+## CPU stats
+#CPU ${cpu cpu1}% | \
+## RAM in use
+#RAM ${memperc}% | \
+##BATT ${battery BAT0} | \
+#${time %a %m-%d-%y} ${time %H:%M:%S} | \
+## Volume %
+#V ${exec exec amixer get Headphone -M | grep -oEm 1 "[[:digit:]]*%"}
+
+TEXT
+[{ "full_text" : "   ${exec /home/timo/scripts/pyLoadStatus.sh} " , "color" : "\#d68176" },
+ { "full_text" : "   ♪ ${mpd_title} - ${mpd_artist} - ${mpd_elapsed}/${mpd_length} " , "color" : "\#d68176" },
+ { "full_text" : "   💾  ${fs_used /} /${fs_size}  ~ ${fs_used /home/timo} /${fs_size /home/timo} " , "color" : "\#d6a676" },
+ { "full_text" : "   Net: ${if_up eth0} ${downspeed eth0} ${else} NOT CONNECTED ${endif}", "color" : "\#5cd637" },
+ { "full_text" : "   Mem: ${memfree} ", "color" : "\#aa71ce" },
+ { "full_text" : "   🔊  ${exec amixer -c 0 get Master | grep Mono: | cut -d " " -f6} ", "color" : "\#aa71ce" },
+ { "full_text" : "   CPU: ${cpu}% ", "color" : "\#aa71ce" },
+ { "full_text" : "   🕚  ${time %a %y-%m-%d} - ${time %H:%M:%S %p}"}],
