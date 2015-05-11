@@ -1,0 +1,44 @@
+#!/bin/sh
+# Modified version of https://github.com/giacomos/i3wm-config/blob/master/i3exit
+lock() {
+	scriptdir=$( cd $(dirname $0) ; pwd ) 
+    i3lock -dti "$scriptdir/lock.png"
+}
+
+suspend() {
+	dbus-send --print-reply --system --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+}
+
+shutdown() {
+	dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
+}
+
+reboot () {
+	dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
+}
+
+case "$1" in
+    lock)
+        lock
+        ;;
+    logout)
+        i3-msg exit
+        ;;
+    suspend)
+        lock && suspend
+        ;;
+    hibernate)
+        lock && systemctl hibernate
+        ;;
+    reboot)
+        reboot
+        ;;
+    shutdown)
+        shutdown
+        ;;
+    *)
+        echo "Usage: $0 {lock|logout|suspend|hibernate|reboot|shutdown}"
+        exit 2
+esac
+
+exit 0

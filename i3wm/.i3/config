@@ -1,0 +1,267 @@
+#################
+# Configuration #
+#################
+
+set $mod Mod4
+floating_modifier $mod
+workspace_auto_back_and_forth yes
+set $i3_path /home/timo/.i3
+set $fgcolor #746c48
+set $bgcolor #1a1a1a
+
+### Arrange monitors
+set $mainMonitor   HDMI-3
+set $secondMonitor DVI-1
+
+#bar {
+#	status_command i3status -c $i3_path/i3status.conf
+#	tray_output primary
+#}
+
+bar {
+	#status_command i3status
+	status_command bash $i3_path/statusline
+	position top
+	tray_output primary
+	font pango:Icons 10, Source Code Pro 10
+	colors{
+		background #2d2d2d
+		separator #dcdcdc
+		focused_workspace #d64937 #d64937 #2d2d2d
+		active_workspace #2d2d2d #2d2d2d #dcdcdc
+		inactive_workspace #2d2d2d #2d2d2d #dcdcdc
+		urgent_workspace #2d2d2d #2d2d2d #dcdcdc
+	}
+}
+
+
+### Define workspaces for easier renaming
+set $w1  1: www
+set $w2  2
+set $w3  3
+set $w4  4
+set $w5  5
+set $w6  6
+set $w7  7
+set $w8  8: misc
+set $w9  9
+set $w10 10
+
+### Assign outputs
+workspace "$w1" output $mainMonitor
+workspace "$w2" output $mainMonitor
+workspace "$w3" output $mainMonitor
+workspace "$w4" output $mainMonitor
+workspace "$w5" output $mainMonitor
+workspace "$w6" output $mainMonitor
+workspace "$w7" output $mainMonitor
+workspace "$w8" output $secondMonitor
+workspace "$w9" output $secondMonitor
+workspace "$w10" output $secondMonitor
+
+
+##############
+# Appearence #
+##############
+font pango:Source Code Pro 7
+client.focused          $fgcolor $fgcolor $bgcolor $fgcolor 
+client.focused_inactive $bgcolor $bgcolor $fgcolor $bgcolor
+client.unfocused        $bgcolor $bgcolor $fgcolor $bgcolor
+new_float  pixel 5
+new_window pixel 5
+
+###############
+# Keybindings #
+###############
+
+### System Keybindings
+bindsym $mod+Return  exec urxvt
+bindsym $mod+Ctrl+c  exec calcoo
+bindsym $mod+d       exec --no-startup-id j4-dmenu-desktop --term=urxvt
+#bindsym $mod+d       exec --no-startup-id dmenu_run
+#bindsym $mod+d       exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+Shift+q kill
+
+# move focus
+bindsym $mod+h     focus left
+bindsym $mod+j     focus down
+bindsym $mod+k     focus up
+bindsym $mod+l     focus right
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h     move left
+bindsym $mod+Shift+j     move down
+bindsym $mod+Shift+k     move up
+bindsym $mod+Shift+l     move right
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+# move workspace
+bindsym $mod+Shift+Ctrl+h     move workspace to output left
+bindsym $mod+Shift+Ctrl+j     move workspace to output down
+bindsym $mod+Shift+Ctrl+k     move workspace to output up
+bindsym $mod+Shift+Ctrl+l     move workspace to output right
+bindsym $mod+Shift+Ctrl+Left  move workspace to output left
+bindsym $mod+Shift+Ctrl+Down  move workspace to output down
+bindsym $mod+Shift+Ctrl+Up    move workspace to output up
+bindsym $mod+Shift+Ctrl+Right move workspace to output right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+
+
+### Switch workspace
+bindsym $mod+z   workspace back_and_forth
+bindsym $mod+Tab workspace next
+bindsym $mod+1   workspace number $w1
+bindsym $mod+2   workspace number $w2
+bindsym $mod+3   workspace number $w3
+bindsym $mod+4   workspace number $w4
+bindsym $mod+5   workspace number $w5
+bindsym $mod+6   workspace number $w6
+bindsym $mod+7   workspace number $w7
+bindsym $mod+8   workspace number $w8
+bindsym $mod+9   workspace number $w9
+bindsym $mod+0   workspace number $w10
+
+### Move container
+bindsym $mod+Shift+z move container to workspace back_and_forth
+bindsym $mod+Shift+1 move container to workspace number $w1
+bindsym $mod+Shift+2 move container to workspace number $w2
+bindsym $mod+Shift+3 move container to workspace number $w3
+bindsym $mod+Shift+4 move container to workspace number $w4
+bindsym $mod+Shift+5 move container to workspace number $w5
+bindsym $mod+Shift+6 move container to workspace number $w6
+bindsym $mod+Shift+7 move container to workspace number $w7
+bindsym $mod+Shift+8 move container to workspace number $w8
+bindsym $mod+Shift+9 move container to workspace number $w9
+bindsym $mod+Shift+0 move container to workspace number $w10
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+u exec devmon --unmount-recent
+# Depends on https://github.com/proxypoke/quickswitch-for-i3
+bindsym $mod+x exec quickswitch.py
+
+### Media Keys
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -- -5%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 -- +5%
+bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle
+#bindsym XF86AudioLowerVolume exec amixer -c 1 set Master 5+
+#bindsym XF86AudioRaiseVolume exec amixer -c 1 set Master 5-
+#bindsym XF86AudioMute exec amixer -c 1 set Master toggle
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioStop exec mpc stop
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc prev
+
+### Modes
+bindsym $mod+r mode "resize"
+bindsym $mod+Shift+e mode "$mode_system"
+bindsym $mod+m mode "$mode_mpd"
+
+# Take a screenshot upon pressing $mod+x (select an area)
+bindsym --release $mod+Shift+x exec --no-startup-id import /tmp/latest-screenshot.png
+
+# Scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+#############
+# Autostart #
+#############
+
+exec --no-startup-id redshift-gtk
+exec --no-startup-id trash-empty &
+exec --no-startup-id xset dpms 600
+exec --no-startup-id mpd /home/timo/.config/mpd/mpd.conf
+exec --no-startup-id pyLoadCore --daemon
+exec --no-startup-id /home/timo/.local/bin/start-syncthing
+exec --no-startup-id xautolock -time 10 -locker '$i3_path/scripts/i3exit lock' &
+exec --no-startup-id devmon --exec-on-drive "notify-send --urgency=low 'Mounted %f (%l) at %d'"
+exec --no-startup-id i3-msg 'workspace $w1; exec firefox'
+exec --no-startup-id i3-msg 'workspace number 8; append_layout /home/timo/.i3/workspaces/misc_workspace.json'
+exec --no-startup-id urxvt -title telegram -e /home/timo/.local/bin/telegram-cli
+exec --no-startup-id vim -g -c "call Vimtodo()"
+exec --no-startup-id urxvt -title misc -e zsh
+exec --no-startup-id urxvt -title music -e ncmpcpp
+exec --no-startup-id thunderbird
+
+# Default workspace
+exec --no-startup-id i3-msg 'workspace $w1'
+
+#########
+# Modes #
+#########
+
+# Mode to exit i3wm
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+set $i3exit $i3_path/scripts/i3exit
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $i3_path/scripts/i3exit lock, mode "default"
+    bindsym e exec --no-startup-id $i3_path/scripts/i3exit logout, mode "default"
+    bindsym s exec --no-startup-id $i3_path/scripts/i3exit suspend, mode "default"
+    bindsym h exec --no-startup-id $i3_path/scripts/i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id $i3_path/scripts/i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id $i3_path/scripts/i3exit shutdown, mode "default"  
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Mode to control mpd
+set $mode_mpd Mpd (p) play/pause, (+) vol+, (-) vol-, (<) prev, (>) next, (r) random
+mode "$mode_mpd" {
+	bindsym p exec --no-startup-id mpc toggle, mode "default"
+	bindsym plus exec --no-startup-id mpc volume +5
+	bindsym minus exec --no-startup-id mpc volume -5
+	bindsym < exec --no-startup-id mpc prev, mode "default"
+	bindsym > exec --no-startup-id mpc next, mode "default"
+	bindsym r exec --no-startup-id random, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Mode to resize windows
+mode "resize" {
+        bindsym h resize shrink width  10 px or 10 ppt
+        bindsym j resize grow   height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow   width  10 px or 10 ppt
+        bindsym Shift+h resize shrink width  1 px or 1 ppt
+        bindsym Shift+j resize grow   height 1 px or 1 ppt
+        bindsym Shift+k resize shrink height 1 px or 1 ppt
+        bindsym Shift+l resize grow   width  1 px or 1 ppt
+        bindsym Left resize shrink width  10 px or 10 ppt
+        bindsym Down resize grow   height 10 px or 10 ppt
+        bindsym Up resize shrink   height 10 px or 10 ppt
+        bindsym Right resize grow  width  10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+		bindsym $mod+r mode "default"
+}

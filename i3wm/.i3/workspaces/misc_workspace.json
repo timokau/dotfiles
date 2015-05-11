@@ -1,0 +1,74 @@
+// vim:ts=4:sw=4:et
+{
+"border": "normal",
+"floating": "auto_off",
+"layout": "splith",
+"type": "con",
+"nodes": [
+    {
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": 0.4,
+    "type": "con",
+    "nodes": [
+        {
+        "border": "normal",
+        "name": "music",
+        "percent": 0.6,
+        "swallows": [
+           {
+            "class": "^URxvt$",
+            "title": "^music$"
+           }
+        ],
+        "type": "con"
+        },
+        {
+        "border": "normal",
+        "percent": 0.6,
+        "swallows": [
+           {
+            "class": "^URxvt$",
+            "title": "^misc$"
+           }
+        ],
+        "type": "con"
+        }
+        ]
+    },
+    {
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": 0.4,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "normal",
+            "name": "telegram",
+            "percent": 0.5,
+            "swallows": [
+               {
+                "class": "^URxvt$",
+                "title": "^telegram$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "normal",
+            "name": "vimtodo",
+            "percent": 0.5,
+            "swallows": [
+               {
+                "class": "^Gvim$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+    }
+]
+}
+
