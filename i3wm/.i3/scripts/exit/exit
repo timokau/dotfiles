@@ -6,16 +6,53 @@ lock() {
 }
 
 suspend() {
-	dbus-send --print-reply --system --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+	case "$distro" in
+		ubuntu)
+			dbus-send --print-reply --system --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+			;;
+		arch)
+			systemctl suspend
+			;;
+		*)
+			echo "Can't handle this system"
+			exit 2
+			;;
+	esac
 }
 
 shutdown() {
-	dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
+	case "$distro" in
+		ubuntu)
+			dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
+			;;
+		arch)
+			systemctl poweroff
+			;;
+		*)
+			echo "Can't handle this system"
+			exit 2
+			;;
+	esac
 }
 
 reboot () {
-	dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
+	case "$distro" in
+		ubuntu)
+			dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
+			;;
+		arch)
+			systemctl reboot
+			;;
+		*)
+			echo "Can't handle this system"
+			exit 2
+			;;
+	esac
 }
+
+# Get the distro ID ($ID)
+. /etc/os-release
+distro=$ID
 
 case "$1" in
     lock)
