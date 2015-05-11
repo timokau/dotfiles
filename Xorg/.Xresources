@@ -1,0 +1,75 @@
+*background:#222222
+*foreground:#e8e9ca
+
+*color0:    #222222
+*color1:    #8b3e2f
+*color2:    #526f33
+*color3:    #665847
+*color4:    #4a708b
+*color5:    #7a378b
+*color6:    #528b8b
+*color7:    #999999
+
+*color8:    #4c4c4c
+*color9:    #d75f00
+*color10:   #cee318
+*color11:   #eee685
+*color12:   #9ac0cd
+*color13:   #9f79ee
+*color14:   #79cdcd
+*color15:   #e8e9ca
+!! terminal colours
+!*foreground:#a0a0a0
+!*background:#1b1d1e
+!!molokai inspired colors
+!!black
+!*color0: #1b1d1e
+!*color8: #505354
+!!red
+!*color1: #f92672
+!*color9: #ff5995
+!!green
+!*color2: #82b414
+!*color10: #b6e354
+!!yellow
+!*color3: #fd971f
+!*color11: #feed6c
+!!blue
+!*color4: #56c2d6
+!*color12: #8cedff
+!!magenta
+!*color5: #8c54fe
+!*color13: #9e6ffe
+!!cyan
+!*color6: #465457
+!*color14: #899ca1
+!!white
+!*color7: #ccccc6
+!*color15: #f8f8f2
+
+! URXVT
+URxvt*urgentOnBell: true
+URxvt*internalBorder: 6
+URxvt*cursorBlink: true
+URxvt*scrollBar: false
+URxvt*letterSpace: -4
+URxvt.perl-ext-common: default,matcher,clipboard
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 1
+URxvt.colorUL: #4682B4
+URxvt.iso14755: False
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.clipboard.copycmd:  xsel -ib
+URxvt.clipboard.pastecmd: xsel -ob
+URxvt.iso14755_52: false
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
+
+URxvt*font:                 xft:Source Code Pro:regular:size=9
+URxvt*imFont:               xft:Source Code Pro:regular:size=9
+URxvt*boldFont:             xft:Source Code Pro:semibold:size=9
+URxvt*italicFont:           xft:Source Code Pro:italic:size=9
+URxvt*boldItalicFont,q:       xft:Source Code Pro:semibold:italic:size=9
