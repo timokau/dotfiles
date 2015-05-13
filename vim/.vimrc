@@ -47,7 +47,8 @@ Plug 'bling/vim-airline'                                  " Better statusbar
 Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
 Plug 'bruno-/vim-man'                                     " View manpages in vim
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
-Plug '907th/vim-auto-save'
+Plug '907th/vim-auto-save'                                " Autosave files
+Plug 'nathanaelkane/vim-indent-guides'                    " Show identation level
 let g:auto_save = 1
 let g:auto_save_no_updatetime = 1
 let g:auto_save_in_insert_mode = 0
@@ -97,6 +98,9 @@ endfunction
 " racer {{{3
 let g:racer_cmd = '/home/timo/.local/share/git/racer/release/racer'
 let $RUST_SRC_PATH='/home/timo/.local/share/git/rust/src/'
+
+" indent guides {{{3
+let g:indent_guides_enable_on_vim_startup = 1
 
 " NERDTree {{{3
 nnoremap <leader>nt :NERDTreeToggle<cr>
