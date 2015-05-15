@@ -11,5 +11,11 @@ To install one of the configurations, install [GNU Stow][1], clone the repositor
 [neovim][2] is an "ambitious Vim-fork focused on extensibility and agility".
 The vim and neovim configurations are currently identical (hard linked).
 
+#### YouCompleteMe
+The YouCompleteMe plugin needs CMake to compile.
+
+#### Racer
+The Racer plugin needs Cargo to compile.
+
 [1]: https://www.gnu.org/software/stow
 [2]: https://github.com/neovim/neovim
