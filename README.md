@@ -12,7 +12,7 @@ To install one of the configurations, install [GNU Stow][1], clone the repositor
 The vim and neovim configurations are currently identical (hard linked).
 
 #### YouCompleteMe
-The YouCompleteMe plugin needs CMake to compile.
+The YouCompleteMe plugin needs CMake to compile and vim with python2 support to execute.
 
 #### Racer
 The Racer plugin needs Cargo to compile.
