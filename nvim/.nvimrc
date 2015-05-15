@@ -23,7 +23,9 @@ Plug 'vim-pandoc/vim-pandoc'                              " Pandoc
 Plug 'vim-pandoc/vim-pandoc-syntax'                       " Pandoc syntax
 Plug 'dogrover/vim-pentadactyl', { 'for': 'pentadactyl' } " Pentadactyl
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
-Plug 'phildawes/racer', {'do': 'cargo build --release'}   " Rust Auto-Complete-er
+if executable('cargo')
+	Plug 'phildawes/racer', {'do': 'cargo build --release'}   " Rust Auto-Complete-er
+endif
 Plug 'klen/python-mode', { 'for': 'python' }              " Advanced python features
 " Colorschemes {{{3
 Plug 'morhetz/gruvbox'                                    " Gruvbox
