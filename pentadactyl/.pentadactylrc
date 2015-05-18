@@ -109,6 +109,8 @@ set! privacy.donottrackheader.enabled=true
 extupdate!
 " Noscript
 set! noscript.untrusted="google-analytics.com http://google-analytics.com https://google-analytics.com"
+" Pocket
+set! extensions.isreaditlater.autoCloseTab=true
 
 command! PlugInstall -nargs=0 -description "Install my addons" -javascript <<EOF
 	// Addons from mozilla.org
@@ -118,6 +120,7 @@ command! PlugInstall -nargs=0 -description "Install my addons" -javascript <<EOF
 	ext.push("387429"); // Reddit Enhancement Suite
 	ext.push("2108");   // Stylish
 	ext.push("7661");   // Pocket
+	ext.push("722");    // NoScript
 	for(var i=0; i<ext.length; i++) {
 		dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/latest/" + ext[i] + "/addon-" + ext[i] + "-latest.xpi")
 	}
