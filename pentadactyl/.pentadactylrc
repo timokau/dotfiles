@@ -111,6 +111,8 @@ extupdate!
 set! noscript.untrusted="google-analytics.com http://google-analytics.com https://google-analytics.com"
 " Pocket
 set! extensions.isreaditlater.autoCloseTab=true
+" Ghostery
+set! extensions.firefox@ghostery.com.install-event-fired=true
 
 command! PlugInstall -nargs=0 -description "Install my addons" -javascript <<EOF
 	// Addons from mozilla.org
@@ -118,7 +120,6 @@ command! PlugInstall -nargs=0 -description "Install my addons" -javascript <<EOF
 	ext.push("9609");   // Ghostery
 	ext.push("452714"); // Pushbullet
 	ext.push("387429"); // Reddit Enhancement Suite
-	ext.push("2108");   // Stylish
 	ext.push("7661");   // Pocket
 	ext.push("722");    // NoScript
 	for(var i=0; i<ext.length; i++) {
