@@ -1,0 +1,15 @@
+[user]
+	name = Timo Kaufmann
+	email = eisfreak7@gmail.com
+[alias]
+	ci = commit
+	st = status
+	br = branch
+	co = checkout
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+[core]
+	editor = vim
+	autocrlf = input
+	safecrlf = true
+[credential]
+	helper = cache --timeout=3600
