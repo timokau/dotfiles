@@ -171,6 +171,7 @@ hi Conceal guibg=white guifg=black
 set formatoptions-=t                   " Don't autowrap text
 set formatoptions-=c                   " Don't autowrap comments
 set formatoptions-=o                   " Don't insert comment-leader
+let g:netrw_dirhistmax = 0 " Don't save a file history in the .vim folder
 
 " Mappings {{{2
 " Use space as leader {{{3
