@@ -274,6 +274,7 @@
 /* About:Blank background */
 @-moz-document url(about:blank) {
     html,body { background: var(--bg-light) !important; }
+    * {background-color: #000 !important; color: teal !important;}
 }
 
 /* about:stylish-edit toolbar style */
