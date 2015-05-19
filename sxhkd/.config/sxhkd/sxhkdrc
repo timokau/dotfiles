@@ -61,8 +61,8 @@ super + ctrl + {_,shift + }space
 super + r : {h,j,k,l}
 	bspc window --edge {left -10,down +10,up -10,right +10}
 
-super + r : {shift + h,shift + j,shift + k,shift + l}
-	bspc window -edge {right -10,up +10,down -10,left +10}
+super + r : shift + {h,j,k,l}
+	bspc window --edge {right -10,up +10,down -10,left +10}
 
 super + ctrl + {1-9}
 	bspc window --ratio 0.{1-9}
@@ -78,6 +78,9 @@ super + button{1-3}
 
 super + @button{1-3}
 	bspc pointer --ungrab
+
+super + {plus,minus}
+	bspc config -d focused window_gap $(($(bspc config -d focused window_gap) {+,-} 5))
 
 #
 # wm independent hotkeys
