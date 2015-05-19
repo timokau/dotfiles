@@ -50,7 +50,6 @@ Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
 Plug 'bruno-/vim-man'                                     " View manpages in vim
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
 Plug '907th/vim-auto-save'                                " Autosave files
-Plug 'nathanaelkane/vim-indent-guides'                    " Show identation level
 let g:auto_save = 1
 let g:auto_save_no_updatetime = 1
 let g:auto_save_in_insert_mode = 0
