@@ -12,7 +12,7 @@
     }
     html {
     	color: #E6E5E5 !important;
-    	background: none repeat scroll 0 0 #333333 !important;
+    	background: none repeat scroll 0 0 #222222 !important;
     }   
     body, .zci, .result__snippet {
         color: #aaaaaa;
@@ -36,6 +36,7 @@
 		background: #333 !important;
 	}
     .result, .results, .results_links, .highlight_v, .result__snippet {
+    	/* Color of the result boxes */
         background-color: #222222 !important;
         max-width: 65em;
     }
@@ -159,7 +160,7 @@
         background-color: #447799;
     }
     .header-wrap, header_wrapper {
-        background-color: #000;
+        background-color: #333;
         height: 8em;
     }
     .header__button--menu {
@@ -189,7 +190,7 @@
     #search_form {
     	/* I want a border around the whole form, including the bottom.
         border-bottom: 1px solid #000 !important;
-        */
+        /*
     }
     #search_form_input {
         border-color: #888888 !important;
