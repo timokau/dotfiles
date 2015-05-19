@@ -12,13 +12,29 @@
     }
     html {
     	color: #E6E5E5 !important;
-    	background: none repeat scroll 0 0 #222222 !important;
+    	background: none repeat scroll 0 0 #333333 !important;
     }   
     body, .zci, .result__snippet {
         color: #aaaaaa;
         font-size: 14px;
+        /* Main color */
         background: none repeat scroll 0 0 #222222 !important;
     }
+    /* The search field background */
+    .search, .search--adv {
+		background-color: #222 !important;
+		border: 1px solid #fff !important;
+		border-radius: 5px !important;
+    }
+    /* The search field text */
+    .search, .search__input, .search--adv, .search__input--adv {
+        color: #EEEEEE !important;
+		font-size: 1.3em !important;
+    }
+    /* parts of the header */
+	.header-wrap, .has-zcm .header-wrap::before, .has-zcm .header-wrap::after, .has-zcm .header::after {
+		background: #333 !important;
+	}
     .result, .results, .results_links, .highlight_v, .result__snippet {
         background-color: #222222 !important;
         max-width: 65em;
@@ -93,22 +109,6 @@
         margin-right: 40px;
         margin-bottom: 3px;
     }
-    /* The search field background */
-    .search, .search--adv {
-		background-color: #222 !important;
-		border: 1px solid #fff !important;
-		border-radius: 5px !important;
-    }
-    /* The search field text */
-    .search, .search__input, .search--adv, .search__input--adv {
-        color: #EEEEEE !important;
-		font-size: 1.3em !important;
-    }
-    /* parts of the header */
-	.header-wrap, .has-zcm .header-wrap::before, .has-zcm .header-wrap::after, .has-zcm .header::after {
-		background: none !important;
-	}
-
     .search--hover #search_button {
         background: #383838;
     }
