@@ -35,6 +35,10 @@ set passkeys+=getpocket.com:jka?<A-1><A-2><A-3><A-5><Enter>
 
 set hintkeys="hsdfgyuiopqwertnmzxcvbHSDFGYUIOPQWERTNMZXCVB"
 
+" No scrollbars
+set guioptions-=s
+set guioptions-=b
+
 " Appearance {{{
 colorscheme solarized-dark
 
