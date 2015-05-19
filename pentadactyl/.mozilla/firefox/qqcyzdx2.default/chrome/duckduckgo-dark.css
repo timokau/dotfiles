@@ -1,7 +1,10 @@
 @namespace url(http://www.w3.org/1999/xhtml);
 
 /* Original:
- * https://userstyles.org/styles/65379/faceblack-black-facebook-by-a3canton */
+ * https://userstyles.org/styles/101431/new-duckduckgo-dark-theme
+ * I "fixed" the layout without any knowledge of css and with pure
+ * trial-and-error. Don't judge me.
+ * The commented sections are edited by me. */
 
 @-moz-document domain("duckduckgo.com") {
     * {
@@ -82,9 +85,6 @@
         padding-top: 3px;
         background: #333;
     }    
-    .search__input--adv {
-        color: #EEEEEE !important;
-    }
     #search_form_input_clear {
         padding-top: 2px;
         padding-bottom: 1px;
@@ -93,8 +93,23 @@
         margin-right: 40px;
         margin-bottom: 3px;
     }
-    .search--hover #search_button {
+    /* The search field background */
+    .search, .search--adv {
+		background-color: #222 !important;
+		border: 1px solid #fff !important;
+		border-radius: 5px !important;
+    }
+    /* The search field text */
+    .search, .search__input, .search--adv, .search__input--adv {
+        color: #EEEEEE !important;
+		font-size: 1.3em !important;
+    }
+    /* parts of the header */
+	.has-zcm .header-wrap::before, .has-zcm .header-wrap::after, .has-zcm .header::after {
+		background: none !important;
+	}
 
+    .search--hover #search_button {
         background: #383838;
     }
     .search--hover {
@@ -106,7 +121,7 @@
         margin: 15px;
     }
     .has-active-zci .header-wrap, .has-active-zci {
-        background-color: #333333;
+        background-color: #333333 !important;
         border: none;
     }
     
@@ -144,7 +159,7 @@
         background-color: #447799;
     }
     .header-wrap, header_wrapper {
-        background-color: #333;
+        background-color: #000;
         height: 8em;
     }
     .header__button--menu {
@@ -172,7 +187,9 @@
         background-color: #333333;
     }
     #search_form {
-        border-bottom: 1px solid #202020 !important;
+    	/* I want a border around the whole form, including the bottom.
+        border-bottom: 1px solid #000 !important;
+        */
     }
     #search_form_input {
         border-color: #888888 !important;
