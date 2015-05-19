@@ -105,7 +105,7 @@
 		font-size: 1.3em !important;
     }
     /* parts of the header */
-	.has-zcm .header-wrap::before, .has-zcm .header-wrap::after, .has-zcm .header::after {
+	.header-wrap, .has-zcm .header-wrap::before, .has-zcm .header-wrap::after, .has-zcm .header::after {
 		background: none !important;
 	}
 
