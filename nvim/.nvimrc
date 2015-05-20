@@ -180,6 +180,9 @@ map <Space> <leader>
 nnoremap ö [
 nnoremap ä ]
 
+" make C-u in insert mode undoable
+inoremap <C-U> <C-G>u<C-U>
+
 " Resource vimrc
 nnoremap <silent> <Leader>rs :source $MYVIMRC<CR>
 

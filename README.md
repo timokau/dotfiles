@@ -9,7 +9,7 @@ To install one of the configurations, install [GNU Stow][1], clone the repositor
 
 ### (neo)vim
 [neovim][2] is an "ambitious Vim-fork focused on extensibility and agility".
-The vim and neovim configurations are currently identical (hard linked).
+The vim and neovim configurations are currently symlinked.
 
 #### YouCompleteMe
 The YouCompleteMe plugin needs CMake to compile and vim with python2 support to execute.
