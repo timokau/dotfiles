@@ -8,3 +8,8 @@
 # Only track the chrome folder from the firefox profile
 /pentadactyl/.mozilla/firefox/qqcyzdx2.default/*
 !/pentadactyl/.mozilla/firefox/qqcyzdx2.default/chrome/
+
+# These are machine specific
+/ranger/.config/ranger/bookmarks
+/ranger/.config/ranger/tagged
+/ranger/.config/ranger/history
