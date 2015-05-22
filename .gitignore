@@ -1,4 +1,10 @@
+# Plugins can be loaded with 'PlugInstall' inside (neo)vim
 /vim/.vim/plugged
 /nvim/.nvim/plugged
+
+# This shouldn't be tracked (it contains the command history)
 /pentadactyl/.pentadactyl/info
-/pentadactyl/.mozilla/firefox
+
+# Only track the chrome folder from the firefox profile
+/pentadactyl/.mozilla/firefox/qqcyzdx2.default/*
+!/pentadactyl/.mozilla/firefox/qqcyzdx2.default/chrome/
