@@ -110,8 +110,6 @@ set! privacy.clearOnShutdown.sessions=true
 set! privacy.clearOnShutdown.siteSettings=true
 set! privacy.donottrackheader.enabled=true
 
-" Extensions
-extupdate!
 " Noscript
 set! noscript.untrusted="google-analytics.com http://google-analytics.com https://google-analytics.com"
 " Pocket
