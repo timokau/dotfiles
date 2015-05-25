@@ -195,7 +195,6 @@ exec --no-startup-id redshift-gtk
 exec --no-startup-id trash-empty &
 exec --no-startup-id xset dpms 600
 exec --no-startup-id mpd ~/.config/mpd/mpd.conf
-exec --no-startup-id pyLoadCore --daemon
 exec --no-startup-id ~/.local/bin/start-syncthing
 exec --no-startup-id xautolock -time 10 -locker '$exitscript lock' &
 exec --no-startup-id devmon --exec-on-drive "notify-send --urgency=low 'Mounted %f (%l) at %d'"
