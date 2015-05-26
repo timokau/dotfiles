@@ -194,6 +194,9 @@ nnoremap <silent> <Leader>w :write<CR>
 " word is lower case
 nnoremap <Leader>J Elxgul
 
+" Make Y consistent with other commands
+nnoremap Y y$
+
 " I'm feeling lucky correction {{{3
 nnoremap z0 1z=
 " [s is unreachable on a german keyboard
