@@ -1,0 +1,54 @@
+# [Created by task 2.3.0 12/8/2014 22:23:00]
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.local/share/task
+taskd.certificate=~/.local/share/task/timo.cert.pem
+taskd.key=~/.local/share/task/timo.key.pem
+taskd.ca=~/.local/share/task/ca.cert.pem
+#
+# Color theme
+include ~/.local/share/task/dark-green-256.theme
+color.due.today=bold red on black
+
+# Server
+taskd.server=192.168.2.180:53589
+taskd.credentials=Public/Timo/50e9c135-4ef4-4918-9b17-21a7535529dd
+taskd.trust=ignore hostname
+
+# Settings
+dateformat=y-M-D H:N
+search.case.sensitive=no
+
+# For the timetracking hook
+max_active_tasks=3
+uda.totalactivetime.type=duration
+uda.totalactivetime.label=Total active time
+uda.totalactivetime.values=''
+
+# Reports
+report.dsheet.columns     =  start,end,totalactivetime,project,priority,entry.age,description,uuid
+report.dsheet.description =  Lists completed tasks from today
+report.dsheet.filter      =  end:today
+report.dsheet.labels      =  Started,Complete,Active,Proj,Pri,Age,Description,UUID
+report.dsheet.sort        =  end+,priority-,project+
+
+report.today.columns = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due,until.age,description,urgency
+report.today.labels = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.today.filter = (status:pending or status:waiting) and (due:today or +OVERDUE)
+report.today.sort = urgency-
+
+report.lstoday.columns = id,start.age,totalactivetime,depends.indicator,priority,project,tags,scheduled.countdown,due.countdown,until.countdown,description.count,urgency
+report.lstoday.labels =  ID,Active,Total,D,P,Project,Tag,S,Due,Until,Description,Urg
+report.lstoday.filter = (status:pending or status:waiting) and (due:today or +OVERDUE)
+report.lstoday.sort = end+,priority-
+
+report.unfinished.columns     = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.age,description,urgency
+report.unfinished.description = Unfinished tasks sorted by urgency
+report.unfinished.filter      = (status:pending or status:waiting)
+report.unfinished.labels      = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Description,Urg
+report.unfinished.sort        = urgency-
+
+
+# Show the due date instead of the due age in the next report
+report.next.columns = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due,until.age,description,urgency
