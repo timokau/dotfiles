@@ -1,0 +1,14 @@
+# for reference see the example configuration
+key_up = 259 'k'
+key_down = 258 'j'
+key_up_album = '['
+key_down_album = ']'
+key_up_artist = '{'
+key_down_artist = '}'
+key_page_up = 339 'K'
+key_page_down = 338 'J'
+key_home = 262 'g'
+key_end = 360 'G'
+key_prev_column = 260 'h'
+key_next_column = 261 'l'
+key_lyrics = 0
