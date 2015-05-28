@@ -97,7 +97,7 @@ export RPS1="%(?..%B(%?%)%b )%1~"
 #
 alias rm='rm -Iv --one-file-system'
 check_com task && alias t='task'
-alias smv='rsync -avz --remote-source-files -e ssh'
+alias smv='rsync -avz --remove-source-files -e ssh'
 alias bell='echo -en "\a"'
 alias e="$EDITOR"
 alias detach='bg && disown && exit'
