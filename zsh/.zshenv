@@ -1,6 +1,6 @@
 # PATH
 typeset -U path # No double entries
-path=(~/bin $path) # $PATH is generated from this array
+path=(~/bin ~/.local/bin $path) # $PATH is generated from this array
 export path
 
 # Lemonbar
