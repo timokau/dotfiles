@@ -1,0 +1,3 @@
+#!/bin/bash
+# translate an english word to german
+notify-send --expire-time=10000 --urgency=low "$(trans :de -no-ansi $1)"

@@ -1,0 +1,33 @@
+#! /bin/sh
+loc='EUR|DE|33106|Elsen'
+site="http://rss.accuweather.com/rss/liveweather_rss.asp?metric=1&locCode=$loc"
+weather=$(curl -s "$site" --connect-timeout 30 | sed -n 's/^.*Currently: \(.*\): \([0-9]\+\).*$/\1:\2/p')
+
+condition=$(echo $weather | cut -f1 -d:)
+temperature=$(echo $weather | cut -f2 -d:)
+
+echo $weather
+
+
+# possible: Fog, Snow, Cloudy, Sunny, T-Storms
+
+# case "$cond" in
+# 
+# 'Fog')
+#     echo -e "Nombre\c"
+# ;;
+# 'Snow')
+#     echo -e "Nevado\c"
+# ;;
+# 'Cloudy')
+#     echo -e "Nublado\c"
+# ;;
+# 'Sunny')
+#    echo -e "Ensolarado\c"
+# ;;
+# 'T-Storms')
+#    echo -e "Pancada\c"
+# ;;
+# *)
+#    echo -e  $cond'\c'
+# esac
