@@ -1,0 +1,9 @@
+#! /bin/sh
+# dependencies: mpc
+cur=$(mpc current)
+
+if test -n "$cur"; then
+	echo "$cur"
+else
+	echo "stopped"
+fi

@@ -1,0 +1,6 @@
+#! /bin/sh
+# gives the number of tasks due today
+# dependencies: taskwarrior
+# rc.gc=off turns taskwarrior's "garbage collector" for this command off,
+# so that the IDs won't be changed by it
+task rc.gc=off 'due:today and (status:pending or status:waiting)' count

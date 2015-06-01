@@ -1,0 +1,33 @@
+#! /bin/sh
+# dependencies: ip (from iproute2) and iwconfig (from wireles_tools)
+
+# get all available interfaces
+interfaces=$(ip link | sed -n 's/^[0-9]: \(.*\):.*$/\1/p')
+
+# assuming there are 3 interfaces: loopback, ethernet, wifi (also works with 2)
+read _ int1 int2 <<< $interfaces
+
+# iwconfig returns an error code if the interface tested isn't wireless
+if iwconfig "$int1" >/dev/null 2>&1; then
+	wifi=$int1
+	eth0=$int2
+else
+	wifi=$int2
+	eth0=$int1
+fi
+
+# use ethernet if it's up, wifi otherwise
+if ip link show "$eth0" | grep 'state UP' > /dev/null; then
+	int=$eth0
+else
+	int=$wifi
+fi
+
+echo -n "$int "
+
+# check for internet access by pinging google's DNS
+if ping -c 1 8.8.8.8 > /dev/null 2>&1; then
+	echo "connected"
+else
+	echo "disconnected"
+fi

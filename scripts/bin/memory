@@ -1,0 +1,8 @@
+#! /bin/sh
+# dependencies: bc
+# returns the memory usage in percent
+
+read total free <<< $(grep -E 'Mem(Total|Free)' /proc/meminfo | awk '{print $2}')
+read buffers cached <<< $(grep -E '^(Buffers|Cached)' /proc/meminfo | awk '{print $2}')
+
+bc <<< "100*($total - $free - $cached - $buffers) / $total"

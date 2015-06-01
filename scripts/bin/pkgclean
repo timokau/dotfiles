@@ -1,0 +1,2 @@
+#! /bin/sh
+paccache -r && paccache -ruk0
