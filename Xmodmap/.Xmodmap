@@ -8,5 +8,4 @@
 ! keycode  66 = Caps_Lock NoSymbol Caps_Lock
 ! add Control = Caps_Lock
 remove Lock = Caps_Lock
-keycode 66 = Control_L NoSymbol Control_L
-!keycode 66 = Escape NoSymbol Escape
+keycode 66 = Escape NoSymbol Escape
