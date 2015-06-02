@@ -79,12 +79,16 @@ super + button{1-3}
 super + @button{1-3}
 	bspc pointer --ungrab
 
-super + {plus,minus}
+super + shift + b : {plus,minus}
 	bspc config -d focused window_gap $(($(bspc config -d focused window_gap) {+,-} 5))
 
 #
 # wm independent hotkeys
 #
+
+# volume
+super + {plus,minus}
+	amixer set Master 5%{+,-}
 
 super + Return
 	termite
