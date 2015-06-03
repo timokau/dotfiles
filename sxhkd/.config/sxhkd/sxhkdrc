@@ -37,7 +37,7 @@ super + {o,i}
 super + y
 	bspc window --to-window last.manual
 
-super + m
+super + shift + m
 	bspc window --swap biggest
 
 super + {_,shift + }{h,j,k,l}
@@ -86,9 +86,20 @@ super + shift + b : {plus,minus}
 # wm independent hotkeys
 #
 
-# volume
-super + {plus,minus}
-	amixer set Master 5%{+,-}
+# media
+super + m : {plus,minus,m}
+	amixer set Master {5%+,5%-,toggle}
+
+{XF86AudioRaiseVolume,XF86AudioLowerVolume,XF86AudioMute}
+	amixer set Master {5%+,5%-,toggle}
+
+super + m : {p,h,l}
+	mpc {toggle,prev,next}
+
+{XF86AudioPlay,XF86AudioStop,XF86AudioPrev,XF86AudioNext}
+	mpc {toggle,stop,prev,next}
+
+# run
 
 super + Return
 	termite
