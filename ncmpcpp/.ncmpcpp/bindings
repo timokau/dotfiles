@@ -1,0 +1,67 @@
+# for more informaion and default bindings see the example bindings file
+
+def_key "k"
+  scroll_up
+
+def_key "j"
+  scroll_down
+
+def_key "ctrl_u"
+  page_up
+
+def_key "ctrl_d"
+  page_down
+
+def_key "g"
+  move_home
+
+def_key "G"
+  move_end
+
+def_key "x"
+  delete_playlist_items
+
+def_key "x"
+  delete_browser_items
+
+def_key "x"
+  delete_stored_playlist
+
+def_key "l"
+  next_column
+
+def_key "l"
+  slave_screen
+
+def_key "l"
+  volume_up
+
+def_key "h"
+  previous_column
+
+def_key "h"
+  master_screen
+
+def_key "h"
+  volume_down
+
+def_key ","
+  execute_command
+
+def_key "ctrl_l"
+  next_screen
+
+def_key "ctrl_h"
+  previous_screen
+
+def_key "L"
+  next
+
+def_key "H"
+  previous
+
+def_key "n"
+  next_found_item
+
+def_key "N"
+  previous_found_item
