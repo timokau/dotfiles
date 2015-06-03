@@ -59,8 +59,9 @@ mouse_list_scroll_whole_page = "no"
 empty_tag_marker = "<empty>"
 tag_editor_extended_numeration = "yes"
 search_engine_default_search_mode = "2"
-external_editor = "vim"
+external_editor = "nvim"
 use_console_editor = "yes"
+allow_for_physical_item_deletion = "yes"
 
 ##### colors definitions #####
 colors_enabled = "yes"
