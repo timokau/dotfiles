@@ -51,6 +51,10 @@ REPORTTIME=5
 # vim-like line editing
 bindkey -v
 
+# enable the delete key
+bindkey    "^[[3~"          delete-char
+bindkey    "^[3;5~"         delete-char
+
 #
 # utility functions {{{1
 #
