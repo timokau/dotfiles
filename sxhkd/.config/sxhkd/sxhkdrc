@@ -128,7 +128,7 @@ super + e ; l
 	xautolock -locknow
 
 super + e ; s
-	xautolock -locknow \
+	xautolock -locknow; \
 	systemctl suspend
 
 # media
