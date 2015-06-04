@@ -37,6 +37,7 @@ song_window_title_format = "{%a - }{%t}|{%f}"
 song_columns_list_format = "(7f)[green]{l} (25)[cyan]{a} (40)[]{t|f} (30)[red]{b}"
 
 ##### various settings #####
+media_library_primary_tag = album_artist
 playlist_show_remaining_time = "yes"
 playlist_shorten_total_times = "yes"
 playlist_display_mode = "columns"
