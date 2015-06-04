@@ -5,9 +5,6 @@
 super + e ; e
 	pkill -x panel; bspc quit
 
-super + e ; {s, r}
-	systemctl {poweroff, reboot}
-
 super + shift + r
 	~/.config/bspwm/bspwmrc
 
@@ -85,6 +82,18 @@ super + shift + b : {plus,minus}
 #
 # wm independent hotkeys
 #
+
+# power
+
+super + e ; {p, r}
+	systemctl {poweroff, reboot}
+
+super + e ; l
+	i3lock --dpms --inactivity-timeout 30s --color=333333 --ignore-empty-password --show-failed-attempts
+
+super + e ; s
+	i3lock --dpms --inactivity-timeout 30s --color=333333 --ignore-empty-password --show-failed-attempts; \
+	systemctl suspend
 
 # media
 super + m : {plus,minus,m}
