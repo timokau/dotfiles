@@ -122,11 +122,13 @@ super + shift + b : {plus,minus}
 super + e ; {p, r}
 	systemctl {poweroff, reboot}
 
+# this depends on xautolock being running (it should be started in the
+# xinitrc)
 super + e ; l
-	i3lock --dpms --inactivity-timeout 30s --color=333333 --ignore-empty-password --show-failed-attempts
+	xautolock -locknow
 
 super + e ; s
-	i3lock --dpms --inactivity-timeout 30s --color=333333 --ignore-empty-password --show-failed-attempts; \
+	xautolock -locknow \
 	systemctl suspend
 
 # media
