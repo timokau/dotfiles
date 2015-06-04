@@ -37,8 +37,42 @@ super + y
 super + shift + m
 	bspc window --swap biggest
 
-super + {_,shift + }{h,j,k,l}
-	bspc window --{focus,swap} {left,down,up,right}
+# be able to focus an empty monitor
+# for details on this (and the window moving) see
+# http://blog.neeasade.net/2015/04/28/BSPWM-Multihead.html
+super +  {h,j,k,l}
+	bspc config pointer_follows_monitor true; \
+	bspc config pointer_follows_focus true; \
+	dir={left,down,up,right}; \
+	if ! bspc window --focus $dir; then \
+		bspc monitor --focus $dir; \
+	fi; \
+	bspc config pointer_follows_monitor false; \
+	bspc config pointer_follows_focus false
+
+# move the window in an i3-like manner
+# for example, windows can be moved to an empty monitor and when
+# doing so they keep the focus
+super + shift + {h,j,k,l}
+	bspc config pointer_follows_focus true; \
+	cur_win=$(bspc query -W -w) \
+	cur_mon=$(bspc query -M -m); \
+	dir={left,down,up,right}; \
+# move to an empty monitor
+	if ! bspc window --focus $dir; then \
+		bspc window --to-monitor $dir; \
+		bspc monitor --focus $dir; \
+	else \
+		new_mon=$(bspc query -M -m); \
+# if the target is on another (non-empty) monitor
+		if [[ "$new_mon" = "$cur_mon" ]]; then \
+			bspc window -s $cur_win; \
+		else \
+			bspc window $cur_win --to-monitor "$new_mon"; \
+		fi; \
+		bspc window --focus $cur_win; \
+    fi; \
+    bspc config pointer_follows_focus false
 
 super + {_,shift + }c
 	bspc window --focus {next,prev}
