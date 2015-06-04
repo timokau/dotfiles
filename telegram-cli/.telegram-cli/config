@@ -1,0 +1,6 @@
+default_profile = "default";
+default = {
+	log_level = 1
+	alert = 1;
+	msg_num = TRUE
+};
