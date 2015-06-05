@@ -362,3 +362,18 @@ whatwhen()  {
         ;;
     esac
 }
+
+# maintenence tasks for pacman
+pacupdt() {
+	BLUE='\033[0;34m'
+	NC='\033[0m'
+	echo ">>> ${BLUE}Updating packages${NC}"
+	pacaur -Syu
+	echo ">>> ${BLUE}Removing orphans${NC}"
+	pacaur -Rns $(pacaur -Qdtq)
+	echo ">>> ${BLUE}Cleaning the package cache${NC}"
+	paccache -r; paccache -ruk0
+	echo ">>> ${BLUE}Saving package list${NC}"
+	rm "$HOME/Documents/pkglist.txt" > /dev/null
+	(pacman -Qqen ; echo '\n' ; pacman -Qqem) > "$HOME/Documents/pkglist.txt"
+}
