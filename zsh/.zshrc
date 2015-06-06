@@ -370,7 +370,7 @@ pacupdt() {
 	echo ">>> ${BLUE}Updating packages${NC}"
 	pacaur -Syu
 	echo ">>> ${BLUE}Removing orphans${NC}"
-	pacaur -Rns $(pacaur -Qdtq)
+	pacaur -Rns $(pacaur -Qdtq) 2> /dev/null
 	echo ">>> ${BLUE}Cleaning the package cache${NC}"
 	paccache -r; paccache -ruk0
 	echo ">>> ${BLUE}Saving package list${NC}"
