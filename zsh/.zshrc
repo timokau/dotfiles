@@ -364,9 +364,11 @@ whatwhen()  {
 }
 
 # maintenence tasks for pacman
-pacupdt() {
+sysupgrade() {
 	BLUE='\033[0;34m'
 	NC='\033[0m'
+	snapshot_nbr=$(snapper create --type=pre --cleanup-algorithm=number --print-number --description="${cmd}")
+	echo ">>> ${BLUE}New pre snapshot with number ${snapshot_nbr}.${NC}"
 	echo ">>> ${BLUE}Updating packages${NC}"
 	pacaur -Syu
 	echo ">>> ${BLUE}Removing orphans${NC}"
@@ -376,4 +378,7 @@ pacupdt() {
 	echo ">>> ${BLUE}Saving package list${NC}"
 	rm "$HOME/Documents/pkglist.txt" > /dev/null
 	(pacman -Qqen ; echo '\n' ; pacman -Qqem) > "$HOME/Documents/pkglist.txt"
+
+	snapshot_nbr=$(snapper create --type=post --cleanup-algorithm=number --print-number --pre-number="$snapshot_nbr")
+	echo ">>> ${BLUE}New post snapshot with number ${snapshot_nbr}.${NC}"
 }
