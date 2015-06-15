@@ -156,6 +156,10 @@ super + d ; r
 super + d ; f
 	firefox
 
+# requires the pass-dmenu script in ~/bin
+super + d ; p
+	pass-dmenu
+
 # needs dmenu2 (for better configuration) and j4-dmenu-desktop-git from the AUR
 super + space
 	j4-dmenu-desktop --dmenu='dmenu -q -i -h 25 -p Run'

@@ -1,0 +1,7 @@
+#!/bin/bash
+#target=$(find ~/.password-store/ | sed -re "s/\.gpg$//" | sed -re "s/^.*\/.password-store\///" | dmenu -l 5 -nb \#FF004F)
+target=$(find ~/.password-store/ -iname '*.gpg' -type f | sed -nre 's/^.*\/.password-store\/(.+).gpg/\1/p' | dmenu -l 5 )
+if [[ -n "$target" ]] ; then
+	pass -c $target
+	notify-send --urgency=low "Copied $target to clipboard. Will clear in 45 seconds"
+fi
