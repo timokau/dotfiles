@@ -1,0 +1,14 @@
+next_img l space Right
+prev_img h Left
+quit q
+jump_first 0
+jump_last dollar
+jump_fwd L
+jump_fwd H
+delete x Delete
+scroll_left C-h C-Left
+scroll_right C-l C-Right
+scroll_up C-k C-Up
+scroll_down C-j C-Down
+zoom_in plus
+zoom_out minus
