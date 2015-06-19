@@ -2,6 +2,7 @@
 # this is heavily inspired (partly copied) by the grml zsh config
 autoload -U compinit
 compinit
+setopt completealiases
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
