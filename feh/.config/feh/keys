@@ -4,7 +4,7 @@ quit q
 jump_first 0
 jump_last dollar
 jump_fwd L
-jump_fwd H
+jump_back H
 delete x Delete
 scroll_left C-h C-Left
 scroll_right C-l C-Right
