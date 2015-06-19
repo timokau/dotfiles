@@ -1,5 +1,7 @@
 # vim: nowrap foldmethod=marker foldlevel=2
 # this is heavily inspired (partly copied) by the grml zsh config
+autoload -U compinit
+compinit
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
