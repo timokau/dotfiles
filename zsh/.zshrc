@@ -55,6 +55,10 @@ bindkey -v
 bindkey    "^[[3~"          delete-char
 bindkey    "^[3;5~"         delete-char
 
+# history search
+bindkey -M vicmd 'k' history-beginning-search-backward
+bindkey -M vicmd 'j' history-beginning-search-forward
+
 #
 # utility functions {{{1
 #
