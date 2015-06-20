@@ -211,6 +211,9 @@ set formatoptions-=c                   " Don't autowrap comments
 set formatoptions-=o                   " Don't insert comment-leader
 let g:netrw_dirhistmax = 0 " Don't save a file history in the .vim folder
 
+" Email-Settings {{{3
+autocmd FileType mail execute 'normal G' | set formatoptions-=t
+
 " Mappings {{{2
 " Use space as leader {{{3
 map <Space> <leader>
