@@ -132,13 +132,13 @@ super + e ; s
 	systemctl suspend
 
 # media
-super + m : {plus,minus,m}
+super + v : {plus,minus,m}
 	amixer set Master {5%+,5%-,toggle}
 
 {XF86AudioRaiseVolume,XF86AudioLowerVolume,XF86AudioMute}
 	amixer set Master {5%+,5%-,toggle}
 
-super + m : {p,h,l}
+super + m ; {p,h,l}
 	mpc {toggle,prev,next}
 
 {XF86AudioPlay,XF86AudioStop,XF86AudioPrev,XF86AudioNext}
