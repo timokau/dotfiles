@@ -121,6 +121,7 @@ alias lsl='ls -l *(@)'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias trans='translate -x en de'
+alias pastebin='curl -F "sprunge=<-" http://sprunge.us'
 
 alias -g DN='/dev/null'
 alias -g NE='2> /dev/null'
