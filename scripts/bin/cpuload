@@ -1,3 +1,12 @@
 #! /bin/sh
 # sums up the total CPU load of all running programs
-ps -eo pcpu | awk 'BEGIN {sum=0.0f} {sum +=$1} END {print sum}'
+ps -eo pcpu | awk '
+BEGIN {
+	sum=0.0f
+} 
+{
+	sum +=$1
+}
+END {
+	printf ("%3d%%\n", int(sum+0.5))
+}'
