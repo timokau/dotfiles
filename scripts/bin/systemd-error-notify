@@ -1,0 +1,13 @@
+#! /bin/sh
+# This script notifies the user if there were high priority errors in the last
+# hour. It should be run on a regular basis (for example trough a systemd
+# timer).
+firstline=true
+journalctl -b -p 0..3 -f --lines=1 --no-pager | while read line
+do
+	if ! $firstline ; then
+		notify-send -- "$line"
+	else
+		firstline=false
+	fi
+done
