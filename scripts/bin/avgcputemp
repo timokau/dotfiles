@@ -1,0 +1,14 @@
+#! /bin/bash
+sensors | awk '
+BEGIN {
+	temp = 0
+	cnt = 0
+}
+$1 == "Core" {
+	cnt++
+	temp += $3 
+}
+END {
+	temp /= cnt
+	printf ("%3d°C\n", int(temp+0.5))
+}'
