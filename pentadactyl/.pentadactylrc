@@ -46,6 +46,7 @@ highlight Hint font-size:12;color:white;background-color:red;padding:2px
 " Commands {{{
 command! -nargs=0 mpv :silent :execute "!mpv '" + content.location.href + "' &"
 command! -nargs=0 feh :silent :execute "!feh '" + content.location.href + "' &"
+command! -nargs=0 qute :silent :execute "!qutebrowser '" + content.location.href + "' &"
 
 " Mappings {{{
 nmap <Space> <Leader>
@@ -54,6 +55,7 @@ nmap -builtin j 5j
 nmap -builtin k 5k
 
 nmap -builtin <Leader>m :mpv<CR>d
+nmap -builtin <Leader>q :qute<CR>d
 
 nmap <Leader>c nohlsearch
 
