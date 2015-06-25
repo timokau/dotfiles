@@ -1,0 +1,29 @@
+#!/bin/bash
+
+MAILDIRS=(
+"$HOME/Mail/yahoo/inbox"
+"$HOME/Mail/gmx/inbox"
+)
+
+#count new mail and update summary head
+NEWMAILCOUNT() {
+    #to summary
+    for i in "${MAILDIRS[@]}"
+    do
+		NEW="$(find "$i/new" -type f | wc -l)"
+		(( TOT+=NEW ))
+    done
+
+	echo $TOT
+}
+
+CNT="0"
+
+while true; do
+	NEW="$(NEWMAILCOUNT)"
+	if [[ $NEW -gt $CNT ]]; then
+		notify-send "New mail" "$NEW new mail(s)" --urgency=normal
+	fi
+	CNT=$NEW
+	sleep 1m
+done
