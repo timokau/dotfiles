@@ -6,7 +6,33 @@ setopt completealiases
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-# AUR autocompletion for pacaur is too slow
+
+############################### zgen (plugins)
+ZGEN_DIR="${HOME}/.zsh/zgen"
+if [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
+	echo "Installing zgen"
+	mkdir -p "$ZGEN_DIR"
+	curl -L 'https://raw.githubusercontent.com/tarjoilija/zgen/master/zgen.zsh' > "${ZGEN_DIR}/zgen.zsh"
+fi
+
+source "${ZGEN_DIR}/zgen.zsh"
+if ! zgen saved; then
+    echo "Creating a zgen save"
+
+    zgen load jimmijj/zsh-syntax-highlighting
+
+    # autosuggestions should be loaded last
+    zgen load tarruda/zsh-autosuggestions
+
+    zgen save
+fi
+###############################
+
+# Enable zsh-autosuggestions automatically.
+zle-line-init() {
+    zle autosuggest-start
+}
+zle -N zle-line-init
 
 ############################### Completion
 # allow one error for every three characters typed in approximate completer
@@ -247,8 +273,15 @@ alias pastebin='curl -F "sprunge=<-" http://sprunge.us'
 check_com rsync && alias smv='rsync -avz --remove-source-files -e ssh'
 check_com translate && alias trans='translate -x en de'
 if check_com task ; then
-	alias t='task'
+	zstyle ':completion:*:*:task:*' verbose yes
+	zstyle ':completion:*:*:task:*:descriptions' format '%U%B%d%b%u'
+
+	zstyle ':completion:*:*:task:*' group-name ''
+
+	alias t=task
 	alias in='task add +in'
+	compdef _task t=task
+	compdef _task in=task
 fi
 
 alias -g DN='/dev/null'
