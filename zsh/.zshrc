@@ -107,8 +107,6 @@ export RPS1="%(?..%B(%?%)%b )%1~"
 # aliases {{{1
 #
 alias rm='rm -Iv --one-file-system'
-check_com task && alias t='task'
-alias smv='rsync -avz --remove-source-files -e ssh'
 alias bell='echo -en "\a"'
 alias e="$EDITOR"
 alias detach='bg && disown && exit'
@@ -120,8 +118,13 @@ alias lad='ls -lad .*'
 alias lsl='ls -l *(@)'
 alias ..='cd ..'
 alias ...='cd ../..'
-alias trans='translate -x en de'
 alias pastebin='curl -F "sprunge=<-" http://sprunge.us'
+check_com rsync && alias smv='rsync -avz --remove-source-files -e ssh'
+check_com translate && alias trans='translate -x en de'
+if check_com task ; then
+	alias t='task'
+	alias in='task add +in'
+fi
 
 alias -g DN='/dev/null'
 alias -g NE='2> /dev/null'

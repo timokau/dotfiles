@@ -49,6 +49,11 @@ report.unfinished.filter      = (status:pending or status:waiting)
 report.unfinished.labels      = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Description,Urg
 report.unfinished.sort        = urgency-
 
+report.inbox.columns     = id,description
+report.inbox.description = Inbox
+report.inbox.filter      = status:pending limit:page (+in)
+report.inbox.labels      = ID,Description
+
 
 # Show the due date instead of the due age in the next report
 report.next.columns = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due,until.age,description,urgency
