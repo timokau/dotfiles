@@ -7,10 +7,135 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 # AUR autocompletion for pacaur is too slow
-zstyle ':completion:*:pacaur:*' remote-access false
 
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
+############################### Completion
+# allow one error for every three characters typed in approximate completer
+zstyle ':completion:*:approximate:'    max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )'
+
+# don't complete backup files as executables
+zstyle ':completion:*:complete:-command-::commands' ignored-patterns '(aptitude-*|*\~)'
+
+# start menu completion only if it could find no unambiguous initial string
+zstyle ':completion:*:correct:*'       insert-unambiguous true
+zstyle ':completion:*:corrections'     format $'%{\e[0;31m%}%d (errors: %e)%{\e[0m%}'
+zstyle ':completion:*:correct:*'       original true
+
+# activate color-completion
+zstyle ':completion:*:default'         list-colors ${(s.:.)LS_COLORS}
+
+# format on completion
+zstyle ':completion:*:descriptions'    format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+
+# insert all expansions for expand completer
+zstyle ':completion:*:expand:*'        tag-order all-expansions
+zstyle ':completion:*:history-words'   list false
+
+# activate menu
+zstyle ':completion:*:history-words'   menu yes
+
+# ignore duplicate entries
+zstyle ':completion:*:history-words'   remove-all-dups yes
+zstyle ':completion:*:history-words'   stop yes
+
+# match uppercase from lowercase
+zstyle ':completion:*'                 matcher-list 'm:{a-z}={A-Z}'
+
+# separate matches into groups
+zstyle ':completion:*:matches'         group 'yes'
+zstyle ':completion:*'                 group-name ''
+
+zstyle ':completion:*'                 menu select=5
+
+zstyle ':completion:*:messages'        format '%d'
+zstyle ':completion:*:options'         auto-description '%d'
+
+# describe options in full
+zstyle ':completion:*:options'         description 'yes'
+
+# on processes completion complete all user processes
+zstyle ':completion:*:processes'       command 'ps -au$USER'
+
+# offer indexes before parameters in subscripts
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# provide verbose completion information
+zstyle ':completion:*'                 verbose true
+
+zstyle ':completion:*:-command-:*:'    verbose false
+
+# set format for warnings
+zstyle ':completion:*:warnings'        format $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
+
+# define files to ignore for zcompile
+zstyle ':completion:*:*:zcompile:*'    ignored-patterns '(*~|*.zwc)'
+zstyle ':completion:correct:'          prompt 'correct to: %e'
+
+# Ignore completion functions for commands you don't have:
+zstyle ':completion::(^approximate*):*:functions' ignored-patterns '_*'
+
+# Provide more processes in completion of programs like killall:
+zstyle ':completion:*:processes-names' command 'ps c -u ${USER} -o command | uniq'
+
+# complete manual by their section
+zstyle ':completion:*:manuals'    separate-sections true
+zstyle ':completion:*:manuals.*'  insert-sections   true
+zstyle ':completion:*:man:*'      menu yes select
+
+# Search path for sudo completion
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin \
+                                           /usr/local/bin  \
+                                           /usr/sbin       \
+                                           /usr/bin        \
+                                           /sbin           \
+                                           /bin            \
+                                           /usr/X11R6/bin
+
+# provide .. as a completion
+zstyle ':completion:*' special-dirs ..
+
+# run rehash on completion so new installed program are found automatically:
+_force_rehash() {
+    (( CURRENT == 1 )) && rehash
+    return 1
+}
+
+## correction
+setopt correct
+zstyle -e ':completion:*' completer '
+    if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
+        _last_try="$HISTNO$BUFFER$CURSOR"
+        reply=(_complete _match _ignored _prefix _files)
+    else
+        if [[ $words[1] == (rm|mv) ]] ; then
+            reply=(_complete _files)
+        else
+            reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
+        fi
+    fi'
+
+# command for process lists, the local web server details and host completion
+zstyle ':completion:*:urls' local 'www' '/var/www/' 'public_html'
+
+# caching
+[[ -d $ZSHDIR/cache ]] && zstyle ':completion:*' use-cache yes && \
+                        zstyle ':completion::complete:*' cache-path $ZSHDIR/cache/
+
+# host completion
+[[ -r ~/.ssh/config ]] && _ssh_config_hosts=(${${(s: :)${(ps:\t:)${${(@M)${(f)"$(<$HOME/.ssh/config)"}:#Host *}#Host }}}:#*[*?]*}) || _ssh_config_hosts=()
+[[ -r ~/.ssh/known_hosts ]] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
+[[ -r /etc/hosts ]] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
+hosts=(
+    $(hostname)
+    "$_ssh_config_hosts[@]"
+    "$_ssh_hosts[@]"
+    "$_etc_hosts[@]"
+    localhost
+)
+zstyle ':completion:*:hosts' hosts $hosts
+
+# pacaur remote completion is too slow 
+zstyle ':completion:*:pacaur:*' remote-access false
+###############################
 
 [[ $TERM == xterm-termite ]] && \
 	alias nvim="NVIM_TUI_ENABLE_TRUE_COLOR=1 NVIM_TUI_ENABLE_CURSOR_SHAPE=1 nvim"
