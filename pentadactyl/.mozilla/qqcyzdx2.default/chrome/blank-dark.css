@@ -1,0 +1,4 @@
+/* About:Blank background */
+@-moz-document url(about:blank) {
+    * {background-color: #27282B !important; color: teal !important;}
+}
