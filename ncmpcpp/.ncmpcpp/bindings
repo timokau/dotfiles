@@ -18,6 +18,9 @@ def_key "g"
 def_key "G"
   move_end
 
+def_key "B"
+  jump_to_browser
+
 def_key "x"
   delete_playlist_items
 
