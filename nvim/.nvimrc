@@ -222,6 +222,10 @@ map <Space> <leader>
 nnoremap ö [
 nnoremap ä ]
 
+" make <C-p> and <C-n> behave like up and down (with history filtering)
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
 " make C-u in insert mode undoable
 inoremap <C-U> <C-G>u<C-U>
 
