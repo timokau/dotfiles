@@ -157,6 +157,10 @@ super + d ; r
 super + d ; f
 	firefox
 
+# open my current ebook
+super + d ; e
+	xdg-open "$HOME/Ebooks/current.pdf"
+
 # requires the pass-dmenu script in ~/bin
 super + d ; p
 	pass-dmenu
