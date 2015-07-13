@@ -1,5 +1,6 @@
 #! /bin/sh
 # sums up the total CPU load of all running programs
+cores="$(grep -i processor /proc/cpuinfo | wc -l)"
 ps -eo pcpu | awk '
 BEGIN {
 	sum=0.0f
@@ -8,5 +9,6 @@ BEGIN {
 	sum +=$1
 }
 END {
-	printf ("%3d%%\n", int(sum+0.5))
+	totalper = sum / '"$cores"'
+	printf ("%3d%%\n", int(totalper+0.5))
 }'
