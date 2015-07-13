@@ -1,6 +1,6 @@
 #! /bin/sh
 # sums up the total CPU load of all running programs
-cores="$(grep -i processor /proc/cpuinfo | wc -l)"
+cores="$(grep -c -i processor /proc/cpuinfo)"
 ps -eo pcpu | awk '
 BEGIN {
 	sum=0.0f
