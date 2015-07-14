@@ -33,6 +33,8 @@ zle-line-init() {
     zle autosuggest-start
 }
 zle -N zle-line-init
+bindkey '^T' autosuggest-toggle
+bindkey '^L' autosuggest-execute-suggestion
 
 ############################### Completion
 # allow one error for every three characters typed in approximate completer
