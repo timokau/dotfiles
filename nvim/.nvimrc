@@ -299,10 +299,10 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Move splits
-nnoremap <C-H> <C-w>H
-nnoremap <C-J> <C-w>J
-nnoremap <C-K> <C-w>K
-nnoremap <C-L> <C-w>L
+nnoremap <C-M-h> <C-w>H
+nnoremap <C-M-j> <C-w>J
+nnoremap <C-M-k> <C-w>K
+nnoremap <C-M-l> <C-w>L
 
 
 " Alignment with tab {{{3
