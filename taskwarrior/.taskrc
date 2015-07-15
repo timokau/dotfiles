@@ -43,11 +43,11 @@ report.lstoday.labels =  ID,Active,Total,D,P,Project,Tag,S,Due,Until,Description
 report.lstoday.filter = (status:pending or status:waiting) and (due:today or +OVERDUE)
 report.lstoday.sort = end+,priority-
 
-report.unfinished.columns     = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.age,description,urgency
+report.unfinished.columns     = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due,description,urgency
 report.unfinished.description = Unfinished tasks sorted by urgency
 report.unfinished.filter      = (status:pending or status:waiting)
 report.unfinished.labels      = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Description,Urg
-report.unfinished.sort        = urgency-
+report.unfinished.sort        = due+,urgency-
 
 report.inbox.columns     = id,description
 report.inbox.description = Inbox
