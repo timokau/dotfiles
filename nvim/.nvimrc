@@ -9,7 +9,7 @@ if has('nvim')
 else
 	let g:vimdir = '~/.vim'
 endif
-if empty(glob('~/.vim/autoload/plug.vim'))
+if empty(glob(vimdir.'/autoload/plug.vim'))
 	silent !mkdir -p vimdir.'/autoload'
 	silent !curl -fLo vimdir.'/autoload/plug.vim'
 	    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -97,8 +97,7 @@ function! Timer()
 endfunction
 
 " racer {{{3
-let g:racer_cmd = '/home/timo/.local/share/git/racer/release/racer'
-let $RUST_SRC_PATH='/home/timo/.local/share/git/rust/src/'
+let $RUST_SRC_PATH=$HOME."/.local/share/racer/rust/"
 
 " indent guides {{{3
 let g:indent_guides_enable_on_vim_startup = 1
