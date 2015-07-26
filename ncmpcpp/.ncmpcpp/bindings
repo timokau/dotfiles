@@ -1,5 +1,8 @@
 # for more informaion and default bindings see the example bindings file
 
+def_key "K"
+  show_lyrics
+
 def_key "k"
   scroll_up
 
