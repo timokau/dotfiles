@@ -12,6 +12,7 @@ eval "$(fasd --init auto)"
 alias v='f -e vim'
 alias m'f -e mpv'
 alias o='f -e xdg-open'
+bindkey '^O' fasd-complete
 ############
 
 ############################### zgen (plugins)
