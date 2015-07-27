@@ -9,6 +9,9 @@ SAVEHIST=10000
 
 ############ fasd
 eval "$(fasd --init auto)"
+alias v='f -e vim'
+alias m'f -e mpv'
+alias o='f -e xdg-open'
 ############
 
 ############################### zgen (plugins)
