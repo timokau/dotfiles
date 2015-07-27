@@ -7,6 +7,10 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
+############ fasd
+eval "$(fasd --init auto)"
+############
+
 ############################### zgen (plugins)
 ZGEN_DIR="${HOME}/.zsh/zgen"
 if [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
