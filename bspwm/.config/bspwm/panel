@@ -5,6 +5,11 @@ if [ "$(pgrep -cx panel)" -gt 1 ] ; then
 	exit 1
 fi
 
+PANEL_FIFO=/tmp/panel-fifo
+PANEL_HEIGHT=24
+PANEL_FONT_FAMILY="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-*-1"
+export PANEL_FIFO PANEL_HIGHT PANEL_FONT_FAMILY
+
 # handle interrupts
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
