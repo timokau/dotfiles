@@ -50,6 +50,7 @@ Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
 Plug 'bruno-/vim-man'                                     " View manpages in vim
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
 Plug '907th/vim-auto-save'                                " Autosave files
+Plug 'vimwiki/vimwiki'                                    " Vimwiki
 let g:auto_save = 1
 let g:auto_save_no_updatetime = 1
 let g:auto_save_in_insert_mode = 0
@@ -119,6 +120,9 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_python_checkers = ['flake8']
 
+" Vimwiki {{{3
+let g:vimwiki_list = [{'path': '~/vimwiki/', 
+                     \ 'syntax': 'markdown', 'ext': '.md'}]
 " General {{{1
 " Settings {{{2
 " Misc {{{3
