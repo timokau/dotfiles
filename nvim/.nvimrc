@@ -49,11 +49,11 @@ Plug 'bling/vim-airline'                                  " Better statusbar
 Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
 Plug 'bruno-/vim-man'                                     " View manpages in vim
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
-Plug '907th/vim-auto-save'                                " Autosave files
+"Plug '907th/vim-auto-save'                                " Autosave files
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
-let g:auto_save = 1
-let g:auto_save_no_updatetime = 1
-let g:auto_save_in_insert_mode = 0
+"let g:auto_save = 1
+"let g:auto_save_no_updatetime = 1
+"let g:auto_save_in_insert_mode = 0
 "let g:auto_save_postsave_hook ='Command'
 if exists(':terminal')
 	Plug 'kassio/neoterm', { 'on': 'T' }                  " Execute commands in neovims terminal
@@ -355,23 +355,6 @@ function! CargoTest()
 	execute 'T ' command
 endfun
 
-" Autosave {{{3
-"autocmd BufRead,BufNewFile * call InitializeAutosave()
-"function! InitializeAutosave()
-"	" Save only regular buffers (e.g. no quickfix)
-"	if &buftype == ''
-"		autocmd InsertLeave <buffer> nested call AutoSave()
-"		autocmd TextChanged <buffer> nested call AutoSave()
-"		autocmd CursorHold  <buffer> nested call AutoSave()
-"	endif
-"endfun
-"function! AutoSave()
-"	" Save only if the buffer corresponds to a file
-"	if expand('%') != ''
-"		update
-"	endif
-"endfun
-
 " Use vim help instead of man in vim files when K is pressed {{{3
 autocmd vimrc FileType vim setlocal keywordprg=:help
 
@@ -395,8 +378,32 @@ function! Pandocsettings()
 	iabbrev <buffer> 4# ####<Space>\<Tab>\<Tab>
 endfun
 
-" Source the vimrc file after saving it {{{3
-"autocmd vimrc bufwritepost $MYVIMRC source $MYVIMRC
+" Transparent editing of gpg encrypted files {{{3
+" By Wouter Hanegraaff
+augroup encrypted
+  au!
+  " First make sure nothing is written to ~/.viminfo while editing
+  " an encrypted file.
+  autocmd BufReadPre,FileReadPre *.gpg set viminfo=
+  " We don't want a various options which write unencrypted data to disk
+  autocmd BufReadPre,FileReadPre *.gpg set noswapfile noundofile nobackup
+
+  " Switch to binary mode to read the encrypted file
+  autocmd BufReadPre,FileReadPre *.gpg set bin
+  autocmd BufReadPre,FileReadPre *.gpg let ch_save = &ch|set ch=2
+  autocmd BufReadPost,FileReadPost *.gpg '[,']!gpg --decrypt 2> /dev/null
+
+  " Switch to normal mode for editing
+  autocmd BufReadPost,FileReadPost *.gpg set nobin
+  autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
+  autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
+
+  " Convert all text to encrypted text before writing
+  autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
+  " Undo the encryption so we are back in the normal text, directly
+  " after the file has been written.
+  autocmd BufWritePost,FileWritePost *.gpg u
+augroup END
 
 " Commands {{{2
 " Delete buffer but keep window {{{3
