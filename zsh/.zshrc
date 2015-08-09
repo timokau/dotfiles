@@ -226,6 +226,9 @@ bindkey -M vicmd ' j' history-search-forward
 bindkey '^f' vi-forward-word
 bindkey '^b' vi-backward-word
 
+# no delay after pressing escape (don't use escape as a prefix)
+bindkey -rpM viins '\e'
+
 #
 # utility functions {{{1
 #
