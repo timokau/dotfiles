@@ -204,6 +204,7 @@ setopt no_beep
 setopt hist_verify
 setopt no_clobber
 setopt correct
+setopt rc_quotes
 setopt unset
 
 #
