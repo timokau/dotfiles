@@ -222,6 +222,11 @@ bindkey    "^[3;5~"         delete-char
 # history search
 bindkey -M vicmd ' k' history-search-backward
 bindkey -M vicmd ' j' history-search-forward
+
+# incremental search
+bindkey -M viins '^R' history-incremental-search-backward
+bindkey -M viins '^S' history-incremental-search-forward
+
 # Accept suggestions without leaving insert mode
 bindkey '^f' vi-forward-word
 bindkey '^b' vi-backward-word
