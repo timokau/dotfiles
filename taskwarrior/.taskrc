@@ -19,6 +19,7 @@ taskd.trust=ignore hostname
 # Settings
 dateformat=y-M-D H:N
 search.case.sensitive=no
+urgency.waiting.coefficient=-20
 
 # For the timetracking hook
 max_active_tasks=3
