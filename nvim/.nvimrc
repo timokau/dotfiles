@@ -49,12 +49,8 @@ Plug 'bling/vim-airline'                                  " Better statusbar
 Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
 Plug 'bruno-/vim-man'                                     " View manpages in vim
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
-"Plug '907th/vim-auto-save'                                " Autosave files
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
-"let g:auto_save = 1
-"let g:auto_save_no_updatetime = 1
-"let g:auto_save_in_insert_mode = 0
-"let g:auto_save_postsave_hook ='Command'
+Plug 'tbabej/taskwiki'                                    " Taskwiki
 if exists(':terminal')
 	Plug 'kassio/neoterm', { 'on': 'T' }                  " Execute commands in neovims terminal
 endif
