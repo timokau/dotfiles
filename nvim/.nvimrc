@@ -50,7 +50,6 @@ Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
 Plug 'bruno-/vim-man'                                     " View manpages in vim
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
-Plug 'tbabej/taskwiki'                                    " Taskwiki
 if exists(':terminal')
 	Plug 'kassio/neoterm', { 'on': 'T' }                  " Execute commands in neovims terminal
 endif
