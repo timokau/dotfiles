@@ -239,6 +239,16 @@ bindkey -rpM viins '\e'
 # utility functions {{{1
 #
 
+# display a countdown for $1 seconds
+function countdown(){
+   date1=$((`date +%s` + $1)); 
+   echo -e "Counting down until $(date --date @${date1} +'%F %T')..."
+   while [ "$date1" -ne `date +%s` ]; do 
+     echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+     sleep 0.1
+   done
+}
+
 # this function checks if a command exists and returns either true or false
 check_com() {
     emulate -L zsh
