@@ -239,14 +239,36 @@ bindkey -rpM viins '\e'
 # utility functions {{{1
 #
 
-# display a countdown for $1 seconds
+# display a countdown (usage similar to sleep)
 function countdown(){
-   date1=$((`date +%s` + $1)); 
-   echo -e "Counting down until $(date --date @${date1} +'%F %T')..."
-   while [ "$date1" -ne `date +%s` ]; do 
-     echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
-     sleep 0.1
-   done
+    seconds=0
+    while [[ $# -ge 1 ]]
+    do
+        number=${1:0: -1}
+        suffix=${1: -1}
+        case $suffix in
+            s)
+                seconds=$(( $seconds + $number ))
+                ;;
+            m)
+                seconds=$(( $seconds + $number * 60 ))
+                ;;
+            h)
+                seconds=$(( $seconds + $number * 60 * 60 ))
+                ;;
+            *)
+                number=${number}${suffix}
+                seconds=$(( $seconds + $number ))
+                ;;
+        esac
+        shift
+    done
+    dateAfter=$((`date +%s` + $seconds)); 
+    echo -e "Counting down $seconds seconds until $(date --date @${dateAfter} +'%F %T')..."
+    while [ "$dateAfter" -ne `date +%s` ]; do 
+        echo -ne "$(date -u --date @$(($dateAfter - `date +%s`)) +%H:%M:%S)\r";
+        sleep 0.1
+    done
 }
 
 # this function checks if a command exists and returns either true or false
