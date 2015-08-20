@@ -266,10 +266,12 @@ function countdown(){
     dateAfter=$((`date +%s` + $seconds)); 
     echo -e "Counting down $seconds seconds until $(date --date @${dateAfter} +'%F %T')..."
     while [ "$dateAfter" -ne `date +%s` ]; do 
+        echo -ne "\033[2K" # clear the line
         echo -ne "$(date -u --date @$(($dateAfter - `date +%s`)) +%H:%M:%S)\r";
         sleep 0.1
     done
 }
+alias cntd='countdown'
 
 # this function checks if a command exists and returns either true or false
 check_com() {
@@ -324,6 +326,7 @@ alias lsl='ls -l *(@)'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias pastebin='curl -F "sprunge=<-" http://sprunge.us'
+alias ns='notify-send'
 check_com rsync && alias smv='rsync -avz --remove-source-files -e ssh'
 check_com translate && alias trans='translate -x en de'
 if check_com task ; then
