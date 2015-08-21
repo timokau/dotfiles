@@ -273,8 +273,8 @@ function countdown(){
 }
 alias cntd='countdown'
 cntdn () {
-	countdown "$1"
-	notify-send "${2:-'Time over'}"
+	countdown "$@"
+	notify-send 'Time over'
 }
 
 # this function checks if a command exists and returns either true or false
