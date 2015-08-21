@@ -272,6 +272,10 @@ function countdown(){
     done
 }
 alias cntd='countdown'
+cntdn () {
+	countdown "$1"
+	notify-send "${2:-'Time over'}"
+}
 
 # this function checks if a command exists and returns either true or false
 check_com() {
