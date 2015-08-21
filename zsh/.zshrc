@@ -273,7 +273,7 @@ function countdown(){
 }
 alias cntd='countdown'
 cntdn () {
-	countdown "$@"
+	countdown $@
 	notify-send 'Time over'
 }
 
