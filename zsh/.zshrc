@@ -265,7 +265,7 @@ function countdown(){
     done
     dateAfter=$((`date +%s` + $seconds)); 
     echo -e "Counting down $seconds seconds until $(date --date @${dateAfter} +'%F %T')..."
-    while [ "$dateAfter" -ne `date +%s` ]; do 
+    while [[ "$dateAfter" > `date +%s` ]]; do 
         echo -ne "\033[2K" # clear the line
         echo -ne "$(date -u --date @$(($dateAfter - `date +%s`)) +%H:%M:%S)\r";
         sleep 0.1
