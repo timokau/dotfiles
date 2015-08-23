@@ -233,6 +233,17 @@ nnoremap <silent> <Leader>rs :source $MYVIMRC<CR>
 " Save {{{3
 nnoremap <silent> <Leader>w :write<CR>
 
+" Visual star search
+xnoremap * :<C-u> call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u> call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+
+function! s:VSetSearch()
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+  let @s = temp
+endfunction
+
 " Join words {{{3
 " Move to the space, delete it, ensure the first letter of the formerly second
 " word is lower case
