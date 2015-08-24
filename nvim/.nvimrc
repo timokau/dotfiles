@@ -36,6 +36,9 @@ Plug 'altercation/vim-colors-solarized'                   " Solarized
 Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo '.vimdir.'/spell/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
 Plug 'danro/rename.vim'                                   " Rename the current file
 Plug 'dhruvasagar/vim-table-mode'                         " Table mode
+if executable('ag')
+	Plug 'rking/ag.vim'
+endif
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
 Plug 'farseer90718/vim-taskwarrior', { 'on': 'TW' }       " Taskwarrior
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}      " File explorer
