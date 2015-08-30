@@ -35,7 +35,7 @@ set passkeys+=getpocket.com:jka?<A-1><A-2><A-3><A-5><Enter>
 
 set hintkeys="hsdfgyuiopqwertnmzxcvbHSDFGYUIOPQWERTNMZXCVB"
 " Whatsapp Web
-set hinttags+=div[class=chat],'div[class="chat unread"]'
+set hinttags+=div[class=chat],'div[class="unread chat"]'
 
 " No scrollbars
 set guioptions-=r
