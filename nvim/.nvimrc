@@ -252,6 +252,10 @@ vmap <Leader>P "+P
 nnoremap ö [
 nnoremap ä ]
 
+" close {{{3
+nnoremap <Leader>q :quit<CR>
+nnoremap <Leader>Q :qall<CR>
+
 " make <C-p> and <C-n> behave like up and down (with history filtering)
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
