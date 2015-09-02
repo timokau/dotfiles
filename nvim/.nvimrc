@@ -45,6 +45,7 @@ Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}      " File explorer
 Plug 'tpope/vim-repeat'                                   " Make custom options repeatable
 Plug 'tpope/vim-fugitive'                                 " Git wrapper
 Plug 'tpope/vim-surround'                                 " Surrounding things
+Plug 'tpope/vim-unimpaired'                               " Mappings
 Plug 'clever-f.vim'                                       " Make F and T repeatable
 Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}     " Better autocompletion
 Plug 'scrooloose/syntastic'                               " Syntax checking on save
@@ -71,28 +72,28 @@ augroup TaskwarriorMapping
 augroup END
 
 function! MapTaskwarrior()
-	nmap <buffer> <Space> <Leader>
-	nmap <buffer> l <Plug>(taskwarrior_skip_right)
-	nmap <buffer> h <Plug>(taskwarrior_skip_left)
-	nmap <buffer> t <Plug>(taskwarrior_command)mod<Space>due:tomorrow<CR>
-	nmap <buffer> + <Plug>(taskwarrior_start_task)<Plug>(taskwarrior_refresh)
-	nmap <buffer> <Leader>d <Plug>(taskwarrior_command)done<CR>
-	nmap <buffer> <Leader>a :TW<Space>add<Space>
+nmap <buffer> <Space> <Leader>
+nmap <buffer> l <Plug>(taskwarrior_skip_right)
+nmap <buffer> h <Plug>(taskwarrior_skip_left)
+nmap <buffer> t <Plug>(taskwarrior_command)mod<Space>due:tomorrow<CR>
+nmap <buffer> + <Plug>(taskwarrior_start_task)<Plug>(taskwarrior_refresh)
+nmap <buffer> <Leader>d <Plug>(taskwarrior_command)done<CR>
+nmap <buffer> <Leader>a :TW<Space>add<Space>
 endfunction
 
 function! Vimtodo()
-	set laststatus=0
-	set nolist
-	set cmdheight=1
-	set colorcolumn=0
-	TW lstoday
-	autocmd vimrc CursorHold task* call Timer()
+set laststatus=0
+set nolist
+set cmdheight=1
+set colorcolumn=0
+TW lstoday
+autocmd vimrc CursorHold task* call Timer()
 endfunction
 
 function! Timer()
-  call taskwarrior#list()
-  set updatetime=5000
-  call feedkeys("f\e") " Retrigger the CursorHold event
+call taskwarrior#list()
+set updatetime=5000
+call feedkeys("f\e") " Retrigger the CursorHold event
 endfunction
 
 " racer {{{3
@@ -120,11 +121,11 @@ let g:syntastic_python_checkers = ['flake8']
 
 " Vimwiki {{{3
 let g:vimwiki_list = [{'path': '~/vimwiki/', 
-                     \ 'syntax': 'markdown', 'ext': '.md'}]
+                 \ 'syntax': 'markdown', 'ext': '.md'}]
 
 " ag.vim {{{3
 if executable('ag')
-  let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --nogroup --nocolor --column'
 endif
 
 " General {{{1
@@ -160,48 +161,48 @@ set copyindent                         " Keep spaces used for alignment
 set preserveindent
 " Remember undos {{{3
 if has('persistent_undo')
-	set undofile
-	set undodir=~/tmp/vim/undo//
-	set undolevels=100000
-	set undoreload=100000
+set undofile
+set undodir=~/tmp/vim/undo//
+set undolevels=100000
+set undoreload=100000
 endif
 
 " Prevent Vim from keeping the contents of tmp files on the system {{{3
 " Don't backup files in temp directories or shm
 if exists('&backupskip')
-    set backupskip+=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
+set backupskip+=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
 endif
- 
+
 " Don't keep swap files in temp directories or shm
 if has('autocmd')
-    augroup swapskip
+augroup swapskip
+    autocmd!
+    silent! autocmd BufNewFile,BufReadPre
+        \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
+        \ setlocal noswapfile
+augroup END
+endif
+
+" Don't keep undo files in temp directories or shm
+if has('persistent_undo') && has('autocmd')
+augroup undoskip
+    autocmd!
+    silent! autocmd BufWritePre
+        \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
+        \ setlocal noundofile
+augroup END
+endif
+
+" Don't keep viminfo for files in temp directories or shm
+if has('viminfo')
+if has('autocmd')
+    augroup viminfoskip
         autocmd!
         silent! autocmd BufNewFile,BufReadPre
             \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
-            \ setlocal noswapfile
+            \ setlocal viminfo=
     augroup END
 endif
- 
-" Don't keep undo files in temp directories or shm
-if has('persistent_undo') && has('autocmd')
-    augroup undoskip
-        autocmd!
-        silent! autocmd BufWritePre
-            \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
-            \ setlocal noundofile
-    augroup END
-endif
- 
-" Don't keep viminfo for files in temp directories or shm
-if has('viminfo')
-    if has('autocmd')
-        augroup viminfoskip
-            autocmd!
-            silent! autocmd BufNewFile,BufReadPre
-                \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
-                \ setlocal viminfo=
-        augroup END
-    endif
 endif
 
 " Appearance {{{3
@@ -238,6 +239,14 @@ inoremap <C-U> <C-G>u<C-U>
 
 " Resource vimrc
 nnoremap <silent> <Leader>rs :source $MYVIMRC<CR>
+
+" Map ü and + to [ and ] (like they are positioned on the US-Keyboard) {{{3
+nmap ü [
+nmap + ]
+omap ü [
+omap + ]
+xmap ü [
+xmap + ]
 
 " Save {{{3
 nnoremap <silent> <Leader>w :write<CR>
