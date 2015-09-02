@@ -109,6 +109,9 @@ nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <silent> <leader>r :update<Cr>:T<Space>clear;<Space>cargo<Space>run<Cr>
 let g:neoterm_size = 15
 
+" ctrlp {{{3
+nnoremap <Leader>o :CtrlP<CR>
+
 " table-mode {{{3
 let g:table_mode_corner_corner='+'
 let g:table_mode_header_fillchar='='
@@ -225,6 +228,14 @@ autocmd FileType mail execute 'normal G' | set formatoptions-=t
 " Mappings {{{2
 " Use space as leader {{{3
 map <Space> <leader>
+
+" Quickly use the system keyboard by saving 2 (!) keys
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
 
 " [ ] are hard to reach on a German keyboard
 nnoremap ö [
