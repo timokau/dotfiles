@@ -36,9 +36,6 @@ Plug 'altercation/vim-colors-solarized'                   " Solarized
 Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo '.vimdir.'/spell/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
 Plug 'danro/rename.vim'                                   " Rename the current file
 Plug 'dhruvasagar/vim-table-mode'                         " Table mode
-if executable('ag') || executable('ack')
-	Plug 'mileszs/ack.vim'
-endif
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
 Plug 'farseer90718/vim-taskwarrior', { 'on': 'TW' }       " Taskwarrior
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}      " File explorer
@@ -125,11 +122,6 @@ let g:syntastic_python_checkers = ['flake8']
 " Vimwiki {{{3
 let g:vimwiki_list = [{'path': '~/vimwiki/', 
                  \ 'syntax': 'markdown', 'ext': '.md'}]
-
-" ag.vim {{{3
-if executable('ag')
-let g:ackprg = 'ag --nogroup --nocolor --column'
-endif
 
 " General {{{1
 " Settings {{{2
@@ -224,6 +216,13 @@ let g:netrw_dirhistmax = 0 " Don't save a file history in the .vim folder
 
 " Email-Settings {{{3
 autocmd FileType mail execute 'normal G' | set formatoptions-=t
+
+" Use ack/ag if available
+if executable ('ag')
+	set grepprg=ag\ --nogroup\ --nocolor
+elseif executable ('ack')
+	set grepprg=ack\ --nogroup\ --nocolor
+endif
 
 " Mappings {{{2
 " Use space as leader {{{3
