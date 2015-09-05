@@ -94,7 +94,8 @@ call feedkeys("f\e") " Retrigger the CursorHold event
 endfunction
 
 " racer {{{3
-let $RUST_SRC_PATH=$HOME."/.local/share/racer/rust/"
+let g:racer_cmd = vimdir.'/plugged/racer/target/release/racer'
+let $RUST_SRC_PATH=$HOME."/.local/share/racer/rust/src"
 
 " indent guides {{{3
 let g:indent_guides_enable_on_vim_startup = 1
