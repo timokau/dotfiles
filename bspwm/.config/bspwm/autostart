@@ -1,0 +1,11 @@
+#! /bin/sh
+
+bspc desktop --focus '^1'
+firefox > /dev/null &
+xdotool search --sync --onlyvisible --class 'Firefox'
+sleep 4s
+bspc desktop --focus '^2'
+firefox --new-window 'web.whatsapp.com' &
+telegram &
+sleep 1s
+bspc desktop --focus '^1'

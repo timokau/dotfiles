@@ -20,3 +20,5 @@ if [ "$(pgrep -cx panel)" -ge 1 ] ; then
 fi
 
 "$(dirname "$0")/panel" > ~/logs/panel &
+
+"$(dirname "$0")/autostart" > /dev/null &
