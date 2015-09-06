@@ -38,7 +38,7 @@ Plug 'danro/rename.vim'                                   " Rename the current f
 Plug 'dhruvasagar/vim-table-mode'                         " Table mode
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
 Plug 'farseer90718/vim-taskwarrior', { 'on': 'TW' }       " Taskwarrior
-Plug 'Raimondi/delimitMate'                               " Insert matching dleimeters (e.g. { })
+Plug 'jiangmiao/auto-pairs'                               " Insert matching dleimeters (e.g. { })
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}      " File explorer
 Plug 'tpope/vim-repeat'                                   " Make custom options repeatable
 Plug 'tpope/vim-fugitive'                                 " Git wrapper
