@@ -333,7 +333,8 @@ alias pastebin='curl -F "sprunge=<-" http://sprunge.us'
 alias pastebinc='pastebin | xsel -b'
 alias ns='notify-send'
 check_com rsync && alias smv='rsync -avz --remove-source-files -e ssh'
-check_com translate && alias trans='translate -x en de'
+check_com translate-shell && alias trans='HOME_LANG=de TARGET_LANG=de trans'
+check_com translate-shell && alias transb='HOME_LANG=de TARGET_LANG=de trans -brief'
 if check_com task ; then
 	zstyle ':completion:*:*:task:*' verbose yes
 	zstyle ':completion:*:*:task:*:descriptions' format '%U%B%d%b%u'
