@@ -8,4 +8,7 @@ bspc desktop --focus '^2'
 firefox --new-window 'web.whatsapp.com' &
 telegram &
 sleep 1s
+bspc desktop --focus '^6'
+termite -e 'weechat' &
+sleep 0.5s
 bspc desktop --focus '^1'
