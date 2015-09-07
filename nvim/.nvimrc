@@ -53,7 +53,7 @@ Plug 'bruno-/vim-man'                                     " View manpages in vim
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
 if exists(':terminal')
-	Plug 'kassio/neoterm', { 'on': 'T' }                  " Execute commands in neovims terminal
+	Plug 'kassio/neoterm'                                 " Execute commands in neovims terminal
 endif
 call plug#end()
 
