@@ -600,10 +600,19 @@ whatwhen()  {
 sysupgrade() {
 	BLUE='\033[0;34m'
 	NC='\033[0m'
+	nightly_file="$HOME/.local/share/sysupgrade/lastnightly"
+
 	snapshot_nbr=$(snapper create --type=pre --cleanup-algorithm=number --print-number --description="${cmd}")
 	echo ">>> ${BLUE}New pre snapshot with number ${snapshot_nbr}.${NC}"
 	echo ">>> ${BLUE}Updating packages${NC}"
-	pacaur -Syu
+	if [[ "$(cat "$nightly_file" 2> /dev/null)" != "$(date -I)" ]]; then
+		pacaur -Syu --devel --needed
+		rm "$nightly_file" 2> /dev/null
+		mkdir -p "$(dirname "$nightly_file")"
+		date -I > "$nightly_file"
+	else
+		pacaur -Syu
+	fi
 	echo ">>> ${BLUE}Removing orphans${NC}"
 	pacaur -Rns $(pacaur -Qdtq) 2> /dev/null
 	echo ">>> ${BLUE}Cleaning the package cache${NC}"
