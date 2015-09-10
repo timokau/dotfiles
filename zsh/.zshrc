@@ -277,6 +277,24 @@ cntdn () {
 	notify-send 'Time over'
 }
 
+function timer(){
+	echo -e "Starting timer ($(date))"
+	running=true
+	start="$(date +%s)"
+	trap 'running=false' SIGINT SIGTERM SIGSTOP
+    while $running; do 
+        echo -ne "\033[2K" # clear the line
+        cur_time="$(date -u --date @$((`date +%s` - $start)) +%H:%M:%S)"
+        echo -ne "${cur_time}\r";
+        sleep 0.1
+    	if [ "$running" = false ]; then
+    		running=false
+    		echo
+    		echo -e "Timer ran ${cur_time}\r";
+    	fi
+    done
+}
+
 # this function checks if a command exists and returns either true or false
 check_com() {
     emulate -L zsh
