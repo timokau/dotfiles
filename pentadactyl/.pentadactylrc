@@ -50,6 +50,12 @@ command! -nargs=0 mpv :silent :execute "!mpv '" + content.location.href + "' &"
 command! -nargs=0 feh :silent :execute "!feh '" + content.location.href + "' &"
 command! -nargs=0 qute :silent :execute "!qutebrowser '" + content.location.href + "' &"
 
+" Hint modes {{{
+javascript <<EOS
+hints.addMode("m", "prompt", (elem, loc) => dactyl.execute("!mpv '" + loc + "' &", null, true));
+CommandExMode().enter();
+EOS
+
 " Mappings {{{
 nmap <Space> <Leader>
 nmap -builtin , :
