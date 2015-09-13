@@ -33,7 +33,7 @@ set passkeys+=reddit.com:jkpö+-<C-C><C-Enter><Enter>
 set passkeys+=duckduckgo.com:jk<Enter>
 set passkeys+=getpocket.com:jka?<A-1><A-2><A-3><A-5><Enter>
 
-set hintkeys="hsdfgyuiopqwertnmzxcvbHSDFGYUIOPQWERTNMZXCVB"
+set hintkeys="hsdfgyuiopqwertnmzxcvb"
 " Whatsapp Web
 set hinttags+=div[class=chat],'div[class="unread chat"]'
 
