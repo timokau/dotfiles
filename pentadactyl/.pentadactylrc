@@ -52,7 +52,16 @@ command! -nargs=0 qute :silent :execute "!qutebrowser '" + content.location.href
 
 " Hint modes {{{
 javascript <<EOS
-hints.addMode("m", "prompt", (elem, loc) => dactyl.execute("!mpv '" + loc + "' &", null, true));
+hints.addMode("m", "Open in mpv", (elem, loc) => dactyl.execute("!mpv '" + loc + "' &", null, true));
+
+
+hints.addMode("w", "Save to wallabag", function(elem,loc) {
+    wallabag_server="https://www.framabag.org"
+    wallabag_user="eisfreak7"
+
+    url=wallabag_server + "/u/" + wallabag_user + "/?action=add&autoclose=true&url=" + btoa(loc)
+    dactyl.open(url, dactyl.NEW_TAB)
+});
 EOS
 
 " Mappings {{{
