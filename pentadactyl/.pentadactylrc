@@ -46,38 +46,44 @@ set guioptions-=b
 colorscheme solarized-dark
 highlight Hint font-size:12;color:white;background-color:red;padding:2px
 
+" Javascript helper functions {{{
+javascript <<EOS
+function httpGetAsync(url, callback)
+{
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function() {
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+			callback(xmlHttp.responseText);
+	}
+	xmlHttp.open("GET", url, true);
+	xmlHttp.send(null);
+}
+
+function saveToWallabag(url) {
+wallabag_server="https://www.framabag.org/u/eisfreak7"
+
+wallabag_url=wallabag_server + "/?action=add&url=" + btoa(url)
+httpGetAsync(wallabag_url, function(text){
+		success=text.search("the link has been added successfully") != -1
+		if (success)
+			dactyl.execute("echo 'Link saved'")
+		else
+			dactyl.execute("echoerr 'Link couldn\\'t be saved.'")
+	})
+}
+EOS
+
 " Commands {{{
 command! -nargs=0 mpv :silent :execute "!mpv '" + content.location.href + "' &"
 command! -nargs=0 feh :silent :execute "!feh '" + content.location.href + "' &"
 command! -nargs=0 qute :silent :execute "!qutebrowser '" + content.location.href + "' &"
+command! -nargs=0 wbag :javascript saveToWallabag(content.location.href)
 
 " Hint modes {{{
 javascript <<EOS
 hints.addMode("m", "Open in mpv", (elem, loc) => dactyl.execute("!mpv '" + loc + "' &", null, true));
 
-hints.addMode("w", "Save to wallabag", function(elem,loc) {
-    wallabag_server="https://www.framabag.org/u/eisfreak7"
-
-    url=wallabag_server + "/?action=add&url=" + btoa(loc)
-    httpGetAsync(url, function(text){
-    		success=text.search("the link has been added successfully") != -1
-    		if (success)
-    			dactyl.execute("echo 'Link saved'")
-    		else
-    			dactyl.execute("echoerr 'Link couldn\\'t be saved.'")
-    	})
-});
-
-function httpGetAsync(url, callback)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", url, true); // true for asynchronous 
-    xmlHttp.send(null);
-}
+hints.addMode("w", "Save to wallabag", (elem, loc) => saveToWallabag(loc));
 EOS
 
 " Mappings {{{
@@ -88,11 +94,12 @@ nmap -builtin k 5k
 
 nmap -builtin <Leader>m :mpv<CR>d
 nmap -builtin <Leader>q :qute<CR>d
+nmap -builtin <Leader>w :wbag<CR>d
 
 nmap <Leader>c nohlsearch
 
 " Open a new tab in the background
-map T :tabopen! 
+map T :tabopen!<Space>
 
 " Move tab
 nmap -builtin <C-S-h> :tabmove -1<CR>
@@ -165,7 +172,7 @@ command! PlugInstall -nargs=0 -description "Install my addons" -javascript <<EOF
 
 	// GNotifier
 	dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/file/309172/gnotifier-1.8.9-sm+tb+fx-linux.xpi?src=dp-btn-primary")
-	
+
 	// uBlock Origin
 	dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/file/312228/ublock_origin-0.9.5.0-an+sm+fx.xpi?src=dp-btn-primary")
 EOF
