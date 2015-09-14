@@ -66,9 +66,9 @@ wallabag_url=wallabag_server + "/?action=add&url=" + btoa(url)
 httpGetAsync(wallabag_url, function(text){
 		success=text.search("the link has been added successfully") != -1
 		if (success)
-			dactyl.execute("echo 'Link saved'")
+			dactyl.echomsg("Link saved", 0, 0)
 		else
-			dactyl.execute("echoerr 'Link couldn\\'t be saved.'")
+			dactyl.echoerr("Link couldn't be saved.", 0)
 	})
 }
 EOS
@@ -81,7 +81,7 @@ command! -nargs=0 wbag :javascript saveToWallabag(content.location.href)
 
 " Hint modes {{{
 javascript <<EOS
-hints.addMode("m", "Open in mpv", (elem, loc) => dactyl.execute("!mpv '" + loc + "' &", null, true));
+hints.addMode("m", "Open in mpv", (elem, loc) => dactyl.execute("silent !mpv '" + loc + "' &", null, true));
 
 hints.addMode("w", "Save to wallabag", (elem, loc) => saveToWallabag(loc));
 EOS
