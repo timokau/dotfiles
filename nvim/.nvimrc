@@ -1,7 +1,7 @@
 " vim: nowrap foldmethod=marker foldlevel=2
 
 " Plugins {{{1
-"
+
 " Vim-Plug Boilderplate {{{3
 " Automatically install vim-plug if it isn't installed
 if has('nvim')
@@ -170,10 +170,11 @@ set copyindent                         " Keep spaces used for alignment
 set preserveindent
 " Remember undos {{{3
 if has('persistent_undo')
-set undofile
-set undodir=~/tmp/vim/undo//
-set undolevels=100000
-set undoreload=100000
+"silent call system('mkdir -p $HOME/tmp/vim/undo')
+"set undodir=$HOME/tmp/vim/undo
+"set undolevels=100000
+"set undoreload=100000
+"set undofile
 endif
 
 " Prevent Vim from keeping the contents of tmp files on the system {{{3
