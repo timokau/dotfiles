@@ -24,7 +24,7 @@ Plug 'vim-pandoc/vim-pandoc-syntax'                       " Pandoc syntax
 Plug 'dogrover/vim-pentadactyl', { 'for': 'pentadactyl' } " Pentadactyl
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
 if executable('cargo')
-	Plug 'phildawes/racer', {'do': 'cargo build --release'}   " Rust Auto-Complete-er
+	Plug 'racer-rust/vim-racer'                           " Rust Auto-Complete-er
 endif
 Plug 'klen/python-mode', { 'for': 'python' }              " Advanced python features
 " Colorschemes {{{3
@@ -95,8 +95,8 @@ call feedkeys("f\e") " Retrigger the CursorHold event
 endfunction
 
 " racer {{{3
-let g:racer_cmd = vimdir.'/plugged/racer/target/release/racer'
 let $RUST_SRC_PATH=$HOME."/.local/share/racer/rust/src"
+let g:racer_cmd = '/usr/bin/racer'
 
 " indent guides {{{3
 let g:indent_guides_enable_on_vim_startup = 1
