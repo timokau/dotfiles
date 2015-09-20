@@ -243,7 +243,7 @@ endif
 " Use space as leader {{{3
 map <Space> <leader>
 
-" Quickly use the system keyboard by saving 2 (!) keys
+" Quickly use the system keyboard by saving 2 (!) keys {{{3
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 nmap <Leader>p "+p
@@ -251,9 +251,12 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
-" [ ] are hard to reach on a German keyboard
+" [ ] are hard to reach on a German keyboard {{{3
 nnoremap ö [
 nnoremap ä ]
+
+" search for TODO comments {{{3
+nnoremap <Leader>t :silent grep TODO<CR>
 
 " close {{{3
 nnoremap <Leader>q :quit<CR>
