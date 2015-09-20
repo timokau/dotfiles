@@ -158,8 +158,8 @@ set tabstop=4
 set shiftwidth=0                       " Shiftwidth equals tabstop
 set wrap
 set linebreak
-set textwidth=80
-set colorcolumn=80
+set textwidth=99
+set colorcolumn=+0
 set showmatch
 set ignorecase
 set smartcase
@@ -170,11 +170,11 @@ set copyindent                         " Keep spaces used for alignment
 set preserveindent
 " Remember undos {{{3
 if has('persistent_undo')
-"silent call system('mkdir -p $HOME/tmp/vim/undo')
-"set undodir=$HOME/tmp/vim/undo
-"set undolevels=100000
-"set undoreload=100000
-"set undofile
+	silent call system('mkdir -p $HOME/tmp/vim/undo')
+	set undodir=$HOME/tmp/vim/undo
+	set undolevels=100000
+	set undoreload=100000
+	set undofile
 endif
 
 " Prevent Vim from keeping the contents of tmp files on the system {{{3
