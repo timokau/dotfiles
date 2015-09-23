@@ -45,6 +45,7 @@ Plug 'tpope/vim-repeat'                                   " Make custom options 
 Plug 'tpope/vim-fugitive'                                 " Git wrapper
 Plug 'tpope/vim-surround'                                 " Surrounding things
 Plug 'tpope/vim-unimpaired'                               " Mappings
+Plug 'tpope/vim-commentary'                               " Comment stuff out
 Plug 'clever-f.vim'                                       " Make F and T repeatable
 Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}     " Better autocompletion
 Plug 'scrooloose/syntastic'                               " Syntax checking on save
