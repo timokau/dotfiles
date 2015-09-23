@@ -126,7 +126,8 @@ imap -builtin <C-S-a> <C-Home><C-S-End>
 
 " Autocmds {{{
 autocmd!
-"autocmd PageLoad youtube.com :execute "!mpv '<url>' &" | tabclose '<tab>'
+" No, I really don't want the newtab page (even if I close the last tab)
+autocmd LocationChange about:newtab :open about:blank
 
 " Browser Settings {{{
 " General
