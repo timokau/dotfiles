@@ -1,0 +1,23 @@
+#! /bin/bash
+# Customize the (German) keyboard with xmodmap and xcape
+
+setxkbmap de
+
+# Use the CapsLock key as escape when pressed alone and ctrl when pressed with some other key
+xmodmap -e 'remove Lock = Caps_Lock'
+xmodmap -e 'remove Control = Control_L'
+xmodmap -e 'keysym Control_L = 0'
+xmodmap -e 'keysym Caps_Lock = Control_L'
+xmodmap -e 'add Control = Control_L'
+xcape -e 'Control_L=Escape'
+
+
+# Use the 'ö' key (right of l on the German keyboard) as an extra modifier when pressed with some
+# other key
+to_remap='odiaeresis'
+target_modifier='Hyper_L'
+xmodmap -e "keysym $to_remap = $target_modifier"
+# xmodmap -e "remove mod4 = Hyper_L"
+xmodmap -e "add Control = $target_modifier"
+xmodmap -e "keycode 255 = $to_remap"
+xcape -e "Hyper_L=$to_remap"
