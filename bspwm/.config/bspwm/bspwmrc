@@ -22,4 +22,4 @@ fi
 "$(dirname "$0")/panel" > ~/logs/panel &
 
 # Autostart only if no window is active yet
-[[ -z xtitle ]] && "$(dirname "$0")/autostart" > /dev/null &
+[[ -z "$(xtitle)" ]] && "$(dirname "$0")/autostart" > /dev/null &
