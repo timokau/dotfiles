@@ -24,3 +24,5 @@ rm "$HOME/Documents/pkglist.txt" > /dev/null
 
 snapshot_nbr=$(snapper create --type=post --cleanup-algorithm=number --print-number --pre-number="$snapshot_nbr")
 echo ">>> ${BLUE}New post snapshot with number ${snapshot_nbr}.${NC}"
+
+[ -e "/tmp/panel-fifo" ] &&	echo "A0" > "/tmp/panel-fifo"
