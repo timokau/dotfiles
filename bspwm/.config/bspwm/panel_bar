@@ -10,11 +10,29 @@ while read -r line ; do
 	case $line in
 		S*)
 			# date output
-			sys_infos="%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG} ${line#?} %{B-}%{F-}"
+			date="%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG} ${line#?} %{B-}%{F-}"
 			;;
 		T*)
 			# xtitle output
 			title="%{F$COLOR_TITLE_FG}%{B$COLOR_TITLE_BG} ${line#?} %{B-}%{F-}"
+			;;
+		D*)
+			# due tasks
+			due_nr=${line#?}
+			if (( "$due_nr" == 0 )); then
+				due=""
+			else
+				due="%{F$COLOR_DUE_FG}%{B$COLOR_DUE_BG} ${due_nr} tasks %{B-}%{F-}"
+			fi
+			;;
+		A*)
+			# updates
+			updates_nr=${line#?}
+			if (( "$updates_nr" == 0 )); then
+				updates=""
+			else
+				updates="%{F$COLOR_UPDATES_FG}%{B$COLOR_UPDATES_BG} ${updates_nr} updates %{B-}%{F-}"
+			fi
 			;;
 		W*)
 			# bspwm internal state
@@ -77,5 +95,5 @@ while read -r line ; do
 			done
 			;;
 	esac
-	printf "%s\n" "%{l}${wm_infos}%{S1}%{c}${title}%{r}${updates}${sys_infos}"
+	printf "%s\n" "%{l}${wm_infos}%{S1}%{c}${title}%{r}${due}${updates}${date}"
 done
