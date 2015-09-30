@@ -297,9 +297,9 @@ check_com() {
 # enviroment variables {{{1
 #
 check_com firefox && export BROWSER=firefox
-if check_com nvim
+if check_com nvim; then
 	export EDITOR=nvim
-else if check_com vim
+elif check_com vim; then
 	export EDITOR=vim
 fi
 check_com less && export PAGER=less
