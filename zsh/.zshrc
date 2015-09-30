@@ -168,12 +168,6 @@ zstyle ':completion:*:pacaur:*' remote-access false
 [[ $TERM == xterm-termite ]] && \
 	alias nvim="NVIM_TUI_ENABLE_TRUE_COLOR=1 NVIM_TUI_ENABLE_CURSOR_SHAPE=1 nvim"
 
-#
-# enviroment variables {{{1
-#
-export BROWSER=firefox
-export EDITOR=nvim
-export PAGER=less
 
 #
 # options {{{1
@@ -298,6 +292,17 @@ check_com() {
     fi
     return 1
 }
+
+#
+# enviroment variables {{{1
+#
+check_com firefox && export BROWSER=firefox
+if check_com nvim
+	export EDITOR=nvim
+else if check_com vim
+	export EDITOR=vim
+fi
+check_com less && export PAGER=less
 
 # 
 # colors {{{1
