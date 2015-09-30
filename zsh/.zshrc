@@ -7,14 +7,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-############ fasd
-eval "$(fasd --init auto)"
-alias v='f -e vim'
-alias m'f -e mpv'
-alias o='f -e xdg-open'
-bindkey '^O' fasd-complete
-############
-
 ############################### zgen (plugins)
 ZGEN_DIR="${HOME}/.zsh/zgen"
 if [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
@@ -364,6 +356,18 @@ if check_com task ; then
 	compdef _task t=task
 	compdef _task in=task
 fi
+
+############ fasd
+if check_com fasd ; then
+	eval "$(fasd --init auto)"
+	alias v='f -e vim'
+	alias m'f -e mpv'
+	alias o='f -e xdg-open'
+	bindkey '^O' fasd-complete
+fi
+
+############
+
 
 alias -g DN='/dev/null'
 alias -g NE='2> /dev/null'
