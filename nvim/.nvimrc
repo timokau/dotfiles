@@ -470,7 +470,7 @@ function! PanPreview()
 	let tmpfile=system('mktemp --suffix=.pdf')
 	let tmpfile=strpart(tmpfile, 0, len(tmpfile) - 1) " Strip trailing <CR>
 
-	let pandoccmd='pandoc --template=informatik --to=latex ' . shellescape(expand('%:p'), 1) . ' --output ' . shellescape(tmpfile, 1)
+	let pandoccmd='pandoc --template=nicolin --to=latex ' . shellescape(expand('%:p'), 1) . ' --output ' . shellescape(tmpfile, 1)
 	let readercmd='xdg-open ' . shellescape(tmpfile, 1) . ' &'
 	execute 'silent !' . pandoccmd . ' && ' .readercmd
 
