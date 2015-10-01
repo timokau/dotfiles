@@ -4,6 +4,7 @@
 % Double space
 %\usepackage{setspace}
 %\doublespacing
+\usepackage{dsfont}
 
 % Custom header und footer
 \usepackage{fancyhdr}
