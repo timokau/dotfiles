@@ -152,6 +152,9 @@ super + m ; {p,h,l}
 super + Return
 	termite
 
+super + a
+	termite
+
 # Since termite doesn't support displaying images inranger, use urxvt
 # borders are needed to avoid Artifacts in images
 super + d ; r
