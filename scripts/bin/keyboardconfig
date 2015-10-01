@@ -11,13 +11,15 @@ xmodmap -e 'keysym Caps_Lock = Control_L'
 xmodmap -e 'add Control = Control_L'
 xcape -e 'Control_L=Escape'
 
+# Use rctrl as a play/pause media key (for usage when my handy aren't on the homerow)
+# since it is nearly unreachable when my hands are on the homerow anyway
+xmodmap -e 'remove Control = Control_R'
+xmodmap -e 'keysym Control_R = XF86AudioPlay'
 
 # Use the 'ö' key (right of l on the German keyboard) as an extra modifier when pressed with some
 # other key
 to_remap='odiaeresis'
 target_modifier='Hyper_L'
 xmodmap -e "keysym $to_remap = $target_modifier"
-# xmodmap -e "remove mod4 = Hyper_L"
-xmodmap -e "add Control = $target_modifier"
 xmodmap -e "keycode 255 = $to_remap"
 xcape -e "Hyper_L=$to_remap"
