@@ -219,6 +219,7 @@ endif
 endif
 
 " Appearance {{{3
+set encoding=utf-8
 set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
 color gruvbox
