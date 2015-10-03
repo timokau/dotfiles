@@ -1,6 +1,8 @@
 #! /bin/bash
 # Customize the (German) keyboard with xmodmap and xcape
 
+# Reset
+pkill xcape
 setxkbmap de
 
 # Use the CapsLock key as escape when pressed alone and ctrl when pressed with some other key
