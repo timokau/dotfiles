@@ -9,23 +9,37 @@ SAVEHIST=10000
 
 ############################### zgen (plugins)
 ZGEN_DIR="${HOME}/.zsh/zgen"
-if [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
-	echo "Installing zgen"
+if [ ! -f "{$ZGEN_DIR}/disabled" ] && [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
 	mkdir -p "$ZGEN_DIR"
-	curl -L 'https://raw.githubusercontent.com/tarjoilija/zgen/master/zgen.zsh' > "${ZGEN_DIR}/zgen.zsh"
+	echo "zgen plugin manager is not installed. Do you want to install it?"
+	read YnAnswer
+	case "$YnAnswer" in
+		y*) curl -L 'https://raw.githubusercontent.com/tarjoilija/zgen/master/zgen.zsh' > "${ZGEN_DIR}/zgen.zsh"
+			;;
+		*)  touch "${ZGEN_DIR}/disabled"
+			;;
+	esac
 fi
 
-source "${ZGEN_DIR}/zgen.zsh"
-if ! zgen saved; then
-    echo "Creating a zgen save"
-
-    zgen load jimmijj/zsh-syntax-highlighting
-
-    # autosuggestions should be loaded last
-    zgen load tarruda/zsh-autosuggestions
-
-    zgen save
+if [ -f "${ZGEN_DIR}/disabled" ]; then
+	plugins=false
+else
+	plugins=true
 fi
+
+if $plugins; then
+	source "${ZGEN_DIR}/zgen.zsh"
+	if ! zgen saved; then
+    	echo "Creating a zgen save"
+
+    	zgen load jimmijj/zsh-syntax-highlighting
+
+    	# autosuggestions should be loaded last
+    	zgen load tarruda/zsh-autosuggestions
+
+    	zgen save
+	fi
+fi;
 ###############################
 
 # Enable zsh-autosuggestions automatically.
