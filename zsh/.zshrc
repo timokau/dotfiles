@@ -9,16 +9,18 @@ SAVEHIST=10000
 
 ############################### zgen (plugins)
 ZGEN_DIR="${HOME}/.zsh/zgen"
-if [ ! -f "{$ZGEN_DIR}/disabled" ] && [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
-	mkdir -p "$ZGEN_DIR"
-	echo "zgen plugin manager is not installed. Do you want to install it?"
-	read YnAnswer
-	case "$YnAnswer" in
-		y*) curl -L 'https://raw.githubusercontent.com/tarjoilija/zgen/master/zgen.zsh' > "${ZGEN_DIR}/zgen.zsh"
-			;;
-		*)  touch "${ZGEN_DIR}/disabled"
-			;;
-	esac
+if [ ! -f "${ZGEN_DIR}/disabled" ]; then
+	if [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
+		mkdir -p "$ZGEN_DIR"
+		echo "zgen plugin manager is not installed. Do you want to install it?"
+		read YnAnswer
+		case "$YnAnswer" in
+			y*) curl -L 'https://raw.githubusercontent.com/tarjoilija/zgen/master/zgen.zsh' > "${ZGEN_DIR}/zgen.zsh"
+				;;
+			*)  touch "${ZGEN_DIR}/disabled"
+				;;
+		esac
+	fi
 fi
 
 if [ -f "${ZGEN_DIR}/disabled" ]; then
