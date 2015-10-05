@@ -255,8 +255,8 @@ let cur_colorscheme = ''
 redir => cur_colorscheme
 silent colorscheme
 redir END
-if split(cur_colorscheme, "\n")[0] != 'gruvbox'
-	colorscheme base16-default
+if split(cur_colorscheme, "\n")[0] != 'gruvbox' || &t_Co < 88
+	silent! colorscheme darkblue
 endif
 syntax enable
 " Better highlighting for concealed text
