@@ -250,10 +250,10 @@ set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
 set background=dark
 " Colorscheme (if available)
-silent color gruvbox
+silent! color gruvbox
 let cur_colorscheme = ''
 redir => cur_colorscheme
-silent! colorscheme
+silent colorscheme
 redir END
 if split(cur_colorscheme, "\n")[0] != 'gruvbox'
 	colorscheme base16-default
