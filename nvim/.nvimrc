@@ -222,8 +222,12 @@ endif
 set encoding=utf-8
 set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
-color gruvbox
 set background=dark
+if match(&runtimepath, 'gruvbox') != -1
+	color gruvbox
+else
+	echo "The colorscheme is not installed. Run :PlugInstall to install it."
+endif
 syntax enable
 " Better highlighting for concealed text
 hi Conceal guibg=white guifg=black
