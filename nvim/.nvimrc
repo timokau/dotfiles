@@ -218,15 +218,45 @@ if has('autocmd')
 endif
 endif
 
+" Helper functions {{{3
+" Check if script is loaded
+function! IsLoaded(pattern)
+	let scriptnames_output = ''
+	redir => scriptnames_output
+	silent scriptnames
+	redir END
+
+	for line in split(scriptnames_output, "\n")
+		" Only do non-blank lines.
+		if line =~ '\S'
+			" Get the first number in the line.
+			let nr = matchstr(line, '\d\+')
+			" Get the file name, remove the script number " 123: ".
+			let name = substitute(line, '.\+:\s*', '', '')
+			" Check against the pattern
+			echo name
+			if name =~ a:pattern
+				return 1
+			endif
+		endif
+	endfor
+    unlet scriptnames_output
+    return 0
+endfun
+
 " Appearance {{{3
 set encoding=utf-8
 set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
 set background=dark
-if match(&runtimepath, 'gruvbox') != -1
-	color gruvbox
-else
-	echo "The colorscheme is not installed. Run :PlugInstall to install it."
+" Colorscheme (if available)
+silent color gruvbox
+let cur_colorscheme = ''
+redir => cur_colorscheme
+silent colorscheme
+redir END
+if split(cur_colorscheme, "\n")[0] != 'gruvbox'
+	colorscheme base16-default
 endif
 syntax enable
 " Better highlighting for concealed text
