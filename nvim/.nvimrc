@@ -432,10 +432,6 @@ augroup vimrc
   autocmd!
 augroup END
 
-
-" Use cargo for rust files {{{3
-autocmd BufRead,BufNewFile *.rs compiler cargo
-
 " Run tests on every write for rust source files
 autocmd BufWritePost *.rs call CargoTest()
 
