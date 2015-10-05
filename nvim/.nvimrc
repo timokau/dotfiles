@@ -253,7 +253,7 @@ set background=dark
 silent color gruvbox
 let cur_colorscheme = ''
 redir => cur_colorscheme
-silent colorscheme
+silent! colorscheme
 redir END
 if split(cur_colorscheme, "\n")[0] != 'gruvbox'
 	colorscheme base16-default
