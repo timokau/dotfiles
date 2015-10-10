@@ -147,6 +147,7 @@ if &compatible | set nocompatible | endif
 set history=5000
 set number
 set relativenumber
+set cursorline
 set ruler
 set cmdheight=2
 set splitright
