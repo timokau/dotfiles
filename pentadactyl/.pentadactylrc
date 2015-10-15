@@ -154,6 +154,8 @@ set! privacy.donottrackheader.enabled=true
 
 " Noscript
 set! noscript.untrusted="google-analytics.com http://google-analytics.com https://google-analytics.com"
+set! noscript.keys.tempAllowPage="ctrl shift n"
+
 " Pocket
 set! extensions.isreaditlater.autoCloseTab=true
 
