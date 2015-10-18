@@ -14,8 +14,14 @@ super + w
 super + t
 	bspc desktop --layout next
 
-super + b
+super + shift +  b
 	bspc desktop --balance
+
+super + b : {plus,minus}
+	xbacklight -{inc,dec} 5
+
+super + b : {e,d}
+	xbacklight -set {80, 0}
 
 super + {s,f}
 	bspc window --toggle {floating,fullscreen}
