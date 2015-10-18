@@ -171,6 +171,9 @@ super + d ; e
 super + d ; p
 	pass-dmenu
 
+super + @i
+	scrot -u -e 'mv $f ~/Pictures/'
+
 # needs dmenu2 (for better configuration) and j4-dmenu-desktop-git from the AUR
 super + space
 	j4-dmenu-desktop --dmenu='dmenu -q -i -h 25 -p Run'
