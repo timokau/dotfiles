@@ -304,10 +304,7 @@ function cpy(){
 		echo "Usage: cpy SOURCE... DESTINATION"
 		return 1
 	fi
-	last_src=$(( $# - 1 ))
-	src="${@:1:$last_src}"
-	dest="${@:$#}"
-	rsync --archive --human-readable --info=progress2,stats2,flist1 "$src" "$dest"
+	rsync --archive --human-readable --info=progress2,stats2,flist1 $*
 	notify-send --urgency=low --app-name=cpy "Copying of $src to $dest finished."
 }
 
