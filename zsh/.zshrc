@@ -305,7 +305,7 @@ function cpy(){
 		return 1
 	fi
 	rsync --archive --human-readable --info=progress2,stats2,flist1 $*
-	notify-send --urgency=low --app-name=cpy "Copying of $src to $dest finished."
+	notify-send --urgency=low --app-name=cpy "Copying finished. The argumetns were:\n$@"
 }
 
 # this function checks if a command exists and returns either true or false
