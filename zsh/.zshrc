@@ -297,6 +297,20 @@ function timer(){
     done
 }
 
+# use rsync to copy
+function cpy(){
+	if [[ $# -lt 2 ]]; then
+		echo "You have to specify at least one source and the destination."
+		echo "Usage: cpy SOURCE... DESTINATION"
+		return 1
+	fi
+	last_src=$(( $# - 1 ))
+	src="${@:1:$last_src}"
+	dest="${@:$#}"
+	rsync --archive --human-readable --info=progress2,stats2,flist1 "$src" "$dest"
+	notify-send --urgency=low --app-name=cpy "Copying of $src to $dest finished."
+}
+
 # this function checks if a command exists and returns either true or false
 check_com() {
     emulate -L zsh
