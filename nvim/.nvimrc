@@ -21,6 +21,7 @@ endif
 call plug#begin(vimdir.'/plugged')
 Plug 'vim-pandoc/vim-pandoc'                              " Pandoc
 Plug 'vim-pandoc/vim-pandoc-syntax'                       " Pandoc syntax
+Plug 'LaTeX-Box-Team/LaTeX-Box'                           " Latex support
 Plug 'dogrover/vim-pentadactyl', { 'for': 'pentadactyl' } " Pentadactyl
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
 if executable('cargo')
