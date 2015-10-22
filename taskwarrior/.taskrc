@@ -21,6 +21,7 @@ dateformat=y-M-D H:N
 search.case.sensitive=no
 urgency.waiting.coefficient=-20
 urgency.inherhit
+verbose=new-id,affected,project,filter,ercur,unwait
 
 # For the timetracking hook
 max_active_tasks=3
