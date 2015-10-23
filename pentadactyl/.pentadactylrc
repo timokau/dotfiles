@@ -105,8 +105,19 @@ map T :tabopen!<Space>
 nmap -builtin <C-S-h> :tabmove -1<CR>
 nmap -builtin <C-S-l> :tabmove +1<CR>
 
+" Normally copy and paste
+nnoremap <C-v> <C-v><C-v>
+inoremap <C-v> <C-v><C-v>
+cnoremap <C-v> <C-v><C-v>
+vnoremap <C-v> <C-v><C-v>
+nnoremap <C-c> <C-v><C-c>
+inoremap <C-c> <C-v><C-c>
+cnoremap <C-c> <C-v><C-c>
+vnoremap <C-c> <C-v><C-c>
+
 " Re-Source
 nmap -builtin <Leader>rs :source ~/.pentadactylrc<CR>:echo "Settings reloaded"<CR>
+inoremap <C-v> <C-v><C-v>
 
 " Tab detach
 nmap -builtin <Leader>td :tabdetach<CR>
