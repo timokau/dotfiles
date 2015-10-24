@@ -162,6 +162,7 @@ set! privacy.clearOnShutdown.passwords=true
 set! privacy.clearOnShutdown.sessions=true
 set! privacy.clearOnShutdown.siteSettings=true
 set! privacy.donottrackheader.enabled=true
+set! signon.rememberSignons=false
 
 " Noscript
 set! noscript.untrusted="google-analytics.com http://google-analytics.com https://google-analytics.com"
