@@ -1,6 +1,4 @@
 [global]
-    font = Monospace 8
-    
     # Allow a small subset of html markup:
     # <http://developer.gnome.org/pango/stable/PangoMarkupFormat.html>.
     # If markup is not allowed, those tags will be stripped out of the
