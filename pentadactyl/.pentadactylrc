@@ -48,6 +48,18 @@ highlight Hint font-size:12;color:white;background-color:red;padding:2px
 
 " Javascript helper functions {{{
 javascript <<EOS
+function new_tab(url) {
+	// Open a new tab or overwrite the current one if it is blank
+	if (content.location.href === "about:blank")
+	{
+		dactyl.open(url, dactyl.CURRENT_TAB)
+	}
+	else
+	{
+		dactyl.open(url, dactyl.NEW_TAB)
+	}
+}
+
 function httpGetAsync(url, callback)
 {
 	var xmlHttp = new XMLHttpRequest();
@@ -60,15 +72,18 @@ function httpGetAsync(url, callback)
 }
 
 function saveToWallabag(url) {
-wallabag_server="https://www.framabag.org/u/eisfreak7"
+	wallabag_server="https://www.framabag.org/u/eisfreak7"
 
-wallabag_url=wallabag_server + "/?action=add&url=" + btoa(url)
-httpGetAsync(wallabag_url, function(text){
+	wallabag_url=wallabag_server + "/?action=add&url=" + btoa(url)
+	httpGetAsync(wallabag_url, function(text){
 		success=text.search("the link has been added successfully") != -1
 		if (success)
 			dactyl.echomsg("Link saved", 0, 0)
 		else
+		{
 			dactyl.echoerr("Link couldn't be saved.", 0)
+			new_tab(wallabag_url)
+		}
 	})
 }
 EOS
@@ -117,7 +132,6 @@ vmap -builtin <C-c> <C-v><C-c>
 
 " Re-Source
 nmap -builtin <Leader>rs :source ~/.pentadactylrc<CR>:echo "Settings reloaded"<CR>
-inoremap <C-v> <C-v><C-v>
 
 " Tab detach
 nmap -builtin <Leader>td :tabdetach<CR>
