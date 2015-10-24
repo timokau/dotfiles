@@ -1,0 +1,19 @@
+#!/bin/sh
+asoundrc="$HOME/.asoundrc"
+main_monitor='eDP1'
+beamer_monitor='HDMI1'
+
+# Reset the sound configuration
+[ -e "$asoundrc" ] && rm "$asoundrc"
+if [[ $1 != 'off' ]] ; then
+	# Use the HDMI sound card
+	cat > "$asoundrc" <<EOF
+pcm.!default{
+	type plug
+	slave {
+		pcm "hw:1,3"
+		channels 2
+	}
+}
+EOF
+fi

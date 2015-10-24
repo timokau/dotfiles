@@ -34,7 +34,7 @@ if $plugins; then
 	if ! zgen saved; then
     	echo "Creating a zgen save"
 
-    	zgen load jimmijj/zsh-syntax-highlighting
+    	#zgen load jimmijj/zsh-syntax-highlighting
 
     	# autosuggestions should be loaded last
     	zgen load tarruda/zsh-autosuggestions
@@ -50,7 +50,7 @@ if $plugins; then
 	bindkey '^T' autosuggest-toggle
 	bindkey '^L' autosuggest-execute-suggestion
 fi;
-###############################
+##############################
 
 
 ############################### Completion
