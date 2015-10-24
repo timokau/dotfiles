@@ -20,8 +20,9 @@ taskd.trust=ignore hostname
 dateformat=y-M-D H:N
 search.case.sensitive=no
 urgency.waiting.coefficient=-20
-urgency.inherhit
-verbose=new-id,affected,project,filter,ercur,unwait
+#urgency.inherhit
+#verbose=header,new-id,affected,project,filter,ercur,unwait
+verbose=yes
 
 # For the timetracking hook
 max_active_tasks=3
