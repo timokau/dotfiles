@@ -19,8 +19,10 @@ pacaur -Rns $(pacaur -Qdtq) 2> /dev/null
 echo ">>> ${BLUE}Cleaning the package cache${NC}"
 paccache -r; paccache -ruk0
 echo ">>> ${BLUE}Saving package list${NC}"
-rm "$HOME/Documents/pkglist.txt" > /dev/null
-(pacman -Qqen ; echo '\n' ; pacman -Qqem) > "$HOME/Documents/pkglist.txt"
+pkglist="$HOME/pkglist.txt"
+[ -e $pkglist ] && rm "$pkglist"
+mkdir -p "$(dirname $pkglist)"
+(pacman -Qqen ; echo '\n' ; pacman -Qqem) > "$pkglist"
 
 snapshot_nbr=$(snapper create --type=post --cleanup-algorithm=number --print-number --pre-number="$snapshot_nbr")
 echo ">>> ${BLUE}New post snapshot with number ${snapshot_nbr}.${NC}"
