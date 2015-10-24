@@ -1,0 +1,19 @@
+#! /bin/sh
+main_monitor='eDP1'
+hdmi_monitor='HDMI1'
+
+if [[ $1 == 'off' ]] ; then
+	xrandr --output $hdmi_monitor --off
+	bspc monitor $hdm_monitor --remove-desktops VI VII VIII IX X
+	bspc monitor $main_monitor --reset-desktops I II III IV V VI VII VIII IX X
+else
+	xrandr --output $hdmi_monitor --auto --left-of eDP1
+	bspc monitor $main_monitor --reset-desktops I II III IV V
+	bspc monitor $hdmi_monitor --reset-desktops VI VII VIII IX X
+fi
+
+if [ "$(pgrep -cx panel)" -ge 1 ] ; then
+	echo "Restarting panel"
+	pkill -x panel
+fi
+"$HOME/.config/bspwm/panel" > /dev/null 2 &> 1 &
