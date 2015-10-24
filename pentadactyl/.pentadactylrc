@@ -106,14 +106,14 @@ nmap -builtin <C-S-h> :tabmove -1<CR>
 nmap -builtin <C-S-l> :tabmove +1<CR>
 
 " Normally copy and paste
-nnoremap <C-v> <C-v><C-v>
-inoremap <C-v> <C-v><C-v>
-cnoremap <C-v> <C-v><C-v>
-vnoremap <C-v> <C-v><C-v>
-nnoremap <C-c> <C-v><C-c>
-inoremap <C-c> <C-v><C-c>
-cnoremap <C-c> <C-v><C-c>
-vnoremap <C-c> <C-v><C-c>
+nmap -builtin <C-v> <C-v><C-v>
+imap -builtin <C-v> <C-v><C-v>
+cmap -builtin <C-v> <C-v><C-v>
+vmap -builtin <C-v> <C-v><C-v>
+nmap -builtin <C-c> <C-v><C-c>
+imap -builtin <C-c> <C-v><C-c>
+cmap -builtin <C-c> <C-v><C-c>
+vmap -builtin <C-c> <C-v><C-c>
 
 " Re-Source
 nmap -builtin <Leader>rs :source ~/.pentadactylrc<CR>:echo "Settings reloaded"<CR>
