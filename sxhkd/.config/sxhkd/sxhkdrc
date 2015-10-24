@@ -175,7 +175,10 @@ super + d ; e
 
 # requires the pass-dmenu script in ~/bin
 super + d ; p
-	pass-dmenu
+	pass-dmenu copy
+
+super + d ; P
+	pass-dmenu type
 
 super + @i
 	scrot -u -e 'mv $f ~/Pictures/'
