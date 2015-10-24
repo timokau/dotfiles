@@ -7,52 +7,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-############################### zgen (plugins)
-ZGEN_DIR="${HOME}/.zsh/zgen"
-if [ ! -f "${ZGEN_DIR}/disabled" ]; then
-	if [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
-		mkdir -p "$ZGEN_DIR"
-		echo "zgen plugin manager is not installed. Do you want to install it?"
-		read YnAnswer
-		case "$YnAnswer" in
-			y*) curl -L 'https://raw.githubusercontent.com/tarjoilija/zgen/master/zgen.zsh' > "${ZGEN_DIR}/zgen.zsh"
-				;;
-			*)  touch "${ZGEN_DIR}/disabled"
-				;;
-		esac
-	fi
-fi
-
-if [ -f "${ZGEN_DIR}/disabled" ]; then
-	plugins=false
-else
-	plugins=true
-fi
-
-if $plugins; then
-	source "${ZGEN_DIR}/zgen.zsh"
-	if ! zgen saved; then
-    	echo "Creating a zgen save"
-
-    	#zgen load jimmijj/zsh-syntax-highlighting
-
-    	# autosuggestions should be loaded last
-    	zgen load tarruda/zsh-autosuggestions
-
-    	zgen save
-	fi
-
-	# Enable zsh-autosuggestions automatically.
-	zle-line-init() {
-    	zle autosuggest-start
-	}
-	zle -N zle-line-init
-	bindkey '^T' autosuggest-toggle
-	bindkey '^L' autosuggest-execute-suggestion
-fi;
-##############################
-
-
 ############################### Completion
 # allow one error for every three characters typed in approximate completer
 zstyle ':completion:*:approximate:'    max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )'
@@ -330,6 +284,13 @@ elif check_com vim; then
 	export EDITOR=vim
 fi
 check_com less && export PAGER=less
+
+# Configure fzf
+if check_com fzf; then
+	export FZF_DEFAULT_OPTS='--extended --cycle --multi'
+	fzf_script='/etc/profile.d/fzf.zsh'
+	[ -e "$fzf_script" ] && source "$fzf_script"
+fi
 
 # 
 # colors {{{1
@@ -649,3 +610,49 @@ whatwhen()  {
         ;;
     esac
 }
+
+############################### zgen (plugins)
+ZGEN_DIR="${HOME}/.zsh/zgen"
+if [ ! -f "${ZGEN_DIR}/disabled" ]; then
+	if [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
+		mkdir -p "$ZGEN_DIR"
+		echo "zgen plugin manager is not installed. Do you want to install it?"
+		read YnAnswer
+		case "$YnAnswer" in
+			y*) curl -L 'https://raw.githubusercontent.com/tarjoilija/zgen/master/zgen.zsh' > "${ZGEN_DIR}/zgen.zsh"
+				;;
+			*)  touch "${ZGEN_DIR}/disabled"
+				;;
+		esac
+	fi
+fi
+
+if [ -f "${ZGEN_DIR}/disabled" ]; then
+	plugins=false
+else
+	plugins=true
+fi
+
+if $plugins; then
+	source "${ZGEN_DIR}/zgen.zsh"
+	if ! zgen saved; then
+    	echo "Creating a zgen save"
+
+    	#zgen load jimmijj/zsh-syntax-highlighting
+
+    	# autosuggestions should be loaded last
+    	zgen load tarruda/zsh-autosuggestions
+
+    	zgen save
+	fi
+
+	# Enable zsh-autosuggestions automatically.
+	# zle-line-init() {
+    	# zle autosuggest-start
+	# }
+	# zle -N zle-line-init
+	# bindkey '^T' autosuggest-toggle
+	# bindkey '^L' autosuggest-execute-suggestion
+fi;
+##############################
+
