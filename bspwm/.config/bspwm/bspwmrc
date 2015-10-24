@@ -4,15 +4,17 @@ bspc config border_width 4
 bspc config window_gap 6
 bspc config focused_border_color '#746c48'
 
-bspc config split_ratio           0.5
-bspc config borderless_monocle    true
-bspc config gapless_monocle       true
-bspc config history_aware_focus   true
-bspc config auto_alternate        true
-bspc config focus_follows_pointer true
+bspc config split_ratio                0.5
+bspc config borderless_monocle         true
+bspc config gapless_monocle            true
+bspc config history_aware_focus        true
+bspc config auto_alternate             true
+bspc config focus_follows_pointer      true
+bspc config remove_disabled_monitors   true
+bspc config remove_unplugged_monitors  true
+bspc config merge_overlapping_monitors true
 
-bspc monitor HDMI-3 -d I II III IV V
-bspc monitor DVI-1  -d VI VII VIII IX X
+"$HOME/bin/hdmi-video" off
 
 if [ "$(pgrep -cx panel)" -ge 1 ] ; then
 	echo "Restarting panel"
