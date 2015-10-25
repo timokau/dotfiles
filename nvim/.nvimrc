@@ -49,6 +49,7 @@ Plug 'tpope/vim-unimpaired'                               " Mappings
 Plug 'tpope/vim-commentary'                               " Comment stuff out
 Plug 'clever-f.vim'                                       " Make F and T repeatable
 Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}     " Better autocompletion
+Plug 'SirVer/ultisnips'                                   " Snipptes
 Plug 'scrooloose/syntastic'                               " Syntax checking on save
 Plug 'bling/vim-airline'                                  " Better statusbar
 Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
@@ -141,6 +142,13 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_python_checkers = ['flake8']
+
+" Ultisnips {{{3
+" Trigger configuration. <tab> interferes with YouCompleteMe
+let g:UltiSnipsExpandTrigger="<tab><tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
+let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+let g:UltiSnipsEditSplit="vertical"
 
 " Vimwiki {{{3
 let g:vimwiki_list = [{'path': '~/vimwiki/', 
