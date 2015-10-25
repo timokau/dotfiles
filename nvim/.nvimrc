@@ -298,7 +298,9 @@ endfun
 
 " Appearance {{{3
 if has ("multi_byte_encoding")
-	set encoding=utf-8
+	if !has("nvim")
+		set encoding=utf-8
+	endif
 endif
 set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
