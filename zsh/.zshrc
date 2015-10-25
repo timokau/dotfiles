@@ -288,6 +288,12 @@ check_com less && export PAGER=less
 # Configure fzf
 if check_com fzf; then
 	export FZF_DEFAULT_OPTS='--extended --cycle --multi'
+	if check_com ag; then
+		ag_selector='--follow --depth=-1 --all-types --hidden --search-zip -g ""'
+		export FZF_DEFAULT_COMMAND="ag --nocolor --files-with-matches $ag_selector"
+	else
+		export FZF_DEFAULT_COMMAND='find -L -type f'
+	fi	
 	fzf_script='/etc/profile.d/fzf.zsh'
 	[ -e "$fzf_script" ] && source "$fzf_script"
 fi
