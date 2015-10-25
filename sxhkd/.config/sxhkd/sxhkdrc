@@ -190,6 +190,10 @@ super + d ; p
 super + d ; P
 	pass-dmenu type
 
+# use rofi as a window switcher
+super + d ; w
+	rofi -show window
+
 super + @i
 	scrot -u -e 'mv $f ~/Pictures/'
 
