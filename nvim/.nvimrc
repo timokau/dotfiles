@@ -21,7 +21,7 @@ endif
 call plug#begin(vimdir.'/plugged')
 Plug 'vim-pandoc/vim-pandoc'                              " Pandoc
 Plug 'vim-pandoc/vim-pandoc-syntax'                       " Pandoc syntax
-Plug 'LaTeX-Box-Team/LaTeX-Box'                           " Latex support
+Plug 'lervag/vimtex'                                      " Latex support
 Plug 'dogrover/vim-pentadactyl', { 'for': 'pentadactyl' } " Pentadactyl
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
 if executable('cargo')
@@ -285,7 +285,9 @@ function! IsLoaded(pattern)
 endfun
 
 " Appearance {{{3
-set encoding=utf-8
+if has ("multi_byte_encoding")
+	set encoding=utf-8
+endif
 set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
 set background=dark
