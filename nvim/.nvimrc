@@ -113,6 +113,10 @@ nnoremap <leader>nt :NERDTreeToggle<cr>
 nnoremap <silent> <leader>r :update<Cr>:T<Space>clear;<Space>cargo<Space>run<Cr>
 let g:neoterm_size = 15
 
+" surround {{{3
+" surround with latex command
+let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
+
 " ctrlp {{{3
 nnoremap <Leader>o :CtrlP<CR>
 let g:ctrlp_use_caching = 0
