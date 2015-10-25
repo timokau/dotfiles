@@ -104,9 +104,6 @@ endfunction
 let $RUST_SRC_PATH=$HOME."/.local/share/racer/rust/src"
 let g:racer_cmd = '/usr/bin/racer'
 
-" indent guides {{{3
-let g:indent_guides_enable_on_vim_startup = 1
-
 " NERDTree {{{3
 nnoremap <leader>nt :NERDTreeToggle<cr>
 
