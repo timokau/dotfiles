@@ -218,6 +218,9 @@ set ignorecase
 set smartcase
 set directory-=.
 set backupdir-=.
+if has('nvim')
+	silent execute "!mkdir -p " . &backupdir
+endif
 set mouse+=a
 set copyindent                         " Keep spaces used for alignment
 set preserveindent
