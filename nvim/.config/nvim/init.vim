@@ -5,15 +5,15 @@
 " Vim-Plug Boilderplate {{{3
 " Automatically install vim-plug if it isn't installed
 if has('nvim')
-	let g:vimdir = '~/.nvim'
+	let g:vimdir = $HOME . '/.config/nvim'
 else
-	let g:vimdir = '~/.vim'
+	let g:vimdir = $HOME . '/.vim'
 endif
+
 if empty(glob(vimdir.'/autoload/plug.vim'))
-	silent !mkdir -p vimdir.'/autoload'
-	silent !curl -fLo vimdir.'/autoload/plug.vim'
-	    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall
+  execute "!curl -fLo " . shellescape(vimdir . "/autoload/plug.vim") . " --create-dirs " .
+    \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 " Installed Plugins {{{2
@@ -49,7 +49,8 @@ Plug 'tpope/vim-unimpaired'                               " Mappings
 Plug 'tpope/vim-commentary'                               " Comment stuff out
 Plug 'clever-f.vim'                                       " Make F and T repeatable
 Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}     " Better autocompletion
-Plug 'SirVer/ultisnips'                                   " Snipptes
+Plug 'SirVer/ultisnips'                                   " Snipptes suppert
+Plug 'honza/vim-snippets'                                 " Default snipptes
 Plug 'scrooloose/syntastic'                               " Syntax checking on save
 Plug 'bling/vim-airline'                                  " Better statusbar
 Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
@@ -207,7 +208,7 @@ set backspace=indent,eol,start
 set hlsearch
 set wildignore+=*~,*.pyc,*.swp
 set tabstop=4
-set shiftwidth=0                       " Shiftwidth equals tabstop
+set shiftwidth=4                       " Shiftwidth equals tabstop
 set wrap
 set linebreak
 set textwidth=99

@@ -1,7 +1,6 @@
 # Plugins can be loaded with 'PlugInstall' inside (neo)vim
 /vim/.vim/plugged
-/nvim/.nvim/plugged
-/nvim/.nvim/shada
+/nvim/.config/nvim/plugged
 
 # This shouldn't be tracked (it contains the command history)
 /pentadactyl/.pentadactyl/info
