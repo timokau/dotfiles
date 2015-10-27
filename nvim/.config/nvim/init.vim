@@ -101,7 +101,8 @@ call feedkeys("f\e") " Retrigger the CursorHold event
 endfunction
 
 " racer {{{3
-let $RUST_SRC_PATH=$HOME."/.local/share/racer/rust/src"
+let $RUST_SRC_PATH=$HOME . "/.local/share/racer/rust/src"
+silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
 
 " NERDTree {{{3
