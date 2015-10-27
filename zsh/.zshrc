@@ -341,6 +341,9 @@ alias ...='cd ../..'
 alias pastebin='curl -F "sprunge=<-" http://sprunge.us'
 alias pastebinc='pastebin | xsel -b'
 alias ns='notify-send'
+function o() {
+	xdg-open $@ &
+}
 check_com rsync && alias smv='rsync -avz --remove-source-files -e ssh'
 check_com translate-shell && alias trans='HOME_LANG=de TARGET_LANG=de trans'
 check_com translate-shell && alias transb='HOME_LANG=de TARGET_LANG=de trans -brief'
