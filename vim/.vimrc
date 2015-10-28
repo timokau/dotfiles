@@ -40,7 +40,6 @@ Plug 'bkad/CamelCaseMotion'                               " Move through camelCa
 Plug 'dhruvasagar/vim-table-mode'                         " Table mode
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
 Plug 'farseer90718/vim-taskwarrior', { 'on': 'TW' }       " Taskwarrior
-Plug 'jiangmiao/auto-pairs'                               " Insert matching dleimeters (e.g. { })
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}      " File explorer
 Plug 'tpope/vim-repeat'                                   " Make custom options repeatable
 Plug 'tpope/vim-fugitive'                                 " Git wrapper
@@ -102,7 +101,8 @@ call feedkeys("f\e") " Retrigger the CursorHold event
 endfunction
 
 " racer {{{3
-let $RUST_SRC_PATH=$HOME."/.local/share/racer/rust/src"
+let $RUST_SRC_PATH=$HOME . "/.local/share/racer/rust/src"
+silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
 
 " NERDTree {{{3
@@ -143,7 +143,7 @@ let g:syntastic_python_checkers = ['flake8']
 
 " Ultisnips {{{3
 " Trigger configuration. <tab> interferes with YouCompleteMe
-let g:UltiSnipsExpandTrigger="<tab><tab>"
+let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-n>"
 let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 let g:UltiSnipsEditSplit="vertical"
@@ -218,6 +218,9 @@ set ignorecase
 set smartcase
 set directory-=.
 set backupdir-=.
+if has('nvim')
+	silent execute "!mkdir -p " . &backupdir
+endif
 set mouse+=a
 set copyindent                         " Keep spaces used for alignment
 set preserveindent
