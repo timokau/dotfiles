@@ -105,6 +105,9 @@ let $RUST_SRC_PATH=$HOME . "/.local/share/racer/rust/src"
 silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
 
+" vimtex {{{3
+let g:vimtex_view_method="zathura"
+
 " NERDTree {{{3
 nnoremap <leader>nt :NERDTreeToggle<cr>
 
@@ -144,8 +147,8 @@ let g:syntastic_python_checkers = ['flake8']
 " Ultisnips {{{3
 " Trigger configuration. <tab> interferes with YouCompleteMe
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-n>"
-let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsEditSplit="vertical"
 
 " Vimwiki {{{3
