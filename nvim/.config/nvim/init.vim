@@ -235,7 +235,9 @@ set preserveindent
 " Remember undos {{{3
 if has('persistent_undo')
 	silent call system('mkdir -p $HOME/tmp/vim/undo')
-	set undodir=$HOME/tmp/vim/undo
+	if !has("nvim")
+		set undodir=$HOME/tmp/vim/undo
+	endif
 	set undolevels=100000
 	set undoreload=100000
 	set undofile
