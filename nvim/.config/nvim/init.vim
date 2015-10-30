@@ -6,8 +6,10 @@
 " Automatically install vim-plug if it isn't installed
 if has('nvim')
 	let g:vimdir = $HOME . '/.config/nvim'
+	let g:spelldir = $HOME . '/.local/share/nvim/site/spell'
 else
 	let g:vimdir = $HOME . '/.vim'
+	let g:spelldir = g:vimdir . '/spell'
 endif
 
 if empty(glob(vimdir.'/autoload/plug.vim'))
@@ -34,7 +36,7 @@ Plug 'chriskempson/base16-vim'                            " Base16
 Plug 'altercation/vim-colors-solarized'                   " Solarized
 " Misc {{{3
 " Useable german spell checking (Donaudampfschifffahrtskapitänskajütentür should be accepted)
-Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo '.vimdir.'/spell/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
+Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo ' . spelldir .'/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
 Plug 'danro/rename.vim'                                   " Rename the current file
 Plug 'bkad/CamelCaseMotion'                               " Move through camelCase and snake_case
 Plug 'dhruvasagar/vim-table-mode'                         " Table mode
