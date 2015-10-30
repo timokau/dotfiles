@@ -225,6 +225,7 @@ set ignorecase
 set smartcase
 set directory-=.
 set backupdir-=.
+set nobackup
 if has('nvim')
 	silent execute "!mkdir -p " . &backupdir
 endif
