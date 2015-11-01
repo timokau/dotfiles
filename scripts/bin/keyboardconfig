@@ -13,6 +13,10 @@ xmodmap -e 'keysym Caps_Lock = Control_L'
 xmodmap -e 'add Control = Control_L'
 xcape -e 'Control_L=Escape'
 
+# I prefer my keys alive
+xmodmap -e 'keysym dead_circumflex = asciicircum'
+xmodmap -e 'keysym dead_acute = acute'
+
 # Use rctrl as a play/pause media key (for usage when my handy aren't on the homerow)
 # since it is nearly unreachable when my hands are on the homerow anyway
 xmodmap -e 'remove Control = Control_R'
