@@ -5,7 +5,11 @@ snippet "b(egin)?" "begin{} / end{}" br
 endsnippet
 
 snippet emph "emphasize"
-\emph{${0:${VISUAL}}$0
+\emph{${1:${VISUAL}}}$0
+endsnippet
+
+snippet text "text in math mode"
+\text{${1:${VISUAL}}}$0
 endsnippet
 
 snippet enum "Enumerate" b
