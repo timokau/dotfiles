@@ -1,0 +1,22 @@
+#! /bin/sh
+# Run a java program. Compile it first if neccessary.
+
+if [[ $# -lt 1 ]]; then
+	echo "Please give the name of a java or a class file as an argument"
+	exit 1
+fi
+
+fullname=$1
+ext=${1##*.}
+shift
+
+if [[ $ext == "java" ]]; then
+	base=$(basename "$fullname" ".java")
+	javac "$fullname" && java "${base}" $@
+elif [[ $ext == "class" ]]; then
+	base=$(basename "$fullname" ".class")
+	java "$base" $@
+else
+	echo "The given argument is neither a java nor a class file."
+	exit 1
+fi
