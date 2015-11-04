@@ -1,14 +1,107 @@
-snippet "b(egin)?" "begin{} / end{}" br
+snippet br "Literal brackets" i
+\\{$1\\} $0
+endsnippet
+
+snippet cd "\cdot" w
+\\cdot 
+endsnippet
+
+snippet ra "\rightarrow" i
+\\rightarrow $0
+endsnippet
+
+snippet Ra "\Rightarrow" i
+\\Rightarrow $0
+endsnippet
+
+snippet la "\leftarrow" i
+\\leftarrow $0
+endsnippet
+
+snippet La "\Leftarrow" i
+\\Leftarrow $0
+endsnippet
+
+snippet lra "\leftrightarrow" i
+\\leftrightarrow $0
+endsnippet
+
+snippet Lra "\Leftrightarrow" i
+\\Leftrightarrow $0
+endsnippet
+
+snippet qd "\quad"
+\\quad $0
+endsnippet
+
+snippet qqd "\qquad"
+\\qquad $0
+endsnippet
+
+snippet fn "Function" i
+$1: $2 \rightarrow $3$0
+endsnippet
+
+snippet seq "\subseteq" i
+\\subseteq 
+endsnippet
+
+snippet inv "^-1" i
+^{-1}
+endsnippet
+
+snippet Zds "\mathds Z" i
+\\mathds Z
+endsnippet
+
+snippet Nds "\mathds N" i
+\\mathds N
+endsnippet
+
+snippet Qds "\mathds Q" i
+\\mathds Q
+endsnippet
+
+snippet b "begin{} / end{}" b
 \begin{${1:something}}
 	${0:${VISUAL}}
 \end{$1}
 endsnippet
 
-snippet emph "emphasize" i
+snippet bd "Definition" b
+\begin{defn}
+	${0:${VISUAL}}
+\end{defn}
+endsnippet
+
+snippet be "Example" b
+\begin{exmp}
+	${0:${VISUAL}}
+\end{exmp}
+endsnippet
+
+snippet bp "Proposition" b
+\begin{prop}
+	${0:${VISUAL}}
+\end{prop}
+endsnippet
+
+snippet bt "Theorem" b
+\begin{prop}
+	${0:${VISUAL}}
+\end{prop}
+endsnippet
+
+snippet emph "emphasize"
 \emph{${1:${VISUAL}}}$0
 endsnippet
 
-snippet text "text in math mode" i
+snippet vs "vspace"
+\vspace{${1:3mm}} \\\
+$0
+endsnippet
+
+snippet text "text in math mode"
 \text{${1:${VISUAL}}}$0
 endsnippet
 
@@ -49,8 +142,11 @@ snippet desc* "Description (tight)" b
 endsnippet
 
 snippet it "Individual item" b
-\item ${1}
-$0
+\item $0
+endsnippet
+
+snippet it* "Individual named item" b
+\item[$1] $0
 endsnippet
 
 snippet part "Part" b
@@ -138,6 +234,7 @@ snippet eqann "Equation array without numbers" b
 \end{eqnarray*}
 
 endsnippet
+
 snippet frac "Fraction" w
 \frac{${1:${VISUAL:nom}}}{${2:denom}}
 endsnippet
@@ -162,6 +259,10 @@ endsnippet
 
 snippet lr[ "left[ right]" w
 \left[ ${1:${VISUAL}} \right]
+endsnippet
+
+snippet ZnZ "znz" i
+\mathds Z /n \mathds Z
 endsnippet
 
 # vim:ft=snippets:
