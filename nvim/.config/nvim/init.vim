@@ -38,8 +38,6 @@ Plug 'altercation/vim-colors-solarized'                   " Solarized
 " Useable german spell checking (Donaudampfschifffahrtskapitänskajütentür should be accepted)
 Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo ' . spelldir .'/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
 Plug 'danro/rename.vim'                                   " Rename the current file
-Plug 'bkad/CamelCaseMotion'                               " Move through camelCase and snake_case
-Plug 'dhruvasagar/vim-table-mode'                         " Table mode
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
 Plug 'farseer90718/vim-taskwarrior', { 'on': 'TW' }       " Taskwarrior
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}      " File explorer
