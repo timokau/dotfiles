@@ -150,6 +150,15 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_tex_chktex_quiet_messages = {
+	\ "regex": ['Vertical rules in tables are ugly.',
+	          \ 'You should put a space in front of parenthesis.',
+	          \ 'You should put a space after parenthesis.',
+	          \ 'Command terminated with space.',
+	          \ 'You might wish to put this between a pair of `{}''',
+	          \ 'You should avoid spaces after parenthesis.',
+	          \ 'Wrong length of dash may have been used.']
+\}
 
 " Ultisnips {{{3
 " Trigger configuration. <tab> interferes with YouCompleteMe
