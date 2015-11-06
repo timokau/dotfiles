@@ -221,8 +221,10 @@ set wildignore+=*~,*.pyc,*.swp
 set tabstop=4
 set shiftwidth=4                       " Shiftwidth equals tabstop
 set wrap
-set linebreak
-set breakindent
+if has('linebreak')
+	set linebreak
+	set breakindent
+endif
 set textwidth=99
 set colorcolumn=+0
 set showmatch
