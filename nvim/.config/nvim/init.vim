@@ -157,6 +157,9 @@ let g:syntastic_tex_chktex_quiet_messages = {
 	          \ 'Command terminated with space.',
 	          \ 'You might wish to put this between a pair of `{}''',
 	          \ 'You should avoid spaces after parenthesis.',
+	          \ 'Number of `('' doesn''t match the number of `)''!',
+	          \ 'Mathmode still on at end of LaTeX file.',
+	          \ 'Delete this space to maintain correct pagereferences.',
 	          \ 'Wrong length of dash may have been used.']
 \}
 
