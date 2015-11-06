@@ -290,7 +290,15 @@ if check_com fzf; then
 	export FZF_DEFAULT_OPTS='--extended --cycle --multi'
 	if check_com ag; then
 		ag_selector='--follow --depth=-1 --all-types --hidden --search-zip -g ""'
-		export FZF_DEFAULT_COMMAND="ag --nocolor --files-with-matches $ag_selector"
+		export FZF_DEFAULT_COMMAND="ag --nocolor --files-with-matches $ag_selector 2> /dev/null"
+		export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+		# Recreate the meta-c widget because it is not configurable
+		fzf-cd-widget() {
+			cd "$($FZF_DEFAULT_COMMAND| $(__fzfcmd) +m)"
+			zle reset-prompt
+		}
+		zle     -N    fzf-cd-widget
+		bindkey '\ec' fzf-cd-widget
 	else
 		export FZF_DEFAULT_COMMAND='find -L -type f'
 	fi	
@@ -664,4 +672,3 @@ if $plugins; then
 	# bindkey '^L' autosuggest-execute-suggestion
 fi;
 ##############################
-
