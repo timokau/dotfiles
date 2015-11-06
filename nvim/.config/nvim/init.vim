@@ -13,9 +13,9 @@ else
 endif
 
 if empty(glob(vimdir.'/autoload/plug.vim'))
-  execute "!curl -fLo " . shellescape(vimdir . "/autoload/plug.vim") . " --create-dirs " .
-    \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+	execute "!curl -fLo " . shellescape(vimdir . "/autoload/plug.vim") . " --create-dirs " .
+	      \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+	autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 " Installed Plugins {{{2
@@ -66,6 +66,9 @@ endif
 call plug#end()
 
 " Plugin specific {{{2
+" vim-ariline {{{3
+let g:airline#extensions#whitespace#mixed_indent_algo = 2
+
 " vim-taskwarrior {{{3
 let g:task_rc_override = 'rc.defaultwidth=999 rc.defaultheight=0'
 let g:task_report_command = ['dsheet', 'today', 'lstoday']
@@ -109,8 +112,8 @@ let g:racer_cmd = '/usr/bin/racer'
 
 " vimtex {{{3
 augroup vimtex_config
-  autocmd!
-  autocmd Filetype tex autocmd BufUnload <buffer> VimtexClean
+	autocmd!
+	autocmd Filetype tex autocmd BufUnload <buffer> VimtexClean
 augroup END
 let g:vimtex_view_method="zathura"
 
@@ -160,8 +163,7 @@ let g:UltiSnipsSnippetsDir=vimdir . "/UltiSnips"
 let g:UltiSnipsEnableSnipMate=0
 
 " Vimwiki {{{3
-let g:vimwiki_list = [{'path': '~/vimwiki/', 
-                 \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
 
 " fzf {{{3
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
@@ -256,32 +258,32 @@ endif
 " Don't keep swap files in temp directories or shm
 if has('autocmd')
 augroup swapskip
-    autocmd!
-    silent! autocmd BufNewFile,BufReadPre
-        \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
-        \ setlocal noswapfile
+	autocmd!
+	silent! autocmd BufNewFile,BufReadPre
+	              \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
+	              \ setlocal noswapfile
 augroup END
 endif
 
 " Don't keep undo files in temp directories or shm
 if has('persistent_undo') && has('autocmd')
 augroup undoskip
-    autocmd!
-    silent! autocmd BufWritePre
-        \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
-        \ setlocal noundofile
+	autocmd!
+	silent! autocmd BufWritePre
+	              \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
+	              \ setlocal noundofile
 augroup END
 endif
 
 " Don't keep viminfo for files in temp directories or shm
 if has('viminfo')
 if has('autocmd')
-    augroup viminfoskip
-        autocmd!
-        silent! autocmd BufNewFile,BufReadPre
-            \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
-            \ setlocal viminfo=
-    augroup END
+	augroup viminfoskip
+		autocmd!
+		silent! autocmd BufNewFile,BufReadPre
+		              \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
+		              \ setlocal viminfo=
+	augroup END
 endif
 endif
 
@@ -307,8 +309,8 @@ function! IsLoaded(pattern)
 			endif
 		endif
 	endfor
-    unlet scriptnames_output
-    return 0
+	unlet scriptnames_output
+	return 0
 endfun
 
 " Appearance {{{3
@@ -397,10 +399,10 @@ xnoremap * :<C-u> call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u> call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
 
 function! s:VSetSearch()
-  let temp = @s
-  norm! gv"sy
-  let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
-  let @s = temp
+	let temp = @s
+	norm! gv"sy
+	let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+	let @s = temp
 endfunction
 
 " Join words {{{3
@@ -484,7 +486,7 @@ if exists(':terminal')
 	tnoremap <C-l> <C-\><C-n><C-w>l
 	nnoremap <leader>vt :vs term://zsh<CR>i
 	" Re-run last command
-    tnoremap <C-r> <Up><Cr>
+	tnoremap <C-r> <Up><Cr>
 
 	augroup terminal
 		autocmd!
@@ -500,7 +502,7 @@ endif
 " Autocommands {{{2
 " Initialize (reset) autocommands {{{3
 augroup vimrc
-  autocmd!
+	autocmd!
 augroup END
 
 " Run tests on every write for rust source files
@@ -538,28 +540,28 @@ endfun
 " Transparent editing of gpg encrypted files {{{3
 " By Wouter Hanegraaff
 augroup encrypted
-  au!
-  " First make sure nothing is written to ~/.viminfo while editing
-  " an encrypted file.
-  autocmd BufReadPre,FileReadPre *.gpg set viminfo=
-  " We don't want a various options which write unencrypted data to disk
-  autocmd BufReadPre,FileReadPre *.gpg set noswapfile noundofile nobackup
+	au!
+	" First make sure nothing is written to ~/.viminfo while editing
+	" an encrypted file.
+	autocmd BufReadPre,FileReadPre *.gpg set viminfo=
+	" We don't want a various options which write unencrypted data to disk
+	autocmd BufReadPre,FileReadPre *.gpg set noswapfile noundofile nobackup
 
-  " Switch to binary mode to read the encrypted file
-  autocmd BufReadPre,FileReadPre *.gpg set bin
-  autocmd BufReadPre,FileReadPre *.gpg let ch_save = &ch|set ch=2
-  autocmd BufReadPost,FileReadPost *.gpg '[,']!gpg --decrypt 2> /dev/null
+	" Switch to binary mode to read the encrypted file
+	autocmd BufReadPre,FileReadPre *.gpg set bin
+	autocmd BufReadPre,FileReadPre *.gpg let ch_save = &ch|set ch=2
+	autocmd BufReadPost,FileReadPost *.gpg '[,']!gpg --decrypt 2> /dev/null
 
-  " Switch to normal mode for editing
-  autocmd BufReadPost,FileReadPost *.gpg set nobin
-  autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
-  autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
+	" Switch to normal mode for editing
+	autocmd BufReadPost,FileReadPost *.gpg set nobin
+	autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
+	autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
 
-  " Convert all text to encrypted text before writing
-  autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
-  " Undo the encryption so we are back in the normal text, directly
-  " after the file has been written.
-  autocmd BufWritePost,FileWritePost *.gpg u
+	" Convert all text to encrypted text before writing
+	autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
+	" Undo the encryption so we are back in the normal text, directly
+	" after the file has been written.
+	autocmd BufWritePost,FileWritePost *.gpg u
 augroup END
 
 " Commands {{{2
