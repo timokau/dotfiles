@@ -45,7 +45,6 @@ Plug 'tpope/vim-commentary'                               " Comment stuff out
 Plug 'clever-f.vim'                                       " Make F and T repeatable
 Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}     " Better autocompletion
 Plug 'SirVer/ultisnips'                                   " Snipptes suppert
-Plug 'honza/vim-snippets'                                 " Default snipptes
 Plug 'scrooloose/syntastic'                               " Syntax checking on save
 Plug 'bling/vim-airline'                                  " Better statusbar
 Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
