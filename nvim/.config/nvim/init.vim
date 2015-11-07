@@ -37,7 +37,6 @@ Plug 'chriskempson/base16-vim'                            " Base16
 " Useable german spell checking (Donaudampfschifffahrtskapitänskajütentür should be accepted)
 Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo ' . spelldir .'/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
-Plug 'farseer90718/vim-taskwarrior', { 'on': 'TW' }       " Taskwarrior
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}      " File explorer
 Plug 'tpope/vim-repeat'                                   " Make custom options repeatable
 Plug 'tpope/vim-fugitive'                                 " Git wrapper
@@ -64,42 +63,6 @@ call plug#end()
 " Plugin specific {{{2
 " vim-ariline {{{3
 let g:airline#extensions#whitespace#mixed_indent_algo = 2
-
-" vim-taskwarrior {{{3
-let g:task_rc_override = 'rc.defaultwidth=999 rc.defaultheight=0'
-let g:task_report_command = ['dsheet', 'today', 'lstoday']
-let g:task_report_name = 'lstoday'
-let g:task_highlight_field = 1
-let g:task_default_prompt = ['due', 'description']
-augroup TaskwarriorMapping
-	autocmd!
-	autocmd FileType taskreport call MapTaskwarrior()
-augroup END
-
-function! MapTaskwarrior()
-nmap <buffer> <Space> <Leader>
-nmap <buffer> l <Plug>(taskwarrior_skip_right)
-nmap <buffer> h <Plug>(taskwarrior_skip_left)
-nmap <buffer> t <Plug>(taskwarrior_command)mod<Space>due:tomorrow<CR>
-nmap <buffer> + <Plug>(taskwarrior_start_task)<Plug>(taskwarrior_refresh)
-nmap <buffer> <Leader>d <Plug>(taskwarrior_command)done<CR>
-nmap <buffer> <Leader>a :TW<Space>add<Space>
-endfunction
-
-function! Vimtodo()
-set laststatus=0
-set nolist
-set cmdheight=1
-set colorcolumn=0
-TW lstoday
-autocmd vimrc CursorHold task* call Timer()
-endfunction
-
-function! Timer()
-call taskwarrior#list()
-set updatetime=5000
-call feedkeys("f\e") " Retrigger the CursorHold event
-endfunction
 
 " racer {{{3
 let $RUST_SRC_PATH=$HOME . "/.local/share/racer/rust/src"
