@@ -37,7 +37,6 @@ Plug 'chriskempson/base16-vim'                            " Base16
 " Useable german spell checking (Donaudampfschifffahrtskapitänskajütentür should be accepted)
 Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo ' . spelldir .'/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}      " File explorer
 Plug 'tpope/vim-repeat'                                   " Make custom options repeatable
 Plug 'tpope/vim-fugitive'                                 " Git wrapper
 Plug 'tpope/vim-surround'                                 " Surrounding things
