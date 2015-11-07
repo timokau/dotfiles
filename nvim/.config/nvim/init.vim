@@ -47,7 +47,6 @@ Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}     " Better autocompletio
 Plug 'SirVer/ultisnips'                                   " Snipptes suppert
 Plug 'scrooloose/syntastic'                               " Syntax checking on save
 Plug 'bling/vim-airline'                                  " Better statusbar
-Plug 'kien/ctrlp.vim'                                     " Fuzzy file-search
 Plug 'bruno-/vim-man'                                     " View manpages in vim
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
