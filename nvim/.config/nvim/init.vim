@@ -80,10 +80,6 @@ let g:neoterm_size = 15
 " surround with latex command
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
-" table-mode {{{3
-let g:table_mode_corner_corner='+'
-let g:table_mode_header_fillchar='='
-
 " Syntastic {{{3
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
