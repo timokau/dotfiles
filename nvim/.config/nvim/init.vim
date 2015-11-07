@@ -80,21 +80,6 @@ let g:neoterm_size = 15
 " surround with latex command
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
-" ctrlp {{{3
-nnoremap <Leader>o :CtrlP<CR>
-let g:ctrlp_use_caching = 0
-if executable('ag')
-	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-elseif executable('ack')
-	let g:ctrlp_user_command = 'ack %s -l --nocolor -g ""'
-else
-	let g:ctrlp_user_command = [ '.git',
-	    \ 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f' ]
-	let g:ctrlp_prompt_mappings = {
-	    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
-	    \ }
-endif
-
 " table-mode {{{3
 let g:table_mode_corner_corner='+'
 let g:table_mode_header_fillchar='='
