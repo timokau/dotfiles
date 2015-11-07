@@ -72,9 +72,6 @@ augroup vimtex_config
 augroup END
 let g:vimtex_view_method="zathura"
 
-" NERDTree {{{3
-nnoremap <leader>nt :NERDTreeToggle<cr>
-
 " neoterm {{{3
 nnoremap <silent> <leader>r :update<Cr>:T<Space>clear;<Space>cargo<Space>run<Cr>
 let g:neoterm_size = 15
