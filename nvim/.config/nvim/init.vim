@@ -33,7 +33,6 @@ Plug 'klen/python-mode', { 'for': 'python' }              " Advanced python feat
 " Colorschemes {{{3
 Plug 'morhetz/gruvbox'                                    " Gruvbox
 Plug 'chriskempson/base16-vim'                            " Base16
-Plug 'altercation/vim-colors-solarized'                   " Solarized
 " Misc {{{3
 " Useable german spell checking (Donaudampfschifffahrtskapitänskajütentür should be accepted)
 Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo ' . spelldir .'/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
