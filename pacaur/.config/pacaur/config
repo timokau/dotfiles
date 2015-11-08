@@ -1,0 +1,3 @@
+clonedir=$HOME/aur
+sudoloop=true
+displaybuildfiles=diff
