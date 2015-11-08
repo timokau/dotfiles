@@ -68,7 +68,8 @@ let g:racer_cmd = '/usr/bin/racer'
 " vimtex {{{3
 augroup vimtex_config
 	autocmd!
-	autocmd User VimtexQuit call vimtex#latexmk#clean(0)
+	autocmd FileType tex autocmd BufWritePost <buffer> VimtexView
+	autocmd User VimtexEventQuit call vimtex#latexmk#clean(0)
 augroup END
 let g:vimtex_view_method="zathura"
 
