@@ -96,6 +96,7 @@ let g:syntastic_tex_chktex_quiet_messages = {
 	          \ 'Number of `('' doesn''t match the number of `)''!',
 	          \ 'Mathmode still on at end of LaTeX file.',
 	          \ 'Delete this space to maintain correct pagereferences.',
+	          \ 'Intersentence spacing (`\\@'') should perhaps be used.',
 	          \ 'Wrong length of dash may have been used.']
 \}
 
