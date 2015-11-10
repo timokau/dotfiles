@@ -97,6 +97,7 @@ let g:syntastic_tex_chktex_quiet_messages = {
 	          \ 'Mathmode still on at end of LaTeX file.',
 	          \ 'Delete this space to maintain correct pagereferences.',
 	          \ 'Intersentence spacing (`\\@'') should perhaps be used.',
+	          \ 'You should use \\.\?dots to achieve an ellipsis.',
 	          \ 'Wrong length of dash may have been used.']
 \}
 
