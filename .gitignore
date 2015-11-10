@@ -1,5 +1,6 @@
 # Plugins can be loaded with 'PlugInstall' inside (neo)vim
 /vim/.vim/plugged
+/vim/.vim/spell
 /nvim/.config/nvim/plugged
 
 # This shouldn't be tracked (it contains the command history)
