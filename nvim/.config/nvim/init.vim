@@ -37,6 +37,9 @@ Plug 'chriskempson/base16-vim'                            " Base16
 " Useable german spell checking (Donaudampfschifffahrtskapitänskajütentür should be accepted)
 Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo ' . spelldir .'/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
+if executable('zeal')
+	Plug 'KabbAmine/zeavim.vim'                           " Offline documentation
+endif
 Plug 'tpope/vim-repeat'                                   " Make custom options repeatable
 Plug 'tpope/vim-fugitive'                                 " Git wrapper
 Plug 'tpope/vim-surround'                                 " Surrounding things
@@ -405,7 +408,7 @@ nnoremap <silent> <leader>sD :set spell spelllang=hun-de-DE<CR>
 nnoremap <silent> <leader>se :set spell spelllang=en_us<CR>
 
 " search/replace the word under the cursor {{{3
-nnoremap <leader>z :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>hi
+nnoremap <leader>s :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>hi
 
 " Stop highlighting the last search {{{3
 nnoremap <leader>c :nohlsearch<CR>
