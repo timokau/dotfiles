@@ -81,8 +81,11 @@ super + shift + {h,j,k,l}
     bspc config pointer_follows_focus false
 
 super + shift + ctrl + {h,j,k,l}
-	bspc desktop --to-monitor {left,down,up,right}; \
-	bspc desktop --focus last
+	bspc desktop --to-monitor {left,down,up,right} && \
+	bspc desktop --focus last; \
+	bspc monitor -o $(bspc query -D -m focused | sort | awk 'BEGIN \{found_IX = 0; found_X = 0\} \{if ($1 == "IX") found_IX=1; else if ($1 == "X") found_X=1; else print $1\} END \{if (found_IX == 1) print "IX"; if (found_X == 1) print "X"\}')
+# This is a **very** ugly hack to sort roman numbers (up to 10). Don't look at it too long
+# or your brain may take damage.
 
 super + {_,shift + }c
 	bspc window --focus {next,prev}
