@@ -372,8 +372,6 @@ if check_com fasd ; then
 	alias v='fasd -f -e nvim'
 	alias m'fasd -f -e mpv'
 	alias o='fasd -f -e "setsid xdg-open"'
-	function zat()
-		fasd -f -e "setsid zathura" "$@ pdf$"
 	bindkey '^O' fasd-complete
 else
 	alias v='nvim'
