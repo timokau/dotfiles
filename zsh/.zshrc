@@ -351,9 +351,6 @@ alias ...='cd ../..'
 alias pastebin='curl -F "sprunge=<-" http://sprunge.us'
 alias pastebinc='pastebin | xsel -b'
 alias ns='notify-send'
-function o() {
-	xdg-open $@ &
-}
 check_com rsync && alias smv='rsync -avz --remove-source-files -e ssh'
 check_com translate-shell && alias trans='HOME_LANG=de TARGET_LANG=de trans'
 check_com translate-shell && alias transb='HOME_LANG=de TARGET_LANG=de trans -brief'
@@ -372,10 +369,17 @@ fi
 ############ fasd
 if check_com fasd ; then
 	eval "$(fasd --init auto)"
-	alias v='f -e vim'
-	alias m'f -e mpv'
-	alias o='f -e xdg-open'
+	alias v='fasd -f -e nvim'
+	alias m'fasd -f -e mpv'
+	alias o='fasd -f -e "setsid xdg-open"'
+	function zat()
+		fasd -f -e "setsid zathura" "$@ pdf$"
 	bindkey '^O' fasd-complete
+else
+	alias v='nvim'
+	alias m'setsid mpv'
+	alias o='setsid xdg-open'
+	alias zat='setsid zathura'
 fi
 
 ############
@@ -674,3 +678,5 @@ if $plugins; then
 	# bindkey '^L' autosuggest-execute-suggestion
 fi;
 ##############################
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
