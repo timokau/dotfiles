@@ -14,7 +14,8 @@ bspc config remove_disabled_monitors   true
 bspc config remove_unplugged_monitors  true
 bspc config merge_overlapping_monitors true
 
-"$HOME/bin/hdmi-video" off
+# "$HOME/bin/hdmi-video" off
+$HOME/.config/bspwm/monitorrc
 
 if [ "$(pgrep -cx panel)" -ge 1 ] ; then
 	echo "Restarting panel"
