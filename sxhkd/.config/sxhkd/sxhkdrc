@@ -46,7 +46,7 @@ super + shift + m
 # be able to focus an empty monitor
 # for details on this (and the window moving) see
 # http://blog.neeasade.net/2015/04/28/BSPWM-Multihead.html
-super +  {h,j,k,l}
+super + {h,j,k,l}
 	bspc config pointer_follows_monitor true; \
 	bspc config pointer_follows_focus true; \
 	dir={left,down,up,right}; \
@@ -80,6 +80,10 @@ super + shift + {h,j,k,l}
     fi; \
     bspc config pointer_follows_focus false
 
+super + shift + ctrl + {h,j,k,l}
+	bspc desktop --to-monitor {left,down,up,right}; \
+	bspc desktop --focus last
+
 super + {_,shift + }c
 	bspc window --focus {next,prev}
 
@@ -105,7 +109,7 @@ super + ctrl + {1-9}
 	bspc window --ratio 0.{1-9}
 
 super + {_,shift + }{1-9,0}
-	bspc {desktop --focus,window --to-desktop} ^{1-9,10}
+	bspc {desktop --focus,window --to-desktop} {I,II,III,IV,V,VI,VII,VIII,IX,X}
 
 ~button1
 	bspc pointer --grab focus
