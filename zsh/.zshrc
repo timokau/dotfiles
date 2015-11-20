@@ -141,6 +141,8 @@ zstyle ':completion:*:pacaur:*' remote-access false
 
 alias vim='vim --servername vim'
 
+alias scrott='scrot /tmp/shot-$(date +%FT%T).png'
+
 
 #
 # options {{{1
