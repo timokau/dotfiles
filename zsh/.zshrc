@@ -174,6 +174,11 @@ REPORTTIME=5
 # vim-like line editing
 bindkey -v
 
+# edit in $editor
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 # enable the delete key
 bindkey    "^[[3~"          delete-char
 bindkey    "^[3;5~"         delete-char
