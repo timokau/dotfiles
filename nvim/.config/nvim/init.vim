@@ -120,6 +120,11 @@ let g:UltiSnipsEnableSnipMate=0
 
 " Vimwiki {{{3
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+" no default mappings please
+nnoremap <silent> <leader>zw <Plug>VimwikiIndex
+nnoremap <silent> <leader>zt <Plug>VimwikiTabIndex
+nnoremap <silent> <leader>zs <Plug>VimwikiUISelect
+nnoremap <silent> <leader>zi <Plug>VimwikiDiaryIndex
 
 " fzf {{{3
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
