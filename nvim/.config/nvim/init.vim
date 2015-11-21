@@ -74,11 +74,11 @@ silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
 
 " vimtex {{{3
-augroup vimtex_config
-	autocmd!
-	autocmd FileType tex autocmd BufWritePost <buffer> VimtexView
-	autocmd User VimtexEventQuit call vimtex#latexmk#clean(0)
-augroup END
+" augroup vimtex_config
+" 	autocmd!
+" 	autocmd FileType tex autocmd BufWritePost <buffer> VimtexView
+" 	autocmd User VimtexEventQuit call vimtex#latexmk#clean(0)
+" augroup END
 let g:vimtex_view_method="zathura"
 
 " neoterm {{{3
