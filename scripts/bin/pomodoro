@@ -15,16 +15,16 @@ for i in 2 3 4; do
 	task start "$id"
 	countdown "25m" # Needs the countdown script
 	notify-send --app-name=Pomodoro "Time's up" "Time to relax"
-	echo "Enough. Start pause? [Y/n]"
-	read -r item
+	echo "Enough."
+	read -r -n 1 -p "Start pause? [Y/n]" item
 	task stop "$id"
 	case "$item" in
 		n|N) exit;;
 		*) countdown 5m;;
 	esac
 	notify-send --app-name=Pomodoro "Time's up" "Time to work"
-	echo "Time for round $i. Ready? [Y/n]"
-	read -r item
+	echo "Time for round $i."
+	read -r -n 1 -p "Ready? [Y/n]" item
 	task stop "$id"
 	case "$item" in
 		n|N) exit;;
