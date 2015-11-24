@@ -1,0 +1,32 @@
+#! /bin/bash
+# Use taskwarrior in combination with the pomodoro technique.
+# the arguments are passed to taskwarrior as a filter
+
+# the surrounding parenthesis turn the space-seperated ids into an array
+ids=($(task rc.gc=off rc.verbose=no status:pending ids "$@" 2>/dev/null))
+if [[ ${#ids[@]} -gt 1 ]]; then
+	echo "The filter is ambigous. Please be more specific."
+	exit 1
+fi
+
+id=${ids[0]}
+task list "$id"
+for i in 2 3 4; do
+	task start "$id"
+	countdown "25m" # Needs the countdown script
+	notify-send --app-name=Pomodoro "Time's up" "Time to relax"
+	echo "Enough. Start pause? [Y/n]"
+	read -r item
+	task stop "$id"
+	case "$item" in
+		n|N) exit;;
+		*) countdown 5m;;
+	esac
+	notify-send --app-name=Pomodoro "Time's up" "Time to work"
+	echo "Time for round $i. Ready? [Y/n]"
+	read -r item
+	task stop "$id"
+	case "$item" in
+		n|N) exit;;
+	esac
+done
