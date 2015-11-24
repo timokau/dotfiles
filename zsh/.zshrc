@@ -357,6 +357,7 @@ export RPS1="%(?..%B(%?%)%b )%1~"
 # aliases {{{1
 #
 alias rm='rm -Iv --one-file-system'
+alias cp='cp -i'
 alias bell='echo -en "\a"'
 alias e="$EDITOR"
 alias detach='bg && disown && exit'
