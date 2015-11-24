@@ -28,5 +28,8 @@ echo -e "Counting down $seconds seconds until $(date --date @${dateAfter} +'%F %
 while [[ "$dateAfter" > `date +%s` ]]; do 
     echo -ne "\033[2K" # clear the line
     echo -ne "$(date -u --date @$(($dateAfter - `date +%s`)) +%H:%M:%S)\r";
-    sleep 0.1
+    read -r -n 1 -s -t 0.1 input
+    if [[ $input == "a" ]]; then # abourt
+    	exit
+    fi
 done
