@@ -217,38 +217,6 @@ bindkey '^Z' fancy-ctrl-z
 # utility functions {{{1
 #
 
-# display a countdown (usage similar to sleep)
-function countdown(){
-    seconds=0
-    while [[ $# -ge 1 ]]
-    do
-        number=${1:0: -1}
-        suffix=${1: -1}
-        case $suffix in
-            s)
-                seconds=$(( $seconds + $number ))
-                ;;
-            m)
-                seconds=$(( $seconds + $number * 60 ))
-                ;;
-            h)
-                seconds=$(( $seconds + $number * 60 * 60 ))
-                ;;
-            *)
-                number=${number}${suffix}
-                seconds=$(( $seconds + $number ))
-                ;;
-        esac
-        shift
-    done
-    dateAfter=$((`date +%s` + $seconds)); 
-    echo -e "Counting down $seconds seconds until $(date --date @${dateAfter} +'%F %T')..."
-    while [[ "$dateAfter" > `date +%s` ]]; do 
-        echo -ne "\033[2K" # clear the line
-        echo -ne "$(date -u --date @$(($dateAfter - `date +%s`)) +%H:%M:%S)\r";
-        sleep 0.1
-    done
-}
 alias cntd='countdown'
 cntdn () {
 	countdown $@
