@@ -1,6 +1,7 @@
 #! /bin/bash
 # Use taskwarrior in combination with the pomodoro technique.
 # the arguments are passed to taskwarrior as a filter
+# This is a pretty ugly script, but it works (isn't this the definition of a bash script?)
 
 # the surrounding parenthesis turn the space-seperated ids into an array
 ids=($(task rc.gc=off rc.verbose=no status:pending ids "$@" 2>/dev/null))
@@ -16,8 +17,12 @@ for i in 2 3 4; do
 	countdown "25m" # Needs the countdown script
 	notify-send --app-name=Pomodoro "Time's up" "Time to relax"
 	echo "Enough."
-	read -r -n 1 -p "Start pause? [Y/n]" item
+	read -r -n1 -p"Finished working? [Y/n]" item
+	echo # newline
 	task stop "$id"
+	if [[ $i == 4 ]]; then # Don't pause the last time
+		break
+	fi
 	case "$item" in
 		n|N) exit;;
 		*) countdown 5m;;
@@ -25,6 +30,7 @@ for i in 2 3 4; do
 	notify-send --app-name=Pomodoro "Time's up" "Time to work"
 	echo "Time for round $i."
 	read -r -n 1 -p "Ready? [Y/n]" item
+	echo # newlline
 	task stop "$id"
 	case "$item" in
 		n|N) exit;;
