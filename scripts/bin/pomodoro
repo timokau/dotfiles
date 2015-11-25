@@ -3,22 +3,27 @@
 # the arguments are passed to taskwarrior as a filter
 # This is a pretty ugly script, but it works (isn't this the definition of a bash script?)
 
-# the surrounding parenthesis turn the space-seperated ids into an array
-ids=($(task rc.gc=off rc.verbose=no status:pending ids "$@" 2>/dev/null))
-if [[ ${#ids[@]} -gt 1 ]]; then
-	echo "The filter is ambigous. Please be more specific."
-	exit 1
-fi
+get_id() {
+	# the surrounding parenthesis turn the space-seperated ids into an array
+	ids=($(task rc.gc=off rc.verbose=no status:pending ids "$@" 2>/dev/null))
+	if [[ ${#ids[@]} -gt 1 ]]; then
+		echo "The filter is ambigous. Please be more specific."
+		exit 1
+	fi
+	id=${ids[0]}
+}
 
-id=${ids[0]}
+get_id "$@"
 task list "$id"
 for i in 2 3 4; do
+	get_id "$@"
 	task start "$id"
 	countdown "25m" # Needs the countdown script
 	notify-send --app-name=Pomodoro "Time's up" "Time to relax"
 	echo "Enough."
 	read -r -n1 -p"Finished working? [Y/n]" item
 	echo # newline
+	get_id "$@"
 	task stop "$id"
 	if [[ $i == 4 ]]; then # Don't pause the last time
 		break
@@ -31,6 +36,7 @@ for i in 2 3 4; do
 	echo "Time for round $i."
 	read -r -n 1 -p "Ready? [Y/n]" item
 	echo # newlline
+	get_id "$@"
 	task stop "$id"
 	case "$item" in
 		n|N) exit;;
