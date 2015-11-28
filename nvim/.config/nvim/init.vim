@@ -73,6 +73,9 @@ let $RUST_SRC_PATH=$HOME . "/.local/share/racer/rust/src"
 silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
 
+" rust.vim {{{3
+let g:rustfmt_autosave = 1 " Run rustfmt on save
+
 " vimtex {{{3
 " augroup vimtex_config
 " 	autocmd!
