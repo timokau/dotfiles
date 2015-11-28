@@ -13,6 +13,14 @@ xmodmap -e 'keysym Caps_Lock = Control_L'
 xmodmap -e 'add Control = Control_L'
 xcape -e 'Control_L=Escape'
 
+# Use tab as alt-gr
+key="ISO_Level3_Shift"
+xmodmap -e "keysym Tab = $key"
+xmodmap -e "remove mod4 = $key"
+xmodmap -e "add Control = $key"
+xmodmap -e 'keycode any = Tab'
+xcape -e "$key=Tab"
+
 # I prefer my keys alive
 xmodmap -e 'keysym dead_circumflex = asciicircum'
 xmodmap -e 'keysym dead_acute = acute grave'
