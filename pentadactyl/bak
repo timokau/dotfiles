@@ -89,7 +89,7 @@ function saveToWallabag(url) {
 EOS
 
 " Commands {{{
-command! -nargs=0 mpv :silent :execute "!mpv --ytdl-format='best[height<=1080]' '" + content.location.href + "' &"
+command! -nargs=0 mpv :silent :execute "!mpv --ytdl-format=best '" + content.location.href + "' &"
 command! -nargs=0 feh :silent :execute "!feh '" + content.location.href + "' &"
 command! -nargs=0 qute :silent :execute "!qutebrowser '" + content.location.href + "' &"
 command! -nargs=0 wbag :javascript saveToWallabag(content.location.href)
