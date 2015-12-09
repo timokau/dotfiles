@@ -51,7 +51,12 @@ Plug 'tpope/vim-surround'                                 " Surrounding things
 Plug 'tpope/vim-unimpaired'                               " Mappings
 Plug 'tpope/vim-commentary'                               " Comment stuff out
 Plug 'clever-f.vim'                                       " Make F and T repeatable
-Plug 'Valloric/YouCompleteMe', {'do': './install.sh'}     " Better autocompletion
+"
+if has('nvim')
+	Plug 'Shougo/deoplete.nvim'                           " Better autocompletion
+else
+	Plug 'Valloric/YouCompleteMe', {'do': './install.sh'} " Better autocompletion
+endif
 Plug 'SirVer/ultisnips'                                   " Snipptes suppert
 Plug 'scrooloose/syntastic'                               " Syntax checking on save
 Plug 'bling/vim-airline'                                  " Better statusbar
@@ -83,6 +88,9 @@ let g:rustfmt_autosave = 1 " Run rustfmt on save
 " 	autocmd User VimtexEventQuit call vimtex#latexmk#clean(0)
 " augroup END
 let g:vimtex_view_method="zathura"
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
 
 " neoterm {{{3
 nnoremap <silent> <leader>r :update<Cr>:T<Space>clear;<Space>cargo<Space>run<Cr>
