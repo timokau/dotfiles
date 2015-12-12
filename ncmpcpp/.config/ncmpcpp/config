@@ -1,6 +1,6 @@
 # For reference see 'man ncmpcpp' and the example configuration
 ##### directories ######
-ncmpcpp_directory = "~/.ncmpcpp"
+ncmpcpp_directory = "~/.config/ncmpcpp"
 lyrics_directory = "~/Music/lyrics"
 
 ##### connection settings #####
