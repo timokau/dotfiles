@@ -58,7 +58,7 @@ else
 	Plug 'Valloric/YouCompleteMe', {'do': './install.sh'} " Better autocompletion
 endif
 Plug 'SirVer/ultisnips'                                   " Snipptes suppert
-Plug 'scrooloose/syntastic'                               " Syntax checking on save
+Plug 'benekastah/neomake'                                 " Linter
 Plug 'bling/vim-airline'                                  " Better statusbar
 Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
@@ -104,25 +104,11 @@ let g:neoterm_size = 15
 " surround with latex command
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
-" Syntastic {{{3
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_tex_chktex_quiet_messages = {
-	\ "regex": ['Vertical rules in tables are ugly.',
-	          \ 'You should put a space in front of parenthesis.',
-	          \ 'You should put a space after parenthesis.',
-	          \ 'Command terminated with space.',
-	          \ 'You might wish to put this between a pair of `{}''',
-	          \ 'You should avoid spaces after parenthesis.',
-	          \ 'Number of `('' doesn''t match the number of `)''!',
-	          \ 'Mathmode still on at end of LaTeX file.',
-	          \ 'Delete this space to maintain correct pagereferences.',
-	          \ 'Intersentence spacing (`\\@'') should perhaps be used.',
-	          \ 'You should use \\.\?dots to achieve an ellipsis.',
-	          \ 'Wrong length of dash may have been used.']
-\}
+" Neomake {{{3
+augroup neomake
+	autocmd!
+	autocmd BufWritePost * Neomake
+augroup END
 
 " Ultisnips {{{3
 " Trigger configuration. <tab> interferes with YouCompleteMe
