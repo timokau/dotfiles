@@ -9,6 +9,12 @@ def_key "k"
 def_key "j"
   scroll_down
 
+def_key "v"
+  select_item
+
+def_key "ctrl-v"
+  select_range
+
 def_key "ctrl_u"
   page_up
 
