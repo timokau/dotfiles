@@ -153,6 +153,9 @@ imap -builtin <C-S-a> <C-Home><C-S-End>
 autocmd!
 " No, I really don't want the newtab page (even if I close the last tab)
 autocmd LocationChange about:newtab :open about:blank
+" The reddit sidebar is way too big when firefox doesn't take up the whole screen
+autocmd PageLoad 'https://www.reddit.com/*' :javascript $('.side').hide();void(0);
+command! SideToggle -javascript $('.side').toggle();void(0);
 
 " Browser Settings {{{
 " General
