@@ -1,10 +1,5 @@
 " vim: set ft=pentadactyl:
 
-" Initialisation
-" TODO
-"loadplugins '\.(js|penta)$'
-" TODO
-"group user
 set cdpath=''
 
 " Search engines {{{
@@ -32,25 +27,23 @@ silent qmark P localhost:8000
 " TODO
 " set passkeys&
 " set passkeys+=feedly.com:jkrs
+" ignorekeys add -except=g,n,t,o,d,h,l,f,;,<c-h>,<c-l>,<c-n>,<c-p>,: feedly.com
 " set passkeys+=duolingo.com/practice:<Enter>
 " set passkeys+=reddit.com:jkpö+-<C-C><C-Enter><Enter>
 " set passkeys+=duckduckgo.com:jk<Enter>
 " set passkeys+=getpocket.com:jka?<A-1><A-2><A-3><A-5><Enter>
 
-" TODO
-" set hintkeys="hsdfgyuiopqwertnmzxcvb"
+set hintchars="hsdfgyuiopqwertnmzxcvb"
 " Whatsapp Web
 " TODO
 " set hinttags+=div[class=chat],'div[class="unread chat"]'
 
-" TODO
 " No scrollbars
-" set guioptions-=r
-" set guioptions-=b
+set toolbars=none,tabs
+set noscrollbars
 
 " Appearance {{{
-" TODO
-"colorscheme solarized-dark
+colorscheme seaweed
 highlight Hint font-size:12;color:white;background-color:red;padding:2px
 
 " Javascript helper functions {{{
