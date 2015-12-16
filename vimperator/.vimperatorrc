@@ -1,8 +1,10 @@
 " vim: set ft=pentadactyl:
 
 " Initialisation
-loadplugins '\.(js|penta)$'
-group user
+" TODO
+"loadplugins '\.(js|penta)$'
+" TODO
+"group user
 set cdpath=''
 
 " Search engines {{{
@@ -27,23 +29,28 @@ silent qmark t www.tvshowtime.com
 silent qmark P localhost:8000
 
 " Settings {{{
-set passkeys&
-set passkeys+=feedly.com:jkrs
-set passkeys+=duolingo.com/practice:<Enter>
-set passkeys+=reddit.com:jkpö+-<C-C><C-Enter><Enter>
-set passkeys+=duckduckgo.com:jk<Enter>
-set passkeys+=getpocket.com:jka?<A-1><A-2><A-3><A-5><Enter>
+" TODO
+" set passkeys&
+" set passkeys+=feedly.com:jkrs
+" set passkeys+=duolingo.com/practice:<Enter>
+" set passkeys+=reddit.com:jkpö+-<C-C><C-Enter><Enter>
+" set passkeys+=duckduckgo.com:jk<Enter>
+" set passkeys+=getpocket.com:jka?<A-1><A-2><A-3><A-5><Enter>
 
-set hintkeys="hsdfgyuiopqwertnmzxcvb"
+" TODO
+" set hintkeys="hsdfgyuiopqwertnmzxcvb"
 " Whatsapp Web
-set hinttags+=div[class=chat],'div[class="unread chat"]'
+" TODO
+" set hinttags+=div[class=chat],'div[class="unread chat"]'
 
+" TODO
 " No scrollbars
-set guioptions-=r
-set guioptions-=b
+" set guioptions-=r
+" set guioptions-=b
 
 " Appearance {{{
-colorscheme solarized-dark
+" TODO
+"colorscheme solarized-dark
 highlight Hint font-size:12;color:white;background-color:red;padding:2px
 
 " Javascript helper functions {{{
@@ -52,11 +59,11 @@ function new_tab(url) {
 	// Open a new tab or overwrite the current one if it is blank
 	if (content.location.href === "about:blank")
 	{
-		dactyl.open(url, dactyl.CURRENT_TAB)
+		liberator.open(url, liberator.CURRENT_TAB)
 	}
 	else
 	{
-		dactyl.open(url, dactyl.NEW_TAB)
+		liberator.open(url, liberator.NEW_TAB)
 	}
 }
 
@@ -78,10 +85,10 @@ function saveToWallabag(url) {
 	httpGetAsync(wallabag_url, function(text){
 		success=text.search("the link has been added successfully") != -1
 		if (success)
-			dactyl.echomsg("Link saved", 0, 0)
+			liberator.echomsg("Link saved", 0, 0)
 		else
 		{
-			dactyl.echoerr("Link couldn't be saved.", 0)
+			liberator.echoerr("Link couldn't be saved.", 0)
 			new_tab(wallabag_url)
 		}
 	})
@@ -96,38 +103,20 @@ command! -nargs=0 wbag :javascript saveToWallabag(content.location.href)
 
 " Hint modes {{{
 javascript <<EOS
-hints.addMode("m", "Open in mpv", (elem, loc) => dactyl.execute("silent !mpv '" + loc + "' &", null, true));
+hints.addMode("m", "Open in mpv", (elem, loc) => liberator.execute("silent !mpv '" + loc + "' &", null, true));
 
 hints.addMode("w", "Save to wallabag", (elem, loc) => saveToWallabag(loc));
 EOS
 
-" To Enable map <Space>
-" (see https://github.com/vimperator/vimperator-labs/issues/10#issuecomment-158256240)
-js <<EOM
-  window.addEventListener('keypress',function (event) {
-    var code=event.charCode;
-    if ((liberator.mode === modes.INSERT && modes.extended === modes.MENU)
-    ||(liberator.mode ==modes.NORMAL && code==32)
-    ||(liberator.mode ==modes.COMMAND_LINE && code !=32)){
-      let map = mappings.get(liberator.mode, events.toString(event));
-      if (map) {
-        event.preventDefault();
-        event.stopPropagation();
-        map.execute();
-      }
-    }
-  },false);
-EOM
-
 " Mappings {{{
 nmap <Space> <Leader>
-nmap -builtin , :
-nmap -builtin j 5j
-nmap -builtin k 5k
+nnoremap , :
+nnoremap j 5j
+nnoremap k 5k
 
-nmap -builtin <Leader>m :mpv<CR>d
-nmap -builtin <Leader>q :qute<CR>d
-nmap -builtin <Leader>w :wbag<CR>d
+nnoremap <Leader>m :mpv<CR>d
+nnoremap <Leader>q :qute<CR>d
+nnoremap <Leader>w :wbag<CR>d
 
 nmap <Leader>c nohlsearch
 
@@ -135,37 +124,37 @@ nmap <Leader>c nohlsearch
 map T :tabopen!<Space>
 
 " Move tab
-nmap -builtin <C-S-h> :tabmove -1<CR>
-nmap -builtin <C-S-l> :tabmove +1<CR>
+nnoremap <C-S-h> :tabmove -1<CR>
+nnoremap <C-S-l> :tabmove +1<CR>
 
 " Normally copy and paste
-nmap -builtin <C-v> <C-v><C-v>
-imap -builtin <C-v> <C-v><C-v>
-cmap -builtin <C-v> <C-v><C-v>
-vmap -builtin <C-v> <C-v><C-v>
-nmap -builtin <C-c> <C-v><C-c>
-imap -builtin <C-c> <C-v><C-c>
-cmap -builtin <C-c> <C-v><C-c>
-vmap -builtin <C-c> <C-v><C-c>
+nnoremap <C-v> <C-v><C-v>
+inoremap <C-v> <C-v><C-v>
+cnoremap <C-v> <C-v><C-v>
+vnoremap <C-v> <C-v><C-v>
+nnoremap <C-c> <C-v><C-c>
+inoremap <C-c> <C-v><C-c>
+cnoremap <C-c> <C-v><C-c>
+vnoremap <C-c> <C-v><C-c>
 
 " Re-Source
-nmap -builtin <Leader>rs :source ~/.pentadactylrc<CR>:echo "Settings reloaded"<CR>
+nnoremap <Leader>rs :source ~/.vimperatorrc<CR>:echo "Settings reloaded"<CR>
 
 " Tab detach
-nmap -builtin <Leader>td :tabdetach<CR>
+nnoremap <Leader>td :tabdetach<CR>
 
-" Edit pentadactylrc
-nmap -builtin <Leader>er :!vim -g ~/.pentadactylrc<CR>
+" Edit vimperatorrc
+nnoremap <Leader>er :!vim -g ~/.vimperatorrc<CR>
 
 " Use <BS> to return to previous tab
-nmap -builtin <BS> <C-^>
+nnoremap <BS> <C-^>
 
 " Use h,l to move left,right between tabs
-nmap -builtin <C-h> :tabprevious<CR>
-nmap -builtin <C-l> :tabnext<CR>
+nnoremap <C-h> :tabprevious<CR>
+nnoremap <C-l> :tabnext<CR>
 
 " Select all
-imap -builtin <C-S-a> <C-Home><C-S-End>
+inoremap <C-S-a> <C-Home><C-S-End>
 
 " Autocmds {{{
 autocmd!
@@ -206,24 +195,24 @@ set! noscript.keys.tempAllowPage="ctrl shift n"
 " Pocket
 set! extensions.isreaditlater.autoCloseTab=true
 
-command! PlugInstall -nargs=0 -description "Install my addons" -javascript <<EOF
-	// Addons from mozilla.org
-	var ext = [];
-	ext.push("452714"); // Pushbullet
-	ext.push("387429"); // Reddit Enhancement Suite
-	ext.push("7661");   // Pocket
-	ext.push("722");    // NoScript
-	for(var i=0; i<ext.length; i++) {
-		dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/latest/" + ext[i] + "/addon-" + ext[i] + "-latest.xpi")
-	}
+" TODO
+" command! PlugInstall -nargs=0 -description "Install my addons" :javascript <<EOS
+" 	// Addons from mozilla.org
+" 	var ext = [];
+" 	ext.push("452714"); // Pushbullet
+" 	ext.push("387429"); // Reddit Enhancement Suite
+" 	ext.push("7661");   // Pocket
+" 	ext.push("722");    // NoScript
+" 	for(var i=0; i<ext.length; i++) {
+" 		liberator.execute("extadd https://addons.mozilla.org/firefox/downloads/latest/" + ext[i] + "/addon-" + ext[i] + "-latest.xpi")
+" 	}
 
-	// HTTPS-Everywhere
-	dactyl.execute("extadd https://www.eff.org/files/https-everywhere-latest.xpi")
+" 	// HTTPS-Everywhere
+" 	liberator.execute("extadd https://www.eff.org/files/https-everywhere-latest.xpi")
 
-	// GNotifier
-	dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/file/309172/gnotifier-1.8.9-sm+tb+fx-linux.xpi?src=dp-btn-primary")
+" 	// GNotifier
+" 	liberator.execute("extadd https://addons.mozilla.org/firefox/downloads/file/309172/gnotifier-1.8.9-sm+tb+fx-linux.xpi?src=dp-btn-primary")
 
-	// uBlock Origin
-	dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/file/312228/ublock_origin-0.9.5.0-an+sm+fx.xpi?src=dp-btn-primary")
-EOF
-
+" 	// uBlock Origin
+" 	liberator.execute("extadd https://addons.mozilla.org/firefox/downloads/file/312228/ublock_origin-0.9.5.0-an+sm+fx.xpi?src=dp-btn-primary")
+" EOS
