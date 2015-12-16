@@ -1,0 +1,229 @@
+" vim: set ft=pentadactyl:
+
+" Initialisation
+loadplugins '\.(js|penta)$'
+group user
+set cdpath=''
+
+" Search engines {{{
+set defsearch=duckduckgo
+silent bmark -title="Subreddit"   -keyword="r"   "www.reddit.com/r/%s/"
+silent bmark -title="Leo Es - De" -keyword="lsd" "dict.leo.org/esde/#/search=%s"
+silent bmark -title="Leo En - De" -keyword="led" "dict.leo.org/ende/#/search=%s"
+silent bmark -title="Arch Wiki"   -keyword="aw"  "wiki.archlinux.org/index.php?search=%s"
+silent bmark -title="Youtube"     -keyword="yt"  "www.youtube.com/results?search_type=search_videos&search_sort=relevance&search_query=%s&search=Search"
+
+" Quick marks {{{
+delqmarks!
+silent qmark r www.reddit.com
+silent qmark R www.reddit.com/r/Dashboard
+silent qmark w web.whatsapp.com
+silent qmark f www.feedly.com
+silent qmark F www.facebook.de
+silent qmark p www.getpocket.com/a/queue/list
+silent qmark w www.framabag.org/u/eisfreak7
+silent qmark t www.tvshowtime.com
+" Pyload
+silent qmark P localhost:8000
+
+" Settings {{{
+set passkeys&
+set passkeys+=feedly.com:jkrs
+set passkeys+=duolingo.com/practice:<Enter>
+set passkeys+=reddit.com:jkpö+-<C-C><C-Enter><Enter>
+set passkeys+=duckduckgo.com:jk<Enter>
+set passkeys+=getpocket.com:jka?<A-1><A-2><A-3><A-5><Enter>
+
+set hintkeys="hsdfgyuiopqwertnmzxcvb"
+" Whatsapp Web
+set hinttags+=div[class=chat],'div[class="unread chat"]'
+
+" No scrollbars
+set guioptions-=r
+set guioptions-=b
+
+" Appearance {{{
+colorscheme solarized-dark
+highlight Hint font-size:12;color:white;background-color:red;padding:2px
+
+" Javascript helper functions {{{
+javascript <<EOS
+function new_tab(url) {
+	// Open a new tab or overwrite the current one if it is blank
+	if (content.location.href === "about:blank")
+	{
+		dactyl.open(url, dactyl.CURRENT_TAB)
+	}
+	else
+	{
+		dactyl.open(url, dactyl.NEW_TAB)
+	}
+}
+
+function httpGetAsync(url, callback)
+{
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function() {
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+			callback(xmlHttp.responseText);
+	}
+	xmlHttp.open("GET", url, true);
+	xmlHttp.send(null);
+}
+
+function saveToWallabag(url) {
+	wallabag_server="https://www.framabag.org/u/eisfreak7"
+
+	wallabag_url=wallabag_server + "/?action=add&url=" + btoa(url)
+	httpGetAsync(wallabag_url, function(text){
+		success=text.search("the link has been added successfully") != -1
+		if (success)
+			dactyl.echomsg("Link saved", 0, 0)
+		else
+		{
+			dactyl.echoerr("Link couldn't be saved.", 0)
+			new_tab(wallabag_url)
+		}
+	})
+}
+EOS
+
+" Commands {{{
+command! -nargs=0 mpv :silent :execute "!mpv --ytdl-format='best[height<=1080]' '" + content.location.href + "' &"
+command! -nargs=0 feh :silent :execute "!feh '" + content.location.href + "' &"
+command! -nargs=0 qute :silent :execute "!qutebrowser '" + content.location.href + "' &"
+command! -nargs=0 wbag :javascript saveToWallabag(content.location.href)
+
+" Hint modes {{{
+javascript <<EOS
+hints.addMode("m", "Open in mpv", (elem, loc) => dactyl.execute("silent !mpv '" + loc + "' &", null, true));
+
+hints.addMode("w", "Save to wallabag", (elem, loc) => saveToWallabag(loc));
+EOS
+
+" To Enable map <Space>
+" (see https://github.com/vimperator/vimperator-labs/issues/10#issuecomment-158256240)
+js <<EOM
+  window.addEventListener('keypress',function (event) {
+    var code=event.charCode;
+    if ((liberator.mode === modes.INSERT && modes.extended === modes.MENU)
+    ||(liberator.mode ==modes.NORMAL && code==32)
+    ||(liberator.mode ==modes.COMMAND_LINE && code !=32)){
+      let map = mappings.get(liberator.mode, events.toString(event));
+      if (map) {
+        event.preventDefault();
+        event.stopPropagation();
+        map.execute();
+      }
+    }
+  },false);
+EOM
+
+" Mappings {{{
+nmap <Space> <Leader>
+nmap -builtin , :
+nmap -builtin j 5j
+nmap -builtin k 5k
+
+nmap -builtin <Leader>m :mpv<CR>d
+nmap -builtin <Leader>q :qute<CR>d
+nmap -builtin <Leader>w :wbag<CR>d
+
+nmap <Leader>c nohlsearch
+
+" Open a new tab in the background
+map T :tabopen!<Space>
+
+" Move tab
+nmap -builtin <C-S-h> :tabmove -1<CR>
+nmap -builtin <C-S-l> :tabmove +1<CR>
+
+" Normally copy and paste
+nmap -builtin <C-v> <C-v><C-v>
+imap -builtin <C-v> <C-v><C-v>
+cmap -builtin <C-v> <C-v><C-v>
+vmap -builtin <C-v> <C-v><C-v>
+nmap -builtin <C-c> <C-v><C-c>
+imap -builtin <C-c> <C-v><C-c>
+cmap -builtin <C-c> <C-v><C-c>
+vmap -builtin <C-c> <C-v><C-c>
+
+" Re-Source
+nmap -builtin <Leader>rs :source ~/.pentadactylrc<CR>:echo "Settings reloaded"<CR>
+
+" Tab detach
+nmap -builtin <Leader>td :tabdetach<CR>
+
+" Edit pentadactylrc
+nmap -builtin <Leader>er :!vim -g ~/.pentadactylrc<CR>
+
+" Use <BS> to return to previous tab
+nmap -builtin <BS> <C-^>
+
+" Use h,l to move left,right between tabs
+nmap -builtin <C-h> :tabprevious<CR>
+nmap -builtin <C-l> :tabnext<CR>
+
+" Select all
+imap -builtin <C-S-a> <C-Home><C-S-End>
+
+" Autocmds {{{
+autocmd!
+" No, I really don't want the newtab page (even if I close the last tab)
+autocmd LocationChange about:newtab :open about:blank
+" The reddit sidebar is way too big when firefox doesn't take up the whole screen
+autocmd PageLoad 'https://www.reddit.com/*' :javascript $('.side').hide();void(0);
+command! SideToggle -javascript $('.side').toggle();void(0);
+
+" Browser Settings {{{
+" General
+set! browser.startup.homepage="about:blank"
+set! browser.newtab.url="about:blank"
+set! browser.search.selectedEngine="DuckDuckGo"
+set! browser.search.defaultenginename="DuckDuckGo"
+set! browser.bookmarks.restore_default_bookmarks=false
+set! browser.download.lastDir=""
+set! browser.tabs.closeWindowWithLastTab=false
+set! browser.tabs.warnOnClose=false
+
+" Privacy
+set! privacy.clearOnShutdown.cache=false
+set! privacy.clearOnShutdown.cookies=false
+set! privacy.clearOnShutdown.downloads=true
+set! privacy.clearOnShutdown.formdata=true
+set! privacy.clearOnShutdown.history=false
+set! privacy.clearOnShutdown.offlineApps=true
+set! privacy.clearOnShutdown.passwords=true
+set! privacy.clearOnShutdown.sessions=true
+set! privacy.clearOnShutdown.siteSettings=true
+set! privacy.donottrackheader.enabled=true
+set! signon.rememberSignons=false
+
+" Noscript
+set! noscript.untrusted="google-analytics.com http://google-analytics.com https://google-analytics.com"
+set! noscript.keys.tempAllowPage="ctrl shift n"
+
+" Pocket
+set! extensions.isreaditlater.autoCloseTab=true
+
+command! PlugInstall -nargs=0 -description "Install my addons" -javascript <<EOF
+	// Addons from mozilla.org
+	var ext = [];
+	ext.push("452714"); // Pushbullet
+	ext.push("387429"); // Reddit Enhancement Suite
+	ext.push("7661");   // Pocket
+	ext.push("722");    // NoScript
+	for(var i=0; i<ext.length; i++) {
+		dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/latest/" + ext[i] + "/addon-" + ext[i] + "-latest.xpi")
+	}
+
+	// HTTPS-Everywhere
+	dactyl.execute("extadd https://www.eff.org/files/https-everywhere-latest.xpi")
+
+	// GNotifier
+	dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/file/309172/gnotifier-1.8.9-sm+tb+fx-linux.xpi?src=dp-btn-primary")
+
+	// uBlock Origin
+	dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/file/312228/ublock_origin-0.9.5.0-an+sm+fx.xpi?src=dp-btn-primary")
+EOF
+
