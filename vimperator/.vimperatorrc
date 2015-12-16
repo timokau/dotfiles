@@ -101,6 +101,27 @@ hints.addMode("m", "Open in mpv", (elem, loc) => liberator.execute("silent !mpv 
 hints.addMode("w", "Save to wallabag", (elem, loc) => saveToWallabag(loc));
 EOS
 
+" To Enable map <Space>
+" see (https://github.com/vimperator/vimperator-labs/issues/10#issuecomment-158256240)
+js <<EOM
+  window.addEventListener('keypress',function (event) {
+    var code=event.charCode;
+    if ((liberator.mode === modes.INSERT && modes.extended === modes.MENU)
+    ||(liberator.mode ==modes.NORMAL && code==32)
+    ||(liberator.mode ==modes.COMMAND_LINE && code !=32)){
+      let map = mappings.get(liberator.mode, events.toString(event));
+      if (map) {
+        event.preventDefault();
+        event.stopPropagation();
+        map.execute();
+      }
+    }
+  },false);
+EOM
+
+" My Customization
+map <Space> <Leader>
+
 " Mappings {{{
 nmap <Space> <Leader>
 nnoremap , :
