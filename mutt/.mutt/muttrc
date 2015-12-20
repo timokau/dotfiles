@@ -1,0 +1,134 @@
+# mail is fetched by mbsync
+mailboxes "+gmx/archive" "+gmx/inbox" "+gmx/sent" "+yahoo/archive" "+yahoo/inbox" "+yahoo/sent"
+mailboxes +search \
+          +drafts
+
+# contacts are managed by khard
+set query_command= "khard email --search '%s'"
+bind editor <Tab> complete-query
+bind editor ^T    complete
+macro index,pager A \
+    "<pipe-message>khard add-email<return>" \
+    "add the sender email address to khard"
+
+set folder = "$HOME/Mail"
+set mbox_type = Maildir
+set spoolfile = "+yahoo/inbox"
+set postponed = "+draft"
+set alias_file = "~/.mutt/aliases"
+set sort_alias = alias
+source $alias_file
+set header_cache = "~/.cache/mutt/headers"
+set message_cachedir = "~/.cache/mutt/bodies"
+set certificate_file = "~/.mutt/certificates"
+set mailcap_path = "~/.mutt/mailcap"
+
+# Stuff I don't add to github:
+# folder-hook yahoo 'set \
+#     from = "___" \
+#     mbox = "+yahoo/archive" \
+#     record = "+yahoo/sent" \
+#     sendmail = "/usr/bin/msmtp -a yahoo"'
+# folder-hook gmx 'set \
+#     from = "___" \
+#     realname = "___" \
+#     mbox = "+gmx/archive" \
+#     record = "+gmx/sent" \
+#     sendmail = "/usr/bin/msmtp -a gmx"'
+# alternates "___" "___" # my 2 email addresses
+source ~/.mutt/personal
+
+set wait_key = no
+set mail_check = 0
+set timeout = 3
+set mark_old = no
+set edit_headers
+set beep_new
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+set date_format = "%y-%m-%d %H:%M"
+set index_format = "[%Z]  %D  %-20.20F  %s"
+set sort=threads
+set sort_aux = last-date-received
+set sort_re
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set strict_threads=yes
+set charset = 'utf-8'
+set pager_format = "%4C %Z %[!%Y-%m-%d at %H:%M]  %.20n  %s%* -- (%P)"
+set pager_index_lines = 10
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set tilde
+unset markers
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+alternative_order text/enriched text/plain text/html
+auto_view text/html
+set fast_reply
+set fcc_attach
+set forward_format = "Fwd: %s"
+set mime_forward
+set attribution = "On %d, %n wrote:"
+set reply_to
+set reverse_name
+set include
+set forward_quote
+set editor = "$EDITOR"
+set sendmail_wait = 0
+set abort_nosubject = ask-no
+set abort_unmodified = ask-yes
+set copy = yes
+set delete = yes
+set forward_edit = ask-yes
+set include = ask-yes
+set mime_forward = ask-yes
+set mime_forward_rest = ask-yes
+set postpone = ask-no
+set print = ask-no
+set reply_to = ask-yes
+unset collapse_unread
+exec collapse-all
+
+# Header Options -------------------------------------
+ignore *
+unignore from: to: cc: date: subject: # show only these
+unhdr_order *
+hdr_order from: to: cc: date: subject: # and in this order
+
+bind pager j next-line
+bind pager k previous-line
+bind pager J next-entry
+bind pager K previous-entry
+bind pager gg top
+bind pager G bottom
+bind pager R group-reply
+bind pager N search-opposite
+bind index N search-opposite
+bind index p recall-message
+bind index gg first-entry
+bind index G last-entry
+bind index <tab> sync-mailbox
+bind index <space> collapse-thread
+bind attach <return> view-mailcap
+bind compose p postpone-message
+
+macro index R '<enter-command>unset wait_key<enter><shell-escape>mbsync -Va<enter>' 'sync the mail'
+macro index S "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt -o ~/Mail/search -p search<enter><change-folder-readonly>+search<enter>" "search mail (using notmuch)"
+macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
+macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+macro pager \Cu "|urlview<enter>" "call urlview to open links"
+
+###----------------------------------------------------------------------------
+### color config
+###----------------------------------------------------------------------------
+
+source ~/.mutt/colors
+
+# Sidebar Patch
+set sidebar_delim = ' │'
+set sidebar_visible = yes
+set sidebar_width = 24
+color sidebar_new color221 color233
+bind index,pager \Cn sidebar-next
+bind index,pager \Cp sidebar-prev
+bind index,pager \Co sidebar-open
