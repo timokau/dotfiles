@@ -1,0 +1,10 @@
+[Unit]
+Description=Notify about new mail
+
+[Service]
+ExecStart=/usr/bin/bash -c %h/bin/mailcheck
+Environment=DISPLAY=:0
+Restart=always
+
+[Install]
+WantedBy=default.target

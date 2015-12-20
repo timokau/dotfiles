@@ -1,0 +1,11 @@
+[Unit]
+Description=Notify about priority 0-3 errors in journald
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/bash -c %h/bin/systemd-error-notify
+Environment=DISPLAY=:0
+Restart=always
+
+[Install]
+WantedBy=default.target
