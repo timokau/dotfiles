@@ -4,18 +4,6 @@ dotfiles
 # Introduction
 The files are organized by application. Each application has its own folders, in which the config files are placed like they are relative to the home folder.  
 To install one of the configurations, install [GNU Stow][1], clone the repository (for example to `$HOME/dotfiles`), change into the directory and call `stow *application*`.  
-
-# Notes and Descriptions
-
-### (neo)vim
-[neovim][2] is an "ambitious Vim-fork focused on extensibility and agility".
-The vim and neovim configurations are currently symlinked.
-
-#### YouCompleteMe
-The YouCompleteMe plugin needs CMake to compile and vim with python2 support to execute.
-
-#### Racer
-The Racer plugin needs Cargo to compile.
+That doesn't work for systemd unit files however, those have to be hardlinked.
 
 [1]: https://www.gnu.org/software/stow
-[2]: https://github.com/neovim/neovim
