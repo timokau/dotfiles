@@ -3,7 +3,7 @@
 if [[ $# -gt 0 ]]; then
 	wallpaper=$1
 else
-	wallpaper="$HOME/Pictures/Wallpaper/falcon_landing.jpg"
+	wallpaper="$HOME/data/pictures/wallpaper/falcon_landing.jpg"
 fi
 
 feh --bg-fill "$wallpaper"
