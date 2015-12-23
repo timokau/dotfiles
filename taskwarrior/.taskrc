@@ -12,7 +12,7 @@ include ~/.local/share/task/dark-green-256.theme
 color.due.today=bold red on black
 
 # Server
-taskd.server=192.168.2.180:53589
+taskd.server=rpi:53589
 taskd.credentials=Public/Timo/50e9c135-4ef4-4918-9b17-21a7535529dd
 taskd.trust=ignore hostname
 
