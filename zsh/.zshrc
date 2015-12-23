@@ -82,12 +82,12 @@ zstyle ':completion:*:man:*'      menu yes select
 
 # Search path for sudo completion
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin \
-                                           /usr/local/bin  \
-                                           /usr/sbin       \
-                                           /usr/bin        \
-                                           /sbin           \
-                                           /bin            \
-                                           /usr/X11R6/bin
+    /usr/local/bin  \
+    /usr/sbin       \
+    /usr/bin        \
+    /sbin           \
+    /bin            \
+    /usr/X11R6/bin
 
 # provide .. as a completion
 zstyle ':completion:*' special-dirs ..
@@ -101,38 +101,38 @@ _force_rehash() {
 ## correction
 setopt correct
 zstyle -e ':completion:*' completer '
-    if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
-        _last_try="$HISTNO$BUFFER$CURSOR"
-        reply=(_complete _match _ignored _prefix _files)
+if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
+    _last_try="$HISTNO$BUFFER$CURSOR"
+    reply=(_complete _match _ignored _prefix _files)
+else
+    if [[ $words[1] == (rm|mv) ]] ; then
+        reply=(_complete _files)
     else
-        if [[ $words[1] == (rm|mv) ]] ; then
-            reply=(_complete _files)
-        else
-            reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
-        fi
-    fi'
+        reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
+    fi
+fi'
 
 # command for process lists, the local web server details and host completion
 zstyle ':completion:*:urls' local 'www' '/var/www/' 'public_html'
 
 # caching
 [[ -d $ZSHDIR/cache ]] && zstyle ':completion:*' use-cache yes && \
-                        zstyle ':completion::complete:*' cache-path $ZSHDIR/cache/
+    zstyle ':completion::complete:*' cache-path $ZSHDIR/cache/
 
 # host completion
 [[ -r ~/.ssh/config ]] && _ssh_config_hosts=(${${(s: :)${(ps:\t:)${${(@M)${(f)"$(<$HOME/.ssh/config)"}:#Host *}#Host }}}:#*[*?]*}) || _ssh_config_hosts=()
 [[ -r ~/.ssh/known_hosts ]] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
 [[ -r /etc/hosts ]] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
 hosts=(
-    $(hostname)
-    "$_ssh_config_hosts[@]"
-    "$_ssh_hosts[@]"
-    "$_etc_hosts[@]"
-    localhost
+$(hostname)
+"$_ssh_config_hosts[@]"
+"$_ssh_hosts[@]"
+"$_etc_hosts[@]"
+localhost
 )
 zstyle ':completion:*:hosts' hosts $hosts
 
-# pacaur remote completion is too slow 
+# pacaur remote completion is too slow
 zstyle ':completion:*:pacaur:*' remote-access false
 ###############################
 
@@ -149,7 +149,7 @@ alias scrott='scrot /tmp/shot-$(date +%FT%T).png'
 #
 
 # history (append to file, more info, share between sessions)
-setopt append_history inc_append_history extended_history share_history 
+setopt append_history inc_append_history extended_history share_history
 setopt hist_ignore_space hist_ignore_dups hist_find_no_dups
 setopt hist_reduce_blanks
 setopt vi
@@ -224,44 +224,44 @@ cntdn () {
 }
 
 function timer(){
-	echo -e "Starting timer ($(date))"
-	running=true
-	start="$(date +%s)"
-	trap 'running=false' SIGINT SIGTERM SIGSTOP
-    while $running; do 
-        echo -ne "\033[2K" # clear the line
-        cur_time="$(date -u --date @$((`date +%s` - $start)) +%H:%M:%S)"
-        echo -ne "${cur_time}\r";
-        sleep 0.1
-    	if [ "$running" = false ]; then
-    		running=false
-    		echo
-    		echo -e "Timer ran ${cur_time}\r";
-    	fi
-    done
+echo -e "Starting timer ($(date))"
+running=true
+start="$(date +%s)"
+trap 'running=false' SIGINT SIGTERM SIGSTOP
+while $running; do
+	echo -ne "\033[2K" # clear the line
+	cur_time="$(date -u --date @$((`date +%s` - $start)) +%H:%M:%S)"
+	echo -ne "${cur_time}\r";
+	sleep 0.1
+	if [ "$running" = false ]; then
+		running=false
+		echo
+		echo -e "Timer ran ${cur_time}\r";
+	fi
+done
 }
 
 # use rsync to copy
 function cpy(){
-	if [[ $# -lt 2 ]]; then
-		echo "You have to specify at least one source and the destination."
-		echo "Usage: cpy SOURCE... DESTINATION"
-		return 1
-	fi
-	rsync --archive --human-readable --info=progress2,stats2,flist1 $*
-	notify-send --urgency=low --app-name=cpy "Copying finished."
+if [[ $# -lt 2 ]]; then
+	echo "You have to specify at least one source and the destination."
+	echo "Usage: cpy SOURCE... DESTINATION"
+	return 1
+fi
+rsync --archive --human-readable --info=progress2,stats2,flist1 $*
+notify-send --urgency=low --app-name=cpy "Copying finished."
 }
 
 # this function checks if a command exists and returns either true or false
 check_com() {
-    emulate -L zsh
-    if   [[ -n ${commands[$1]}    ]] \
-      || [[ -n ${functions[$1]}   ]] \
-      || [[ -n ${aliases[$1]}     ]] \
-      || [[ -n ${reswords[(r)$1]} ]] ; then
-        return 0
-    fi
-    return 1
+	emulate -L zsh
+	if   [[ -n ${commands[$1]}    ]] \
+		|| [[ -n ${functions[$1]}   ]] \
+		|| [[ -n ${aliases[$1]}     ]] \
+		|| [[ -n ${reswords[(r)$1]} ]] ; then
+	return 0
+fi
+return 1
 }
 
 #
@@ -291,14 +291,14 @@ if check_com fzf; then
 		bindkey '\ec' fzf-cd-widget
 	else
 		export FZF_DEFAULT_COMMAND='find -L -type f'
-	fi	
+	fi
 	fzf_script='/etc/profile.d/fzf.zsh'
 	[ -e "$fzf_script" ] && source "$fzf_script"
 fi
 
-# 
+#
 # colors {{{1
-# 
+#
 # color setup for ls:
 check_com dircolors && eval $(dircolors -b)
 
@@ -398,272 +398,272 @@ rcd () {
 	tempfile=$(mktemp /tmp/ranger-dirXXX)
 	ranger --choosedir="$tempfile" "${@:-$(pwd)}"
 	test -f "$tempfile" &&
-	if [[ "$(cat -- "$tempfile")" != "$(echo -n $(pwd))" ]]; then
-		echo "$(cat "$tempfile")"
-		cd -- "$(cat "$tempfile")"
-	fi
-	rm -f -- "$tempfile" > /dev/null
-}
+		if [[ "$(cat -- "$tempfile")" != "$(echo -n $(pwd))" ]]; then
+			echo "$(cat "$tempfile")"
+			cd -- "$(cat "$tempfile")"
+		fi
+		rm -f -- "$tempfile" > /dev/null
+	}
 
-# Create temporary directory and cd to it
-cdt() {
-    local t
-    t=$(mktemp -d)
-    echo "$t"
-    builtin cd "$t"
-}
+	# Create temporary directory and cd to it
+	cdt() {
+		local t
+		t=$(mktemp -d)
+		echo "$t"
+		builtin cd "$t"
+	}
 
-# List files which have been accessed within the last n days, n defaults to 1
-accessed() {
-    emulate -L zsh
-    print -l -- *(a-${1:-1})
-}
+	# List files which have been accessed within the last n days, n defaults to 1
+	accessed() {
+		emulate -L zsh
+		print -l -- *(a-${1:-1})
+	}
 
-# List files which have been changed within the last n days, n defaults to 1
-changed() {
-    emulate -L zsh
-    print -l -- *(c-${1:-1})
-}
+	# List files which have been changed within the last n days, n defaults to 1
+	changed() {
+		emulate -L zsh
+		print -l -- *(c-${1:-1})
+	}
 
-# List files which have been modified within the last n days, n defaults to 1
-modified() {
-    emulate -L zsh
-    print -l -- *(m-${1:-1})
-}
+	# List files which have been modified within the last n days, n defaults to 1
+	modified() {
+		emulate -L zsh
+		print -l -- *(m-${1:-1})
+	}
 
-# cd to directoy and list files
-cl() {
-    emulate -L zsh
-    cd $1 && ls -a
-}
+	# cd to directoy and list files
+	cl() {
+		emulate -L zsh
+		cd $1 && ls -a
+	}
 
-# extract intelligently (-d deltes the source files)
-xtract() {
-    emulate -L zsh
-    setopt extended_glob noclobber
-    local DELETE_ORIGINAL DECOMP_CMD USES_STDIN USES_STDOUT GZTARGET WGET_CMD
-    local RC=0
-    zparseopts -D -E "d=DELETE_ORIGINAL"
-    for ARCHIVE in "${@}"; do
-        case $ARCHIVE in
-            *(tar.bz2|tbz2|tbz))
-                DECOMP_CMD="tar -xvjf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *(tar.gz|tgz))
-                DECOMP_CMD="tar -xvzf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *(tar.xz|txz|tar.lzma))
-                DECOMP_CMD="tar -xvJf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *tar)
-                DECOMP_CMD="tar -xvf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *rar)
-                DECOMP_CMD="unrar x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *lzh)
-                DECOMP_CMD="lha x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *7z)
-                DECOMP_CMD="7z x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *(zip|jar))
-                DECOMP_CMD="unzip"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *deb)
-                DECOMP_CMD="ar -x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *bz2)
-                DECOMP_CMD="bzip2 -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *(gz|Z))
-                DECOMP_CMD="gzip -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *(xz|lzma))
-                DECOMP_CMD="xz -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *)
-                print "ERROR: '$ARCHIVE' has unrecognized archive type." >&2
-                RC=$((RC+1))
-                continue
-                ;;
-        esac
+	# extract intelligently (-d deltes the source files)
+	xtract() {
+		emulate -L zsh
+		setopt extended_glob noclobber
+		local DELETE_ORIGINAL DECOMP_CMD USES_STDIN USES_STDOUT GZTARGET WGET_CMD
+		local RC=0
+		zparseopts -D -E "d=DELETE_ORIGINAL"
+		for ARCHIVE in "${@}"; do
+			case $ARCHIVE in
+				*(tar.bz2|tbz2|tbz))
+					DECOMP_CMD="tar -xvjf -"
+					USES_STDIN=true
+					USES_STDOUT=false
+					;;
+				*(tar.gz|tgz))
+					DECOMP_CMD="tar -xvzf -"
+					USES_STDIN=true
+					USES_STDOUT=false
+					;;
+				*(tar.xz|txz|tar.lzma))
+					DECOMP_CMD="tar -xvJf -"
+					USES_STDIN=true
+					USES_STDOUT=false
+					;;
+				*tar)
+					DECOMP_CMD="tar -xvf -"
+					USES_STDIN=true
+					USES_STDOUT=false
+					;;
+				*rar)
+					DECOMP_CMD="unrar x"
+					USES_STDIN=false
+					USES_STDOUT=false
+					;;
+				*lzh)
+					DECOMP_CMD="lha x"
+					USES_STDIN=false
+					USES_STDOUT=false
+					;;
+				*7z)
+					DECOMP_CMD="7z x"
+					USES_STDIN=false
+					USES_STDOUT=false
+					;;
+				*(zip|jar))
+					DECOMP_CMD="unzip"
+					USES_STDIN=false
+					USES_STDOUT=false
+					;;
+				*deb)
+					DECOMP_CMD="ar -x"
+					USES_STDIN=false
+					USES_STDOUT=false
+					;;
+				*bz2)
+					DECOMP_CMD="bzip2 -d -c -"
+					USES_STDIN=true
+					USES_STDOUT=true
+					;;
+				*(gz|Z))
+					DECOMP_CMD="gzip -d -c -"
+					USES_STDIN=true
+					USES_STDOUT=true
+					;;
+				*(xz|lzma))
+					DECOMP_CMD="xz -d -c -"
+					USES_STDIN=true
+					USES_STDOUT=true
+					;;
+				*)
+					print "ERROR: '$ARCHIVE' has unrecognized archive type." >&2
+					RC=$((RC+1))
+					continue
+					;;
+			esac
 
-        if ! check_com ${DECOMP_CMD[(w)1]}; then
-            echo "ERROR: ${DECOMP_CMD[(w)1]} not installed." >&2
-            RC=$((RC+2))
-            continue
-        fi
+			if ! check_com ${DECOMP_CMD[(w)1]}; then
+				echo "ERROR: ${DECOMP_CMD[(w)1]} not installed." >&2
+				RC=$((RC+2))
+				continue
+			fi
 
-        GZTARGET="${ARCHIVE:t:r}"
-        if [[ -f $ARCHIVE ]] ; then
+			GZTARGET="${ARCHIVE:t:r}"
+			if [[ -f $ARCHIVE ]] ; then
 
-            print "Extracting '$ARCHIVE' ..."
-            if $USES_STDIN; then
-                if $USES_STDOUT; then
-                    ${=DECOMP_CMD} < "$ARCHIVE" > $GZTARGET
-                else
-                    ${=DECOMP_CMD} < "$ARCHIVE"
-                fi
-            else
-                if $USES_STDOUT; then
-                    ${=DECOMP_CMD} "$ARCHIVE" > $GZTARGET
-                else
-                    ${=DECOMP_CMD} "$ARCHIVE"
-                fi
-            fi
-            [[ $? -eq 0 && -n "$DELETE_ORIGINAL" ]] && rm -f "$ARCHIVE"
+				print "Extracting '$ARCHIVE' ..."
+				if $USES_STDIN; then
+					if $USES_STDOUT; then
+						${=DECOMP_CMD} < "$ARCHIVE" > $GZTARGET
+					else
+						${=DECOMP_CMD} < "$ARCHIVE"
+					fi
+				else
+					if $USES_STDOUT; then
+						${=DECOMP_CMD} "$ARCHIVE" > $GZTARGET
+					else
+						${=DECOMP_CMD} "$ARCHIVE"
+					fi
+				fi
+				[[ $? -eq 0 && -n "$DELETE_ORIGINAL" ]] && rm -f "$ARCHIVE"
 
-        elif [[ "$ARCHIVE" == (#s)(https|http|ftp)://* ]] ; then
-            if check_com curl; then
-                WGET_CMD="curl -L -k -s -o -"
-            elif check_com wget; then
-                WGET_CMD="wget -q -O - --no-check-certificate"
-            else
-                print "ERROR: neither wget nor curl is installed" >&2
-                RC=$((RC+4))
-                continue
-            fi
-            print "Downloading and Extracting '$ARCHIVE' ..."
-            if $USES_STDIN; then
-                if $USES_STDOUT; then
-                    ${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD} > $GZTARGET
-                    RC=$((RC+$?))
-                else
-                    ${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD}
-                    RC=$((RC+$?))
-                fi
-            else
-                if $USES_STDOUT; then
-                    ${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE") > $GZTARGET
-                else
-                    ${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE")
-                fi
-            fi
+			elif [[ "$ARCHIVE" == (#s)(https|http|ftp)://* ]] ; then
+				if check_com curl; then
+					WGET_CMD="curl -L -k -s -o -"
+				elif check_com wget; then
+					WGET_CMD="wget -q -O - --no-check-certificate"
+				else
+					print "ERROR: neither wget nor curl is installed" >&2
+					RC=$((RC+4))
+					continue
+				fi
+				print "Downloading and Extracting '$ARCHIVE' ..."
+				if $USES_STDIN; then
+					if $USES_STDOUT; then
+						${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD} > $GZTARGET
+						RC=$((RC+$?))
+					else
+						${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD}
+						RC=$((RC+$?))
+					fi
+				else
+					if $USES_STDOUT; then
+						${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE") > $GZTARGET
+					else
+						${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE")
+					fi
+				fi
 
-        else
-            print "ERROR: '$ARCHIVE' is neither a valid file nor a supported URI." >&2
-            RC=$((RC+8))
-        fi
-    done
-    return $RC
-}
-#
-# Find history events by search pattern and list them by date.
-whatwhen()  {
-    emulate -L zsh
-    local usage help ident format_l format_s first_char remain first last
-    usage='USAGE: whatwhen [options] <searchstring> <search range>'
-    help='Use `whatwhen -h'\'' for further explanations.'
-    ident=${(l,${#${:-Usage: }},, ,)}
-    format_l="${ident}%s\t\t\t%s\n"
-    format_s="${format_l//(\\t)##/\\t}"
-    # Make the first char of the word to search for case
-    # insensitive; e.g. [aA]
-    first_char=[${(L)1[1]}${(U)1[1]}]
-    remain=${1[2,-1]}
-    # Default search range is `-100'.
-    first=${2:-\-100}
-    # Optional, just used for `<first> <last>' given.
-    last=$3
-    case $1 in
-        ("")
-            printf '%s\n\n' 'ERROR: No search string specified. Aborting.'
-            printf '%s\n%s\n\n' ${usage} ${help} && return 1
-        ;;
-        (-h)
-            printf '%s\n\n' ${usage}
-            print 'OPTIONS:'
-            printf $format_l '-h' 'show help text'
-            print '\f'
-            print 'SEARCH RANGE:'
-            printf $format_l "'0'" 'the whole history,'
-            printf $format_l '-<n>' 'offset to the current history number; (default: -100)'
-            printf $format_s '<[-]first> [<last>]' 'just searching within a give range'
-            printf '\n%s\n' 'EXAMPLES:'
-            printf ${format_l/(\\t)/} 'whatwhen grml' '# Range is set to -100 by default.'
-            printf $format_l 'whatwhen zsh -250'
-            printf $format_l 'whatwhen foo 1 99'
-        ;;
-        (\?)
-            printf '%s\n%s\n\n' ${usage} ${help} && return 1
-        ;;
-        (*)
-            # -l list results on stout rather than invoking $EDITOR.
-            # -i Print dates as in YYYY-MM-DD.
-            # -m Search for a - quoted - pattern within the history.
-            fc -li -m "*${first_char}${remain}*" $first $last
-        ;;
-    esac
-}
-
-############################### zgen (plugins)
-ZGEN_DIR="${HOME}/.zsh/zgen"
-if [ ! -f "${ZGEN_DIR}/disabled" ]; then
-	if [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
-		mkdir -p "$ZGEN_DIR"
-		echo "zgen plugin manager is not installed. Do you want to install it?"
-		read YnAnswer
-		case "$YnAnswer" in
-			y*) curl -L 'https://raw.githubusercontent.com/tarjoilija/zgen/master/zgen.zsh' > "${ZGEN_DIR}/zgen.zsh"
+			else
+				print "ERROR: '$ARCHIVE' is neither a valid file nor a supported URI." >&2
+				RC=$((RC+8))
+			fi
+		done
+		return $RC
+	}
+	#
+	# Find history events by search pattern and list them by date.
+	whatwhen()  {
+		emulate -L zsh
+		local usage help ident format_l format_s first_char remain first last
+		usage='USAGE: whatwhen [options] <searchstring> <search range>'
+		help='Use `whatwhen -h'\'' for further explanations.'
+		ident=${(l,${#${:-Usage: }},, ,)}
+		format_l="${ident}%s\t\t\t%s\n"
+		format_s="${format_l//(\\t)##/\\t}"
+		# Make the first char of the word to search for case
+		# insensitive; e.g. [aA]
+		first_char=[${(L)1[1]}${(U)1[1]}]
+		remain=${1[2,-1]}
+		# Default search range is `-100'.
+		first=${2:-\-100}
+		# Optional, just used for `<first> <last>' given.
+		last=$3
+		case $1 in
+			("")
+				printf '%s\n\n' 'ERROR: No search string specified. Aborting.'
+				printf '%s\n%s\n\n' ${usage} ${help} && return 1
 				;;
-			*)  touch "${ZGEN_DIR}/disabled"
+			(-h)
+				printf '%s\n\n' ${usage}
+				print 'OPTIONS:'
+				printf $format_l '-h' 'show help text'
+				print '\f'
+				print 'SEARCH RANGE:'
+				printf $format_l "'0'" 'the whole history,'
+				printf $format_l '-<n>' 'offset to the current history number; (default: -100)'
+				printf $format_s '<[-]first> [<last>]' 'just searching within a give range'
+				printf '\n%s\n' 'EXAMPLES:'
+				printf ${format_l/(\\t)/} 'whatwhen grml' '# Range is set to -100 by default.'
+				printf $format_l 'whatwhen zsh -250'
+				printf $format_l 'whatwhen foo 1 99'
+				;;
+			(\?)
+				printf '%s\n%s\n\n' ${usage} ${help} && return 1
+				;;
+			(*)
+				# -l list results on stout rather than invoking $EDITOR.
+				# -i Print dates as in YYYY-MM-DD.
+				# -m Search for a - quoted - pattern within the history.
+				fc -li -m "*${first_char}${remain}*" $first $last
 				;;
 		esac
-	fi
-fi
+	}
 
-if [ -f "${ZGEN_DIR}/disabled" ]; then
-	plugins=false
-else
-	plugins=true
-fi
-
-if $plugins; then
-	source "${ZGEN_DIR}/zgen.zsh"
-	if ! zgen saved; then
-    	echo "Creating a zgen save"
-
-    	#zgen load jimmijj/zsh-syntax-highlighting
-
-    	# autosuggestions should be loaded last
-    	zgen load tarruda/zsh-autosuggestions
-
-    	zgen save
+	############################### zgen (plugins)
+	ZGEN_DIR="${HOME}/.zsh/zgen"
+	if [ ! -f "${ZGEN_DIR}/disabled" ]; then
+		if [ ! -f "${ZGEN_DIR}/zgen.zsh" ] ; then
+			mkdir -p "$ZGEN_DIR"
+			echo "zgen plugin manager is not installed. Do you want to install it?"
+			read YnAnswer
+			case "$YnAnswer" in
+				y*) curl -L 'https://raw.githubusercontent.com/tarjoilija/zgen/master/zgen.zsh' > "${ZGEN_DIR}/zgen.zsh"
+					;;
+				*)  touch "${ZGEN_DIR}/disabled"
+					;;
+			esac
+		fi
 	fi
 
-	# Enable zsh-autosuggestions automatically.
-	# zle-line-init() {
-    	# zle autosuggest-start
-	# }
-	# zle -N zle-line-init
-	# bindkey '^T' autosuggest-toggle
-	# bindkey '^L' autosuggest-execute-suggestion
-fi;
-##############################
+	if [ -f "${ZGEN_DIR}/disabled" ]; then
+		plugins=false
+	else
+		plugins=true
+	fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+	if $plugins; then
+		source "${ZGEN_DIR}/zgen.zsh"
+		if ! zgen saved; then
+			echo "Creating a zgen save"
+
+			#zgen load jimmijj/zsh-syntax-highlighting
+
+			# autosuggestions should be loaded last
+			zgen load tarruda/zsh-autosuggestions
+
+			zgen save
+		fi
+
+		# Enable zsh-autosuggestions automatically.
+		# zle-line-init() {
+		# zle autosuggest-start
+		# }
+		# zle -N zle-line-init
+		# bindkey '^T' autosuggest-toggle
+		# bindkey '^L' autosuggest-execute-suggestion
+	fi;
+	##############################
+
+	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
