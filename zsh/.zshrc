@@ -275,6 +275,8 @@ elif check_com vim; then
 fi
 check_com less && export PAGER=less
 
+check_com termite && export TERMCMD=termite
+
 # Configure fzf
 if check_com fzf; then
 	export FZF_DEFAULT_OPTS='--extended --cycle --multi'
