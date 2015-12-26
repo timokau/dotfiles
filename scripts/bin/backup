@@ -1,0 +1,60 @@
+#! /bin/bash
+# This is a simple rsync-wrapper to meet my backup needs.
+# Those needs are:
+# Keep an exact copy of the folders I specify on my home server.
+# Versioned backups in case I rm -rf my home folder once again are kept by snapper (btrfs
+# subvolumes). So these backups are just for the case of a drive failure.
+
+
+# Args:
+# $1 - Source
+# $2 - Destination host
+# $3 - Destination port
+# $4 - Destination folder
+# $5 - logfile
+# $6 - ssh user (optional)
+# $7 - Excludes (split by newline) (optional)
+
+# Example usage:
+# backup "/etc/" "192.168.1.100" "22" "/mnt/BackupDrive/backup/etc" \
+#        "/home/timo/eisfreak7/backup.log" "eisfreak7" "pacman.d"
+src=$1
+dest_host=$2
+dest_port=$3
+dest_folder=$4
+logfile=$5
+ssh_user=$6
+excludes=$7
+
+args=()
+
+# Add rsync args
+for arg in verbose archive xattrs acls delete delete-excluded progress "log-file=$logfile"; do
+	args+=("--$arg")
+done
+
+# Add excludes
+old_IFS=$IFS
+IFS=$'\n' # Split on newline
+for excl in $excludes; do
+	if [[ -n "$excl" ]]; then
+		args+=("--exclude=$excl")
+	fi
+done
+IFS=$old_IFS
+
+
+# Add ssh port (has to be the last arg)
+if [[ -n $dest_port ]]; then
+	args+=("--rsh=sudo -u $ssh_user ssh -p$dest_port")
+fi
+
+# Add source and destination
+args+=("$src")
+args+=("$dest_host:$dest_folder")
+
+date --iso-8601=seconds >> "$logfile"
+echo "Backing up \"$src\" to \"$dest_host:$dest_folder\", command: rsync ${args[@]}" >> "$logfile"
+
+# Execute
+rsync "${args[@]}"
