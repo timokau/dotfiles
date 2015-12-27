@@ -20,11 +20,11 @@
 #        "/home/timo/eisfreak7/backup.log" "eisfreak7" "pacman.d"
 src=$1
 dest_host=$2
-dest_port=$3
+dest_port=${3:-22}
 dest_folder=$4
-logfile=$5
-ssh_user=$6
-excludes=$7
+logfile=${5:-'/var/log/backup.log'}
+ssh_user=${6:-"$(whoami)"}
+excludes=${7:-""}
 
 args=()
 
@@ -45,9 +45,7 @@ IFS=$old_IFS
 
 
 # Add ssh port (has to be the last arg)
-if [[ -n $dest_port ]]; then
-	args+=("--rsh=sudo -u $ssh_user ssh -p$dest_port")
-fi
+args+=("--rsh=sudo -u $ssh_user ssh -p$dest_port")
 
 # Add source and destination
 args+=("$src")
@@ -58,3 +56,8 @@ echo "Backing up \"$src\" to \"$dest_host:$dest_folder\", command: rsync ${args[
 
 # Execute
 rsync "${args[@]}"
+
+if [[ "$?" -ne 0 ]]; then
+	notify-send --urgency=critical --app-name=Backup "Backup of \"$src\" failed" \
+	    "See the logfile ($logfile) for details."
+fi
