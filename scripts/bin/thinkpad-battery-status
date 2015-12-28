@@ -9,7 +9,8 @@ bat1_status=$(<"$bat1/status")
 bat0_capacity=$(<"$bat0/capacity")
 bat1_capacity=$(<"$bat1/capacity")
 
-if [[ $bat1_status = "Full" ]] && [[ $bat0_status = "Unknown" ]]; then
+if [[ $bat1_status = "Full" ]] || [[ $bat1_status = "Unknown" ]] \
+    && [[ $bat0_status = "Unknown" ]]; then
 	active="AC"
 	stat="="
 elif [[ $bat1_status = "Charging" ]]; then
