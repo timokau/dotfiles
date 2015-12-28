@@ -49,7 +49,7 @@ xtitle -sf 'T%s' > "$PANEL_FIFO" &
 
 # power status
 if [[ -e '/sys/class/power_supply/BAT0' ]]; then
-	(while :; do echo "P$("$HOME/bin/thinkpad-battery-status")"; sleep 30s; done) > "$PANEL_FIFO" &
+	(while :; do echo "P$("$HOME/bin/thinkpad-battery-status")"; sleep 10s; done) > "$PANEL_FIFO" &
 fi
 
 # use the colors specified in panel_colors
