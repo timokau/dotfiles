@@ -47,6 +47,11 @@ xtitle -sf 'T%s' > "$PANEL_FIFO" &
 # date and time (for example Mon 14-12-30 13:45:10)
 (while :; do date '+S%a %y-%m-%d %_H:%M:%S'; sleep 1s; done) > "$PANEL_FIFO" &
 
+# power status
+if [[ -e '/sys/class/power_supply/BAT0' ]]; then
+	(while :; do echo "P$("$HOME/bin/thinkpad-battery-status")"; sleep 30s; done) > "$PANEL_FIFO" &
+fi
+
 # use the colors specified in panel_colors
 . "$(dirname "$0")/panel_colors"
 

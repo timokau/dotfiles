@@ -22,7 +22,7 @@ if [ "$(pgrep -cx panel)" -ge 1 ] ; then
 	pkill -x panel
 fi
 
-"$(dirname "$0")/panel" > ~/logs/panel &
+"$(dirname "$0")/panel" &> ~/logs/panel &
 
 # Autostart only if no window is active yet
 [[ -z "$(xtitle)" ]] && "$(dirname "$0")/autostart" > /dev/null &

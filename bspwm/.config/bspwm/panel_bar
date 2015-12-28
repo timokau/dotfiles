@@ -34,6 +34,11 @@ while read -r line ; do
 				updates="%{F$COLOR_UPDATES_FG}%{B$COLOR_UPDATES_BG} ${updates_nr} updates %{B-}%{F-}"
 			fi
 			;;
+		P*)
+			# power
+			power=${line#?}
+			power_status="%{F$COLOR_POWER_FG}%{B$COLOR_POWER_BG} ${power} %{B-}%{F-}"
+			;;
 		W*)
 			# bspwm internal state
 			wm_infos=""
@@ -95,5 +100,5 @@ while read -r line ; do
 			done
 			;;
 	esac
-	printf "%s\n" "%{l}${wm_infos}%{S1}%{c}${title}%{r}${due}${updates}${date}"
+	printf "%s\n" "%{l}${wm_infos}%{S1}%{c}${title}%{r}${due}${updates}${power_status}${date}"
 done
