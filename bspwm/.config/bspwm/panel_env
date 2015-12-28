@@ -1,0 +1,17 @@
+#! /bin/sh
+# Environment variables to be sourced by scripts that need them
+
+DPI=$(xdpyinfo | awk '/resolution/{print $2}' | sed -e 's/x.*//g')
+
+PANEL_FIFO=/tmp/panel-fifo
+PANEL_HEIGHT=$(( 0.2 * $DPI ))
+# calculate exact font size
+FONT_SIZE=$(( 0.12 * $DPI ))
+# round
+FONT_SIZE=${FONT_SIZE/.*}
+# make it a multiple of 2 (uneven font sizes somehow aren't accepted)
+if (( ($FONT_SIZE % 2) != 0 )); then
+	(( FONT_SIZE += 1 ))
+fi;
+
+PANEL_FONT_FAMILY="-*-terminus-medium-r-normal-*-$FONT_SIZE-*-*-*-c-*-*-1"
