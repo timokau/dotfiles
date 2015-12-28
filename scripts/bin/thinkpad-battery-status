@@ -1,0 +1,37 @@
+#! /bin/bash
+
+syspath='/sys/class/power_supply'
+bat0="$syspath/BAT0"
+bat1="$syspath/BAT1"
+
+bat0_status=$(<"$bat0/status")
+bat1_status=$(<"$bat1/status")
+bat0_capacity=$(<"$bat0/capacity")
+bat1_capacity=$(<"$bat1/capacity")
+
+if [[ $bat1_status = "Unknown" && $bat2_status = "Unkown" ]]; then
+	active="AC"
+	stat="="
+elif [[ $bat1_status = "Charging" ]]; then
+	active="BAT1"
+	stat="+"
+elif [[ $bat1_status = "Discharging" ]]; then
+	active="BAT1"
+	stat="-"
+elif [[ $bat0_status = "Charging" ]]; then
+	active="BAT0"
+	stat="+"
+elif [[ $bat0_status = "Discharging" ]]; then
+	active="BAT0"
+	stat="-"
+else
+	echo "error"
+fi
+
+if [[ $active = "BAT0" ]]; then
+	capacity=$bat0_capacity
+else
+	capacity=$bat1_capacity
+fi
+
+echo "$active $stat $capacity"
