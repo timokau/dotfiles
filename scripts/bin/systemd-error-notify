@@ -8,8 +8,11 @@
 exclude[0]='^-- Logs begin at \w{3} [0-9]{4}\-[0-9]{2}\-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+\. --'
 # G15 daemon classifies it's success messages as errors
 exclude[1]='^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ g15daemon\[[0-9]+\]: Plugin ".+" boot successful.$'
+# Happens every time HDMI is removed from my laptop, probably only something the laptop does to save energy
+exclude[1]='^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ seq [0-9]+ ''/devices/pci0000:00/0000:00:02.0/drm/card0'' killed$'
+exclude[2]='^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ worker \[[0-9]+\] failed while handling ''/devices/pci0000:00/0000:00:02.0/drm/card0'''
 # This seems to be a bug in the radeon driver that occurs when returning from suspend
-exclude[2]='^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: \[drm:si_dpm_set_power_state \[radeon\]\] \*ERROR\* si_set_sw_state failed'
+exclude[3]='^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: \[drm:si_dpm_set_power_state \[radeon\]\] \*ERROR\* si_set_sw_state failed'
 
 journalctl -b -p 0..3 -f --no-pager | while read line
 do
