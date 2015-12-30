@@ -1,4 +1,5 @@
 #! /bin/zsh
+panel_dir="$HOME/.config/bspwm"
 
 if [ "$(pgrep -cx panel)" -gt 1 ] ; then
 	printf "%s\n" "The panel is already running." >&2
@@ -6,7 +7,7 @@ if [ "$(pgrep -cx panel)" -gt 1 ] ; then
 fi
 
 # use the environment specified in panel_env
-. "$(dirname "$0")/panel_env"
+. "$panel_dir/panel_env"
 
 # handle interrupts
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
@@ -39,11 +40,11 @@ if [[ -e '/sys/class/power_supply/BAT0' ]]; then
 fi
 
 # use the colors specified in panel_colors
-. "$(dirname "$0")/panel_colors"
+. "$panel_dir/panel_colors"
 
 # pipe the FIFO through panel_bar to format it and finally into
 # the bar to display it
-cat "$PANEL_FIFO" | "$(dirname "$0")/panel_bar" | lemonbar -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" | sh &
+cat "$PANEL_FIFO" | "$panel_dir/panel_bar" | /usr/bin/lemonbar -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" | sh &
 
 # keep the bar up to date, don't exit
 wait

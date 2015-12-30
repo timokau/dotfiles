@@ -1,6 +1,7 @@
 #! /bin/sh
+panel_dir="$HOME/.config/bspwm"
 
-. "$(dirname "$0")/panel_colors"
+. "$panel_dir/panel_colors"
 
 # monitor count
 mon_count=$(bspc query -M | wc -l)
