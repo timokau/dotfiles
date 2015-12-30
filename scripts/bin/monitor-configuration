@@ -72,8 +72,31 @@ if [[ $HOST = 'ArchPad' ]]; then
 		systemctl reboot
 	fi
 elif [[ $HOST = 'ArchDesk' ]]; then
-	echo "STUB"
-	# TODO
+	if [[ -n "$DVI-1" && -n "$HDMI4" ]]; then
+		echo "DVI-1 and HDMI-3 are connected"
+		xrandr --output DVI-1 --auto
+		xrandr --output HDMI-3 --auto --primary --right-of DVI-1
+		bspc monitor 'HDMI-3' --rename 1
+		bspc monitor 'DVI-1' --rename 2
+		bspc monitor 1 --reset-desktops I II III IV V
+		bspc monitor 2 --reset-desktops VI VII VIII IX X
+	elif [[ -n "$DVI-1" ]]; then
+		echo "DVI-1 is connected"
+		xrandr --output DVI-1 --auto
+		xrandr --output HDMI-3 --off
+		bspc monitor 'DVI-1' --rename 1
+		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
+	elif [[ -n "$HDMI4" ]]; then
+		echo "HDMI-3 is connected"
+		xrandr --output HDMI-3 --auto
+		xrandr --output DVI-1 --off
+		bspc monitor 'HDMI-3' --rename 1
+		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
+	else
+		echo "No monitors are plugged in. This must be a mistake. Rebooting in 30 seconds."
+		sleep 30s
+		systemctl reboot
+	fi
 else
 	>&2 echo 'Unknown Host, can''t configure monitors.'
 fi
