@@ -15,7 +15,8 @@ bspc config remove_unplugged_monitors  true
 bspc config merge_overlapping_monitors true
 
 # Configure my monitors
-/usr/local/bin/monitor-hotplug.sh
+$HOME/bin/monitor-configuration
+/home/timo/bin/wallpaper
 
 if [ "$(pgrep -cx panel)" -ge 1 ] ; then
 	echo "Restarting panel"
