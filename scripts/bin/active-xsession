@@ -1,0 +1,20 @@
+#! /bin/sh
+# Other scripts run outside of the xsession (udev, systemd etc.)
+# can source this to get the DISPLAY and XAUTHORITY variables and the active user.
+
+# inspired by the apci file /etc/acpid/lid.sh and the function it sources
+
+user_and_display=( $(w -h -s | grep ':[0-9]\W' | head -1 | awk '{print $1; print $8}') )
+
+export active_user="${user_and_display[0]}"
+export DISPLAY="${user_and_display[1]}"
+unset user_and_display
+
+if [ -n "$active_user" ]; then
+	export XAUTHORITY="/home/$active_user/.Xauthority"
+else
+	echo "Unable to find an X session"
+	exit 1
+fi
+
+echo "Found user $active_user on Display $DISPLAY"

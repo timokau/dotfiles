@@ -1,0 +1,79 @@
+#!/bin/bash
+# Original: https://github.com/codingtony/udev-monitor-hotplug
+
+devices=$(find /sys/class/drm/*/status)
+
+#this while loop declare the $HDMI1 $VGA1 $LVDS1 and others if they are plugged in
+while read -r l
+do
+	dir="$(dirname "$l")"
+	status="$(cat "$l")"
+	dev="$(echo "$dir" | cut -d- -f 2-)"
+
+	if [ "$(expr match  "$dev" "HDMI")" != "0" ]
+	then
+		#REMOVE THE -X- part from HDMI-X-n
+		dev=HDMI${dev#HDMI-?-}
+	else 
+		dev="$(echo "$dev" | tr -d '-')"
+	fi
+
+	if [ "connected" == "$status" ]
+	then 
+		echo "$dev" "connected"
+		declare $dev="yes"; 
+
+	fi
+done <<< "$devices"
+
+# Make sure HOST is set
+HOST=${HOST:-"$(</etc/hostname)"}
+
+if [[ $HOST = 'ArchPad' ]]; then
+	if [[ -n "$eDP1" && -n "$DP1" && -n "$HDMI1" ]]; then
+		echo "eDP1 and DP1 and HDMI1 are connected"
+		xrandr --output eDP1 --auto
+		xrandr --output HDMI1 --auto --primary --left-of eDP1
+		xrandr --output DP1 --auto --right-of eDP1
+		bspc monitor 'eDP1' --rename 1
+		bspc monitor 'HDMI1' --rename 2
+		bspc monitor 'DP1' --rename 3
+		bspc monitor 1 --reset-desktops I II
+		bspc monitor 2 --reset-desktops III IV V VI
+		bspc monitor 3 --reset-desktops VII VIII IX X
+	elif [[ -n "$eDP1" && -n "$HDMI1" ]]; then
+		echo "eDP1 and HDMI1 are connected"
+		xrandr --output eDP1 --auto
+		xrandr --output HDMI1 --auto --primary --right-of eDP1
+		xrandr --output DP1 --auto --off
+		bspc monitor 'eDP1' --rename 1
+		bspc monitor 'HDMI1' --rename 2
+		bspc monitor 1 --reset-desktops I II III IV V
+		bspc monitor 2 --reset-desktops VI VII VIII IX X
+	elif [[ -n "$eDP1" && -n "$DP1" ]]; then
+		echo "eDP1 and DP1 are connected"
+		xrandr --output eDP1 --auto
+		xrandr --output HDMI1 --off
+		xrandr --output DP1 --auto --primary --right-of eDP1
+		bspc monitor 'eDP1' --rename 1
+		bspc monitor 'DP1' --rename 2
+		bspc monitor 1 --reset-desktops I II III IV V
+		bspc monitor 2 --reset-desktops VI VII VIII IX X
+	elif [[ -n "$eDP1" ]]; then
+		echo "Only the internal eDP1 is connected"
+		xrandr --output eDP1 --auto --primary
+		xrandr --output HDMI1 --off
+		xrandr --output DP1 --auto --off
+		bspc monitor 'eDP1' --rename 1
+		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
+	else
+		echo "No monitors are plugged in. This must be a mistake. Rebooting in 30 seconds."
+		sleep 30s
+		systemctl reboot
+	fi
+elif [[ $HOST = 'ArchDesk' ]]; then
+	echo "STUB"
+	# TODO
+else
+	>&2 echo 'Unknown Host, can''t configure monitors.'
+fi
