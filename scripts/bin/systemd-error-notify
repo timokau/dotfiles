@@ -17,8 +17,11 @@ exclude+='^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: \[drm:radeon_pm
 # This occurs when pluggin in an USB-Drive that doesn't support caching
 exclude+='^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: sd [0-9]+:0:0:0: \[s\w\w\] No Caching mode page found$'
 exclude+='^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: sd [0-9]+:0:0:0: \[s\w\w\] Assuming drive cache: write through$'
+# Apparently a not so important warning (see
+# http://www.spinics.net/lists/intel-gfx/msg81325.html)
+exclude+='^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: \[drm:gen8_irq_handler \[i915\]\] *ERROR* The master control interrupt lied (SDE)!$'
 
-journalctl -b --priority=0..3 --since=-10m --follow --no-pager | while read line
+journalctl -b --priority=0..3 --since=-10h --follow --no-pager | while read line
 do
 	blocked=false
 	for pattern in "${exclude[@]}" ; do
