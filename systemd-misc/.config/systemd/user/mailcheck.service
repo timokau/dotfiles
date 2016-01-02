@@ -1,10 +1,11 @@
 [Unit]
 Description=Notify about new mail
+After=mbsync.service
+Requires=mbsync.service
 
 [Service]
+Type=oneshot
 ExecStart=/usr/bin/bash -c %h/bin/mailcheck
-Environment=DISPLAY=:0
-Restart=always
 
 [Install]
 WantedBy=default.target

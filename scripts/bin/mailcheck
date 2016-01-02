@@ -1,9 +1,14 @@
 #!/bin/bash
 
+if [[ -z "$DISPLAY" ]]; then
+	. /home/timo/bin/active-xsession
+fi
+
 MAILDIRS=(
 "$HOME/Mail/yahoo/inbox"
 "$HOME/Mail/gmx/inbox"
 )
+nmc="$HOME/Mail/newmailcount"
 
 #count new mail and update summary head
 NEWMAILCOUNT() {
@@ -17,13 +22,14 @@ NEWMAILCOUNT() {
 	echo $TOT
 }
 
-CNT="0"
+if [[ -e $nmc ]]; then
+	CNT=$(<$nmc)
+else
+	CNT=0
+fi
 
-while true; do
-	NEW="$(NEWMAILCOUNT)"
-	if [[ $NEW -gt $CNT ]]; then
-		notify-send "New mail" "$NEW new mail(s)" --urgency=normal
-	fi
-	CNT=$NEW
-	sleep 1m
-done
+NEW="$(NEWMAILCOUNT)"
+if [[ $NEW -gt $CNT ]]; then
+	notify-send "New mail" "$NEW new mail(s)" --urgency=normal
+fi
+echo $NEW > $nmc
