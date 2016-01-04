@@ -27,3 +27,6 @@ fi
 
 # Autostart only if no window is active yet
 [[ -z "$(xtitle)" ]] && "$HOME/.config/bspwm/autostart" > /dev/null &
+
+# wait for the panel
+wait

@@ -44,7 +44,7 @@ fi
 
 # pipe the FIFO through panel_bar to format it and finally into
 # the bar to display it
-cat "$PANEL_FIFO" | "$panel_dir/panel_bar" | /usr/bin/lemonbar -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" | sh &
+cat "$PANEL_FIFO" | "$panel_dir/panel_bar" | /usr/bin/lemonbar -p -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" | sh &
 
 # keep the bar up to date, don't exit
 wait
