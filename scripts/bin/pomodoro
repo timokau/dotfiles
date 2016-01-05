@@ -21,8 +21,8 @@ for i in 2 3 4; do
 	countdown "25m" # Needs the countdown script
 	notify-send --app-name=Pomodoro "Time's up" "Time to relax"
 	echo "Enough."
-	read -r -n1 -p"Finished working? [Y/n]" item
-	echo # newline
+	echo "Finished working? [Y/n]"
+	read -rq item
 	get_id "$@"
 	task stop "$id"
 	if [[ $i == 4 ]]; then # Don't pause the last time
