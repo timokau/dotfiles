@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 if [[ -z "$DISPLAY" ]]; then
 	. /home/timo/bin/active-xsession
@@ -29,7 +29,8 @@ else
 fi
 
 NEW="$(NEWMAILCOUNT)"
-if [[ $NEW -gt $CNT ]]; then
-	notify-send "New mail" "$NEW new mail(s)" --urgency=normal
-fi
 echo $NEW > $nmc
+
+# Update panel
+. /home/timo/.config/bspwm/panel_env
+echo "M$NEW" > $PANEL_FIFO

@@ -40,6 +40,15 @@ while read -r line ; do
 			power=${line#?}
 			power_status="%{F$COLOR_POWER_FG}%{B$COLOR_POWER_BG} ${power} %{B-}%{F-}"
 			;;
+		M*)
+			# mail
+			mail=${line#?}
+			if [[ $mail -gt 0 ]]; then
+				mail_status="%{F$COLOR_MAIL_FG}%{B$COLOR_MAIL_BG} ${mail} new %{B-}%{F-}"
+			else
+				mail_status=""
+			fi
+			;;
 		W*)
 			# bspwm internal state
 			wm_infos=""
@@ -101,5 +110,5 @@ while read -r line ; do
 			done
 			;;
 	esac
-	printf "%s\n" "%{l}${wm_infos}%{S1}%{c}${title}%{r}${due}${updates}${power_status}${date}"
+	printf "%s\n" "%{l}${wm_infos}%{S1}%{c}${title}%{r}${due}${updates}${mail_status}${power_status}${date}"
 done
