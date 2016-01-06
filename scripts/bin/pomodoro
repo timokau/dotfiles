@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/zsh
 # Use taskwarrior in combination with the pomodoro technique.
 # the arguments are passed to taskwarrior as a filter
 # This is a pretty ugly script, but it works (isn't this the definition of a bash script?)
