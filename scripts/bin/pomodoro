@@ -1,4 +1,4 @@
-#! /bin/zsh
+#! /bin/bash
 # Use taskwarrior in combination with the pomodoro technique.
 # the arguments are passed to taskwarrior as a filter
 # This is a pretty ugly script, but it works (isn't this the definition of a bash script?)
@@ -21,8 +21,7 @@ for i in 2 3 4; do
 	countdown "25m" # Needs the countdown script
 	notify-send --app-name=Pomodoro "Time's up" "Time to relax"
 	echo "Enough."
-	echo "Finished working? [Y/n]"
-	read -rq item
+	read -r -n 1 -p "Finished working? [Y/n]" item
 	get_id "$@"
 	task stop "$id"
 	if [[ $i == 4 ]]; then # Don't pause the last time
