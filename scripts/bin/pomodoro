@@ -22,6 +22,7 @@ for i in 2 3 4; do
 	notify-send --app-name=Pomodoro "Time's up" "Time to relax"
 	echo "Enough."
 	read -r -n 1 -p "Finished working? [Y/n]" item
+	echo # newline
 	get_id "$@"
 	task stop "$id"
 	if [[ $i == 4 ]]; then # Don't pause the last time
@@ -34,7 +35,7 @@ for i in 2 3 4; do
 	notify-send --app-name=Pomodoro "Time's up" "Time to work"
 	echo "Time for round $i."
 	read -r -n 1 -p "Ready? [Y/n]" item
-	echo # newlline
+	echo # newline
 	get_id "$@"
 	task stop "$id"
 	case "$item" in

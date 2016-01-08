@@ -73,10 +73,19 @@ if [[ $HOST = 'ArchPad' ]]; then
 	fi
 elif [[ $HOST = 'ArchDesk' ]]; then
 	if [[ -n "$DVI-1" && -n "$HDMI4" ]]; then
-		echo "DVI-1 and HDMI-3 are connected"
+		echo "DVI-1 and HDMI4 are connected"
 		xrandr --output DVI-1 --auto
 		xrandr --output HDMI-3 --auto --primary --right-of DVI-1
 		bspc monitor 'HDMI-3' --rename 1
+		bspc monitor 'DVI-1' --rename 2
+		bspc monitor 1 --reset-desktops I II III IV V
+		bspc monitor 2 --reset-desktops VI VII VIII IX X
+		# HDMI4 and HDMI1 are the same monitor, which is somehow sometimes labelled differently
+	elif [[ -n "$DVI-1" && -n "$HDMI1" ]]; then
+		echo "DVI-1 and HDMI1 are connected"
+		xrandr --output DVI-1 --auto
+		xrandr --output HDMI-3 --auto --primary --right-of DVI-1
+		bspc monitor 'HDMI-0' --rename 1
 		bspc monitor 'DVI-1' --rename 2
 		bspc monitor 1 --reset-desktops I II III IV V
 		bspc monitor 2 --reset-desktops VI VII VIII IX X
