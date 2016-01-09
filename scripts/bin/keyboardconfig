@@ -17,7 +17,6 @@ xcape -e 'Control_L=Escape'
 key="ISO_Level3_Shift"
 xmodmap -e "keysym Tab = $key"
 xmodmap -e "remove mod4 = $key"
-xmodmap -e "add Control = $key"
 xmodmap -e 'keycode any = Tab'
 xcape -e "$key=Tab"
 
