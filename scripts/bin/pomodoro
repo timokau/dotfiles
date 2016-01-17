@@ -6,7 +6,7 @@
 get_id() {
 	# the surrounding parenthesis turn the space-seperated ids into an array
 	ids=($(task rc.gc=off rc.verbose=no status:pending ids "$@" 2>/dev/null))
-	if [[ ${#ids[@]} -gt 1 ]]; then
+	if [[ ${#ids[@]} -ne 1 ]]; then
 		echo "The filter is ambigous. Please be more specific."
 		exit 1
 	fi
