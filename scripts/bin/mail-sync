@@ -1,0 +1,5 @@
+#! /bin/bash
+
+. /home/timo/bin/active-xsession
+export GPG_TTY="$(tty)"
+sudo -u "$active_user" --set-home --preserve-env /usr/bin/mbsync -Va
