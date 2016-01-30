@@ -3,5 +3,9 @@
 # dependencies: taskwarrior
 # rc.gc=off turns taskwarrior's "garbage collector" for this command off,
 # so that the IDs won't be changed by it
-task sync > /dev/null 2>&1
+if [[ -e "$HOME/.local/share/task/network-enabled" ]]; then
+	# task sync > /dev/null 2>&1
+	task sync >> ~/logs/tasksync.log 2>&1
+fi
+
 task rc.gc=off "due:${1:-'today'}" 'and' '(status:pending or status:waiting)' 'count' 2> /dev/null
