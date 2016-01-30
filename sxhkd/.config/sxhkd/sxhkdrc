@@ -141,20 +141,10 @@ super + e ; {p, r}
 # this depends on xautolock being running (it should be started in the
 # xinitrc)
 super + e ; l
-	if [[ "$(pgrep -cx xautolock)" -ge 1 ]]; then \
-		xautolock -locknow; \
-	else \
-    	i3lock --dpms --inactivity-timeout 30s --color=333333 \
-               --ignore-empty-password --show-failed-attempts; \
-    fi;
+	$HOME/bin/lock
 
 super + e ; s
-	if [[ "$(pgrep -cx xautolock)" -ge 1 ]]; then \
-		xautolock -locknow; \
-	else \
-    	i3lock --dpms --inactivity-timeout 30s --color=333333 \
-               --ignore-empty-password --show-failed-attempts; \
-    fi; \
+	$HOME/bin/lock; \
 	systemctl suspend
 
 # media

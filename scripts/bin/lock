@@ -1,0 +1,14 @@
+#! /bin/sh
+# locks using i3lock and xautlock (if running)
+if [[ "$1" == "--try-autolock" ]] && [[ "$(pgrep -cx xautolock)" -ge 1 ]]; then
+	xautolock -locknow
+else
+	i3lock --dpms \
+	    --inactivity-timeout 30s \
+	    --color=333333 \
+	    --ignore-empty-password \
+	    --show-failed-attempts
+	# Clear cached passwords
+fi
+pkill -SIGHUP gpg-agent
+echo "gpg-agent cache cleared"
