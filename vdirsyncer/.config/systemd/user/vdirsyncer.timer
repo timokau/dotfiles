@@ -1,5 +1,6 @@
 [Unit]
 Description=Calendar and contacts synchronization timer
+After=network-online.target
 
 [Timer]
 OnActiveSec=15min
