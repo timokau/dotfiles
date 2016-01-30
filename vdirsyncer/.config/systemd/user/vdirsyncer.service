@@ -3,4 +3,5 @@ Description=Calendar and contacts synchronization service
 
 [Service]
 Type=oneshot
-ExecStart=-/usr/bin/vdirsyncer sync
+Restart=no
+ExecStart=/bin/bash -c '/usr/bin/vdirsyncer sync 2> >(/usr/bin/systemd-cat --priority="crit") 1> >(/usr/bin/systemd-cat --priority="info")'
