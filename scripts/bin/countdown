@@ -4,32 +4,55 @@
 seconds=0
 while [[ $# -ge 1 ]]
 do
-    number=${1:0: -1}
-    suffix=${1: -1}
-    case $suffix in
-        s)
-            seconds=$(( $seconds + $number ))
-            ;;
-        m)
-            seconds=$(( $seconds + $number * 60 ))
-            ;;
-        h)
-            seconds=$(( $seconds + $number * 60 * 60 ))
-            ;;
-        *)
-            number=${number}${suffix}
-            seconds=$(( $seconds + $number ))
-            ;;
-    esac
-    shift
+	if [[ "$1" == "--" ]]; then
+		pauseStartCommand="$2"
+		pauseStopCommand="$3"
+		break
+	fi
+	number=${1:0: -1}
+	suffix=${1: -1}
+	case $suffix in
+		s)
+			seconds=$(( $seconds + $number ))
+			;;
+		m)
+			seconds=$(( $seconds + $number * 60 ))
+			;;
+		h)
+			seconds=$(( $seconds + $number * 60 * 60 ))
+			;;
+		*)
+			number=${number}${suffix}
+			seconds=$(( $seconds + $number ))
+			;;
+	esac
+	shift
 done
-dateAfter=$((`date +%s` + $seconds)); 
+dateAfter=$(($(date +%s) + $seconds));
 echo -e "Counting down $seconds seconds until $(date --date @${dateAfter} +'%F %T')..."
-while [[ "$dateAfter" > `date +%s` ]]; do 
-    echo -ne "\033[2K" # clear the line
-    echo -ne "$(date -u --date @$(($dateAfter - `date +%s`)) +%H:%M:%S)\r";
-    read -r -n 1 -s -t 0.1 input
-    if [[ $input == "a" ]]; then # abourt
-    	exit
-    fi
+while [[ "$dateAfter" > `date +%s` ]]; do
+	echo -ne "\033[2K" # clear the line
+	echo -ne "$(date -u --date @$(($dateAfter - `date +%s`)) +%H:%M:%S)\r";
+	read -r -n 1 -s -t 0.1 input
+	case $input in
+		a) # abort
+			break
+			;;
+		p) # pause
+			# Block until the next input of "p"
+			# TODO: time offset
+			pauseStart=$(date +%s)
+			eval "$pauseStartCommand"
+			while :; do
+				read -r -n 1 -s -t 0.1 input
+				if [[ "$input" == "p" ]]; then
+					break
+				fi
+			done
+			pauseDuration=$(($(date +%s) - $pauseStart))
+			eval "$pauseStopCommand"
+			dateAfter=$(($dateAfter + $pauseDuration))
+			;;
+	esac
 done
+echo -ne "\033[2K" # clear the line
