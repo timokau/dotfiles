@@ -18,6 +18,11 @@ echo ">>> ${BLUE}Removing orphans${NC}"
 pacaur -Rns $(pacaur -Qdtq) 2> /dev/null
 echo ">>> ${BLUE}Cleaning the package cache${NC}"
 paccache -r; paccache -ruk0
+echo ">>> ${BLUE}Handling .pac* files${NC}"
+paccount=$(pacdiff --output --pacmandb | wc -l)
+if [[ "$paccount" -gt 0 ]]; then
+	sudo pacdiff --pacmandb
+fi
 echo ">>> ${BLUE}Saving package list${NC}"
 pkglist="$HOME/pkglist.txt"
 [ -e $pkglist ] && rm "$pkglist"
