@@ -2,7 +2,7 @@
 # Customize the (German) keyboard with xmodmap and xcape
 
 # Reset
-pkill xcape
+killall --signal SIGQUIT xcape
 setxkbmap de
 
 # Use the CapsLock key as escape when pressed alone and ctrl when pressed with some other key
@@ -11,15 +11,14 @@ xmodmap -e 'remove Control = Control_L'
 xmodmap -e 'keysym Control_L = 0'
 xmodmap -e 'keysym Caps_Lock = Control_L'
 xmodmap -e 'add Control = Control_L'
-xcape -e 'Control_L=Escape'
+xcape -e 'Control_L=Escape' -d &> /home/timo/logs/xcape-escape.log & disown
 
 # Use tab as alt-gr
 key="ISO_Level3_Shift"
 xmodmap -e "keysym Tab = $key"
 xmodmap -e "remove mod4 = $key"
-xmodmap -e "add Control = $key"
 xmodmap -e 'keycode any = Tab'
-xcape -e "$key=Tab"
+xcape -e "$key=Tab" -d &> /home/timo/logs/xcape-altgr.log & disown
 
 # I prefer my keys alive
 xmodmap -e 'keysym dead_circumflex = asciicircum'
@@ -39,4 +38,4 @@ to_remap='odiaeresis'
 target_modifier='Hyper_L'
 xmodmap -e "keysym $to_remap = $target_modifier"
 xmodmap -e "keycode 255 = $to_remap"
-xcape -e "Hyper_L=$to_remap"
+xcape -e "Hyper_L=$to_remap" -d &> /home/timo/logs/xcape-hyperl.log & disown
