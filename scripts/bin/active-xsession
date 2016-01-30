@@ -6,8 +6,14 @@
 
 user_and_display=( $(w -h -s | grep ':[0-9]\W' | head -1 | awk '{print $1; print $8}') )
 
-export active_user="${user_and_display[0]}"
-export DISPLAY="${user_and_display[1]}"
+# depending on the shell, the array can start at index 0 or 1
+if [ -z "${user_and_display[0]}" ]; then
+	export active_user="${user_and_display[1]}"
+	export DISPLAY="${user_and_display[2]}"
+else
+	export active_user="${user_and_display[0]}"
+	export DISPLAY="${user_and_display[1]}"
+fi
 unset user_and_display
 
 if [ -n "$active_user" ]; then

@@ -1,69 +1,106 @@
 #!/bin/bash
 # Original: https://github.com/codingtony/udev-monitor-hotplug
 
-devices=$(find /sys/class/drm/*/status)
+declare -a monitors
 
-#this while loop declare the $HDMI1 $VGA1 $LVDS1 and others if they are plugged in
-while read -r l
-do
-	dir="$(dirname "$l")"
-	status="$(cat "$l")"
-	dev="$(echo "$dir" | cut -d- -f 2-)"
+echo "date" > /home/timo/logs/tmplog.log
 
-	if [ "$(expr match  "$dev" "HDMI")" != "0" ]
-	then
-		#REMOVE THE -X- part from HDMI-X-n
-		dev=HDMI${dev#HDMI-?-}
-	else 
-		dev="$(echo "$dev" | tr -d '-')"
+# Append a monitor to the array of monitors
+register_monitor() {
+	monitors+=("$1")
+}
+
+# Search for a monitor in the array of monitors
+is_registered() {
+	local monitor
+	for monitor in "${monitors[@]}"; do
+		[[ "$monitor" == "$1" ]] && return 0
+	done
+	return 1
+}
+
+# finds all plugged in monitors and adds them to the monitors array
+find_monitors() {
+	local devices=$(find /sys/class/drm/*/status)
+	while read -r l
+	do
+		dir="$(dirname "$l")"
+		status="$(cat "$l")"
+		dev="$(echo "$dir" | cut -d- -f 2-)"
+
+		if [ "$(expr match  "$dev" "HDMI")" != "0" ]
+		then
+			#REMOVE THE -X- part from HDMI-X-n
+			dev=HDMI${dev#HDMI-?-}
+		else 
+			dev="$(echo "$dev" | tr -d '-')"
+		fi
+
+		if [ "connected" == "$status" ]
+		then 
+			echo "$dev" "connected"
+			register_monitor "$dev"
+		fi
+	done <<< "$devices"
+}
+
+configure_monitors_for_host() {
+	# Make sure HOST is set
+	HOST=${HOST:-"$(</etc/hostname)"}
+
+	if [[ $HOST = 'ArchPad' ]]; then
+		configure_monitors_for_archpad
+	elif [[ $HOST = 'ArchDesk' ]]; then
+		configure_monitors_for_archdesk
+	else
+		>&2 echo 'Unknown Host, can''t configure monitors.'
 	fi
+}
 
-	if [ "connected" == "$status" ]
-	then 
-		echo "$dev" "connected"
-		declare $dev="yes"; 
-
-	fi
-done <<< "$devices"
-
-# Make sure HOST is set
-HOST=${HOST:-"$(</etc/hostname)"}
-
-if [[ $HOST = 'ArchPad' ]]; then
-	if [[ -n "$eDP1" && -n "$DP1" && -n "$HDMI1" ]]; then
-		echo "eDP1 and DP1 and HDMI1 are connected"
+configure_monitors_for_archpad() {
+	if is_registered "eDP1" && is_registered "DP2" && is_registered "HDMI1"; then
+		echo "eDP1 and DP2 and HDMI1 are connected"
 		xrandr --output eDP1 --auto
 		xrandr --output HDMI1 --auto --primary --left-of eDP1
-		xrandr --output DP1 --auto --right-of eDP1
+		xrandr --output DP2 --auto --right-of eDP1
 		bspc monitor 'eDP1' --rename 1
 		bspc monitor 'HDMI1' --rename 2
-		bspc monitor 'DP1' --rename 3
+		bspc monitor 'DP2' --rename 3
 		bspc monitor 1 --reset-desktops I II
 		bspc monitor 2 --reset-desktops III IV V VI
 		bspc monitor 3 --reset-desktops VII VIII IX X
-	elif [[ -n "$eDP1" && -n "$HDMI1" ]]; then
+	elif is_registered "eDP1" && is_registered "HDMI1"; then
 		echo "eDP1 and HDMI1 are connected"
 		xrandr --output eDP1 --auto
 		xrandr --output HDMI1 --auto --primary --right-of eDP1
-		xrandr --output DP1 --auto --off
+		xrandr --output DP2 --auto --off
 		bspc monitor 'eDP1' --rename 1
 		bspc monitor 'HDMI1' --rename 2
 		bspc monitor 1 --reset-desktops I II III IV V
 		bspc monitor 2 --reset-desktops VI VII VIII IX X
-	elif [[ -n "$eDP1" && -n "$DP1" ]]; then
-		echo "eDP1 and DP1 are connected"
+	elif is_registered "eDP1" && is_registered "DP2"; then
+		echo "eDP1 and DP2 are connected"
 		xrandr --output eDP1 --auto
-		xrandr --output HDMI1 --off
-		xrandr --output DP1 --auto --primary --right-of eDP1
+		xrandr --output DP2 --auto --primary --right-of eDP1
+		xrandr --output HDMI1 --auto --off
 		bspc monitor 'eDP1' --rename 1
-		bspc monitor 'DP1' --rename 2
+		bspc monitor 'DP2' --rename 2
 		bspc monitor 1 --reset-desktops I II III IV V
 		bspc monitor 2 --reset-desktops VI VII VIII IX X
-	elif [[ -n "$eDP1" ]]; then
+	elif is_registered "eDP1" && is_registered "DP2"; then
+		echo "eDP1 and DP2 are connected"
+		xrandr --output eDP1 --auto
+		xrandr --output HDMI1 --off
+		xrandr --output DP2 --auto --primary --right-of eDP1
+		bspc monitor 'eDP1' --rename 1
+		bspc monitor 'DP2' --rename 2
+		bspc monitor 1 --reset-desktops I II III IV V
+		bspc monitor 2 --reset-desktops VI VII VIII IX X
+	elif is_registered "eDP1"; then
 		echo "Only the internal eDP1 is connected"
 		xrandr --output eDP1 --auto --primary
 		xrandr --output HDMI1 --off
-		xrandr --output DP1 --auto --off
+		xrandr --output DP2 --auto --off
 		bspc monitor 'eDP1' --rename 1
 		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
 	else
@@ -71,8 +108,10 @@ if [[ $HOST = 'ArchPad' ]]; then
 		sleep 30s
 		systemctl reboot
 	fi
-elif [[ $HOST = 'ArchDesk' ]]; then
-	if [[ -n "$DVI-1" && -n "$HDMI4" ]]; then
+}
+
+configure_monitors_for_archdesk() {
+	if is_registered "DVI-1" && is_registered "HDMI-3"; then
 		echo "DVI-1 and HDMI-3 are connected"
 		xrandr --output DVI-1 --auto
 		xrandr --output HDMI-3 --auto --primary --right-of DVI-1
@@ -80,13 +119,13 @@ elif [[ $HOST = 'ArchDesk' ]]; then
 		bspc monitor 'DVI-1' --rename 2
 		bspc monitor 1 --reset-desktops I II III IV V
 		bspc monitor 2 --reset-desktops VI VII VIII IX X
-	elif [[ -n "$DVI-1" ]]; then
+	elif is_registered "DVI-1"; then
 		echo "DVI-1 is connected"
 		xrandr --output DVI-1 --auto
 		xrandr --output HDMI-3 --off
 		bspc monitor 'DVI-1' --rename 1
 		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
-	elif [[ -n "$HDMI4" ]]; then
+	elif is_registered "HDMI-3"; then
 		echo "HDMI-3 is connected"
 		xrandr --output HDMI-3 --auto
 		xrandr --output DVI-1 --off
@@ -97,6 +136,29 @@ elif [[ $HOST = 'ArchDesk' ]]; then
 		sleep 30s
 		systemctl reboot
 	fi
+}
+
+monitors_have_changed() {
+	local monitor_file="/tmp/monitors"
+	if [[ -e "$monitor_file" ]]; then
+		local old_monitors=$(<"$monitor_file")
+	else
+		local old_monitors=""
+	fi
+
+	if [[ "${monitors[@]}" != "$old_monitors" ]]; then
+		echo "${monitors[@]}" > "$monitor_file"
+		return 0
+	else
+		return 1
+	fi
+}
+
+find_monitors
+if monitors_have_changed; then
+	echo "Updating monitor configuration"
+	configure_monitors_for_host
 else
-	>&2 echo 'Unknown Host, can''t configure monitors.'
+	echo "Monitors unchanged."
+	exit 2
 fi

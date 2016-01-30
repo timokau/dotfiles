@@ -16,17 +16,21 @@ bspc config merge_overlapping_monitors true
 
 # Configure my monitors
 $HOME/bin/monitor-configuration
+monitor_status=$? # 0 if monitors where changed, 2 otherwise
 $HOME/bin/wallpaper
 
-if [ "$(pgrep -cx panel)" -ge 1 ] ; then
-	echo "Restarting panel"
-	pkill -x panel
+if [[ $monitor_status == 0 ]]; then
+	if [[ "$(pgrep -cx panel)" -ge 1 ]] ; then
+		echo "Restarting panel"
+		pkill -x panel
+	fi
 fi
 
-"$HOME/.config/bspwm/panel" &
+if [[ "$(pgrep -cx panel)" -eq 0 ]] ; then
+	"$HOME/.config/bspwm/panel" & disown
+fi
 
 # Autostart only if no window is active yet
-[[ -z "$(xtitle)" ]] && "$HOME/.config/bspwm/autostart" > /dev/null &
-
-# wait for the panel
-wait
+if [[ -z "$(xtitle)" ]]; then
+	"$HOME/.config/bspwm/autostart" > /dev/null & disown
+fi

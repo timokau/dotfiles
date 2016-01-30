@@ -1,16 +1,17 @@
 #! /bin/zsh
-panel_dir="$HOME/.config/bspwm"
-
 if [ "$(pgrep -cx panel)" -gt 1 ] ; then
 	printf "%s\n" "The panel is already running." >&2
 	exit 1
 fi
 
+panel_dir="$HOME/.config/bspwm"
+
 # use the environment specified in panel_env
 . "$panel_dir/panel_env"
 
 # handle interrupts
-trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+trap "trap - TERM; rm \"$PANEL_FIFO\"; kill 0" INT TERM QUIT EXIT
+trap '' HUP
 
 # (re-)create the named pipe
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
