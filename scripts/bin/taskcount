@@ -1,7 +1,17 @@
 #! /bin/sh
 # gives the number of tasks due today
 # dependencies: taskwarrior
+
+# First make sure, the tasks are up-to-date.
+# Log the output if there were any changes.
+logfile="$HOME/logs/tasksync.log"
+syncoutput=$(task rc.color=off sync 2>&1)
+changes=$(grep -c -m1 'No changes.' <<< "$syncoutput")
+if [[ "$changes" == 0 ]]; then
+	date --iso-8601 >> "$logfile"
+	echo "$syncoutput" >> "$logfile"
+fi
+
 # rc.gc=off turns taskwarrior's "garbage collector" for this command off,
 # so that the IDs won't be changed by it
-task sync > /dev/null 2>&1
 task rc.gc=off "due:${1:-'today'}" 'and' '(status:pending or status:waiting)' 'count' 2> /dev/null
