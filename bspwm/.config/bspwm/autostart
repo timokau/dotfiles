@@ -1,5 +1,5 @@
 #! /bin/bash
 
-bspc rule --add Firefox desktop='I' --one-shot; firefox >/dev/null &
+bspc rule --add Firefox desktop='I' --one-shot; firejail firefox >/dev/null &
 bspc rule --add Telegram desktop='II' --one-shot; telegram >/dev/null &
-bspc rule --add termite desktop='II' --one-shot; weechat -e 'weechat' &
+bspc rule --add termite desktop='II' --one-shot; termite -e 'weechat' &

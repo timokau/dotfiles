@@ -51,7 +51,7 @@ Plug 'tpope/vim-surround'                                 " Surrounding things
 Plug 'tpope/vim-unimpaired'                               " Mappings
 Plug 'tpope/vim-commentary'                               " Comment stuff out
 Plug 'clever-f.vim'                                       " Make F and T repeatable
-"
+Plug 'easymotion/vim-easymotion'                          " Highlight possible targets
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim'                           " Better autocompletion
 else

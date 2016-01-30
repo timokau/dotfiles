@@ -1,43 +1,74 @@
 #! /bin/bash
 # Use taskwarrior in combination with the pomodoro technique.
 # the arguments are passed to taskwarrior as a filter
-# This is a pretty ugly script, but it works (isn't this the definition of a bash script?)
 
-get_id() {
-	# the surrounding parenthesis turn the space-seperated ids into an array
-	ids=($(task rc.gc=off rc.verbose=no status:pending ids "$@" 2>/dev/null))
-	if [[ ${#ids[@]} -gt 1 ]]; then
-		echo "The filter is ambigous. Please be more specific."
+get_uuid() {
+	local old=$IFS
+	IFS=$'\n'
+	local result=""
+	# the surrounding parenthesis turn the newline-seperated tasks in the format
+	# uuid:description into an array
+	local uuids=($(task rc.gc=off rc.verbose=no status:pending _zshuuids "$@" 2>/dev/null))
+	local count=${#uuids[@]}
+	if [[ $count -eq 0 ]]; then
+		echo "No item matches this filter."
 		exit 1
+	elif [[ $count -gt 1 ]]; then
+		echo "The filter is ambigous. Please select a match out of the following:"
+		local counter=0
+		for task in ${uuids[@]}; do
+			# Echo the index and the description
+			echo "[$counter] ${task#*:}"
+			((counter++))
+		done
+		read -r selection
+		result=${uuids[$selection]}
+	else
+		result=${uuids[0]}
 	fi
-	id=${ids[0]}
+	IFS=$old
+	# return only the uuid
+	uuid=${result%:*}
 }
 
-get_id "$@"
-task list "$id"
+get_uuid "$@"
+echo "Starting pomodoro timer for the following task:"
+task rc.gc=off rc.verbose=no status:pending ls "$uuid" 2>/dev/null
+trap 'break' SIGTERM SIGINT # TODO: stop task
 for i in 2 3 4; do
-	get_id "$@"
-	task start "$id"
-	countdown "25m" # Needs the countdown script
+	task start "$uuid" 2>/dev/null
+	countdown "25m" -- "task stop \"$uuid\"" "task start \"$uuid\"" # Needs the countdown script
+	resume_cmd=""
+	if [[ $(mpv status | grep 'playing' | wc -l) -gt 0 ]]; then
+		resume_cmd="mpc play"
+		mpc pause;
+	fi
+	mpv '/usr/share/sounds/freedesktop/stereo/complete.oga' >/dev/null
+	eval $resume_cmd
 	notify-send --app-name=Pomodoro "Time's up" "Time to relax"
 	echo "Enough."
-	read -r -n 1 -p "Finished working? [Y/n]" item
-	get_id "$@"
-	task stop "$id"
+	read -r -n1 -p "Finished working? Press any key to continue." item
+	echo # newline
+	task stop "$uuid" 2>/dev/null
 	if [[ $i == 4 ]]; then # Don't pause the last time
 		break
 	fi
 	case "$item" in
-		n|N) exit;;
+		n|N) break;;
 		*) countdown 5m;;
 	esac
+	mpv '/usr/share/sounds/freedesktop/stereo/bell.oga'>/dev/null
 	notify-send --app-name=Pomodoro "Time's up" "Time to work"
 	echo "Time for round $i."
 	read -r -n 1 -p "Ready? [Y/n]" item
-	echo # newlline
-	get_id "$@"
-	task stop "$id"
+	echo # newline
 	case "$item" in
-		n|N) exit;;
+		n|N) break;;
 	esac
 done
+
+read -r -n 1 -p "Task done? [y/N]" item
+echo # newline
+case "$item" in
+	y|Y) task done "$uuid" 2>/dev/null;;
+esac

@@ -112,7 +112,7 @@ configure_monitors_for_archpad() {
 
 configure_monitors_for_archdesk() {
 	if is_registered "DVI-1" && is_registered "HDMI-3"; then
-		echo "DVI-1 and HDMI-3 are connected"
+		echo "DVI-1 and HDMI-4 are connected"
 		xrandr --output DVI-1 --auto
 		xrandr --output HDMI-3 --auto --primary --right-of DVI-1
 		bspc monitor 'HDMI-3' --rename 1
@@ -125,8 +125,9 @@ configure_monitors_for_archdesk() {
 		xrandr --output HDMI-3 --off
 		bspc monitor 'DVI-1' --rename 1
 		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
-	elif is_registered "HDMI-3"; then
-		echo "HDMI-3 is connected"
+	# HDMI4 and HDMI1 are the same monitor, which is somehow sometimes labelled differently
+	elif is_registered "HDMI-4"; then
+		echo "HDMI-4 is connected"
 		xrandr --output HDMI-3 --auto
 		xrandr --output DVI-1 --off
 		bspc monitor 'HDMI-3' --rename 1
