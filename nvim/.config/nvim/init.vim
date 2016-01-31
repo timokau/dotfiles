@@ -473,7 +473,7 @@ augroup vimrc
 augroup END
 
 " Run tests on every write for rust source files
-autocmd BufWritePost *.rs call CargoTest()
+" autocmd BufWritePost *.rs call CargoTest()
 
 function! CargoTest()
 	let currentDir = expand('%:p:h')
