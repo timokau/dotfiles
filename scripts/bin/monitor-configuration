@@ -11,6 +11,7 @@ register_monitor() {
 }
 
 # Search for a monitor in the array of monitors
+# TODO: take multiple arguments and return true when **exactly** those are registered
 is_registered() {
 	local monitor
 	for monitor in "${monitors[@]}"; do
@@ -104,14 +105,12 @@ configure_monitors_for_archpad() {
 		bspc monitor 'eDP1' --rename 1
 		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
 	else
-		echo "No monitors are plugged in. This must be a mistake. Rebooting in 30 seconds."
-		sleep 30s
-		systemctl reboot
+		echo "No known monitor setup cuold be detected." | /usr/bin/systemd-cat --priority="crit"
 	fi
 }
 
 configure_monitors_for_archdesk() {
-	if is_registered "DVI-1" && is_registered "HDMI-3"; then
+	if is_registered "DVII2" && is_registered "HDMI4"; then
 		echo "DVI-1 and HDMI-4 are connected"
 		xrandr --output DVI-1 --auto
 		xrandr --output HDMI-3 --auto --primary --right-of DVI-1
@@ -119,7 +118,7 @@ configure_monitors_for_archdesk() {
 		bspc monitor 'DVI-1' --rename 2
 		bspc monitor 1 --reset-desktops I II III IV V
 		bspc monitor 2 --reset-desktops VI VII VIII IX X
-	elif is_registered "DVI-1"; then
+	elif is_registered "DVII2"; then
 		echo "DVI-1 is connected"
 		xrandr --output DVI-1 --auto
 		xrandr --output HDMI-3 --off
@@ -133,9 +132,7 @@ configure_monitors_for_archdesk() {
 		bspc monitor 'HDMI-3' --rename 1
 		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
 	else
-		echo "No monitors are plugged in. This must be a mistake. Rebooting in 30 seconds."
-		sleep 30s
-		systemctl reboot
+		echo "No known monitor setup cuold be detected." | /usr/bin/systemd-cat --priority="crit"
 	fi
 }
 
