@@ -87,6 +87,9 @@ let g:rustfmt_autosave = 1 " Run rustfmt on save
 " 	autocmd FileType tex autocmd BufWritePost <buffer> VimtexView
 " 	autocmd User VimtexEventQuit call vimtex#latexmk#clean(0)
 " augroup END
+if has('nvim')
+	let g:vimtex_latexmk_progname="nvr"
+endif
 let g:vimtex_view_method="zathura"
 
 " deoplete
