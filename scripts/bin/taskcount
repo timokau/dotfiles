@@ -2,20 +2,18 @@
 # gives the number of tasks due today
 # dependencies: taskwarrior
 
-# First make sure, the tasks are up-to-date.
-# Log the output if there were any changes.
-logfile="$HOME/logs/tasksync.log"
-syncoutput=$(task rc.color=off sync 2>&1)
-changes=$(grep -c -m1 'No changes.' <<< "$syncoutput")
-if [[ "$changes" == 0 ]]; then
-	date --iso-8601 >> "$logfile"
-	echo "$syncoutput" >> "$logfile"
-fi
-
 HOST=${HOST:-"$(</etc/hostname)"}
-if [[ $HOST == "ArchPad" ]] && [[ -e "$HOME/.local/share/task/network-enabled" ]]; then
-	# task sync > /dev/null 2>&1
-	task sync >> ~/logs/tasksync.log 2>&1
+DISABLED=true
+if [[ $DISABLED == false ]] && [[ $HOST != "ArchPad" || -e "$HOME/.local/share/task/network-enabled" ]]; then
+	# First make sure, the tasks are up-to-date.
+	# Log the output if there were any changes.
+	logfile="$HOME/logs/tasksync.log"
+	syncoutput=$(task rc.color=off sync 2>&1)
+	changes=$(grep -c -m1 'No changes.' <<< "$syncoutput")
+	if [[ "$changes" == 0 ]]; then
+		date --iso-8601 >> "$logfile"
+		echo "$syncoutput" >> "$logfile"
+	fi
 fi
 
 # rc.gc=off turns taskwarrior's "garbage collector" for this command off,
