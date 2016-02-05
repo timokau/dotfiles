@@ -33,7 +33,7 @@ synctasks() {
 
 	aftercount=$($countcmd 2>/dev/null)
 	if [[ $beforecount -ne $aftercount ]]; then
-		echo "Before: $beforecount, After: $aftercount"
+		echo "Before: $beforecount, After: $aftercount" >> $logfile
 	fi
 
 	dups_found=$(task diagnostics | grep -c -m1 'No duplicates found')
