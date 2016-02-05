@@ -12,7 +12,15 @@ synctasks() {
 	beforecount=$($countcmd 2>/dev/null)
 	mkdir -p /tmp/task.bak
 	cp "$HOME/.local/share/task/"{completed,pending}".data" "/tmp/task.bak/"
-	$taskcmd sync >> $logfile 2&>1
+	syncoutput=$($synccmd 2>&1)
+	if [[ $(grep -c -m1 'Sync successful. No changes.' <<< $syncoutput) -ge 1 ]]; then
+		rm $logfile
+		[[ -e /tmp/task.bak ]] && rm -r /tmp/task.bak
+		return
+	else
+		echo "$syncoutput" >> $logfile
+	fi
+
 	for name in {completed,pending}; do
 		echo "Diffing $name" >> $logfile
 		original="$HOME/.local/share/task/${name}.data"
