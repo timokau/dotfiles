@@ -3,8 +3,6 @@
 
 declare -a monitors
 
-echo "date" > /home/timo/logs/tmplog.log
-
 # Append a monitor to the array of monitors
 register_monitor() {
 	monitors+=("$1")
