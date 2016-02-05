@@ -5,17 +5,18 @@
 # Sync tasks, saving logs and diffs in $logfile
 synctasks() {
 	logfile="$HOME/logs/syncdiff/$(date -Iseconds)"
+	logdir="$(dirname $logfile)"
 	taskcmd="task rc.color=off rc.gc=off"
 	countcmd="$taskcmd status:pending or status:waiting or status:recurring count"
 	synccmd="$taskcmd sync"
 
 	beforecount=$($countcmd 2>/dev/null)
-	mkdir -p /tmp/task.bak
+	mkdir -p "$logdir"
 	cp "$HOME/.local/share/task/"{completed,pending}".data" "/tmp/task.bak/"
 	syncoutput=$($synccmd 2>&1)
 	if [[ $(grep -c -m1 'Sync successful. No changes.' <<< $syncoutput) -ge 1 ]]; then
 		rm $logfile
-		[[ -e /tmp/task.bak ]] && rm -r /tmp/task.bak
+		[[ -e "$logdir" ]] && rm -r "$logdir"
 		return
 	else
 		echo "$syncoutput" >> $logfile
@@ -40,7 +41,7 @@ synctasks() {
 		echo "Duplicates found." >> $logfile
 		notify-send --urgency=critical "Task duplicates found"
 	fi
-	[[ -e /tmp/task.bak ]] && rm -r /tmp/task.bak
+	[[ -e "$logdir" ]] && rm -r "$logdir"
 }
 
 HOST=${HOST:-"$(</etc/hostname)"}
