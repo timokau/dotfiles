@@ -5,7 +5,7 @@ declare -a monitors
 
 # Apparently this is sometimes needed for new monitors
 # to be recognized
-xrandr >/dev/null 2&>1
+xrandr >/dev/null 2>&1
 
 # Append a monitor to the array of monitors
 register_monitor() {
