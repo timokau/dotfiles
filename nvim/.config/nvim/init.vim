@@ -79,7 +79,9 @@ silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
 
 " rust.vim {{{3
-let g:rustfmt_autosave = 1 " Run rustfmt on save
+if executable('rustfmt')
+	let g:rustfmt_autosave = 1 " Run rustfmt on save
+endif
 
 " vimtex {{{3
 " augroup vimtex_config
