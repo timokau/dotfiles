@@ -5,6 +5,7 @@
 # Sync tasks, saving logs and diffs in $logfile
 synctasks() {
 	logfile="$HOME/logs/syncdiff/$(date -Iseconds)"
+	mkdir -p "$(dirname $logfile)"
 	taskcmd="task rc.color=off rc.gc=off"
 	countcmd="$taskcmd status:pending or status:waiting or status:recurring count"
 	synccmd="$taskcmd sync"
