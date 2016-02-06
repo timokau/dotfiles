@@ -2,7 +2,7 @@
 # Customize the (German) keyboard with xmodmap and xcape
 
 # Reset
-killall --signal SIGQUIT xcape
+killall --signal SIGKILL xcape
 setxkbmap de
 
 # Use the CapsLock key as escape when pressed alone and ctrl when pressed with some other key
