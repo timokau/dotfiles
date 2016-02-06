@@ -8,12 +8,16 @@ synctasks() {
 	mkdir -p "$(dirname $logfile)"
 	taskcmd="task rc.color=off rc.gc=off"
 	countcmd="$taskcmd status:pending or status:waiting or status:recurring count"
-	synccmd="$taskcmd sync"
+	synccmd="timeout -k1m 1m $taskcmd sync"
 
 	beforecount=$($countcmd 2>/dev/null)
 	mkdir -p /tmp/task.bak
 	cp "$HOME/.local/share/task/"{completed,pending}".data" "/tmp/task.bak/"
 	syncoutput=$($synccmd 2>&1)
+	if [[ $? -ne 0 ]]; then
+		notify-send 'Task sync failed.'
+		exit
+	fi
 	if [[ $(grep -c -m1 'Sync successful. No changes.' <<< $syncoutput) -ge 1 ]]; then
 		rm $logfile
 		[[ -e /tmp/task.bak ]] && rm -r /tmp/task.bak
