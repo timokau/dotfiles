@@ -19,7 +19,6 @@ synctasks() {
 		exit
 	fi
 	if [[ $(grep -c -m1 'Sync successful. No changes.' <<< $syncoutput) -ge 1 ]]; then
-		rm $logfile
 		[[ -e /tmp/task.bak ]] && rm -r /tmp/task.bak
 		return
 	else
