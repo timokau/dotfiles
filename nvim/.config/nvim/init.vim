@@ -65,6 +65,7 @@ Plug 'vimwiki/vimwiki'                                    " Vimwiki
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'roman/golden-ratio'                                 " Automatic resizing
+Plug 'bkad/CamelCaseMotion'                               " Move in CamelCase and snake_case
 if exists(':terminal')
 	Plug 'kassio/neoterm'                                 " Execute commands in neovims terminal
 endif
@@ -115,6 +116,9 @@ augroup neomake
 	autocmd!
 	autocmd BufWritePost * Neomake
 augroup END
+
+" CamelCaseMotion {{{3
+call camelcasemotion#CreateMotionMappings(',')
 
 " Ultisnips {{{3
 " Trigger configuration. <tab> interferes with YouCompleteMe
@@ -403,8 +407,8 @@ cnoremap <C-S-l> <S-Right>
 " Expand %% to the folder of the currently edited file {{{3
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 
-" Use , for commands {{{3
-noremap , :
+" " Use , for commands {{{3
+" noremap , :
 
 " Resize {{{3
 nnoremap <silent> <Leader>- :resize -3<CR>
