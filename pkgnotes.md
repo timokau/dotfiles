@@ -1,0 +1,130 @@
+# Package install notes
+
+This includes mainly notes-to-self on why I have something installed or which tool I use for rarely-done tasks.
+
+- python2-mpd - Dependency for the MPDStats beets plugin (https://beets.readthedocs.org/en/latest/plugins/mpdstats.html)
+- glances - Quickly view system stats
+- ack - Faster grep alternative
+- acpi - Battery stats
+## Fonts
+- adobe-source-han-sans-otc-fonts
+- android-tools - Android support
+- android-udev - Udev rules for android devices
+- arch-wiki-docs - In case of offline emergency
+- atool - Deal with archives
+- audacity - Edit mp3s
+- beets - Manage music
+- bspwm - Window manager
+- btrfs-progs - BTRFS
+- cargo - Rust development
+- chromium - In case firefox doesn't do it
+- cpulimit - Limit how much cpu a process can use
+- cups - Printing Server
+- cups-pdf - PDF Printing
+- diffpdf - Diff pdfs
+- digikam - Picture management
+- dosfstools - Deal with fat
+- dunst - Notifications
+- dwdiff - Diff by word
+- evince - PDF reader with annotation support
+- evolution - GUI Calendar
+- fasd - Fast command line navigation
+- fbreader - Ebook reader
+- feh - Display images, apply wallpapers
+- file-roller - Graphical archive manager
+- firefox - main web browser
+- firejail - sandboxing
+- freetype2 - font rendering
+- fzf - fuzzy finder
+- gimp - Image editing
+- git - Source Control
+- gparted - partitioning
+- grip - CD Ripper
+- gvim - GUI Editor
+- gzip - Zip support
+- handbrake - Video conversion
+- i3lock - Screen locker
+- imagemagick - Image tools
+- isync - Mail synchronisation
+- j4-dmenu-desktop - Application launcher
+- khal - CLI calendar
+- khard - CLI contact manager
+- ledger - CLI time logging
+- lemonbar - Bar
+- libreoffice-still - Opening documents
+- mkvtoolnix-cli - Modify mkv files
+- mlocate - Locate
+- mp3splt - Split audio files
+- mpc - Control mpd from the CLI
+- mpd - Music daemon
+- mpv - Video player
+- msmtp - Send mail
+- mutt-sidebar - Read mail
+- ncdu - Find large files (curses)
+- ncmpcpp - Control mpd (curses)
+- neovim - Text editor
+- neovim-remote - Needed by vimtex
+- nethogs - Monitor network usage
+- nmap - Network scanner
+- notmuch-mutt - Mail search
+- ntfs-3g - Write to windows (ntfs) drives
+- pacaur - AUR manager
+- pandoc - Compile markdown to anything
+- pass - CLI password manager
+- pcmanfm - Minimal GUI file manager
+- pentadactyl-git - Firefox extension, unstable but I don't want to browse without it
+- python{,2}-neovim - Python support in neovim
+- qemu - VMs
+- qutebrowser - Minimal alternative browser
+- ranger - (Curses) file manager
+- redshift - Shift monitor temp depending on the time of the day
+- reflector - Automatically adjust the pacman mirrorlist
+- rust - Development of rust code
+- rust-racer - Autocompletion of rust code
+- rustfmt - Formatting of rust code
+- scrot - Screenshots
+- sdl2 - Developmeng
+- sdl2_image - Development
+- sdl2_ttf - Development
+- shellcheck - Check my shell scripts
+- snapper - Regular btrfs snapshots
+- speedtest-cli - Test network speed
+- spotify - Discover new music
+- sshfs - Mount ssh
+- stow - Dotfile management
+- stress - Stresstest
+- sxhkd - Keybindings
+- sxiv - Another image viewer (more features, less configurable than feh)
+- syncthing - Keep my devices in sync
+- syncthing-inotify - Use inotify instead of regular polling for syncthing
+- task - Todo list
+- telegram-desktop-bin - Messanger
+- terminus-font - Font
+- termite - (True color, minimal, configurable) terminal emulator
+- texlive-most - Latex
+- the_silver_searcher - Another fast grep alternative
+- toxcore - Promising messanger
+- toxic - Tox client
+- translate-shell - CLI translations
+- transmission-gtk - Torrents
+- trash-cli - Trsh stuff from the cli
+- ttf-dejavu - Font
+- ttf-hack - Font
+- ttf-liberation - Font
+- ttf-symbola - Font
+- udevil - Automounting
+- unclutter - Hide my mouse
+- unrar - rar support
+- urlview - "Click" links in mutt
+- utox - Tox client
+- vdirsyncer - Sync contacts and calendars
+- w3m - Display images in ranger
+- weechat - IRC
+- wireshark-gtk - Monitor network traffic
+- xautolock - Autolock
+- xcape - Double-bind modifier-keys
+- xtitle - Display window title in lemonbar
+- youtube-dl - Play online videos with mpd
+- zathura - Minimal pdf viewer with vim bindings
+- zathura-pdf-mupdf - Pdf support
+- zsh - Shell
