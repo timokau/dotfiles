@@ -1,5 +1,5 @@
 " vim: nowrap foldmethod=marker foldlevel=2
-
+" TODO: delte comments, toggle terminal, close termian after cargo run
 " Plugins {{{1
 
 " Vim-Plug Boilderplate {{{3
@@ -64,6 +64,7 @@ Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'roman/golden-ratio'                                 " Automatic resizing
 if exists(':terminal')
 	Plug 'kassio/neoterm'                                 " Execute commands in neovims terminal
 endif
