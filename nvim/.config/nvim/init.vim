@@ -138,8 +138,6 @@ nnoremap <silent> <leader>zs <Plug>VimwikiUISelect
 nnoremap <silent> <leader>zi <Plug>VimwikiDiaryIndex
 
 " fzf {{{3
-let g:fzf_nvim_statusline = 0 " disable statusline overwriting
-
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>a :Buffers<CR>
 nnoremap <silent> <leader>; :BLines<CR>
