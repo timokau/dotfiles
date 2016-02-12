@@ -1,34 +1,87 @@
 #! /bin/bash
 
-# display a countdown (usage similar to sleep)
-seconds=0
-while [[ $# -ge 1 ]]
-do
-	if [[ "$1" == "--" ]]; then
-		pauseStartCommand="$2"
-		pauseStopCommand="$3"
-		break
-	fi
-	number=${1:0: -1}
-	suffix=${1: -1}
-	case $suffix in
-		s)
-			seconds=$(( $seconds + $number ))
-			;;
-		m)
-			seconds=$(( $seconds + $number * 60 ))
-			;;
-		h)
-			seconds=$(( $seconds + $number * 60 * 60 ))
-			;;
+# Display a countdown
+# Possible syntax:
+# countdown until 13:40 -- Time from now until the next occurence of 13:40 (parsed by date)
+# countdown 30m 10s -- 30 minute and 10 seconds countdown
+
+
+# Parse the time with date
+# Allows for syntax like `countodwn until tomorrow 13:00`
+parseAbsolute() {
+	dateAfter=$(date +%s --date "$@") # Date of the countodwn end in seconds
+}
+
+# Given argument in a form like `3h 30m 24s`, it will set the `dateAfter` to the appropriate
+# time relative to now.
+# Can parse seconds (s), minutes (m), hours (m). Anything without a suffix is considered a second.
+parseSleepLike() {
+	seconds=0 # Specified time in seconds
+	while [[ $# -ge 1 ]]
+	do
+		number=${1:0: -1}
+		suffix=${1: -1}
+		case $suffix in
+			s)
+				seconds=$(( $seconds + $number ))
+				;;
+			m)
+				seconds=$(( $seconds + $number * 60 ))
+				;;
+			h)
+				seconds=$(( $seconds + $number * 60 * 60 ))
+				;;
+			*)
+				number=${number}${suffix}
+				seconds=$(( $seconds + $number ))
+				;;
+		esac
+		shift
+	done
+	dateAfter=$(($(date +%s) + $seconds));
+}
+
+parseArguments() {
+	parseMode="relative"
+
+	# While there are remaining arguments, `--` was not parsed and the argument is an option
+	while [[ $# -ge 1 ]] && [[ "$1" != '--' ]] && [[ "$1" =~ ^- ]]; do
+		case $1 in
+			"--pauseStartCmd" | "-s")
+				pauseStartCommand="$2"
+				shift
+				;;
+			"--pauseStopCmd" | "-e")
+				pauseStopCommand="$2"
+				shift
+				;;
+			"--until" | "-u")
+				parseMode="absolute"
+				;;
+			"--relative" | "-r")
+				parseMode="relative"
+				;;
+			*)
+				echo "Invalid argument: $1"
+				exit 1
+				;;
+		esac
+		shift
+	done
+	case $parseMode in
+		"relative")
+			parseSleepLike $@;; # Here I *want* to re-split the arguments
+		"absolute")
+			parseAbsolute "$@";;
 		*)
-			number=${number}${suffix}
-			seconds=$(( $seconds + $number ))
+			echo "Invalid parse mode: $parseMode"
+			exit 1
 			;;
 	esac
-	shift
-done
-dateAfter=$(($(date +%s) + $seconds));
+}
+
+parseArguments "$@"
+
 echo -e "Counting down $seconds seconds until $(date --date @${dateAfter} +'%F %T')..."
 while [[ "$dateAfter" > `date +%s` ]]; do
 	echo -ne "\033[2K" # clear the line
@@ -40,7 +93,6 @@ while [[ "$dateAfter" > `date +%s` ]]; do
 			;;
 		p) # pause
 			# Block until the next input of "p"
-			# TODO: time offset
 			pauseStart=$(date +%s)
 			eval "$pauseStartCommand"
 			while :; do

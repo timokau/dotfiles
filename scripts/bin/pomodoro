@@ -37,7 +37,8 @@ task rc.gc=off rc.verbose=no status:pending ls "$uuid" 2>/dev/null
 trap 'break' SIGTERM SIGINT # TODO: stop task
 for i in 2 3 4; do
 	task start "$uuid" 2>/dev/null
-	countdown "25m" -- "task stop \"$uuid\"" "task start \"$uuid\"" # Needs the countdown script
+	# Needs the countdown script
+	countdown --pauseStartCmd "task stop \"$uuid\"" --pauseStopCmd "task start \"$uuid\"" '25m'
 	resume_cmd=""
 	if [[ $(mpv status | grep 'playing' | wc -l) -gt 0 ]]; then
 		resume_cmd="mpc play"
@@ -67,6 +68,7 @@ for i in 2 3 4; do
 	esac
 done
 
+task stop "$uuid" 2>/dev/null
 read -r -n 1 -p "Task done? [y/N]" item
 echo # newline
 case "$item" in
