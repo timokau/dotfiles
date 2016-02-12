@@ -20,7 +20,6 @@ if [ -n "$active_user" ]; then
 	export XAUTHORITY="/home/$active_user/.Xauthority"
 else
 	echo "Unable to find an X session"
-	exit 1
 fi
 
 echo "Found user $active_user on Display $DISPLAY"
