@@ -284,7 +284,16 @@ function! IsLoaded(pattern)
 	endfor
 	unlet scriptnames_output
 	return 0
-endfun
+endfunction
+
+" Execute macro over visual selection {{{3
+" https://github.com/stoeffel/.dotfiles/blob/master/vim/visual-at.vim
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
 
 " Appearance {{{3
 if has ("multi_byte_encoding")
