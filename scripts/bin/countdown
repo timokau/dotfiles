@@ -82,6 +82,8 @@ parseArguments() {
 
 parseArguments "$@"
 
+EXITCODE=0
+
 echo -e "Counting down $seconds seconds until $(date --date @${dateAfter} +'%F %T')..."
 while [[ "$dateAfter" > `date +%s` ]]; do
 	echo -ne "\033[2K" # clear the line
@@ -89,6 +91,7 @@ while [[ "$dateAfter" > `date +%s` ]]; do
 	read -r -n 1 -s -t 0.1 input
 	case $input in
 		a) # abort
+			EXITCODE=2
 			break
 			;;
 		p) # pause
@@ -108,3 +111,5 @@ while [[ "$dateAfter" > `date +%s` ]]; do
 	esac
 done
 echo -ne "\033[2K" # clear the line
+
+exit $EXITCODE
