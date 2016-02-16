@@ -317,7 +317,7 @@ if !has("gui_running")
 endif
 syntax enable
 " Better highlighting for concealed text
-hi Conceal guibg=black guifg=white
+hi Conceal guibg=#333 guifg=lightblue
 " Formating {{{3
 set formatoptions-=t                   " Don't autowrap text
 set formatoptions-=c                   " Don't autowrap comments
