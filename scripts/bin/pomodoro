@@ -31,6 +31,16 @@ get_uuid() {
 	uuid=${result%:*}
 }
 
+play_sound_notification() {
+	resume_cmd=""
+	if [[ $(mpv status | grep 'playing' | wc -l) -gt 0 ]]; then
+		resume_cmd="mpc play"
+		mpc pause;
+	fi
+	mpv "$1" >/dev/null 2>&1
+	eval $resume_cmd
+}
+
 get_uuid "$@"
 echo "Starting pomodoro timer for the following task:"
 task rc.gc=off rc.verbose=no status:pending ls "$uuid" 2>/dev/null
@@ -39,17 +49,13 @@ for i in 2 3 4; do
 	task start "$uuid" 2>/dev/null
 	# Needs the countdown script
 	countdown --pauseStartCmd "task stop \"$uuid\"" --pauseStopCmd "task start \"$uuid\"" '25m'
-	resume_cmd=""
-	if [[ $(mpv status | grep 'playing' | wc -l) -gt 0 ]]; then
-		resume_cmd="mpc play"
-		mpc pause;
+	play_sound_notification '/usr/share/sounds/freedesktop/stereo/complete.oga'
+	if [[ "$?" == 0 ]]; then # Only ask when countdown exited normally (no abort)
+		notify-send --app-name=Pomodoro "Time's up" "Time to relax"
+		echo "Enough."
+		read -r -n1 -p "Finished working? Press any key to continue." item
+		echo # newline
 	fi
-	mpv '/usr/share/sounds/freedesktop/stereo/complete.oga' >/dev/null
-	eval $resume_cmd
-	notify-send --app-name=Pomodoro "Time's up" "Time to relax"
-	echo "Enough."
-	read -r -n1 -p "Finished working? Press any key to continue." item
-	echo # newline
 	task stop "$uuid" 2>/dev/null
 	if [[ $i == 4 ]]; then # Don't pause the last time
 		break
@@ -58,7 +64,7 @@ for i in 2 3 4; do
 		n|N) break;;
 		*) countdown 5m;;
 	esac
-	mpv '/usr/share/sounds/freedesktop/stereo/bell.oga'>/dev/null
+	play_sound_notification '/usr/share/sounds/freedesktop/stereo/bell.oga'
 	notify-send --app-name=Pomodoro "Time's up" "Time to work"
 	echo "Time for round $i."
 	read -r -n 1 -p "Ready? [Y/n]" item
@@ -68,7 +74,9 @@ for i in 2 3 4; do
 	esac
 done
 
-task stop "$uuid" 2>/dev/null
+if [[ $(task active "$uuid" 2>/dev/null | wc -l) != 0 ]]; then # Only stop when active
+	task stop "$uuid" 2>/dev/null
+fi
 read -r -n 1 -p "Task done? [y/N]" item
 echo # newline
 case "$item" in

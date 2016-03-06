@@ -1,0 +1,5 @@
+#/bin/bash
+
+# Quickly save a note to taskwarrior without much mental overhead, to deal with it later.
+
+task add proj:inbox pri:H due:today $@
