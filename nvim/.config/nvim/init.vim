@@ -76,7 +76,7 @@ call plug#end()
 let g:airline#extensions#whitespace#mixed_indent_algo = 2
 
 " racer {{{3
-let $RUST_SRC_PATH=$HOME . "/.local/share/racer/rust/src"
+let $RUST_SRC_PATH="/usr/src/rust/src"
 silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
 
@@ -106,6 +106,16 @@ let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
 " neoterm {{{3
 nnoremap <silent> <leader>r :update<Cr>:T<Space>clear;<Space>cargo<Space>run<Cr>
 let g:neoterm_size = 15
+let g:neoterm_keep_term_open = 1
+let g:run_tests_bg = 1
+let g:raise_when_tests_fail = 1
+set statusline+=%#NeotermTestRunning#%{neoterm#test#status('running')}%*
+set statusline+=%#NeotermTestSuccess#%{neoterm#test#status('success')}%*
+set statusline+=%#NeotermTestFailed#%{neoterm#test#status('failed')}%*
+augroup run_tests
+	autocmd!
+	autocmd BufWritePost *.rs call neoterm#test#run('all')
+augroup END
 
 " surround {{{3
 " surround with latex command
