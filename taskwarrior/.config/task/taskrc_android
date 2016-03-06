@@ -1,0 +1,6 @@
+include config/locations_android
+include config/server
+include config/configuration
+
+android.reports=lstoday,next,list,pending,unfinished
+android.reports.defualt=lstoday

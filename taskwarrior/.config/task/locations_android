@@ -1,0 +1,3 @@
+taskd.certificate=timo.cert.pem
+taskd.key=timo.key.pem
+taskd.ca=ca.cert.pem

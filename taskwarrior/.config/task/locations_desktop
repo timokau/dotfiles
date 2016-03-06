@@ -1,0 +1,7 @@
+# Files
+data.location=~/.local/share/task
+taskd.certificate=~/.local/share/task/timo.cert.pem
+taskd.key=~/.local/share/task/timo.key.pem
+taskd.ca=~/.local/share/task/ca.cert.pem
+
+include ~/.local/share/task/dark-green-256.theme

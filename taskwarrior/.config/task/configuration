@@ -1,0 +1,46 @@
+# Settings
+dateformat=y-M-D H:N
+search.case.sensitive=no
+urgency.waiting.coefficient=-20
+verbose=yes
+
+# Priority
+uda.priority.values=H,M,,L
+urgency.uda.priority.H.coefficient=5.0
+urgency.uda.priority.M.coefficient=2.0
+urgency.uda.priority.L.coefficient=0.5
+
+# Reports
+report.lstoday.description = Done today
+report.dsheet.columns      = start,end,project,priority,entry.age,description,uuid
+report.dsheet.filter       = end:today
+report.dsheet.labels       = Started,Complete,Proj,Pri,Age,Description,UUID
+report.dsheet.sort         = end+,priority-,project+
+
+report.today.columns = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due,until.age,description,urgency
+report.today.labels = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.today.filter = (status:pending or status:waiting) and (due:today or +OVERDUE)
+report.today.sort = urgency-
+
+report.lstoday.description = Due today
+report.lstoday.columns     = id,start.age,depends.indicator,priority,project,tags,scheduled.countdown,due.countdown,until.countdown,description.count,urgency
+report.lstoday.labels      = ID,Total,D,P,Project,Tag,S,Due,Until,Description,Urg
+report.lstoday.filter      = (status:pending or status:waiting) and (due:today or +OVERDUE)
+report.lstoday.sort        = end+,priority-
+
+report.unfinished.description = Unfinished tasks sorted by urgency
+report.unfinished.columns     = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due,description,urgency
+report.unfinished.filter      = (status:pending or status:waiting)
+report.unfinished.labels      = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Description,Urg
+report.unfinished.sort        = due+,urgency-
+
+report.inbox.description   = Inbox
+report.inbox.columns       = id,description
+report.inbox.filter        = status:pending limit:page (+in)
+report.inbox.labels        = ID,Description
+
+# Show the due date instead of the due age in the next report
+report.next.columns = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due,until.age,description,urgency
+
+# Color theme
+color.due.today=bold red on black
