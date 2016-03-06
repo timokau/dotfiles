@@ -33,6 +33,7 @@ whitelist ~/.mozilla
 # Those are symlinked and therefore must be sperately whitelisted
 whitelist ~/.mozilla/firefox/profiles.ini
 whitelist ~/.mozilla/firefox/qqcyzdx2.default/chrome
+whitelist ~/data/downloads
 whitelist ~/Downloads
 whitelist ~/.gtkrc-2.0
 whitelist ~/.vimperatorrc
