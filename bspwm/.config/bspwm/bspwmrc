@@ -20,14 +20,14 @@ monitor_status=$? # 0 if monitors where changed, 2 otherwise
 $HOME/bin/wallpaper
 
 if [[ $monitor_status == 0 ]]; then
-	if [[ "$(pgrep -cx panel)" -ge 1 ]] ; then
+	if [[ "$(pgrep -cx bar_start)" -ge 1 ]] ; then
 		echo "Restarting panel"
-		pkill -x panel
+		pkill -x bar_start
 	fi
 fi
 
-if [[ "$(pgrep -cx panel)" -eq 0 ]] ; then
-	"$HOME/.config/bspwm/panel" & disown
+if [[ "$(pgrep -cx bar_start)" -eq 0 ]] ; then
+	"$HOME/bin/bar/bar_start" & disown
 fi
 
 # Autostart only if no window is active yet

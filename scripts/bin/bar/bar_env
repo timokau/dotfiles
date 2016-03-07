@@ -4,9 +4,9 @@
 DPI=$(xdpyinfo | awk '/resolution/{print $2}' | sed -e 's/x.*//g')
 
 PANEL_FIFO=/tmp/panel-fifo
-PANEL_HEIGHT=$(( 0.2 * $DPI ))
+PANEL_HEIGHT=$( echo $(( 0.2 * $DPI )) | awk '{print int($1 + 0.5)}')
 # calculate exact font size
-FONT_SIZE=$(( 0.12 * $DPI ))
+FONT_SIZE=$( echo $(( 0.12 * $DPI )) | awk '{print int($1 + 0.5)}')
 # round
 FONT_SIZE=${FONT_SIZE/.*}
 # make it a multiple of 2 (uneven font sizes somehow aren't accepted)

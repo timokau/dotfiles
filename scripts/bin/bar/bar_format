@@ -1,7 +1,7 @@
 #! /bin/sh
-panel_dir="$HOME/.config/bspwm"
+dir=$1
 
-. "$panel_dir/panel_colors"
+. "$dir/bar_colors"
 
 # monitor count
 mon_count=$(bspc query -M | wc -l)
@@ -110,5 +110,8 @@ while read -r line ; do
 			done
 			;;
 	esac
-	printf "%s\n" "%{l}${wm_infos}%{S1}%{c}${title}%{r}${due}${updates}${mail_status}${power_status}${date}"
+	printf "%s\n" "%{l}${wm_infos}%{S0}"
+	for (( i=0; i < "$mon_count"; i++ )) ; do
+		printf "%s" "%{l}${wm_infos}%{S$i}%{c}${title}%{r}${due}${updates}${mail_status}${power_status}${date}"
+	done
 done

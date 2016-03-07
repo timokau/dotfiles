@@ -4,12 +4,12 @@ if [ "$(pgrep -cx panel)" -gt 1 ] ; then
 	exit 1
 fi
 
-panel_dir="$HOME/.config/bspwm"
+dir="$(dirname "$(readlink -f "$0")")"
 
 # use the environment specified in panel_env
-. "$panel_dir/panel_env"
+. "$dir/bar_env"
 
-# handle interrupts
+# clean up on exit
 trap "trap - TERM; rm \"$PANEL_FIFO\"; kill 0" INT TERM QUIT EXIT
 trap '' HUP
 
@@ -41,11 +41,14 @@ if [[ -e '/sys/class/power_supply/BAT0' ]]; then
 fi
 
 # use the colors specified in panel_colors
-. "$panel_dir/panel_colors"
+. "$dir/bar_colors"
 
 # pipe the FIFO through panel_bar to format it and finally into
 # the bar to display it
-cat "$PANEL_FIFO" | "$panel_dir/panel_bar" | /usr/bin/lemonbar -p -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" | sh &
+cat "$PANEL_FIFO" \
+    | "$dir/bar_format" "$dir" \
+    | /usr/bin/lemonbar -p -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" \
+    | sh &
 
 # keep the bar up to date, don't exit
 wait
