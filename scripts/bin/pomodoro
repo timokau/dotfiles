@@ -2,7 +2,52 @@
 # Use taskwarrior in combination with the pomodoro technique.
 # the arguments are passed to taskwarrior as a filter
 
-get_uuid() {
+COMPLETE_SOUND='/usr/share/sounds/freedesktop/stereo/complete.oga'
+START_SOUND='/usr/share/sounds/freedesktop/stereo/bell.oga'
+
+parse_options() {
+	ROUNDS=3
+	PAUSE_DURATION='5m'
+	ROUND_DURATION='5m'
+	PLAY_SOUND=0
+
+	# While there are remaining arguments, `--` was not parsed and the argument is an option
+	while [[ $# -ge 1 ]] && [[ "$1" != '--' ]] && [[ "$1" =~ ^- ]]; do
+		case $1 in
+			"--rounds" | "-r")
+				ROUNDS="$2"
+				shift
+				;;
+			"-r"*)
+				ROUNDS="${1#'-r'}"
+				;;
+			"--pauseDuration" | "-p")
+				PAUSE_DURATION="$2"
+				shift
+				;;
+			"-p"*)
+				PAUSE_DURATION="${1#'-p'}"
+				;;
+			"--roundDuration" | "-d")
+				ROUND_DURATION="$2"
+				shift
+				;;
+			"-d"*)
+				ROUND_DURATION="${1#'-d'}"
+				;;
+			"--sound" | "-s")
+				PLAY_SOUND=1
+				;;
+			*)
+				echo "Invalid argument: $1"
+				exit 1
+				;;
+		esac
+		shift
+	done
+
+
+	# Get UUID
 	local old=$IFS
 	IFS=$'\n'
 	local result=""
@@ -32,6 +77,8 @@ get_uuid() {
 }
 
 play_sound_notification() {
+	if [[ $PLAY_SOUND -ne 1 ]]; then return; fi
+
 	resume_cmd=""
 	if [[ $(mpv status | grep 'playing' | wc -l) -gt 0 ]]; then
 		resume_cmd="mpc play"
@@ -41,30 +88,42 @@ play_sound_notification() {
 	eval $resume_cmd
 }
 
-get_uuid "$@"
+start_task() {
+	task start "$uuid" 2>/dev/null
+}
+
+stop_task() {
+	if [[ $(task active "$uuid" 2>/dev/null | wc -l) != 0 ]]; then # Only stop when active
+		task stop "$uuid" 2>/dev/null
+	fi
+}
+
+parse_options "$@"
+echo "$@"
+
 echo "Starting pomodoro timer for the following task:"
 task rc.gc=off rc.verbose=no status:pending ls "$uuid" 2>/dev/null
-trap 'break' SIGTERM SIGINT # TODO: stop task
-for i in 2 3 4; do
-	task start "$uuid" 2>/dev/null
+trap 'break' SIGTERM SIGINT
+for (( i=2; i <= ROUNDS+1; i++)); do
+	start_task
 	# Needs the countdown script
-	countdown --pauseStartCmd "task stop \"$uuid\"" --pauseStopCmd "task start \"$uuid\"" '25m'
-	play_sound_notification '/usr/share/sounds/freedesktop/stereo/complete.oga'
+	countdown --pauseStartCmd "task stop \"$uuid\"" --pauseStopCmd "task start \"$uuid\"" $ROUND_DURATION
+	play_sound_notification $COMPLETE_SOUND
 	if [[ "$?" == 0 ]]; then # Only ask when countdown exited normally (no abort)
 		notify-send --app-name=Pomodoro "Time's up" "Time to relax"
 		echo "Enough."
 		read -r -n1 -p "Finished working? Press any key to continue." item
 		echo # newline
 	fi
-	task stop "$uuid" 2>/dev/null
-	if [[ $i == 4 ]]; then # Don't pause the last time
+	stop_task
+	if [[ $i -gt "$ROUNDS" ]]; then # Don't pause the last time
 		break
 	fi
 	case "$item" in
 		n|N) break;;
-		*) countdown 5m;;
+		*) countdown $PAUSE_DURATION;;
 	esac
-	play_sound_notification '/usr/share/sounds/freedesktop/stereo/bell.oga'
+	play_sound_notification $START_SOUND
 	notify-send --app-name=Pomodoro "Time's up" "Time to work"
 	echo "Time for round $i."
 	read -r -n 1 -p "Ready? [Y/n]" item
@@ -73,10 +132,8 @@ for i in 2 3 4; do
 		n|N) break;;
 	esac
 done
+stop_task
 
-if [[ $(task active "$uuid" 2>/dev/null | wc -l) != 0 ]]; then # Only stop when active
-	task stop "$uuid" 2>/dev/null
-fi
 read -r -n 1 -p "Task done? [y/N]" item
 echo # newline
 case "$item" in
