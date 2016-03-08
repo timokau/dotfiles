@@ -1,0 +1,8 @@
+#/bin/sh
+
+# Amixer wrapper that updates the volume shown in the bar
+/usr/bin/amixer "$@"
+if [[ $1 == "set" ]]; then
+	. "$HOME/bin/bar/bar_env"
+	echo "V$("$HOME/bin/volume")" > "/tmp/panel-fifo"
+fi

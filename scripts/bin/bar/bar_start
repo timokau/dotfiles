@@ -40,6 +40,9 @@ if [[ -e '/sys/class/power_supply/BAT0' ]]; then
 	(while :; do echo "P$("$HOME/bin/thinkpad-battery-status")"; sleep 10s; done) > "$PANEL_FIFO" &
 fi
 
+# volume
+(while :; do echo "V$("$HOME/bin/volume")"; sleep 1m; done) > "$PANEL_FIFO" &
+
 # use the colors specified in panel_colors
 . "$dir/bar_colors"
 
