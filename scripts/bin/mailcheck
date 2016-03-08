@@ -32,5 +32,5 @@ NEW="$(NEWMAILCOUNT)"
 echo $NEW > $nmc
 
 # Update panel
-. /home/timo/.config/bspwm/panel_env
+. $HOME/bin/bar/bar_env
 echo "M$NEW" > $PANEL_FIFO
