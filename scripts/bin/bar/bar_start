@@ -43,6 +43,9 @@ fi
 # volume
 (while :; do echo "V$("$HOME/bin/volume")"; sleep 1m; done) > "$PANEL_FIFO" &
 
+# cpuload
+(while :; do echo "C$("$HOME/bin/cpuload")"; sleep 30s; done) > "$PANEL_FIFO" &
+
 # use the colors specified in panel_colors
 . "$dir/bar_colors"
 

@@ -10,5 +10,6 @@ BEGIN {
 }
 END {
 	totalper = sum / '"$cores"'
-	printf ("%3d%%\n", int(totalper+0.5))
+	# printf ("%3d\n", int(totalper+0.5))
+	printf ("%d\n", int(totalper+0.5))
 }'

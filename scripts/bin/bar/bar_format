@@ -54,6 +54,15 @@ while read -r line ; do
 			vol=${line#?}
 			vol_status="%{F$COLOR_VOL_FG}%{B$COLOR_VOL_BG} Vol: ${vol}%%%{B-}%{F-}"
 			;;
+		C*)
+			# cpuload (only when above 20%)
+			load=${line#?}
+			if [[ $load -ge 20 ]]; then
+				cpu_status="%{F$COLOR_CPU_FG}%{B$COLOR_CPU_BG} CPU: ${load}%%%{B-}%{F-}"
+			else
+				cpu_status=""
+			fi
+			;;
 		W*)
 			# bspwm internal state
 			wm_infos=""
@@ -117,6 +126,6 @@ while read -r line ; do
 	esac
 	printf "%s\n" "%{l}${wm_infos}%{S0}"
 	for (( i=0; i < "$mon_count"; i++ )) ; do
-		printf "%s" "%{l}${wm_infos}%{S$i}%{c}${title}%{r}${due}${updates}${mail_status}${vol_status}${power_status}${date}"
+		printf "%s" "%{l}${wm_infos}%{S$i}%{c}${title}%{r}${due}${updates}${mail_status}${vol_status}${power_status}${cpu_status}${date}"
 	done
 done
