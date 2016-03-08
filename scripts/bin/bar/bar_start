@@ -46,6 +46,9 @@ fi
 # cpuload
 (while :; do echo "C$("$HOME/bin/cpuload")"; sleep 30s; done) > "$PANEL_FIFO" &
 
+# network
+(while :; do echo "N$("$HOME/bin/network")"; sleep 5m; done) > "$PANEL_FIFO" &
+
 # use the colors specified in panel_colors
 . "$dir/bar_colors"
 

@@ -18,16 +18,15 @@ fi
 
 # use ethernet if it's up, wifi otherwise
 if ip link show "$eth0" | grep 'state UP' > /dev/null; then
-	int=$eth0
+	output="eth"
 else
-	int=$wifi
+	ssid="$(iwgetid | grep -oP "ESSID:\"\K.*(?=\")")"
+	output=$ssid
 fi
-
-echo -n "$int "
 
 # check for internet access by pinging google's DNS
 if ping -c 1 8.8.8.8 > /dev/null 2>&1; then
-	echo "connected"
+	echo "$output"
 else
-	echo "disconnected"
+	echo "$output offline"
 fi

@@ -63,6 +63,11 @@ while read -r line ; do
 				cpu_status=""
 			fi
 			;;
+		N*)
+			# network
+			net=${line#?}
+			net_status="%{F$COLOR_NET_FG}%{B$COLOR_NET_BG} ${net}%{B-}%{F-}"
+			;;
 		W*)
 			# bspwm internal state
 			wm_infos=""
@@ -126,6 +131,6 @@ while read -r line ; do
 	esac
 	printf "%s\n" "%{l}${wm_infos}%{S0}"
 	for (( i=0; i < "$mon_count"; i++ )) ; do
-		printf "%s" "%{l}${wm_infos}%{S$i}%{c}${title}%{r}${due}${updates}${mail_status}${vol_status}${power_status}${cpu_status}${date}"
+		printf "%s" "%{l}${wm_infos}%{S$i}%{c}${title}%{r}${due}${updates}${mail_status}${vol_status}${power_status}${cpu_status}${net_status}${date}"
 	done
 done
