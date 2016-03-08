@@ -131,6 +131,6 @@ while read -r line ; do
 	esac
 	printf "%s\n" "%{l}${wm_infos}%{S0}"
 	for (( i=0; i < "$mon_count"; i++ )) ; do
-		printf "%s" "%{l}${wm_infos}%{S$i}%{c}${title}%{r}${due}${updates}${mail_status}${vol_status}${power_status}${cpu_status}${net_status}${date}"
+		printf "%s" "%{l}${wm_infos}%{S$i}%{c}${title}%{r}${due}${updates}${mail_status}${vol_status} ${power_status}${cpu_status} ${net_status} ${date}"
 	done
 done
