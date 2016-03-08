@@ -1,15 +1,20 @@
 #! /bin/sh
 # sums up the total CPU load of all running programs
 cores="$(grep -c -i processor /proc/cpuinfo)"
-ps -eo pcpu | awk '
-BEGIN {
-	sum=0.0f
-} 
-{
-	sum +=$1
-}
-END {
-	totalper = sum / '"$cores"'
-	# printf ("%3d\n", int(totalper+0.5))
-	printf ("%d\n", int(totalper+0.5))
-}'
+# ps -eo pcpu | awk '
+# BEGIN {
+# 	sum=0.0f
+# } 
+# {
+# 	sum +=$1
+# }
+# END {
+# 	totalper = sum / '"$cores"'
+# 	# printf ("%3d\n", int(totalper+0.5))
+# 	printf ("%d\n", int(totalper+0.5))
+# }'
+
+# average of the last 5 minutes. $8 is 1 minute, $10 15 minutes
+avg=$(uptime | awk '{print $9}')
+avg=${avg%,} # Remove trailing comma
+awk "BEGIN {printf \"%.2f\n\", $avg/$cores * 100 }"
