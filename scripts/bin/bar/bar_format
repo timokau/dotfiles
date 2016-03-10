@@ -63,6 +63,24 @@ while read -r line ; do
 				cpu_status=""
 			fi
 			;;
+		R*)
+			# RAM (above 50%)
+			usage="$(tr -cd '[[:digit:]]' <<< ${line#?})"
+			if [[ "$usage" -ge 50 ]]; then
+				ram_status="%{F$COLOR_RAM_FG}%{B$COLOR_RAM_BG} RAM: ${usage}%%%{B-}%{F-}"
+			else
+				ram_status=""
+			fi
+			;;
+		F*)
+			# Root filesystem (above 80%)
+			usage="$(tr -cd '[[:digit:]]' <<< ${line#?})"
+			if [[ "$usage" -ge 80 ]]; then
+				fs_status="%{F$COLOR_FS_FG}%{B$COLOR_FS_BG} FS: ${usage}%%%{B-}%{F-}"
+			else
+				fs_status=""
+			fi
+			;;
 		N*)
 			# network
 			net=${line#?}
@@ -131,6 +149,6 @@ while read -r line ; do
 	esac
 	printf "%s\n" "%{l}${wm_infos}%{S0}"
 	for (( i=0; i < "$mon_count"; i++ )) ; do
-		printf "%s" "%{l}${wm_infos}%{S$i}%{c}${title}%{r}${due}${updates}${mail_status}${vol_status} ${power_status}${cpu_status} ${net_status} ${date}"
+		printf "%s" "%{l}${wm_infos}%{S$i}%{c}${title}%{r}${due}${updates}${mail_status}${vol_status} ${power_status}${cpu_status}${ram_status}${fs_status} ${net_status} ${date}"
 	done
 done

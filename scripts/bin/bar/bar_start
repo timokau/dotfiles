@@ -46,6 +46,12 @@ fi
 # cpuload
 (while :; do echo "C$("$HOME/bin/cpuload")"; sleep 30s; done) > "$PANEL_FIFO" &
 
+# memory
+(while :; do echo "R$("$HOME/bin/memory")"; sleep 30s; done) > "$PANEL_FIFO" &
+
+# root filesystem (also used for /home)
+(while :; do echo "F$(df / | awk 'NR==2 {print $5}' | tr -d '%')"; sleep 30s; done) > "$PANEL_FIFO" &
+
 # network
 (while :; do echo "N$("$HOME/bin/network")"; sleep 5m; done) > "$PANEL_FIFO" &
 
