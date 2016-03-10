@@ -17,4 +17,4 @@ cores="$(grep -c -i processor /proc/cpuinfo)"
 # average of the last 5 minutes. $8 is 1 minute, $10 15 minutes
 avg=$(uptime | awk '{print $9}')
 avg=${avg%,} # Remove trailing comma
-awk "BEGIN {printf \"%.2f\n\", $avg/$cores * 100 }"
+awk "BEGIN {printf \"%.0f\n\", $avg/$cores * 100 }"
