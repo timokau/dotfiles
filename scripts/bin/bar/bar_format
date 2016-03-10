@@ -56,8 +56,8 @@ while read -r line ; do
 			;;
 		C*)
 			# cpuload (only when above 20%)
-			load=${line#?}
-			if [[ $load -ge 20 ]]; then
+			load="$(tr -cd '[[:digit:]]' <<< ${line#?})"
+			if [[ "$load" -ge 10 ]]; then
 				cpu_status="%{F$COLOR_CPU_FG}%{B$COLOR_CPU_BG} CPU: ${load}%%%{B-}%{F-}"
 			else
 				cpu_status=""
