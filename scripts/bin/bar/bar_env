@@ -1,14 +1,12 @@
-#! /bin/sh
+#! /bin/bash
 # Environment variables to be sourced by scripts that need them
 
 DPI=$(xdpyinfo | awk '/resolution/{print $2}' | sed -e 's/x.*//g')
 
 PANEL_FIFO=/tmp/panel-fifo
-PANEL_HEIGHT=$( echo $(( 0.2 * ${DPI} )) | awk '{print int($1 + 0.5)}')
+PANEL_HEIGHT=$(awk "BEGIN{print int((0.2 * $DPI) + 0.5)}")
 # calculate exact font size
-FONT_SIZE=$( echo $(( 0.12 * $DPI )) | awk '{print int($1 + 0.5)}')
-# round
-FONT_SIZE=${FONT_SIZE/.*}
+FONT_SIZE=$(awk "BEGIN{print int((0.12 * $DPI) + 0.5)}")
 # make it a multiple of 2 (uneven font sizes somehow aren't accepted)
 if (( ($FONT_SIZE % 2) != 0 )); then
 	(( FONT_SIZE += 1 ))

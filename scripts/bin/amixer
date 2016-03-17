@@ -4,5 +4,5 @@
 /usr/bin/amixer "$@"
 if [[ $1 == "set" ]]; then
 	. "$HOME/bin/bar/bar_env"
-	echo "V$("$HOME/bin/volume")" > "/tmp/panel-fifo"
+	echo "V$("$HOME/bin/volume")" > "$PANEL_FIFO"
 fi
