@@ -38,4 +38,6 @@ to_remap='odiaeresis'
 target_modifier='Hyper_L'
 xmodmap -e "keysym $to_remap = $target_modifier"
 xmodmap -e "keycode 255 = $to_remap"
-xcape -e "Hyper_L=$to_remap" -d &> /home/timo/logs/xcape-hyperl.log & disown
+xcape -e "Hyper_L=$to_remap" -d &> /home/timo/logs/xcape-hyperl.log &
+
+wait
