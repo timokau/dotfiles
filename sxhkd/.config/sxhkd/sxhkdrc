@@ -58,7 +58,7 @@ super + {h,j,k,l}
 # doing so they keep the focus
 super + shift + {h,j,k,l}
 	bspc config pointer_follows_focus true; \
-	cur_win=$(bspc query -W -w) \
+	cur_win=$(bspc query -N -n) \
 	cur_mon=$(bspc query -M -m); \
 	dir={west,south,north,east}; \
 # move to an empty monitor
