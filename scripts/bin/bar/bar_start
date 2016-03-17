@@ -21,7 +21,7 @@ mkfifo "$PANEL_FIFO"
 bspc config top_padding "$PANEL_HEIGHT"
 
 # WM-info (workspaces, mode)
-bspc control --subscribe > "$PANEL_FIFO" &
+bspc subscribe > "$PANEL_FIFO" &
 
 # active window
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
