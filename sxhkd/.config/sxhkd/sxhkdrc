@@ -108,8 +108,13 @@ super + r : shift + {h,j,k,l}
 super + ctrl + {1-9}
 	bspc node --ratio 0.{1-9}
 
-super + {_,shift + }{1-9,0}
-	bspc {desktop --focus,node --to-desktop} '{I,II,III,IV,V,VI,VII,VIII,IX,X}'
+super + shift {1-9,0}
+	bspc node --to-desktop '{I,II,III,IV,V,VI,VII,VIII,IX,X}'
+
+super + {1-9,0}
+	item="{I,II,III,IV,V,VI,VII,VIII,IX,X}"; \
+	bspc query --desktops --desktop "$\{item\}.focused" > /dev/null && item=last; \
+	bspc desktop --focus "$item"
 
 ~button1
 	bspc pointer --grab focus
