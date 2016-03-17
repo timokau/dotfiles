@@ -27,6 +27,8 @@ exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: kvm: disabled 
 # Systemd trys to detect qgroups that aren't there
 # https://www.mail-archive.com/linux-btrfs@vger.kernel.org/msg48888.html
 exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: BTRFS error \(device sd\w[0-9]*\): could not find root 8$')
+# The wifi connection works flawlessly, even when this error is given
+exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: iwlwifi 0000:03:00.0: No association and the time event is over already\.\.\.$')
 
 journalctl -b --priority=0..3 --since=-10h --follow --no-pager | while read line
 do
