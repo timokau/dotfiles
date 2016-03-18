@@ -99,11 +99,17 @@ super + ctrl + {h,j,k,l}
 super + ctrl + space
 	bspc node --presel-dir cancel
 
-super + r : {h,j,k,l}
-	bspc node --edge {left -10,down +10,up -10,right +10}
+super + r : {k,h}
+	bspc node @{north,west} --ratio -10
 
-super + r : shift + {h,j,k,l}
-	bspc node --edge {right -10,up +10,down -10,left +10}
+super + r : {j,l}
+	bspc node @{south,east} --ratio +10
+
+super + r : shift + {k,h}
+	bspc node @{south,east} --ratio -10
+
+super + r : shift + {j,l}
+	bspc node @{north,west} --ratio +10
 
 super + ctrl + {1-9}
 	bspc node --ratio 0.{1-9}
