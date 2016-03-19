@@ -1,0 +1,22 @@
+#/bin/sh
+
+cmd="dasht"
+
+if [[ "$1" == "--doc" ]]; then
+	cmd="dasht-docsets"
+	shift
+elif [[ "$1" == "--get" ]]; then
+	cmd="dasht-docsets-install"
+	shift
+elif [[ "$1" == "--rm" ]]; then
+	cmd="dasht-docsets-remove"
+	shift
+elif [[ "$1" == "--updt" ]]; then
+	cmd="dasht-docsets-update"
+	shift
+fi
+
+echo test
+
+# dasht wrapper
+firejail --profile=/home/timo/.config/firejail/dasht.profile "$cmd" "$@"

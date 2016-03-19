@@ -65,5 +65,13 @@ cat "$PANEL_FIFO" \
     | /usr/bin/lemonbar -p -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" \
     | sh &
 
+# Keep bar below everything else
+sleep 1s
+bspid="$(xdo id -N Bspwm -n root | sort | head -n 1)"
+IPS="\n"
+xdo id -a "bar" | while read wid; do
+	xdo above -t "$bspid" "$wid"
+done
+
 # keep the bar up to date, don't exit
 wait
