@@ -3,3 +3,4 @@
 bspc rule --add Firefox:Navigator desktop='I' --one-shot; firejail firefox >/dev/null &
 bspc rule --add Telegram:Telegram desktop='II' --one-shot; telegram >/dev/null &
 bspc rule --add Termite:weechat desktop='II' --one-shot; termite -e 'weechat' --name='weechat' &
+bspc rule --add Termite:glances desktop='VI' --one-shot; termite -e 'glances --enable-history' --name='glances' &
