@@ -42,6 +42,7 @@ whitelist ~/.pentadactylrc
 whitelist ~/.pentadactyl
 # mpv is used for videos
 whitelist ~/.config/mpv
+whitelist ~/dotfiles/mpv
 
 # private-dev
 # private-etc alternatives,firefox,fonts,hosts,localtime,nsswitch.conf,resolv.conf,mpv,ssl,ca-certificates,pulse
