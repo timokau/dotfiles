@@ -3,6 +3,25 @@
 
 declare -a monitors
 
+# Recognize my beamer (for hdmi audio)
+beamer_edid="00ffffffffffff003674010be9030000
+00100103804627780a1990a755469824
+10494b2108008bc0814081c061400101
+010101010101011d007251d01e206e28
+5500c48e2100001e011d8018711c1620
+582c2500c48e2100009e000000fc0050
+524f4a4543544f52530a2020000000fd
+0016500e5b10000a20202020202001e1
+02031df24a0102038405101293141f23
+0907078301000065030c0010008c0ad0
+8a20e02d10103e9600138e2100001801
+1d00bc52d01e20b8285540c48e210000
+1e011d80d0721c1620102c2580c48e21
+00009e8c0ad08a20e02d10103e9600c4
+8e210000188c0ad090204031200c4055
+00c48e2100001800000000000000002b"
+
+
 # Apparently this is sometimes needed for new monitors
 # to be recognized
 xrandr >/dev/null 2>&1
@@ -121,6 +140,14 @@ configure_monitors_for_archpad() {
 	else
 		echo "No known monitor setup cuold be detected." | /usr/bin/systemd-cat --priority="crit"
 	fi
+
+	cur_edid="$(xrandr --prop | grep -Pzo 'HDMI1 connected.*\n\tEDID: (\n\t{2}[0-9a-f]{32})*' | grep -Po '[0-9a-f]{32}')"
+
+	if [[ "$beamer_edid" == "$cur_edid" ]]; then
+		hdmi-audio on
+	else
+		hdmi-audio off
+	fi
 }
 
 configure_monitors_for_archdesk() {
@@ -132,7 +159,7 @@ configure_monitors_for_archdesk() {
 		bspc monitor 'DVI-1' --rename 2
 		bspc monitor 1 --reset-desktops I II III IV V
 		bspc monitor 2 --reset-desktops VI VII VIII IX X
-	# HDMI-0 is detected as HDMI1, but xrandr knows it as HDMI-0
+		# HDMI-0 is detected as HDMI1, but xrandr knows it as HDMI-0
 	elif check_setup "DVII2" "HDMI1"; then
 		echo "DVI-1 and HDMI-0 are connected"
 		xrandr --output DVI-1 --auto
@@ -148,7 +175,7 @@ configure_monitors_for_archdesk() {
 		xrandr --output HDMI-3 --off
 		bspc monitor 'DVI-1' --rename 1
 		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
-	# HDMI4 and HDMI1 are the same monitor, which is somehow sometimes labelled differently
+		# HDMI4 and HDMI1 are the same monitor, which is somehow sometimes labelled differently
 	elif check_setup "HDMI-4"; then
 		echo "HDMI-4 is connected"
 		xrandr --output HDMI-3 --auto
