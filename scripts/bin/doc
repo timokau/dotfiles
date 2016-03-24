@@ -1,5 +1,8 @@
 #/bin/sh
 
+# Assure the folder exists
+mkdir -p $HOME/.local/share/dasht/docsets
+
 cmd="dasht"
 
 if [[ "$1" == "--doc" ]]; then
