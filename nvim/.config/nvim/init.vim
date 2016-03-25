@@ -315,6 +315,8 @@ set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
 set background=dark
 " Colorscheme (if available)
+let g:gruvbox_italic = 1 " Use italic
+let g:gruvbox_contrast_dark = "hard" " Hard contrast
 silent! color gruvbox
 let cur_colorscheme = ''
 redir => cur_colorscheme
