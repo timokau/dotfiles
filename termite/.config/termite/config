@@ -57,7 +57,8 @@ highlight = #2f2f2f
 #color13 = #ec93d3
 #color14 = #93e0e3
 #color15 = #ffffff
-background = #333333
+# background = #333333
+background = #111111
 foreground = #e8e9ca
 
 color0 = #222222
