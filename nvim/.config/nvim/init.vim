@@ -95,6 +95,7 @@ if has('nvim')
 	let g:vimtex_latexmk_progname="nvr"
 endif
 let g:vimtex_view_method="zathura"
+let g:vimtex_quickfix_open_on_warning=0
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
