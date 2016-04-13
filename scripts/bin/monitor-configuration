@@ -82,6 +82,8 @@ configure_monitors_for_host() {
 	# Make sure HOST is set
 	HOST=${HOST:-"$(</etc/hostname)"}
 
+	# xrandr is a bit slow sometimes and hdmi-audio needs some time, too
+	sleep 2
 	if [[ $HOST = 'ArchPad' ]]; then
 		configure_monitors_for_archpad
 	elif [[ $HOST = 'ArchDesk' ]]; then
@@ -143,10 +145,11 @@ configure_monitors_for_archpad() {
 
 	cur_edid="$(xrandr --prop | grep -Pzo 'HDMI1 connected.*\n\tEDID: (\n\t{2}[0-9a-f]{32})*' | grep -Po '[0-9a-f]{32}')"
 
+	echo "$cur_edid" > /home/timo/cur-edid
 	if [[ "$beamer_edid" == "$cur_edid" ]]; then
-		hdmi-audio on
+		/home/timo/bin/hdmi-audio on
 	else
-		hdmi-audio off
+		/home/timo/bin/hdmi-audio off
 	fi
 }
 
@@ -204,7 +207,7 @@ monitors_have_changed() {
 }
 
 find_monitors
-if monitors_have_changed; then
+if [[ "$1" == "-f" ]] || monitors_have_changed; then
 	echo "Updating monitor configuration"
 	configure_monitors_for_host
 else
