@@ -136,8 +136,11 @@ zstyle ':completion:*:hosts' hosts $hosts
 zstyle ':completion:*:pacaur:*' remote-access false
 ###############################
 
-[[ $TERM == xterm-termite ]] && \
+if [[ $TERM == xterm-termite ]]; then
 	alias nvim="NVIM_TUI_ENABLE_TRUE_COLOR=1 NVIM_TUI_ENABLE_CURSOR_SHAPE=1 nvim"
+	# In case nvim is started from ranger
+	alias ranger="NVIM_TUI_ENABLE_TRUE_COLOR=1 NVIM_TUI_ENABLE_CURSOR_SHAPE=1 ranger"
+fi
 
 alias vim='vim --servername vim'
 
