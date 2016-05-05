@@ -12,11 +12,6 @@ else
 	let g:spelldir = g:vimdir . '/spell'
 endif
 
-if has("gui_running")
-	set guioptions = 'c'
-	set guifont=Terminus 12
-endif
-
 if empty(glob(vimdir.'/autoload/plug.vim'))
 	execute "!curl -fLo " . shellescape(vimdir . "/autoload/plug.vim") . " --create-dirs " .
 	      \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
