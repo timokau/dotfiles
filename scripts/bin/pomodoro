@@ -8,7 +8,7 @@ START_SOUND='/usr/share/sounds/freedesktop/stereo/bell.oga'
 parse_options() {
 	ROUNDS=3
 	PAUSE_DURATION='5m'
-	ROUND_DURATION='5m'
+	ROUND_DURATION='25m'
 	PLAY_SOUND=0
 
 	# While there are remaining arguments, `--` was not parsed and the argument is an option

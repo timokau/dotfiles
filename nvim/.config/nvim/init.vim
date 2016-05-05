@@ -12,11 +12,6 @@ else
 	let g:spelldir = g:vimdir . '/spell'
 endif
 
-if has("gui_running")
-	set guioptions = 'c'
-	set guifont=Terminus 12
-endif
-
 if empty(glob(vimdir.'/autoload/plug.vim'))
 	execute "!curl -fLo " . shellescape(vimdir . "/autoload/plug.vim") . " --create-dirs " .
 	      \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -95,6 +90,7 @@ if has('nvim')
 	let g:vimtex_latexmk_progname="nvr"
 endif
 let g:vimtex_view_method="zathura"
+let g:vimtex_quickfix_open_on_warning=0
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
