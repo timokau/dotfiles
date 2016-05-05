@@ -1,0 +1,19 @@
+#!/bin/bash
+# Open
+
+open_with() {
+	eval "$1" "$2" >/dev/null 2>&1 &disown
+}
+
+while [[ $# -ge 1 ]]; do
+	ext=${1##*.}
+	case $ext in
+		"pdf")
+			open_with zathura "$1"
+			;;
+		*)
+			open_with xdg-open "$1"
+			;;
+	esac
+	shift
+done

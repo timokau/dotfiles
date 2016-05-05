@@ -363,7 +363,7 @@ if check_com fasd ; then
 	eval "$(fasd --init auto)"
 	alias v='NVIM_TUI_ENABLE_TRUE_COLOR=1 NVIM_TUI_ENABLE_CURSOR_SHAPE=1 fasd -f -e "nvim"'
 	alias m'fasd -f -e mpv'
-	alias o='fasd -f -e "setsid xdg-open"'
+	# alias o='fasd -f -e "setsid xdg-open"'
 	bindkey '^O' fasd-complete
 else
 	alias v='nvim'

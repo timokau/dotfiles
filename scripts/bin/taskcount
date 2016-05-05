@@ -47,7 +47,7 @@ synctasks() {
 }
 
 HOST=${HOST:-"$(</etc/hostname)"}
-if [[ $HOST != "ArchPad" || -e "$HOME/.local/share/task/network-enabled" ]]; then
+if [[ $HOST != "ArchPad" || -e "/tmp/task/network-enabled" ]]; then
 	# First make sure, the tasks are up-to-date.
 	# Log the output if there were any changes.
 	logfile="$HOME/logs/tasksync.log"
