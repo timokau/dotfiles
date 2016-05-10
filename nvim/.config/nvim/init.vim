@@ -24,6 +24,7 @@ call plug#begin(vimdir.'/plugged')
 Plug 'vim-pandoc/vim-pandoc'                              " Pandoc
 Plug 'vim-pandoc/vim-pandoc-syntax'                       " Pandoc syntax
 Plug 'lervag/vimtex'                                      " Latex support
+Plug 'artur-shaik/vim-javacomplete2'                           " Java
 Plug 'dogrover/vim-pentadactyl', { 'for': 'pentadactyl' } " Pentadactyl
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
 if executable('cargo')
@@ -81,11 +82,6 @@ if executable('rustfmt')
 endif
 
 " vimtex {{{3
-" augroup vimtex_config
-" 	autocmd!
-" 	autocmd FileType tex autocmd BufWritePost <buffer> VimtexView
-" 	autocmd User VimtexEventQuit call vimtex#latexmk#clean(0)
-" augroup END
 if has('nvim')
 	let g:vimtex_latexmk_progname="nvr"
 endif
@@ -98,6 +94,18 @@ let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#enable_fuzzy_completion = 1
 let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+
+" java
+let g:JavaComplete_EnableDefaultMappings = 0
+augroup java
+	autocmd!
+	autocmd FileType java setlocal omnifunc=javacomplete#Complete
+	" javac defaults to printing its errors to stderr
+	autocmd FileType java setlocal shellpipe=2>
+	autocmd FileType java setlocal makeprg=javac\ %
+	autocmd FileType java setlocal errorformat=%A:%f:%l:\ %m,%-Z%p^,%-C%.%#
+	autocmd FileType java nnoremap <buffer> <Leader>ji :silent! call javacomplete#imports#AddMissing()\|call javacomplete#imports#RemoveUnused()<CR>
+augroup END
 
 " neoterm {{{3
 nnoremap <silent> <leader>r :update<Cr>:T<Space>clear;<Space>cargo<Space>run<Cr>
@@ -118,9 +126,9 @@ augroup END
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
 " Neomake {{{3
-augroup neomake
+augroup neomake_plugin
 	autocmd!
-	autocmd BufWritePost * Neomake
+	autocmd! BufWritePost * Neomake
 augroup END
 
 " CamelCaseMotion {{{3
@@ -195,7 +203,7 @@ set hidden
 set autoindent
 set backspace=indent,eol,start
 set hlsearch
-set wildignore+=*~,*.pyc,*.swp
+set wildignore+=*~,*.pyc,*.swp,*.class,*.pdf,*.aux,*.fdb_latexmk,*.dfls,*.toc,*.synctex.gz
 set tabstop=4
 set shiftwidth=4                       " Shiftwidth equals tabstop
 set wrap
@@ -297,8 +305,8 @@ endfunction
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
 function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
+	echo "@".getcmdline()
+	execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 
 " Appearance {{{3
@@ -357,6 +365,11 @@ vmap <Leader>P "+P
 " [ ] are hard to reach on a German keyboard {{{3
 nnoremap ö [
 nnoremap ä ]
+
+" make
+nnoremap <Leader>m :Neomake<CR>
+nnoremap <Leader>e :lopen<CR>
+nnoremap <Leader>E :copen<CR>
 
 " search for TODO comments {{{3
 nnoremap <Leader>t :silent grep TODO<CR>
