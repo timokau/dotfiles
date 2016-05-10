@@ -2,7 +2,7 @@
 # Open
 
 open_with() {
-	eval "$1" "$2" >/dev/null 2>&1 &disown
+	"$1" "$2" >/dev/null 2>&1 &disown
 }
 
 while [[ $# -ge 1 ]]; do
