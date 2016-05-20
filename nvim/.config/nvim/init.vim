@@ -46,6 +46,7 @@ Plug 'tpope/vim-fugitive'                                 " Git wrapper
 Plug 'tpope/vim-surround'                                 " Surrounding things
 Plug 'tpope/vim-unimpaired'                               " Mappings
 Plug 'tpope/vim-commentary'                               " Comment stuff out
+Plug 'airblade/vim-gitgutter'                             " Show git diff in gutter
 Plug 'clever-f.vim'                                       " Make F and T repeatable
 Plug 'easymotion/vim-easymotion'                          " Highlight possible targets
 if has('nvim')
