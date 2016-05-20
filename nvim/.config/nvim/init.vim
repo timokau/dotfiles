@@ -1,5 +1,4 @@
 " vim: nowrap foldmethod=marker foldlevel=2
-" TODO: delte comments, toggle terminal, close termian after cargo run
 " Plugins {{{1
 
 " Vim-Plug Boilderplate {{{3
@@ -24,11 +23,11 @@ call plug#begin(vimdir.'/plugged')
 Plug 'vim-pandoc/vim-pandoc'                              " Pandoc
 Plug 'vim-pandoc/vim-pandoc-syntax'                       " Pandoc syntax
 Plug 'lervag/vimtex'                                      " Latex support
-Plug 'artur-shaik/vim-javacomplete2'                           " Java
+Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }    " Java
 Plug 'dogrover/vim-pentadactyl', { 'for': 'pentadactyl' } " Pentadactyl
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
 if executable('cargo')
-	Plug 'racer-rust/vim-racer'                           " Rust Auto-Complete-er
+	Plug 'racer-rust/vim-racer', { 'for': 'rust' }         " Rust Auto-Complete-er
 endif
 Plug 'klen/python-mode', { 'for': 'python' }              " Advanced python features
 " Colorschemes {{{3
@@ -109,7 +108,6 @@ augroup java
 augroup END
 
 " neoterm {{{3
-nnoremap <silent> <leader>r :update<Cr>:T<Space>clear;<Space>cargo<Space>run<Cr>
 let g:neoterm_size = 15
 let g:neoterm_keep_term_open = 1
 let g:run_tests_bg = 1
@@ -184,7 +182,7 @@ imap <C-x><C-f> <plug>(fzf-complete-file-ag)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
 function! SearchWordWithAg()
-execute 'Ag' expand('<cword>')
+	execute 'Ag' expand('<cword>')
 endfunction
 
 function! SearchVisualSelectionWithAg() range
@@ -289,31 +287,6 @@ endif
 endif
 
 " Helper functions {{{3
-" Check if script is loaded
-function! IsLoaded(pattern)
-	let scriptnames_output = ''
-	redir => scriptnames_output
-	silent scriptnames
-	redir END
-
-	for line in split(scriptnames_output, "\n")
-		" Only do non-blank lines.
-		if line =~ '\S'
-			" Get the first number in the line.
-			let nr = matchstr(line, '\d\+')
-			" Get the file name, remove the script number " 123: ".
-			let name = substitute(line, '.\+:\s*', '', '')
-			" Check against the pattern
-			echo name
-			if name =~ a:pattern
-				return 1
-			endif
-		endif
-	endfor
-	unlet scriptnames_output
-	return 0
-endfunction
-
 " Execute macro over visual selection {{{3
 " https://github.com/stoeffel/.dotfiles/blob/master/vim/visual-at.vim
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
@@ -376,14 +349,13 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
-" [ ] are hard to reach on a German keyboard {{{3
-nnoremap ö [
-nnoremap ä ]
-
-" make
-nnoremap <Leader>m :Neomake<CR>
+" Location List
 nnoremap <Leader>e :lopen<CR>
 nnoremap <Leader>E :copen<CR>
+nnoremap <Leader>ln :lprevious<CR>
+nnoremap <Leader>lp :lnext<CR>
+nnoremap <Leader>cn :cnext<CR>
+nnoremap <Leader>cp :cprevious<CR>
 
 " search for TODO comments {{{3
 nnoremap <Leader>t :silent grep TODO<CR>
@@ -392,23 +364,8 @@ nnoremap <Leader>t :silent grep TODO<CR>
 nnoremap <Leader>q :quit<CR>
 nnoremap <Leader>Q :qall<CR>
 
-" make <C-p> and <C-n> behave like up and down (with history filtering)
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-
 " make C-u in insert mode undoable
 inoremap <C-U> <C-G>u<C-U>
-
-" Resource vimrc
-nnoremap <silent> <Leader>rs :source $MYVIMRC<CR>
-
-" Map ü and + to [ and ] (like they are positioned on the US-Keyboard) {{{3
-nmap ü [
-nmap + ]
-omap ü [
-omap + ]
-xmap ü [
-xmap + ]
 
 " Save {{{3
 nnoremap <silent> <Leader>w :write<CR>
@@ -424,21 +381,12 @@ function! s:VSetSearch()
 	let @s = temp
 endfunction
 
-" Join words {{{3
-" Move to the space, delete it, ensure the first letter of the formerly second
-" word is lower case
-nnoremap <Leader>J Elxgul
-
 " Make Y consistent with other commands
 nnoremap Y y$
 
-" I'm feeling lucky correction {{{3
-nnoremap z0 1z=
-" [s is unreachable on a german keyboard
-nnoremap zs [sb
-nnoremap zS ]sb
-
 " Command-line navigation (no arrow keys) {{{3
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 cnoremap <C-h> <Left>
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
@@ -448,9 +396,6 @@ cnoremap <C-S-l> <S-Right>
 
 " Expand %% to the folder of the currently edited file {{{3
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
-
-" " Use , for commands {{{3
-" noremap , :
 
 " Resize {{{3
 nnoremap <silent> <Leader>- :resize -3<CR>
@@ -490,7 +435,6 @@ nnoremap <C-M-j> <C-w>J
 nnoremap <C-M-k> <C-w>K
 nnoremap <C-M-l> <C-w>L
 
-
 " Alignment with tab {{{3
 inoremap <S-Tab> <Space><Space><Space><Space>
 
@@ -517,21 +461,12 @@ if exists(':terminal')
 		autocmd BufEnter term://* startinsert
 	augroup END
 endif
-"
+
 " Autocommands {{{2
 " Initialize (reset) autocommands {{{3
 augroup vimrc
 	autocmd!
 augroup END
-
-" Run tests on every write for rust source files
-" autocmd BufWritePost *.rs call CargoTest()
-
-function! CargoTest()
-	let currentDir = expand('%:p:h')
-	let command = '(cd '.currentDir.';clear;cargo test)'
-	execute 'T ' command
-endfun
 
 " Use vim help instead of man in vim files when K is pressed {{{3
 autocmd vimrc FileType vim setlocal keywordprg=:help
@@ -543,23 +478,13 @@ function! Pandocsettings()
 	setlocal comments +=:-
 	setlocal formatoptions +=r
 	setlocal colorcolumn=0
-	"setlocal spelllang=de_20
-	" Todo: only if plugins enabled
 	setlocal spelllang=hun-de-DE
-	" Arrows
-	iabbrev <buffer> \-> $\rightarrow$
-	iabbrev <buffer> \<- $\leftarrow$
-	iabbrev <buffer> \<> $\leftrightarrow$
-	" Headings
-	iabbrev <buffer> 2# ##
-	iabbrev <buffer> 3# ###
-	iabbrev <buffer> 4# ####<Space>\<Tab>\<Tab>
 endfun
 
 " Transparent editing of gpg encrypted files {{{3
 " By Wouter Hanegraaff
 augroup encrypted
-	au!
+	augroup!
 	" First make sure nothing is written to ~/.viminfo while editing
 	" an encrypted file.
 	autocmd BufReadPre,FileReadPre *.gpg set viminfo=
