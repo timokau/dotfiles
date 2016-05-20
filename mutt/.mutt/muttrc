@@ -1,7 +1,17 @@
 # mail is fetched by mbsync
-mailboxes "+gmx/archive" "+gmx/inbox" "+gmx/sent" "+yahoo/archive" "+yahoo/inbox" "+yahoo/sent"
-mailboxes +search \
-          +drafts
+mailboxes "+gmx" \
+          "+gmx/inbox" \
+          "+gmx/sent" \
+          "+gmx/archive"
+mailboxes "+yahoo" \
+          "+yahoo/inbox" \
+          "+yahoo/sent" \
+          "+yahoo/archive"
+mailboxes +drafts \
+          +search
+
+macro index goy "<change-folder +yahoo/inbox"<enter>
+macro index gog "<change-folder +gmx/inbox"<enter>
 
 # contacts are managed by khard
 set query_command= "khard email '%s'"
@@ -13,7 +23,7 @@ macro index,pager A \
 
 set folder = "$HOME/Mail"
 set mbox_type = Maildir
-set spoolfile = "+yahoo/inbox"
+set spoolfile = "+gmx/inbox"
 set postponed = "+draft"
 set alias_file = "~/.mutt/aliases"
 set sort_alias = alias
@@ -125,10 +135,12 @@ macro pager \Cu "|urlview<enter>" "call urlview to open links"
 source ~/.mutt/colors
 
 # Sidebar Patch
-set sidebar_delim = ' │'
+set sidebar_folder_indent = yes
 set sidebar_visible = yes
-set sidebar_width = 24
+set sidebar_width = 20
 color sidebar_new color221 color233
 bind index,pager \Cn sidebar-next
 bind index,pager \Cp sidebar-prev
 bind index,pager \Co sidebar-open
+
+set sidebar_sort_method = 'unsorted'
