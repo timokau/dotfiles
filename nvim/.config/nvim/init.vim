@@ -484,7 +484,7 @@ endfun
 " Transparent editing of gpg encrypted files {{{3
 " By Wouter Hanegraaff
 augroup encrypted
-	augroup!
+	autocmd!
 	" First make sure nothing is written to ~/.viminfo while editing
 	" an encrypted file.
 	autocmd BufReadPre,FileReadPre *.gpg set viminfo=
