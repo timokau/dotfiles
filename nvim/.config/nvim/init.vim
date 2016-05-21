@@ -33,6 +33,8 @@ Plug 'klen/python-mode', { 'for': 'python' }              " Advanced python feat
 " Colorschemes {{{3
 Plug 'morhetz/gruvbox'                                    " Gruvbox
 Plug 'chriskempson/base16-vim'                            " Base16
+" Appearance {{{3
+Plug 'junegunn/rainbow_parentheses.vim'                   " Color matching parentheses
 " Misc {{{3
 " Useable german spell checking (Donaudampfschifffahrtskapitänskajütentür should be accepted)
 Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo ' . spelldir .'/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
@@ -145,6 +147,9 @@ let g:neomake_tex_chktex_args = ['--nowarn=1', '--nowarn=8', '--nowarn=12', '--n
 
 " CamelCaseMotion {{{3
 call camelcasemotion#CreateMotionMappings(',')
+
+" Rainbow_Parentheses {{{3
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}'], ['<', '>']]
 
 " Ultisnips {{{3
 " Trigger configuration. <tab> interferes with YouCompleteMe
