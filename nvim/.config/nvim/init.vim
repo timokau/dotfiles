@@ -320,7 +320,7 @@ set background=dark
 " Colorscheme (if available)
 let g:gruvbox_italic = 1 " Use italic
 let g:gruvbox_contrast_dark = "hard" " Hard contrast
-silent! color gruvbox
+silent! colorscheme gruvbox
 let cur_colorscheme = ''
 redir => cur_colorscheme
 silent colorscheme
@@ -331,8 +331,6 @@ if !has("gui_running")
 	endif
 endif
 syntax enable
-" Better highlighting for concealed text
-hi Conceal guibg=#333 guifg=lightblue
 " Formating {{{3
 set formatoptions-=t                   " Don't autowrap text
 set formatoptions-=c                   " Don't autowrap comments
