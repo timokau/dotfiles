@@ -78,6 +78,12 @@ let $RUST_SRC_PATH="/usr/src/rust/src"
 silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
 
+" golden ratio {{{3
+augroup gratio 
+	autocmd!
+	autocmd VimResized * GoldenRatioResize
+augroup END
+
 " rust.vim {{{3
 if executable('rustfmt')
 	let g:rustfmt_autosave = 1 " Run rustfmt on save
