@@ -141,9 +141,10 @@ let g:neomake_sty_enabled_makers = ['chktex'] " no lacheck
 " - mathmode on at end (16) (doesn't work)
 " - no ''' (23) (I use ' as a variable differentiator, not just for quoting)
 " - might want to put this between {} (25) (is confused by references with _)
+" - space before punctuation (26) (i want space before :=)
 " - should use space with parenthesis (36) (I don't want to use space)
 " - vertical rules in tables (44) (I don't think they are _always_ ugly)
-let g:neomake_tex_chktex_args = ['--nowarn=1', '--nowarn=8', '--nowarn=12', '--nowarn=13', '--nowarn=16', '--nowarn=23', '--nowarn=25', '--nowarn=36', '--nowarn=44']
+let g:neomake_tex_chktex_args = ['--nowarn=1', '--nowarn=8', '--nowarn=12', '--nowarn=13', '--nowarn=16', '--nowarn=23', '--nowarn=25', '--nowarn=26', '--nowarn=36', '--nowarn=44']
 
 " CamelCaseMotion {{{3
 call camelcasemotion#CreateMotionMappings(',')
