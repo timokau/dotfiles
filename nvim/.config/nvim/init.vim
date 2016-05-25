@@ -100,8 +100,17 @@ let g:vimtex_quickfix_open_on_warning=0
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_camel_case = 1
+let g:deoplete#enable_refresh_always = 1
 let g:deoplete#enable_fuzzy_completion = 1
 let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+let g:deoplete#omni#input_patterns.java = ['[^. \t0-9]\.\w*',
+                                          \'[^. \t0-9]\->\w*',
+                                          \'[^. \t0-9]\::\w*',
+                                          \]
+" Dont auto-import everything I type
+let g:deoplete#ignore_sources = {}
+let g:deoplete#ignore_sources._ = ['javacomplete2']
 
 " java
 let g:JavaComplete_EnableDefaultMappings = 0
