@@ -187,6 +187,13 @@ nnoremap <silent> <leader>zs <Plug>VimwikiUISelect
 nnoremap <silent> <leader>zi <Plug>VimwikiDiaryIndex
 
 " fzf {{{3
+" Ignore non-text filetypes / generated files
+let fzf_ignores = ''
+for ign in ['class', 'pdf', 'fdb_latexmk', 'aux', 'fls', 'synctex.gz', 'zip']
+	let fzf_ignores = fzf_ignores . ' --ignore=''*.'.ign.''''
+endfor
+let $FZF_DEFAULT_COMMAND = 'ag --nocolor'.fzf_ignores.' --files-with-matches --follow --depth=-1 --hidden --search-zip -g ""'
+
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>a :Buffers<CR>
 nnoremap <silent> <leader>; :BLines<CR>
