@@ -192,7 +192,15 @@ let fzf_ignores = ''
 for ign in ['class', 'pdf', 'fdb_latexmk', 'aux', 'fls', 'synctex.gz', 'zip']
 	let fzf_ignores = fzf_ignores . ' --ignore=''*.'.ign.''''
 endfor
-let $FZF_DEFAULT_COMMAND = 'ag --nocolor'.fzf_ignores.' --files-with-matches --follow --depth=-1 --hidden --search-zip -g ""'
+let $FZF_DEFAULT_COMMAND = 'ag --nocolor'.fzf_ignores.' --files-with-matches --follow --depth=-1 --hidden --search-zip -g "" 2>/dev/null'
+
+augroup fzf
+	autocmd!
+	" BufEnter isn't triggered when the terminal is first opened
+	autocmd TermOpen term://*fzf* tunmap <ESC><ESC>
+	autocmd BufEnter term://*fzf* tunmap <ESC><ESC>
+	autocmd BufLeave term://*fzf* tnoremap <silent> <ESC><ESC> <C-\><C-n>G:call search(".", "b")<CR>$
+augroup END
 
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>a :Buffers<CR>
@@ -469,6 +477,8 @@ inoremap <S-Tab> <Space><Space><Space><Space>
 " Terminal mode {{{3
 if exists(':terminal')
 	" Leave terminal mode and jump to the last line
+	" (This mapping is removed and later restored in fzf buffers, see the fzf
+	" configuration for that)
 	tnoremap <silent> <ESC><ESC> <C-\><C-n>G:call search(".", "b")<CR>$
 	" Navigation
 	tnoremap <C-h> <C-\><C-n><C-w>h
