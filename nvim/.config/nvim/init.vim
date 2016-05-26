@@ -95,6 +95,9 @@ if has('nvim')
 endif
 let g:vimtex_view_method="zathura"
 let g:vimtex_quickfix_open_on_warning=0
+let latexmk_options = '-pdf -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
+command! LatexShellescape let g:vimtex_latexmk_options = latexmk_options . ' -shell-escape'
+command! LatexShellescapeOff let g:vimtex_latexmk_options = latexmk_options
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
