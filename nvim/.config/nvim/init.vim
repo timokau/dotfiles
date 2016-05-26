@@ -386,12 +386,12 @@ vmap <Leader>p "+p
 vmap <Leader>P "+P
 
 " Location List
-nnoremap <Leader>e :lopen<CR>
-nnoremap <Leader>E :copen<CR>
-nnoremap <Leader>ln :lprevious<CR>
-nnoremap <Leader>lp :lnext<CR>
-nnoremap <Leader>cn :cnext<CR>
-nnoremap <Leader>cp :cprevious<CR>
+nnoremap <silent> <Leader>e :lopen<CR>
+nnoremap <silent> <Leader>E :copen<CR>
+nnoremap <silent> <Leader>ln :lprevious<CR>
+nnoremap <silent> <Leader>lp :lnext<CR>
+nnoremap <silent> <Leader>cn :cnext<CR>
+nnoremap <silent> <Leader>cp :cprevious<CR>
 
 " search for TODO comments {{{3
 nnoremap <Leader>t :silent grep TODO<CR>
@@ -504,6 +504,17 @@ endif
 " Initialize (reset) autocommands {{{3
 augroup vimrc
 	autocmd!
+augroup END
+
+augroup nonEditableBuffers
+	autocmd!
+	" Don't list location-list / quickfix windows
+	" (since I don't want to switch with them with :bnext & co)
+	" Also, close them with q
+	autocmd BufWinEnter * if &buftype == 'quickfix'
+			\| setlocal nobuflisted
+			\| nnoremap <silent> <buffer> q :bd<CR>
+		\| endif
 augroup END
 
 " Use vim help instead of man in vim files when K is pressed {{{3
