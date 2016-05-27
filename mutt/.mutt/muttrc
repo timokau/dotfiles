@@ -137,7 +137,7 @@ source ~/.mutt/colors
 # Sidebar Patch
 set sidebar_folder_indent = yes
 set sidebar_visible = yes
-set sidebar_width = 20
+set sidebar_width = 24
 color sidebar_new color221 color233
 bind index,pager \Cn sidebar-next
 bind index,pager \Cp sidebar-prev
