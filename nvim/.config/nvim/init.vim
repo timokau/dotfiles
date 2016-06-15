@@ -460,7 +460,7 @@ nnoremap <silent> <leader>se :set spell spelllang=en_us<CR>
 nnoremap <leader>s :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>hi
 
 " Stop highlighting the last search {{{3
-nnoremap <leader>c :nohlsearch<CR>
+nnoremap <silent> <leader>c :nohlsearch<CR>
 
 " Navigate between split views with <CTRL>-[h/j/k/l]
 nnoremap <C-h> <C-w>h
