@@ -58,7 +58,7 @@ endif
 Plug 'SirVer/ultisnips'                                   " Snipptes suppert
 Plug 'benekastah/neomake'                                 " Linter
 Plug 'bling/vim-airline'                                  " Better statusbar
-Plug 'godlygeek/tabular', { 'on': 'Tabularize' }          " Alignment
+Plug 'junegunn/vim-easy-align'                                 " Alignment
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -188,6 +188,10 @@ nnoremap <silent> <leader>zw <Plug>VimwikiIndex
 nnoremap <silent> <leader>zt <Plug>VimwikiTabIndex
 nnoremap <silent> <leader>zs <Plug>VimwikiUISelect
 nnoremap <silent> <leader>zi <Plug>VimwikiDiaryIndex
+
+" EasyAlign {{{3
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " fzf {{{3
 " Ignore non-text filetypes / generated files
