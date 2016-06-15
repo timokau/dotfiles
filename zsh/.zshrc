@@ -280,6 +280,10 @@ check_com less && export PAGER=less
 
 check_com termite && export TERMCMD=termite
 
+# Rust
+# Enable stack backtraces by default
+RUST_BACKTRACE=1
+
 # Configure fzf
 if check_com fzf; then
 	export FZF_DEFAULT_OPTS='--extended --cycle --multi'
