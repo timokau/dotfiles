@@ -11,7 +11,7 @@ urgency.uda.priority.M.coefficient=2.0
 urgency.uda.priority.L.coefficient=0.5
 
 # Reports
-report.lstoday.description = Done today
+report.dsheet.description  = Done today
 report.dsheet.columns      = start,end,project,priority,entry.age,description,uuid
 report.dsheet.filter       = end:today
 report.dsheet.labels       = Started,Complete,Proj,Pri,Age,Description,UUID
