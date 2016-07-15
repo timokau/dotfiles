@@ -156,6 +156,7 @@ let g:neomake_sty_enabled_makers = ['chktex'] " no lacheck
 " Disabled warnings:
 " - command terminated with space (1) (I *want* to terminate some commands with space)
 " - wrong length of dash (8) (may or may not be right)
+" - should use \cdots to achieve an ellipsis (11) (I want to decide myself)
 " - interword spacing (12) (may or may not be right)
 " - intersentence spacing (13) (may or may not be right)
 " - mathmode on at end (16) (doesn't work)
@@ -164,7 +165,7 @@ let g:neomake_sty_enabled_makers = ['chktex'] " no lacheck
 " - space before punctuation (26) (i want space before :=)
 " - should use space with parenthesis (36) (I don't want to use space)
 " - vertical rules in tables (44) (I don't think they are _always_ ugly)
-let g:neomake_tex_chktex_args = ['--nowarn=1', '--nowarn=8', '--nowarn=12', '--nowarn=13', '--nowarn=16', '--nowarn=23', '--nowarn=25', '--nowarn=26', '--nowarn=36', '--nowarn=44']
+let g:neomake_tex_chktex_args = ['--nowarn=1', '--nowarn=8', '--nowarn=11', '--nowarn=12', '--nowarn=13', '--nowarn=16', '--nowarn=23', '--nowarn=25', '--nowarn=26', '--nowarn=36', '--nowarn=44']
 
 " CamelCaseMotion {{{3
 call camelcasemotion#CreateMotionMappings(',')
@@ -513,6 +514,7 @@ augroup vimrc
 	autocmd!
 augroup END
 
+" Don't list location-list / quickfix windows {{{3
 augroup nonEditableBuffers
 	autocmd!
 	" Don't list location-list / quickfix windows
@@ -523,6 +525,9 @@ augroup nonEditableBuffers
 			\| nnoremap <silent> <buffer> q :bd<CR>
 		\| endif
 augroup END
+
+" SML comments {{{3
+autocmd vimrc FileType sml setlocal commentstring=(*%s*)
 
 " Use vim help instead of man in vim files when K is pressed {{{3
 autocmd vimrc FileType vim setlocal keywordprg=:help
@@ -563,6 +568,7 @@ augroup encrypted
 	" after the file has been written.
 	autocmd BufWritePost,FileWritePost *.gpg u
 augroup END
+
 
 " Commands {{{2
 " Delete buffer but keep window {{{3
