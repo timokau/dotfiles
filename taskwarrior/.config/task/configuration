@@ -44,3 +44,6 @@ report.next.columns = id,start.age,entry.age,depends,priority,project,tags,recur
 
 # Color theme
 color.due.today=bold red on black
+
+# Recurrence is handled by the server to avoid duplication
+recurrence = off
