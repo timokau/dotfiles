@@ -143,8 +143,6 @@ if [[ $TERM == xterm-termite ]]; then
 	alias ranger="NVIM_TUI_ENABLE_TRUE_COLOR=1 NVIM_TUI_ENABLE_CURSOR_SHAPE=1 ranger"
 fi
 
-alias vim='vim --servername vim'
-
 alias scrott='scrot /tmp/shot-$(date +%FT%T).png'
 
 
