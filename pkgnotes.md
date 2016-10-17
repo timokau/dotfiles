@@ -59,7 +59,7 @@ This includes mainly notes-to-self on why I have something installed or which to
 - mpd - Music daemon
 - mpv - Video player
 - msmtp - Send mail
-- mutt-sidebar - Read mail
+- neomutt - Read mail
 - ncdu - Find large files (curses)
 - ncmpcpp - Control mpd (curses)
 - neovim - Text editor
