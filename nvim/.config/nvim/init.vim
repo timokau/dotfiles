@@ -159,6 +159,7 @@ augroup neomake_plugin
 		autocmd! BufWritePost *.rs Neomake! clippy
 	endif
 augroup END
+let g:neomake_python_enabled_makers = ['python', 'pyflakes', 'pylint']
 let g:neomake_tex_enabled_makers = ['chktex'] " no lacheck
 let g:neomake_sty_enabled_makers = ['chktex'] " no lacheck
 " Disabled warnings:
