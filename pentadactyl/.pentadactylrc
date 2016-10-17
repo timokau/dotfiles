@@ -16,7 +16,8 @@ silent bmark -title="Youtube"     -keyword="yt"  "www.youtube.com/results?search
 " Quick marks {{{
 delqmarks!
 silent qmark r www.reddit.com
-silent qmark R www.reddit.com/r/Dashboard
+silent qmark R www.reddit.com/me/m/interesting
+silent qmark h news.ycombinator.com
 silent qmark w web.whatsapp.com
 silent qmark f www.feedly.com
 silent qmark F www.facebook.de
