@@ -34,8 +34,10 @@ register_monitor() {
 # Search for a monitor in the array of monitors
 is_registered() {
 	local monitor
+	# Strip the '-' out of the arguments
+	local argument=${1//-}
 	for monitor in "${monitors[@]}"; do
-		[[ "$monitor" == "$1" ]] && return 0
+		[[ "$monitor" == "$argument" ]] && return 0
 	done
 	return 1
 }
@@ -154,36 +156,40 @@ configure_monitors_for_archpad() {
 }
 
 configure_monitors_for_archdesk() {
-	if check_setup "DVII2" "HDMI4"; then
-		echo "DVI-1 and HDMI-4 are connected"
-		xrandr --output DVI-1 --auto
-		xrandr --output HDMI-3 --auto --primary --right-of DVI-1
-		bspc monitor 'HDMI-3' --rename 1
-		bspc monitor 'DVI-1' --rename 2
+	HDMI="HDMI-4"
+	# HDMI-4 and HDMI-1 are the same monitor, which is somehow sometimes labelled differently
+	is_registered "HDMI-1" && HDMI="HDMI-1"
+	DVI="DVI-I-2"
+	DP="DP-1"
+	is_registered "DP-4" && DP="DP-4"
+	if check_setup $DVI $HDMI; then
+		echo "$HDMI and $DVI are connected"
+		xrandr --output $DVI --auto
+		xrandr --output $HDMI --auto --primary --right-of $DVI
+		bspc monitor $HDMI --rename 1
+		bspc monitor $DVI --rename 2
 		bspc monitor 1 --reset-desktops I II III IV V
 		bspc monitor 2 --reset-desktops VI VII VIII IX X
-		# HDMI-0 is detected as HDMI1, but xrandr knows it as HDMI-0
-	elif check_setup "DVII2" "HDMI1"; then
-		echo "DVI-1 and HDMI-0 are connected"
-		xrandr --output DVI-1 --auto
-		xrandr --output HDMI-0 --auto --primary --right-of DVI-1
-		bspc monitor 'HDMI-0' --rename 1
-		bspc monitor 'DVI-1' --rename 2
+	elif is_registered $DP; then
+		echo "$DP is connected"
+		xrandr --output $DP --auto --primary
+		# todo do only once
+		bspc monitor $DP --remove
+		bspc wm --add-monitor 1 1878x1080+0+0
+		bspc wm --add-monitor 2 682x1080+1878+0
 		bspc monitor 1 --reset-desktops I II III IV V
 		bspc monitor 2 --reset-desktops VI VII VIII IX X
-	elif check_setup "DVII2"; then
-		echo "DVI-1 is connected"
-		xrandr --output DVI-1 --auto
-		xrandr --output HDMI-1 --off
-		xrandr --output HDMI-3 --off
-		bspc monitor 'DVI-1' --rename 1
+	elif check_setup $DVI; then
+		echo "$DVI is connected"
+		xrandr --output $DVI --auto
+		xrandr --output $HDMI --off
+		bspc monitor $DVI --rename 1
 		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
-		# HDMI4 and HDMI1 are the same monitor, which is somehow sometimes labelled differently
-	elif check_setup "HDMI-4"; then
-		echo "HDMI-4 is connected"
-		xrandr --output HDMI-3 --auto
-		xrandr --output DVI-1 --off
-		bspc monitor 'HDMI-3' --rename 1
+	elif check_setup $HDMI; then
+		echo "$HDMI is connected"
+		xrandr --output $HDMI --auto
+		xrandr --output $DVI --off
+		bspc monitor $HDMI --rename 1
 		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
 	else
 		echo "No known monitor setup cuold be detected." | /usr/bin/systemd-cat --priority="crit"
