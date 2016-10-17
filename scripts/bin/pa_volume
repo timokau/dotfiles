@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Returns the volume of Sink $1
+# pactl is locale-dependent
+LC_ALL=C pactl list sinks | awk \
+	'$1=="Sink" {sink=substr($2,2)}
+	$1=="Volume:" && sink == "1"{print $5}'
