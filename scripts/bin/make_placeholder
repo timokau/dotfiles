@@ -1,8 +1,0 @@
-#!/bin/bash
-# Make the current terminal a placeholder for $1 (WM_CLASS) until return is pressed
-node_id="$(bspc query -N -n focused)"
-bspc rule --add "$1" node="$node_id" split_dir=south split_ratio=0.0001
-number=$(bspc rule --list | wc -l)
-trap '{ bspc rule --remove "^$number"; exit 0; }' INT
-read
-bspc rule --remove "^$number"
