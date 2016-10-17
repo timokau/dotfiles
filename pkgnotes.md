@@ -83,7 +83,7 @@ This includes mainly notes-to-self on why I have something installed or which to
 - rust-racer - Autocompletion of rust code
 - rustfmt - Formatting of rust code
 - scrot - Screenshots
-- sdl2 - Developmeng
+- sdl2 - Development
 - sdl2_image - Development
 - sdl2_ttf - Development
 - shellcheck - Check my shell scripts
