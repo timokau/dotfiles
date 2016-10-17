@@ -3,7 +3,7 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 nightly_file="$HOME/.local/share/sysupgrade/lastnightly"
 
-snapshot_nbr=$(snapper create --type=pre --cleanup-algorithm=number --print-number --description="${cmd}")
+snapshot_nbr=$(sudo snapper create --type=pre --cleanup-algorithm=number --print-number --description="${cmd}")
 echo ">>> ${BLUE}New pre snapshot with number ${snapshot_nbr}.${NC}"
 echo ">>> ${BLUE}Updating packages${NC}"
 if [[ "$(cat "$nightly_file" 2> /dev/null)" != "$(date -I)" ]]; then
@@ -29,7 +29,7 @@ pkglist="$HOME/pkglist.txt"
 mkdir -p "$(dirname $pkglist)"
 (pacman -Qqen ; echo '\n' ; pacman -Qqem) > "$pkglist"
 
-snapshot_nbr=$(snapper create --type=post --cleanup-algorithm=number --print-number --pre-number="$snapshot_nbr")
+snapshot_nbr=$(sudo snapper create --type=post --cleanup-algorithm=number --print-number --pre-number="$snapshot_nbr")
 echo ">>> ${BLUE}New post snapshot with number ${snapshot_nbr}.${NC}"
 
 [ -e "/tmp/panel-fifo" ] &&	echo "A0" > "/tmp/panel-fifo"
