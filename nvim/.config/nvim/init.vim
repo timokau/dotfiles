@@ -108,7 +108,25 @@ let g:deoplete#omni#input_patterns.java = ['[^. \t0-9]\.\w*',
 let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources._ = ['javacomplete2']
 
-" java
+" Hide preview window after completion
+augroup deoplete_preview
+	autocmd!
+	autocmd CompleteDone * pclose!
+augroup END
+
+" deoplete-jedi {{{3
+let g:deoplete#sources#jedi#show_docstring = 1
+
+" vim-racer {{{3
+augroup racer-bindings
+	autocmd!
+	autocmd Filetype rust nmap <buffer> gD <Plug>RacerShowDocumentation
+augroup END
+
+" echodoc {{{3
+let g:echodoc_enable_at_startup = 1
+
+" java {{{3
 let g:JavaComplete_EnableDefaultMappings = 0
 augroup java
 	autocmd!
