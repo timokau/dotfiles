@@ -361,7 +361,6 @@ if check_com task ; then
 	alias t=task
 	alias ts=tasksh
 	compdef _task t=task
-	compdef _task in=task
 fi
 
 ############ fasd
