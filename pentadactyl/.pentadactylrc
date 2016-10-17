@@ -172,6 +172,9 @@ set! browser.bookmarks.restore_default_bookmarks=false
 set! browser.download.lastDir=""
 set! browser.tabs.closeWindowWithLastTab=false
 set! browser.tabs.warnOnClose=false
+set! media.block-autoplay-until-in-foreground=true
+set! media.block-play-until-visible=true
+set! pdfjs.disabled=true
 
 " Privacy
 set! privacy.clearOnShutdown.cache=false
