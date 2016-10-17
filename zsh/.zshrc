@@ -138,6 +138,7 @@ zstyle ':completion:*:pacaur:*' remote-access false
 
 if [[ $TERM == xterm-termite ]]; then
 	alias nvim="NVIM_TUI_ENABLE_TRUE_COLOR=1 NVIM_TUI_ENABLE_CURSOR_SHAPE=1 nvim"
+	alias vimwiki="NVIM_TUI_ENABLE_TRUE_COLOR=1 NVIM_TUI_ENABLE_CURSOR_SHAPE=1 nvim -c 'VimwikiIndex'"
 	# In case nvim is started from ranger
 	alias ranger="NVIM_TUI_ENABLE_TRUE_COLOR=1 NVIM_TUI_ENABLE_CURSOR_SHAPE=1 ranger"
 fi
