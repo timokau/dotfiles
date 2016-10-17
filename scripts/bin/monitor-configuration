@@ -147,9 +147,11 @@ configure_monitors_for_archpad() {
 
 	echo "$cur_edid" > /home/timo/cur-edid
 	if [[ "$beamer_edid" == "$cur_edid" ]]; then
-		/home/timo/bin/hdmi-audio on
+		# /home/timo/bin/hdmi-audio on
+		~/bin/pa_movesinks 0
 	else
-		/home/timo/bin/hdmi-audio off
+		# /home/timo/bin/hdmi-audio off
+		~/bin/pa_movesinks 1
 	fi
 }
 
