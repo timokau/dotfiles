@@ -187,6 +187,7 @@ set! privacy.clearOnShutdown.passwords=true
 set! privacy.clearOnShutdown.sessions=true
 set! privacy.clearOnShutdown.siteSettings=true
 set! privacy.donottrackheader.enabled=true
+set! privacy.trackingprotection.enabled=true
 set! signon.rememberSignons=false
 
 " Noscript
