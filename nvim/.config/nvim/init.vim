@@ -155,7 +155,8 @@ let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 augroup neomake_plugin
 	autocmd!
 	if has('nvim')
-		autocmd! BufWritePost *.java,*.tex silent Neomake
+		autocmd! BufWritePost * Neomake
+		autocmd! BufWritePost *.rs Neomake! clippy
 	endif
 augroup END
 let g:neomake_tex_enabled_makers = ['chktex'] " no lacheck
