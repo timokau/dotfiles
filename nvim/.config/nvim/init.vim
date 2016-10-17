@@ -146,10 +146,6 @@ let g:raise_when_tests_fail = 1
 set statusline+=%#NeotermTestRunning#%{neoterm#test#status('running')}%*
 set statusline+=%#NeotermTestSuccess#%{neoterm#test#status('success')}%*
 set statusline+=%#NeotermTestFailed#%{neoterm#test#status('failed')}%*
-augroup run_tests
-	autocmd!
-	autocmd BufWritePost *.rs call neoterm#test#run('all')
-augroup END
 
 " surround {{{3
 " surround with latex command
