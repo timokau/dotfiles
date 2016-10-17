@@ -359,7 +359,7 @@ if check_com task ; then
 	zstyle ':completion:*:*:task:*' group-name ''
 
 	alias t=task
-	alias in='task add +in'
+	alias ts=tasksh
 	compdef _task t=task
 	compdef _task in=task
 fi
