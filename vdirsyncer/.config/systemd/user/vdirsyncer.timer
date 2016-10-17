@@ -3,8 +3,7 @@ Description=Calendar and contacts synchronization timer
 After=network-online.target
 
 [Timer]
-OnActiveSec=15min
-OnBootSec=1m
+OnCalendar=*:0/15
 Unit=vdirsyncer.service
 Persistent=true
 
