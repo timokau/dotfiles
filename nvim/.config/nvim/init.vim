@@ -50,6 +50,8 @@ Plug 'clever-f.vim'                                       " Make F and T repeata
 Plug 'easymotion/vim-easymotion'                          " Highlight possible targets
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim'                           " Better autocompletion
+	Plug 'zchee/deoplete-jedi'                            " Python autocompletion
+	Plug 'Shougo/echodoc.vim'                             " Show docstring
 else
 	Plug 'Valloric/YouCompleteMe', {'do': './install.sh'} " Better autocompletion
 endif
