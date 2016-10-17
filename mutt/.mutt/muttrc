@@ -135,12 +135,13 @@ macro pager \Cu "|urlview<enter>" "call urlview to open links"
 source ~/.mutt/colors
 
 # Sidebar Patch
+macro index gs "<sidebar-toggle-visible>"
 set sidebar_folder_indent = yes
-set sidebar_visible = yes
+set sidebar_visible = no
 set sidebar_width = 24
 color sidebar_new color221 color233
-bind index,pager \Cn sidebar-next
-bind index,pager \Cp sidebar-prev
-bind index,pager \Co sidebar-open
+# bind index,pager \Cn sidebar-next
+# bind index,pager \Cp sidebar-prev
+# bind index,pager \Co sidebar-open
 
 set sidebar_sort_method = 'unsorted'
