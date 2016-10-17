@@ -1,7 +1,15 @@
 #!/bin/bash
 
 while read -r _; do
-	winid="$(herbstclient attr clients.focus.winid)"
+	winid="$(herbstclient attr clients.focus.winid 2>/dev/null)"
+	err="$?"
+	# When there is no window focused, skip this one
+	if [[ "$err" -ne 0 ]]; then
+		# notify-send "Skipping" 
+		continue
+	fi
+	# echo "Switching to $winid"
+
 	xwininfo="$(xwininfo -id "$winid")"
 
 	# pos[0] is x of the top-left corner, pos[1] y
