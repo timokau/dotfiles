@@ -17,8 +17,17 @@ super + e ; s
 	systemctl suspend
 
 # media
-super + v : {plus,minus,m}
-	amixer set Master {5%+,5%-,toggle}
+super + v : {plus,minus}
+	pactl set-sink-volume 1 {+,-}5%
+
+super + v : m
+	pactl set-sink-mute 1 toggle
+
+super + V : {plus,minus}
+	pactl set-sink-input-volume $(pa_xsink) {+,-}5%
+
+super + V : m
+	pactl set-sink-input-mute $(pa_xsink) toggle
 
 {XF86AudioRaiseVolume,XF86AudioLowerVolume,XF86AudioMute}
 	amixer set Master {5%+,5%-,toggle}
