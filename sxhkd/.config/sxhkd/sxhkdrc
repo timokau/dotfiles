@@ -32,7 +32,7 @@ super + m ; {p,h,l}
 # run
 
 super + Return
-	termite
+	${TERMINAL:-termite}
 
 super + a
 	termite
