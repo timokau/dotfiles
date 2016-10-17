@@ -14,7 +14,7 @@ macro index goy "<change-folder +yahoo/inbox"<enter>
 macro index gog "<change-folder +gmx/inbox"<enter>
 
 # contacts are managed by khard
-set query_command= "khard email '%s'"
+set query_command= "khard email --parsable '%s'"
 bind editor <Tab> complete-query
 bind editor ^T    complete
 macro index,pager A \
