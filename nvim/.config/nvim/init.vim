@@ -475,6 +475,11 @@ nnoremap <leader>s :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>h
 " Stop highlighting the last search {{{3
 nnoremap <silent> <leader>c :nohlsearch<CR>
 
+" Tabs
+nnoremap <C-n> :tabNext<CR>
+nnoremap <C-p> :tabprevious<CR>
+nnoremap <C-p> :tabprevious<CR>
+
 " Navigate between split views with <CTRL>-[h/j/k/l]
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
