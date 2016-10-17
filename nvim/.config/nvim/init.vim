@@ -552,7 +552,7 @@ function! Pandocsettings()
 	setlocal comments +=:-
 	setlocal formatoptions +=r
 	setlocal colorcolumn=0
-	setlocal spelllang=hun-de-DE
+	setlocal spelllang=de_20
 endfun
 
 " Transparent editing of gpg encrypted files {{{3
