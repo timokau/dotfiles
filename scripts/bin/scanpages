@@ -1,0 +1,90 @@
+#! /bin/bash
+WIDTH='210' #TODO configurable
+HEIGHT='298'
+
+duplex=1
+jpg_quality=10
+png=0
+dpi='500'
+color=0
+limit=0
+
+while [[ $# -gt 0 ]]; do
+	key="$1"
+	case $key in
+		-s|--simplex)
+			duplex=0
+			;;
+		-q|--jpg-quality)
+			jpg_quality="$2"
+			shift
+			;;
+		-p|--png)
+			png=1
+			;;
+		-d|--dpi)
+			dpi="$2"
+			shift
+			;;
+		-c|--color)
+			color=1
+			;;
+		-l|--limit)
+			limit="$2"
+			shift
+			;;
+		*)
+			echo "Unknown option: \"$key\". Ignoring."
+			;;
+	esac
+	shift
+done
+
+if [[ $duplex -eq 0 ]]; then
+	scanimage_source='ADF Front'
+	scanimage_batchcount=1
+else
+	scanimage_source='ADF Duplex'
+	scanimage_batchcount=2
+fi
+
+if [[ $png -eq 0 ]]; then
+	target_ext="jpg"
+else
+	target_ext="png"
+fi
+
+dir="$(pwd)"
+tmpdir="$(mktemp --directory)"
+cd "$tmpdir" || exit 1
+
+(( i = 0 ))
+(( pages = 0 ))
+while (( pages < limit )) || (( limit == 0 )) ; do
+	scanimage \
+		--device-name=canon_dr \
+		--source "$scanimage_source" \
+		--batch="$i-%d.pnm" \
+		--batch-count="$scanimage_batchcount" \
+		--resolution "$dpi" \
+		--page-height "$HEIGHT" \
+		--page-width "$WIDTH" \
+		-y "$HEIGHT" \
+		-x "$WIDTH" \
+		--mode 'Color' || break
+
+		# cp "${i}-1.pnm" "${dir}/" # TODO optionally retain original
+		process_scan "${i}-1.pnm" "${dir}/$((i + 1)).${target_ext}" "$jpg_quality" "$png" "$color" &
+		if [[ $duplex -ne 0 ]]; then
+			process_scan "${i}-2.pnm" "${dir}/$((i + 2)).${target_ext}" "$jpg_quality" "$png" "$color" &
+			(( i += 2 ))
+		else
+			(( i += 1 ))
+		fi
+		(( pages += 1 ))
+done
+
+cd "$dir" || exit 1
+
+wait
+rmdir "$tmpdir"

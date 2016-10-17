@@ -1,0 +1,32 @@
+#!/bin/bash
+calibre_dir="$HOME/data/calibre"
+
+# Ids are seperated by `,`. Read them in as an array.
+IFS=',' ids=( $(calibredb search "$@") )
+
+files=()
+for id in "${ids[@]}"; do
+	# The folder containing the book with the id
+	folder="$(find "$calibre_dir" -type d -name "*($id)")"
+	for file in "$folder/"*; do
+		bn="$(basename "$file")"
+		if [[ "$bn" != 'metadata.opf' ]] && [[ "$bn" != 'cover.jpg' ]]; then
+			files+=("$file")
+		fi
+	done
+done
+
+if (( "${#files[@]}" <= 0 )); then
+	echo "No files found."
+elif (( "${#files[@]}" == 1 )); then
+	xdg-open "${files[0]}";
+else
+	(( i = 0 ))
+	for file in "${files[@]}"; do
+		echo "[$i] $(basename "$file")"
+		(( i++ ))
+	done
+	echo "Enter the index of the file to open:"
+	read -r selection
+	xdg-open "${files[$selection]}"
+fi

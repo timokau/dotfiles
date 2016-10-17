@@ -61,7 +61,7 @@ parse_options() {
 	elif [[ $count -gt 1 ]]; then
 		echo "The filter is ambigous. Please select a match out of the following:"
 		local counter=0
-		for task in ${uuids[@]}; do
+		for task in "${uuids[@]}"; do
 			# Echo the index and the description
 			echo "[$counter] ${task#*:}"
 			((counter++))
@@ -80,12 +80,12 @@ play_sound_notification() {
 	if [[ $PLAY_SOUND -ne 1 ]]; then return; fi
 
 	resume_cmd=""
-	if [[ $(mpv status | grep 'playing' | wc -l) -gt 0 ]]; then
+	if [[ $(mpv status | grep -c 'playing' ) -gt 0 ]]; then
 		resume_cmd="mpc play"
 		mpc pause;
 	fi
 	mpv "$1" >/dev/null 2>&1
-	eval $resume_cmd
+	eval "$resume_cmd"
 }
 
 start_task() {
@@ -107,7 +107,7 @@ trap 'break' SIGTERM SIGINT
 for (( i=2; i <= ROUNDS+1; i++)); do
 	start_task
 	# Needs the countdown script
-	countdown --pauseStartCmd "task stop \"$uuid\"" --pauseStopCmd "task start \"$uuid\"" $ROUND_DURATION
+	countdown --pauseStartCmd "task stop \"$uuid\"" --pauseStopCmd "task start \"$uuid\"" "$ROUND_DURATION"
 	play_sound_notification $COMPLETE_SOUND
 	if [[ "$?" == 0 ]]; then # Only ask when countdown exited normally (no abort)
 		notify-send --app-name=Pomodoro "Time's up" "Time to relax"
@@ -120,8 +120,8 @@ for (( i=2; i <= ROUNDS+1; i++)); do
 		break
 	fi
 	case "$item" in
-		n|N) break;;
-		*) countdown $PAUSE_DURATION;;
+		n|N) break ;;
+		*) countdown "$PAUSE_DURATION" ;;
 	esac
 	play_sound_notification $START_SOUND
 	notify-send --app-name=Pomodoro "Time's up" "Time to work"
@@ -137,5 +137,5 @@ stop_task
 read -r -n 1 -p "Task done? [y/N]" item
 echo # newline
 case "$item" in
-	y|Y) task done "$uuid" 2>/dev/null;;
+	y|Y) task 'done' "$uuid" 2>/dev/null ;;
 esac

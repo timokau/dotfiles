@@ -10,11 +10,11 @@ mailboxes "+yahoo" \
 mailboxes +drafts \
           +search
 
-macro index goy "<change-folder +yahoo/inbox"<enter>
-macro index gog "<change-folder +gmx/inbox"<enter>
+macro index goy "<change-folder> +yahoo/inbox"<enter>
+macro index gog "<change-folder> +gmx/inbox"<enter>
 
 # contacts are managed by khard
-set query_command= "khard email '%s'"
+set query_command= "khard email --parsable '%s'"
 bind editor <Tab> complete-query
 bind editor ^T    complete
 macro index,pager A \
@@ -65,7 +65,7 @@ set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 set strict_threads=yes
 set charset = 'utf-8'
 set pager_format = "%4C %Z %[!%Y-%m-%d at %H:%M]  %.20n  %s%* -- (%P)"
-set pager_index_lines = 10
+set pager_index_lines = 0
 set pager_context = 3
 set pager_stop
 set menu_scroll
@@ -107,7 +107,8 @@ hdr_order from: to: cc: date: subject: # and in this order
 
 bind pager j next-line
 bind pager k previous-line
-bind pager J next-entry
+bind pager J next-unread
+bind index,pager \Cn next-unread-mailbox
 bind pager K previous-entry
 bind pager gg top
 bind pager G bottom
@@ -135,12 +136,13 @@ macro pager \Cu "|urlview<enter>" "call urlview to open links"
 source ~/.mutt/colors
 
 # Sidebar Patch
+macro index gs "<sidebar-toggle-visible>"
 set sidebar_folder_indent = yes
-set sidebar_visible = yes
+set sidebar_visible = no
 set sidebar_width = 24
 color sidebar_new color221 color233
-bind index,pager \Cn sidebar-next
-bind index,pager \Cp sidebar-prev
-bind index,pager \Co sidebar-open
+# bind index,pager \Cn sidebar-next
+# bind index,pager \Cp sidebar-prev
+# bind index,pager \Co sidebar-open
 
 set sidebar_sort_method = 'unsorted'

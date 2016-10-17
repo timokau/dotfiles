@@ -30,7 +30,7 @@ now_playing_suffix = "$/b"
 browser_playlist_prefix = "$2playlist$9 "
 selected_item_prefix = "$8"
 selected_item_suffix = "$9"
-song_window_title_format = "{%a - }{%t}|{%f}"
+song_window_title_format = "ncmpcpp: {%a - }{%t}|{%f}"
 
 ##### columns settings #####
 song_columns_list_format = "(7f)[128]{l} (25)[69]{a} (40)[131]{t|f} (30)[215]{b}"

@@ -16,7 +16,8 @@ silent bmark -title="Youtube"     -keyword="yt"  "www.youtube.com/results?search
 " Quick marks {{{
 delqmarks!
 silent qmark r www.reddit.com
-silent qmark R www.reddit.com/r/Dashboard
+silent qmark R www.reddit.com/me/m/interesting
+silent qmark h news.ycombinator.com
 silent qmark w web.whatsapp.com
 silent qmark f www.feedly.com
 silent qmark F www.facebook.de
@@ -89,7 +90,8 @@ function saveToWallabag(url) {
 EOS
 
 " Commands {{{
-command! -nargs=0 mpv :silent :execute "!mpv --ytdl-format='best[height<=1080]' '" + content.location.href + "' &"
+command! -nargs=0 mpv :silent :execute "!mpv --ytdl-format='(bestvideo[height<=1080]+bestaudio/best)[protocol!=http_dash_segments]' '" + content.location.href + "' &"
+
 command! -nargs=0 feh :silent :execute "!feh '" + content.location.href + "' &"
 command! -nargs=0 qute :silent :execute "!qutebrowser '" + content.location.href + "' &"
 command! -nargs=0 wbag :javascript saveToWallabag(content.location.href)
@@ -110,6 +112,9 @@ nmap -builtin k 5k
 nmap -builtin <Leader>m :mpv<CR>d
 nmap -builtin <Leader>q :qute<CR>d
 nmap -builtin <Leader>w :wbag<CR>d
+
+nmap -builtin * zI
+nmap -builtin _ zO
 
 nmap <Leader>c nohlsearch
 
@@ -154,7 +159,7 @@ autocmd!
 " No, I really don't want the newtab page (even if I close the last tab)
 autocmd LocationChange about:newtab :open about:blank
 " The reddit sidebar is way too big when firefox doesn't take up the whole screen
-autocmd PageLoad 'https://www.reddit.com/*' :javascript $('.side').hide();void(0);
+autocmd PageLoadPre 'https://www.reddit.com/*' :javascript $('.side').hide();void(0);
 command! SideToggle -javascript $('.side').toggle();void(0);
 
 " Browser Settings {{{
@@ -167,6 +172,9 @@ set! browser.bookmarks.restore_default_bookmarks=false
 set! browser.download.lastDir=""
 set! browser.tabs.closeWindowWithLastTab=false
 set! browser.tabs.warnOnClose=false
+set! media.block-autoplay-until-in-foreground=true
+set! media.block-play-until-visible=true
+set! pdfjs.disabled=true
 
 " Privacy
 set! privacy.clearOnShutdown.cache=false
@@ -179,21 +187,21 @@ set! privacy.clearOnShutdown.passwords=true
 set! privacy.clearOnShutdown.sessions=true
 set! privacy.clearOnShutdown.siteSettings=true
 set! privacy.donottrackheader.enabled=true
+set! privacy.trackingprotection.enabled=true
 set! signon.rememberSignons=false
 
 " Noscript
 set! noscript.untrusted="google-analytics.com http://google-analytics.com https://google-analytics.com"
 set! noscript.keys.tempAllowPage="ctrl shift n"
 
-" Pocket
-set! extensions.isreaditlater.autoCloseTab=true
+" uBlock / uMatrix
+" Make the popup work with a minimal ui
+style -name ublick * #nav-bar * { visibility: visible; }
 
 command! PlugInstall -nargs=0 -description "Install my addons" -javascript <<EOF
 	// Addons from mozilla.org
 	var ext = [];
-	ext.push("452714"); // Pushbullet
 	ext.push("387429"); // Reddit Enhancement Suite
-	ext.push("7661");   // Pocket
 	ext.push("722");    // NoScript
 	for(var i=0; i<ext.length; i++) {
 		dactyl.execute("extadd https://addons.mozilla.org/firefox/downloads/latest/" + ext[i] + "/addon-" + ext[i] + "-latest.xpi")

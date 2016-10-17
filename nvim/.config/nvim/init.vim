@@ -29,15 +29,13 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
 if executable('cargo')
 	Plug 'racer-rust/vim-racer', { 'for': 'rust' }         " Rust Auto-Complete-er
 endif
-Plug 'klen/python-mode', { 'for': 'python' }              " Advanced python features
 " Colorschemes {{{3
 Plug 'morhetz/gruvbox'                                    " Gruvbox
 Plug 'chriskempson/base16-vim'                            " Base16
+Plug 'fcpg/vim-fahrenheit'
 " Appearance {{{3
 Plug 'junegunn/rainbow_parentheses.vim'                   " Color matching parentheses
 " Misc {{{3
-" Useable german spell checking (Donaudampfschifffahrtskapitänskajütentür should be accepted)
-Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo ' . spelldir .'/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
 if executable('zeal')
 	Plug 'KabbAmine/zeavim.vim'                           " Offline documentation
@@ -52,6 +50,8 @@ Plug 'clever-f.vim'                                       " Make F and T repeata
 Plug 'easymotion/vim-easymotion'                          " Highlight possible targets
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim'                           " Better autocompletion
+	Plug 'zchee/deoplete-jedi'                            " Python autocompletion
+	Plug 'Shougo/echodoc.vim'                             " Show docstring
 else
 	Plug 'Valloric/YouCompleteMe', {'do': './install.sh'} " Better autocompletion
 endif
@@ -62,7 +62,6 @@ Plug 'junegunn/vim-easy-align'                                 " Alignment
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'roman/golden-ratio'                                 " Automatic resizing
 Plug 'bkad/CamelCaseMotion'                               " Move in CamelCase and snake_case
 if exists(':terminal')
 	Plug 'kassio/neoterm'                                 " Execute commands in neovims terminal
@@ -74,15 +73,9 @@ call plug#end()
 let g:airline#extensions#whitespace#mixed_indent_algo = 2
 
 " racer {{{3
-let $RUST_SRC_PATH="/usr/src/rust/src"
+let $RUST_SRC_PATH = $HOME . '/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
 silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
-
-" golden ratio {{{3
-augroup gratio 
-	autocmd!
-	autocmd VimResized * GoldenRatioResize
-augroup END
 
 " rust.vim {{{3
 if executable('rustfmt')
@@ -115,7 +108,25 @@ let g:deoplete#omni#input_patterns.java = ['[^. \t0-9]\.\w*',
 let g:deoplete#ignore_sources = {}
 let g:deoplete#ignore_sources._ = ['javacomplete2']
 
-" java
+" Hide preview window after completion
+augroup deoplete_preview
+	autocmd!
+	autocmd CompleteDone * pclose!
+augroup END
+
+" deoplete-jedi {{{3
+let g:deoplete#sources#jedi#show_docstring = 1
+
+" vim-racer {{{3
+augroup racer-bindings
+	autocmd!
+	autocmd Filetype rust nmap <buffer> gD <Plug>RacerShowDocumentation
+augroup END
+
+" echodoc {{{3
+let g:echodoc_enable_at_startup = 1
+
+" java {{{3
 let g:JavaComplete_EnableDefaultMappings = 0
 augroup java
 	autocmd!
@@ -135,10 +146,6 @@ let g:raise_when_tests_fail = 1
 set statusline+=%#NeotermTestRunning#%{neoterm#test#status('running')}%*
 set statusline+=%#NeotermTestSuccess#%{neoterm#test#status('success')}%*
 set statusline+=%#NeotermTestFailed#%{neoterm#test#status('failed')}%*
-augroup run_tests
-	autocmd!
-	autocmd BufWritePost *.rs call neoterm#test#run('all')
-augroup END
 
 " surround {{{3
 " surround with latex command
@@ -148,9 +155,11 @@ let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 augroup neomake_plugin
 	autocmd!
 	if has('nvim')
-		autocmd! BufWritePost *.java,*.tex silent Neomake
+		autocmd! BufWritePost * Neomake
+		autocmd! BufWritePost *.rs Neomake! clippy
 	endif
 augroup END
+let g:neomake_python_enabled_makers = ['python', 'pyflakes', 'pylint']
 let g:neomake_tex_enabled_makers = ['chktex'] " no lacheck
 let g:neomake_sty_enabled_makers = ['chktex'] " no lacheck
 " Disabled warnings:
@@ -458,7 +467,6 @@ nnoremap $ g$
 " Spellchecking {{{3
 nnoremap <silent> <leader>s :set spell!<CR>
 nnoremap <silent> <leader>sd :set spell spelllang=de_20<CR>
-nnoremap <silent> <leader>sD :set spell spelllang=hun-de-DE<CR>
 nnoremap <silent> <leader>se :set spell spelllang=en_us<CR>
 
 " search/replace the word under the cursor {{{3
@@ -466,6 +474,11 @@ nnoremap <leader>s :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>h
 
 " Stop highlighting the last search {{{3
 nnoremap <silent> <leader>c :nohlsearch<CR>
+
+" Tabs
+nnoremap <C-n> :tabNext<CR>
+nnoremap <C-p> :tabprevious<CR>
+nnoremap <C-p> :tabprevious<CR>
 
 " Navigate between split views with <CTRL>-[h/j/k/l]
 nnoremap <C-h> <C-w>h
@@ -539,7 +552,7 @@ function! Pandocsettings()
 	setlocal comments +=:-
 	setlocal formatoptions +=r
 	setlocal colorcolumn=0
-	setlocal spelllang=hun-de-DE
+	setlocal spelllang=de_20
 endfun
 
 " Transparent editing of gpg encrypted files {{{3

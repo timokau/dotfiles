@@ -1,0 +1,102 @@
+#!/bin/python -u
+# Has to be unbuffered (-u)
+
+import subprocess
+import sys
+
+class Workspace:
+    def pretty_string(self):
+        return "Workspace {}, {}focused, {}occupied, {}urgent".format(
+            self.name,
+            "" if self.focused else "not ",
+            "" if self.occupied else "not ",
+            "" if self.urgent else "not ")
+
+    def pango_string(self):
+        return "<span{}{}{}>{}</span>".format(
+            ' underline="single"' if self.focused else '',
+            '' if self.occupied else ' foreground="grey"',
+            ' foreground="red"' if self.urgent else '',
+            self.name)
+
+    def __init__(self, name, focused, occupied, urgent):
+        self.name = name
+        self.focused = focused
+        self.occupied = occupied
+        self.urgent = urgent
+
+
+class Monitor:
+    def __init__(self, name, focused):
+        self.workspaces = []
+        self.name = name
+        self.focused = focused
+        self.layout = 'T'
+        self.focused_node_state = 'T'
+        self.focused_node_flags = ''
+
+    def add_workspace(self, w):
+        self.workspaces.append(w)
+
+    def pretty_string(self):
+        result = "Monitor {}, {}focused, layout {}:".format(
+            self.name,
+            "" if self.focused else "not ",
+            self.layout)
+        for workspace in self.workspaces:
+            result = result + '\n\t' + workspace.pretty_string()
+        return result
+
+    def pango_workspaces(self):
+        result = ""
+        for workspace in self.workspaces:
+            result = result + "  " + workspace.pango_string()
+        return result
+
+def parse_report(report):
+    monitors = []
+    items = report[1:].decode().split(":")
+    cur = None
+    for item in items:
+        item_type = item[0]
+        item_value = item[1:]
+        focused = item_type.isupper()
+        item_type = item_type.lower()
+        if item_type == 'm':
+            # Monitor
+            if cur is not None:
+                monitors.append(cur)
+            cur = Monitor(item_value, focused)
+        elif item_type == 'o':
+            # Occupied desktop
+            cur.add_workspace(Workspace(item_value, focused, True, False))
+        elif item_type == 'f':
+            # Free desktop
+            cur.add_workspace(Workspace(item_value, focused, False, False))
+        elif item_type == 'u':
+            # Urgent desktop
+            cur.add_workspace(Workspace(item_value, focused, True, True))
+        elif item_type == 'l':
+            # Layout of the focused desktop
+            cur.layout = item_value
+        elif item_type == 't':
+            # State of the focused node
+            cur.focused_node_state = item_value
+        elif item_type == 'g':
+            # Active flags of the focused node
+            cur.focused_node_flags = item_value
+    if cur is not None:
+        monitors.append(cur)
+    return monitors
+
+result = subprocess.Popen("bspc subscribe report",
+                          shell=True,
+                          stdout=subprocess.PIPE)
+
+monitor = int(sys.argv[1])
+lastreport = ""
+for report in result.stdout:
+    if report != lastreport:
+        lastreport = report
+        monitors = parse_report(report)
+        print(monitors[monitor].pango_workspaces())

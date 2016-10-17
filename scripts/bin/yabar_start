@@ -1,0 +1,10 @@
+#!/bin/sh
+bspc config top_padding 24
+yabar & disown
+
+sleep 1s
+bspid="$(xdo id -N Bspwm -n root | sort | head -n 1)"
+IPS="\n"
+xdo id -a "yabar" | while read wid; do
+	xdo above -t "$bspid" "$wid"
+done

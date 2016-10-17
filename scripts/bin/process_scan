@@ -1,0 +1,28 @@
+#!/bin/bash
+
+src="$1"
+target="$2"
+quality="$3"
+png="$4"
+color="$5"
+
+if [[ $color -eq 0 ]]; then
+	colorspace_arg="-colorspace Gray"
+else
+	colorspace_arg=""
+fi
+
+
+process_dir="$(mktemp --directory)"
+if [[ $png -eq 0 ]]; then
+	convert "$src" -trim -quality "$quality" -auto-level -auto-gamma -contrast-stretch 2% -colorspace Gray "${process_dir}/converted.jpg"
+	rm "$src"
+	mv "${process_dir}/converted.jpg" "$target"
+else
+	convert "$src" -trim -contrast-stretch 2% $colorspace_arg "${process_dir}/converted.pnm"
+	rm "$src"
+	optipng -o3 "${process_dir}/converted.pnm"
+	rm "${process_dir}/converted.pnm"
+	mv "${process_dir}/converted.png" "$target"
+fi
+rmdir "$process_dir"

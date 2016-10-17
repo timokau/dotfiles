@@ -1,0 +1,19 @@
+#!/bin/bash
+# Returns the sink id of the currently active X window
+# usage: pactl set-sink-input-volume $(pa_xsink) +5%
+
+name=$(xdotool getwindowfocus getwindowname)
+if [[ $name == ncmpcpp* ]]; then
+	# For an ncmpcpp window, set the volume of mpc
+	pid=$(pgrep mpd)
+else
+	# Else, set the volume of the pid of the currently active window
+	pid=$(xdotool getwindowfocus getwindowpid)
+fi
+
+# Go through the sinks, alway remember the current sink in the 'sink' variable,
+# print the current sink when the pid of the current window is found.
+# pactl is locale dependent
+LC_ALL=C pactl list sink-inputs | awk \
+	'/Sink Input/{sink=substr($3,2)}
+	 /'$pid'/{print sink; exit}'
