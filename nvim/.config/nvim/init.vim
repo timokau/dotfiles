@@ -32,6 +32,7 @@ endif
 " Colorschemes {{{3
 Plug 'morhetz/gruvbox'                                    " Gruvbox
 Plug 'chriskempson/base16-vim'                            " Base16
+Plug 'fcpg/vim-fahrenheit'
 " Appearance {{{3
 Plug 'junegunn/rainbow_parentheses.vim'                   " Color matching parentheses
 " Misc {{{3
