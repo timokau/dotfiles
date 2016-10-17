@@ -77,3 +77,9 @@ def_key "n"
 
 def_key "N"
   previous_found_item
+
+def_key "c"
+	clear_main_playlist
+
+def_key "D"
+	clear_playlist
