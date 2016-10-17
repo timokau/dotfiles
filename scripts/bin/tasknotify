@@ -1,0 +1,21 @@
+#! /bin/bash
+remind_tasks="$(\
+		task \
+			"rc.report.remind.description=as" \
+			"rc.report.remind.filter=(+PENDING or +WAITING) and due.before:now+30min and +remind" \
+			"rc.report.remind.columns=id,description,due" \
+			"rc.report._remind.sort=due+,modified+" \
+			remind \
+		| tail -n +4 | head -n -1 \
+	)"
+
+if [[ -n "$remind_tasks" ]]; then
+	notify-send \
+		--urgency=critical \
+		--app-name="Tasks" \
+		"Reminders" \
+		"$remind_tasks"
+	sound complete &
+fi
+
+exit 0
