@@ -113,6 +113,9 @@ nmap -builtin <Leader>m :mpv<CR>d
 nmap -builtin <Leader>q :qute<CR>d
 nmap -builtin <Leader>w :wbag<CR>d
 
+nmap -builtin * zI
+nmap -builtin _ zO
+
 nmap <Leader>c nohlsearch
 
 " Open a new tab in the background
