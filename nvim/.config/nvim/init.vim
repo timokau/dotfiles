@@ -62,7 +62,6 @@ Plug 'junegunn/vim-easy-align'                                 " Alignment
 Plug 'vimwiki/vimwiki'                                    " Vimwiki
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'roman/golden-ratio'                                 " Automatic resizing
 Plug 'bkad/CamelCaseMotion'                               " Move in CamelCase and snake_case
 if exists(':terminal')
 	Plug 'kassio/neoterm'                                 " Execute commands in neovims terminal
