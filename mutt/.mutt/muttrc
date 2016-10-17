@@ -10,8 +10,8 @@ mailboxes "+yahoo" \
 mailboxes +drafts \
           +search
 
-macro index goy "<change-folder +yahoo/inbox"<enter>
-macro index gog "<change-folder +gmx/inbox"<enter>
+macro index goy "<change-folder> +yahoo/inbox"<enter>
+macro index gog "<change-folder> +gmx/inbox"<enter>
 
 # contacts are managed by khard
 set query_command= "khard email --parsable '%s'"
