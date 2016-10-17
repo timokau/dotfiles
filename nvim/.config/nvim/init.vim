@@ -467,7 +467,6 @@ nnoremap $ g$
 " Spellchecking {{{3
 nnoremap <silent> <leader>s :set spell!<CR>
 nnoremap <silent> <leader>sd :set spell spelllang=de_20<CR>
-nnoremap <silent> <leader>sD :set spell spelllang=hun-de-DE<CR>
 nnoremap <silent> <leader>se :set spell spelllang=en_us<CR>
 
 " search/replace the word under the cursor {{{3
