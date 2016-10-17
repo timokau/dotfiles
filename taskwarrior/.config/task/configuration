@@ -29,6 +29,12 @@ report.lstoday.labels      = ID,Total,D,P,Project,Tag,S,Due,Until,Description,Ur
 report.lstoday.filter      = (status:pending or status:waiting) and (due:today or +OVERDUE)
 report.lstoday.sort        = end+,priority-
 
+report.mintoday.description = Due today minimally
+report.mintoday.columns     = id,description.count
+report.mintoday.labels      = ID,Description
+report.mintoday.filter      = (status:pending or status:waiting) and (due:today or +OVERDUE)
+report.mintoday.sort        = urgency-,priority-
+
 report.unfinished.description = Unfinished tasks sorted by urgency
 report.unfinished.columns     = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due,description,urgency
 report.unfinished.filter      = (status:pending or status:waiting)
