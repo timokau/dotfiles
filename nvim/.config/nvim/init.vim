@@ -29,7 +29,6 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
 if executable('cargo')
 	Plug 'racer-rust/vim-racer', { 'for': 'rust' }         " Rust Auto-Complete-er
 endif
-Plug 'klen/python-mode', { 'for': 'python' }              " Advanced python features
 " Colorschemes {{{3
 Plug 'morhetz/gruvbox'                                    " Gruvbox
 Plug 'chriskempson/base16-vim'                            " Base16
