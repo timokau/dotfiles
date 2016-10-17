@@ -47,7 +47,9 @@ report.inbox.filter        = status:pending limit:page (+in)
 report.inbox.labels        = ID,Description
 
 # Show the due date instead of the due age in the next report
-report.next.columns = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due,until.age,description,urgency
+report.next.columns = id,description,start.age,depends,due.age
+report.next.labels = ID,Description,Active,Deps,Due
+report.next.filter = status:pending limit:page -BLOCKED
 
 # Color theme
 color.due.today=bold red on black
