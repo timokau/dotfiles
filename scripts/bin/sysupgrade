@@ -29,6 +29,9 @@ pkglist="$HOME/pkglist.txt"
 mkdir -p "$(dirname $pkglist)"
 (pacman -Qqen ; echo '\n' ; pacman -Qqem) > "$pkglist"
 
+echo ">>> ${BLUE}Updating rust${NC}"
+rustup update
+
 snapshot_nbr=$(sudo snapper create --type=post --cleanup-algorithm=number --print-number --pre-number="$snapshot_nbr")
 echo ">>> ${BLUE}New post snapshot with number ${snapshot_nbr}.${NC}"
 
