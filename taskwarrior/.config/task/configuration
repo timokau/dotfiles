@@ -51,8 +51,17 @@ report.next.columns = id,description,start.age,depends,due.age
 report.next.labels = ID,Description,Active,Deps,Due
 report.next.filter = status:pending limit:page -BLOCKED
 
-# Color theme
-color.due.today=bold red on black
+# Reviews
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+report._reviewed.description=Tasksh review report.
+report._reviewed.columns=uuid
+report._reviewed.sort=reviewed+,modified+
+# Pending or waiting tasks that are at least a week old and haven't been
+# reviewed in the last week. Exceptions:
+# - tasks without priority are always reviewed (because I should add a priority)
+# - tasks that are *not* due this year are only reviewed once a month
+report._reviewed.filter = -noreview and ( +PENDING or +WAITING ) and ( -PRIORITY or ( ( reviewed.before:now-1week and ( entry.before:now-1week and reviewed.none: ) ) and ( +YEAR or reviewed.before:now-1month ) ) )
 
 # Recurrence is handled by the server to avoid duplication
 recurrence = off
