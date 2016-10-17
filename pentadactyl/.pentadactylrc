@@ -194,8 +194,9 @@ set! signon.rememberSignons=false
 set! noscript.untrusted="google-analytics.com http://google-analytics.com https://google-analytics.com"
 set! noscript.keys.tempAllowPage="ctrl shift n"
 
-" Pocket
-set! extensions.isreaditlater.autoCloseTab=true
+" uBlock / uMatrix
+" Make the popup work with a minimal ui
+style -name ublick * #nav-bar * { visibility: visible; }
 
 command! PlugInstall -nargs=0 -description "Install my addons" -javascript <<EOF
 	// Addons from mozilla.org
