@@ -1,9 +1,39 @@
 #!/bin/bash
-if [[ $1 == 'copy' ]]; then copy=true; else copy=false; fi
+# If the "copy" argument is given, copy the selected entry
+# Else, type it
+if [[ $1 == 'copy' ]]; then
+	copy=true
+else
+	copy=false
+fi
 
-target=$(find ~/.password-store/ -iname '*.gpg' -type f | sed -nre 's/^.*\/.password-store\/(.+).gpg/\1/p' | dmenu -l 5 )
+pwd_store="$HOME/.password-store"
+
+# Find and format all entries in the password store
+store_entries="$(
+	find "$pwd_store" -iname '*.gpg' -type f | \
+	sed -nre 's/^.*\/.password-store\/(.+).gpg/\1/p'
+)"
+
+# If the entry is to be typed, add "virtual" login entries for every pass entry.
+# Login simply types the user, <tab> and the pass.
+# Note that I don't check if the `user` file exists. That would take too long and isn't
+# nessessary for my case. It will just type no user name if the file doesn't exist.
+if ! $copy; then
+	login_entries="$(
+		echo "$store_entries" | \
+		grep '/pass$' | sed -nre 's/pass/login/p'
+	)"
+else
+	login_entries=""
+fi
+
+# Select an entry
+target="$(echo "$store_entries"$'\n'"$login_entries" | rofi -dmenu)"
+
 if [[ -n "$target" ]] ; then
 	if $copy; then
+		# Copy the entry into the clipboard (cleared after 45 seconds)
 		pass -c "$target"
 		if [[ $? -eq 0 ]] ; then
 			notify-send --urgency=low "Copied $target to clipboard. Will clear in 45 seconds"
@@ -11,6 +41,13 @@ if [[ -n "$target" ]] ; then
 			notify-send --urgency=low "Failed. Possibly the password was wrong?"
 		fi
 	else
-		xdotool type "$(pass show "$target")"
+		if [[ "$(basename "$target")" == "login" ]]; then
+			# The login entry isn't really in the password store.
+			# If it is selected, type the `user` entry, tab, and the `pass` entry.
+			dir=$(dirname "$target")
+			xdotool type "$(pass show "${dir}/user")	$(pass show "${dir}/pass")"
+		else
+			xdotool type "$(pass show "$target")"
+		fi
 	fi
 fi
