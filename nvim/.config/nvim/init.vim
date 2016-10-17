@@ -36,8 +36,6 @@ Plug 'fcpg/vim-fahrenheit'
 " Appearance {{{3
 Plug 'junegunn/rainbow_parentheses.vim'                   " Color matching parentheses
 " Misc {{{3
-" Useable german spell checking (Donaudampfschifffahrtskapitänskajütentür should be accepted)
-Plug 'ganwell/vim-hunspell-dicts', {'do': 'curl -fLo ' . spelldir .'/hun-de-DE.utf-8.spl http://1042.ch/spell/hun-de-DE.utf-8.spl'}
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
 if executable('zeal')
 	Plug 'KabbAmine/zeavim.vim'                           " Offline documentation
