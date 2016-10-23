@@ -73,7 +73,8 @@ call plug#end()
 let g:airline#extensions#whitespace#mixed_indent_algo = 2
 
 " racer {{{3
-let $RUST_SRC_PATH = $HOME . '/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
+let rustc_sysroot = substitute(system("rustc --print sysroot"), '\n$', '', '')
+let $RUST_SRC_PATH = rustc_sysroot . '/lib/rustlib/src/rust/src'
 silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
 let g:racer_cmd = '/usr/bin/racer'
 
