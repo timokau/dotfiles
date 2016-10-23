@@ -6,10 +6,11 @@ verbose=new-id,special,project
 
 # Priority
 uda.priority.values=H,M,,L
-urgency.uda.priority.H.coefficient=5.0
+urgency.uda.priority.H.coefficient=3.0
 urgency.uda.priority.M.coefficient=2.0
 urgency.uda.priority.L.coefficient=-1
 urgency.user.tag.OVERDUE.coefficient=100.0
+urgency.due.coefficient=20.0
 
 # Reports
 report.dsheet.description  = Done today
