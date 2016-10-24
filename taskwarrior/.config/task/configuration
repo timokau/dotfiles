@@ -6,7 +6,7 @@ verbose=new-id,special,project
 
 # Priority
 uda.priority.values=H,M,,L
-urgency.uda.priority.H.coefficient=3.0
+urgency.uda.priority.H.coefficient=4.0
 urgency.uda.priority.M.coefficient=2.0
 urgency.uda.priority.L.coefficient=-1
 urgency.user.tag.OVERDUE.coefficient=100.0
