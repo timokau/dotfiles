@@ -6,10 +6,11 @@ verbose=new-id,special,project
 
 # Priority
 uda.priority.values=H,M,,L
-urgency.uda.priority.H.coefficient=5.0
+urgency.uda.priority.H.coefficient=4.0
 urgency.uda.priority.M.coefficient=2.0
 urgency.uda.priority.L.coefficient=-1
 urgency.user.tag.OVERDUE.coefficient=100.0
+urgency.due.coefficient=20.0
 
 # Reports
 report.dsheet.description  = Done today
@@ -61,7 +62,7 @@ report._reviewed.sort=reviewed+,modified+
 # reviewed in the last week. Exceptions:
 # - tasks without priority are always reviewed (because I should add a priority)
 # - tasks that are *not* due this year are only reviewed once a month
-report._reviewed.filter = -noreview and ( +PENDING or +WAITING ) and ( -PRIORITY or ( ( reviewed.before:now-1week and ( entry.before:now-1week and reviewed.none: ) ) and ( +YEAR or reviewed.before:now-1month ) ) )
+report._reviewed.filter = -noreview and ( +PENDING or +WAITING ) and ( -PRIORITY or ( ( reviewed.before:now-1week or ( entry.before:now-1week and reviewed.none: ) ) and ( +YEAR or reviewed.before:now-1month ) ) )
 
 # Recurrence is handled by the server to avoid duplication
 recurrence = off
