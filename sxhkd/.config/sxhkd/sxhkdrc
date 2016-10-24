@@ -87,3 +87,9 @@ super + Escape
 
 super + n
 	/home/timo/bin/keyboardconfig
+
+super + b : {plus,minus}
+	xbacklight -{inc,dec} 5
+
+super + b : {e,d}
+	xbacklight -set {80, 0}
