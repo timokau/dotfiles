@@ -18,12 +18,6 @@ super + t
 super + shift +  b
 	bspc node --balance
 
-super + b : {plus,minus}
-	xbacklight -{inc,dec} 5
-
-super + b : {e,d}
-	xbacklight -set {80, 0}
-
 super + {p,f,s}
 	bspc node --state '~{floating,fullscreen,pseudo_tiled}'
 
