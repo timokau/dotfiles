@@ -2,7 +2,7 @@
 dateformat=y-M-D H:N
 search.case.sensitive=no
 urgency.waiting.coefficient=-20
-verbose=new-id,special,project
+verbose=new-id,special,project,special,affected
 
 # Priority
 uda.priority.values=H,M,,L
