@@ -22,7 +22,8 @@ silent qmark w web.whatsapp.com
 silent qmark f www.feedly.com
 silent qmark F www.facebook.de
 silent qmark p www.getpocket.com/a/queue/list
-silent qmark w www.framabag.org/u/eisfreak7
+" silent qmark w www.framabag.org/u/eisfreak7
+silent qmark w http://rpi:80
 silent qmark t www.tvshowtime.com
 " Pyload
 silent qmark P localhost:8000
@@ -73,24 +74,25 @@ function httpGetAsync(url, callback)
 }
 
 function saveToWallabag(url) {
-	wallabag_server="https://www.framabag.org/u/eisfreak7"
+	dactyl.echomsg("Saving", 0, 0)
+	wallabag_server="http://rpi"
 
-	wallabag_url=wallabag_server + "/?action=add&url=" + btoa(url)
+	wallabag_url=wallabag_server + "/bookmarklet?url=" + encodeURI(url)
 	httpGetAsync(wallabag_url, function(text){
-		success=text.search("the link has been added successfully") != -1
+		success=text.search("Entry saved") != -1
 		if (success)
 			dactyl.echomsg("Link saved", 0, 0)
 		else
 		{
 			dactyl.echoerr("Link couldn't be saved.", 0)
-			new_tab(wallabag_url)
 		}
 	})
 }
 EOS
+	" new_tab('http://rpi/bookmarklet?url=' + encodeURI(url));
 
 " Commands {{{
-command! -nargs=0 mpv :silent :execute "!mpv --ytdl-format='(bestvideo[height<=1080]+bestaudio/best)[protocol!=http_dash_segments]' '" + content.location.href + "' &"
+command! -nargs=0 mpv :silent :execute "!video-stream '" + content.location.href + "' &"
 
 command! -nargs=0 feh :silent :execute "!feh '" + content.location.href + "' &"
 command! -nargs=0 qute :silent :execute "!qutebrowser '" + content.location.href + "' &"
@@ -98,7 +100,7 @@ command! -nargs=0 wbag :javascript saveToWallabag(content.location.href)
 
 " Hint modes {{{
 javascript <<EOS
-hints.addMode("m", "Open in mpv", (elem, loc) => dactyl.execute("silent !mpv '" + loc + "' &", null, true));
+hints.addMode("m", "Open in mpv", (elem, loc) => dactyl.execute("silent !video-stream '" + loc + "' &", null, true));
 
 hints.addMode("w", "Save to wallabag", (elem, loc) => saveToWallabag(loc));
 EOS

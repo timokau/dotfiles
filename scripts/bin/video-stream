@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# $1 is the URL
+# Work with embedded youtube
+url="$(echo "$1" | sed 's|.*youtube.com/oembed?.*url=\(.*\)|\1|')"
+# notify-send "$url"
+mpv --ytdl-format='(bestvideo[height<=1080]+bestaudio/best)[protocol!=http_dash_segments]' "$url"
