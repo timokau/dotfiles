@@ -93,6 +93,35 @@ let latexmk_options = '-pdf -verbose -file-line-error -synctex=1 -interaction=no
 command! LatexShellescape let g:vimtex_latexmk_options = latexmk_options . ' -shell-escape'
 command! LatexShellescapeOff let g:vimtex_latexmk_options = latexmk_options
 
+" latex spelling {{{3
+autocmd BufRead,BufNewFile *.tex setlocal spell | setlocal spelllang=de
+" Ignore spelling inside tabular {}
+fun! TexNoSpell()
+	syntax region texNoSpell
+	      \ start="\\thref{"rs=s
+	      \ end="}\|%stopzone\>"re=e
+	      \ contains=@NoSpell,texStatement,texHperref
+	syntax region texNoSpell
+	      \ start="\\coordinate"rs=s
+	      \ end=")\|%stopzone\>"re=e
+	      \ contains=@NoSpell,texStatement
+	syntax region texNoSpell
+	      \ start="\\begin{tabular}{"rs=s
+	      \ end="}\|%stopzone\>"re=e
+	      \ contains=@NoSpell,texBeginEnd
+	syntax match texTikzParen /(.\+)/ contained contains=@NoSpell transparent
+	syntax region texTikz
+	      \ start="\\begin{tikzpicture}"rs=s
+	      \ end="\\end{tikzpicture}\|%stopzone\>"re=e
+		  \ keepend
+		  \ transparent
+	      \ contains=texStyle,@texPreambleMatchGroup,texTikzParen
+	syntax region texNoSpellBrace
+	      \ start="\\begin{tikzpicture}{"rs=s
+	      \ end="}\|%stopzone\>"re=e
+endfun
+autocmd BufRead,BufNewFile *.tex :call TexNoSpell()
+
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_ignore_case = 1
