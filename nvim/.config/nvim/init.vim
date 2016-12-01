@@ -319,6 +319,10 @@ set nobackup
 if has('nvim')
 	silent execute "!mkdir -p " . &backupdir
 endif
+
+if has('nvim')
+	set inccommand=split
+endif
 set mouse+=a
 set copyindent                         " Keep spaces used for alignment
 set preserveindent
