@@ -415,7 +415,7 @@ set formatoptions-=o                   " Don't insert comment-leader
 let g:netrw_dirhistmax = 0 " Don't save a file history in the .vim folder
 
 " Email-Settings {{{3
-autocmd FileType mail execute 'normal G' | set formatoptions-=t
+autocmd FileType mail execute 'normal G' | set formatoptions-=t | set spell
 
 " Use ack/ag if available
 if executable ('ag')
