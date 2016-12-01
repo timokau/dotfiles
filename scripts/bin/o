@@ -11,6 +11,12 @@ while [[ $# -ge 1 ]]; do
 		"pdf")
 			open_with zathura "$1"
 			;;
+		"mobi")
+			open_with ebook-viewer "$1"
+			;;
+		"epub")
+			open_with ebook-viewer "$1"
+			;;
 		*)
 			open_with xdg-open "$1"
 			;;
