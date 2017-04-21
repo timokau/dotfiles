@@ -17,7 +17,9 @@
 if [[ $1 == 'off' ]] ; then
 	# Inhibit forever (till sleep inf ends)
 	systemd-inhibit --what=handle-lid-switch sleep inf &
-else
+elif [[ $2 == 'tmp' ]] ; then
+	shift;
+	systemd-inhibit --what=handle-lid-switch sleep "$@" &
 	# Kill the inhibiting process
 	pkill --full 'systemd-inhibit --what=handle-lid-switch sleep inf'
 fi
