@@ -29,8 +29,9 @@ exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: kvm: disabled 
 exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: BTRFS error \(device sd\w[0-9]*\): could not find root 8$')
 # The wifi connection works flawlessly, even when this error is given
 exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: iwlwifi 0000:03:00.0: No association and the time event is over already\.\.\.$')
-# Occurs a lot while running a vm
-exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: \[drm:intel_pipe_update_end \[i915\]\] \*ERROR\* Atomic update failure on pipe A.*$')
+# Occurs a lot while running a vm / working with an external monitor.
+# See https://bugzilla.redhat.com/show_bug.cgi?id=1375399
+exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ kernel: \[drm:intel_pipe_update_end \[i915\]\] \*ERROR\* Atomic update failure on pipe [AB].*$')
 # This gets logged without end when once aborting a sudo prompt
 exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ sudo\[[0-9]+\]: pam_unix\(sudo:auth\): conversation failed$')
 exclude+=('^\w{3} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} \w+ sudo\[[0-9]+\]: pam_unix\(sudo:auth\): auth could not identify password for \[\w+\]$')
