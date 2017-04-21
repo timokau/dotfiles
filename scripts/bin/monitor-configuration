@@ -93,13 +93,31 @@ configure_monitors_for_host() {
 	else
 		>&2 echo 'Unknown Host, can''t configure monitors.'
 	fi
+	herbstclient detect_monitors # apply
+	herbstclient reload
 }
 
 configure_monitors_for_archpad() {
+	cur_edid="$(xrandr --prop | grep -Pzo 'HDMI1 connected.*\n\tEDID: (\n\t{2}[0-9a-f]{32})*' | grep -Po '[0-9a-f]{32}')"
+
+	echo "$cur_edid" > /home/timo/cur-edid
+	if [[ "$beamer_edid" == "$cur_edid" ]]; then
+		# /home/timo/bin/hdmi-audio on
+		hdmi_res="--mode 1360x768"
+		notify-send "Beamer"
+		~/bin/pa_movesinks 1
+	else
+		# /home/timo/bin/hdmi-audio off
+		hdmi_res="--auto"
+		notify-send "NOT Beamer"
+		~/bin/pa_movesinks 0
+	fi
+	notify-send "$hdmi_res"
+
 	if check_setup "eDP1" "DP2" "HDMI1"; then
 		echo "eDP1 and DP2 and HDMI1 are connected"
 		xrandr --output eDP1 --auto
-		xrandr --output HDMI1 --auto --primary --left-of eDP1
+		xrandr --output HDMI1 $hdmi_res --primary --left-of eDP1
 		xrandr --output DP2 --auto --right-of eDP1
 		bspc monitor 'eDP1' --rename 1
 		bspc monitor 'HDMI1' --rename 2
@@ -110,7 +128,7 @@ configure_monitors_for_archpad() {
 	elif check_setup "eDP1" "HDMI1"; then
 		echo "eDP1 and HDMI1 are connected"
 		xrandr --output eDP1 --auto
-		xrandr --output HDMI1 --auto --primary --right-of eDP1
+		xrandr --output HDMI1 $hdmi_res --primary --right-of eDP1
 		xrandr --output DP2 --auto --off
 		bspc monitor 'eDP1' --rename 1
 		bspc monitor 'HDMI1' --rename 2
@@ -143,17 +161,6 @@ configure_monitors_for_archpad() {
 		bspc monitor 1 --reset-desktops I II III IV V VI VII VIII IX X
 	else
 		echo "No known monitor setup cuold be detected." | /usr/bin/systemd-cat --priority="crit"
-	fi
-
-	cur_edid="$(xrandr --prop | grep -Pzo 'HDMI1 connected.*\n\tEDID: (\n\t{2}[0-9a-f]{32})*' | grep -Po '[0-9a-f]{32}')"
-
-	echo "$cur_edid" > /home/timo/cur-edid
-	if [[ "$beamer_edid" == "$cur_edid" ]]; then
-		# /home/timo/bin/hdmi-audio on
-		~/bin/pa_movesinks 0
-	else
-		# /home/timo/bin/hdmi-audio off
-		~/bin/pa_movesinks 1
 	fi
 }
 
