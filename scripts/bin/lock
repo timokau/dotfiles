@@ -1,4 +1,9 @@
-#! /bin/sh
+#! /bin/zsh
+# enable the screen
+if (( $(xbacklight -get) < 1 )); then
+	xbacklight -set 80
+fi
+
 # locks using i3lock and xautlock (if running)
 if [[ "$1" == "--try-autolock" ]] && [[ "$(pgrep -cx xautolock)" -ge 1 ]]; then
 	xautolock -locknow
