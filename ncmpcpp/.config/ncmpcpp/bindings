@@ -1,6 +1,26 @@
 # for more informaion and default bindings see the example bindings file
 
 def_key "K"
+  move_sort_order_up
+
+def_key "K"
+  move_selected_items_up
+
+def_key "J"
+  move_sort_order_down
+
+def_key "J"
+  move_selected_items_down
+
+def_key "ctrl-k"
+  select_item
+  scroll_up
+
+def_key "ctrl-j"
+  select_item
+  scroll_down
+
+def_key "L"
   show_lyrics
 
 def_key "k"
@@ -26,6 +46,9 @@ def_key "g"
 
 def_key "G"
   move_end
+
+def_key "P"
+  jump_to_playlist_editor
 
 def_key "B"
   jump_to_browser
@@ -66,12 +89,6 @@ def_key "ctrl-l"
 def_key "ctrl-h"
   previous_screen
 
-def_key "L"
-  next
-
-def_key "H"
-  previous
-
 def_key "n"
   next_found_item
 
@@ -79,7 +96,7 @@ def_key "N"
   previous_found_item
 
 def_key "c"
-	clear_main_playlist
+  clear_main_playlist
 
 def_key "D"
-	clear_playlist
+  clear_playlist
