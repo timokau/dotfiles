@@ -139,6 +139,20 @@ let g:LanguageClient_serverCommands = {
 let g:LanguageClient_autoStart = 1
 
 augroup lc_bindings
+	autocmd!
+	autocmd Filetype rust LanguageClientStart
+	autocmd Filetype rust nnoremap <buffer> gD <Plug>RacerShowDocumentation
+	autocmd Filetype rust nnoremap <buffer> <silent> K :call LanguageClient_textDocument_hover()<CR>
+	autocmd Filetype rust nnoremap <buffer> <silent> gd :call LanguageClient_textDocument_definition()<CR>
+	autocmd Filetype rust nnoremap <buffer> <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
+augroup END
+
+" racer {{{3
+if executable("rustc")
+	let rustc_sysroot = substitute(system("rustc --print sysroot"), '\n$', '', '')
+	let $RUST_SRC_PATH = rustc_sysroot . '/lib/rustlib/src/rust/src'
+endif
+
 " vim-ariline {{{3
 let g:airline#extensions#whitespace#mixed_indent_algo = 2
 
@@ -173,14 +187,20 @@ fun! TexNoSpell()
 	syntax region texNoSpell
 	      \ start="\\begin{tabular}{"rs=s
 	      \ end="}\|%stopzone\>"re=e
-augroup END
-	autocmd!
-	autocmd Filetype rust LanguageClientStart
-	autocmd Filetype rust nnoremap <buffer> gD <Plug>RacerShowDocumentation
-	autocmd Filetype rust nnoremap <buffer> <silent> K :call LanguageClient_textDocument_hover()<CR>
-	autocmd Filetype rust nnoremap <buffer> <silent> gd :call LanguageClient_textDocument_definition()<CR>
-	autocmd Filetype rust nnoremap <buffer> <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
-augroup END
+	      \ contains=@NoSpell,texBeginEnd
+	syntax match texTikzParen /(.\+)/ contained contains=@NoSpell transparent
+	syntax region texTikz
+	      \ start="\\begin{tikzpicture}"rs=s
+	      \ end="\\end{tikzpicture}\|%stopzone\>"re=e
+		  \ keepend
+		  \ transparent
+	      \ contains=texStyle,@texPreambleMatchGroup,texTikzParen
+	syntax region texNoSpellBrace
+	      \ start="\\begin{tikzpicture}{"rs=s
+	      \ end="}\|%stopzone\>"re=e
+endfun
+autocmd BufRead,BufNewFile *.tex :call TexNoSpell()
+
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_ignore_case = 1
