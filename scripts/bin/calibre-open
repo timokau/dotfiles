@@ -19,7 +19,7 @@ done
 if (( "${#files[@]}" <= 0 )); then
 	echo "No files found."
 elif (( "${#files[@]}" == 1 )); then
-	xdg-open "${files[0]}";
+	~/bin/o "${files[0]}";
 else
 	(( i = 0 ))
 	for file in "${files[@]}"; do
@@ -28,5 +28,5 @@ else
 	done
 	echo "Enter the index of the file to open:"
 	read -r selection
-	xdg-open "${files[$selection]}"
+	~/bin/o "${files[$selection]}"
 fi
