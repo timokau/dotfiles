@@ -2,7 +2,9 @@
 # Open
 
 open_with() {
-	"$1" "$2" >/dev/null 2>&1 &disown
+	program=$1
+	shift
+	"$program" "$@" >/dev/null 2>&1 &disown
 }
 
 while [[ $# -ge 1 ]]; do
