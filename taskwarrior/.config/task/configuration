@@ -16,7 +16,7 @@ urgency.blocking.coefficient=4.0
 # Reports
 report.dsheet.description  = Done today
 report.dsheet.columns      = start,end,project,priority,entry.age,description,uuid
-report.dsheet.filter       = end:today
+report.dsheet.filter       = end:today and status!=deleted
 report.dsheet.labels       = Started,Complete,Proj,Pri,Age,Description,UUID
 report.dsheet.sort         = end+,priority-,project+
 
