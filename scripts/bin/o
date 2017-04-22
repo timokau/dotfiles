@@ -7,6 +7,13 @@ open_with() {
 	"$program" "$@" >/dev/null 2>&1 &disown
 }
 
+if [[ $# -eq 0 ]]; then
+	if [[ -f Cargo.toml ]]; then
+		open_with nvim-qt Cargo.toml src/**/*.rs
+	fi
+	exit 0
+fi
+
 while [[ $# -ge 1 ]]; do
 	ext=${1##*.}
 	case $ext in
