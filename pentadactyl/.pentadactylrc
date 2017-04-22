@@ -58,12 +58,16 @@ function new_tab(url) {
 	}
 }
 
-function httpGetAsync(url, callback)
-{
+function httpGetAsync(url, callback) {
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() {
-		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-			callback(xmlHttp.responseText);
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				callback(xmlHttp.responseText);
+			} else {
+				callback('ERROR: ' + xmlHttp.status)
+			}
+		}
 	}
 	xmlHttp.open("GET", url, true);
 	xmlHttp.send(null);
@@ -71,6 +75,7 @@ function httpGetAsync(url, callback)
 
 function saveToWallabag(url) {
 	dactyl.echomsg("Saving", 0, 0)
+
 	wallabag_server="http://rpi"
 
 	wallabag_url=wallabag_server + "/bookmarklet?url=" + encodeURI(url)
@@ -78,9 +83,9 @@ function saveToWallabag(url) {
 		success=text.search("Entry saved") != -1
 		if (success)
 			dactyl.echomsg("Link saved", 0, 0)
-		else
-		{
+		else {
 			dactyl.echoerr("Link couldn't be saved.", 0)
+			dactyl.execute("silent !echo '" + url + "' >> $HOME/wbag-missed.log", null, true);
 		}
 	})
 }
