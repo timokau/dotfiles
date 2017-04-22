@@ -70,6 +70,16 @@ if exists(':terminal')
 endif
 call plug#end()
 
+" write commit messages
+augroup git-commit
+	autocmd!
+	autocmd Filetype gitcommit setlocal textwidth=72
+	autocmd Filetype gitcommit setlocal wrap
+	" Highlight chars in the 51st column in the subject
+	highlight SubjectTooLong ctermbg=Red ctermfg=White
+	call matchaddpos('SubjectTooLong', [[3, 51]], 100)
+augroup END
+
 " Plugin specific {{{2
 " Eclim (installed through AUR) {{{3
 " to use with nvim: `sudo ln -s /usr/share/vim/vimfiles /etc/xdg/nvim`
