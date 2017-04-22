@@ -444,6 +444,7 @@ endif
 set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
 set background=dark
+set guifont=Source\ Code\ Pro\ 11
 " Colorscheme (if available)
 let g:gruvbox_italic = 1 " Use italic
 let g:gruvbox_contrast_dark = "hard" " Hard contrast
