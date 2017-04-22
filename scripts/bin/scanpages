@@ -7,7 +7,8 @@ HEIGHT='300'
 # Space: 600 -> 100M, 500 -> 45M, 300 -> 25M
 
 duplex=1
-jpg_quality=10
+original=0
+jpg_quality=15
 png=0
 dpi='500'
 color=0
@@ -18,6 +19,9 @@ while [[ $# -gt 0 ]]; do
 	case $key in
 		-s|--simplex)
 			duplex=0
+			;;
+		-o|--original)
+			original=1
 			;;
 		-q|--jpg-quality)
 			jpg_quality="$2"
@@ -78,9 +82,21 @@ while (( pages < limit )) || (( limit == 0 )) ; do
 		--mode 'Color' || break
 
 		# cp "${i}-1.pnm" "${dir}/" # TODO optionally retain original
-		process_scan "${i}-1.pnm" "${dir}/$((i + 1)).${target_ext}" "$jpg_quality" "$png" "$color" &
+		src_file="${i}-1.pnm"
+		target_without_ext="${dir}/$((i + 1))"
+		if (( original == 0 )); then
+			process_scan "$src_file" "${target_without_ext}.${target_ext}" "$jpg_quality" "$png" "$color" &
+		else
+			cp "$src_file" "${target_without_ext}.pnm"
+		fi
 		if [[ $duplex -ne 0 ]]; then
-			process_scan "${i}-2.pnm" "${dir}/$((i + 2)).${target_ext}" "$jpg_quality" "$png" "$color" &
+			src_file="${i}-2.pnm"
+			target_without_ext="${dir}/$((i + 2))"
+			if (( original == 0 )); then
+				process_scan "$src_file" "${target_without_ext}.${target_ext}" "$jpg_quality" "$png" "$color" &
+			else
+				cp "$src_file" "${target_without_ext}.pnm"
+			fi
 			(( i += 2 ))
 		else
 			(( i += 1 ))
@@ -91,4 +107,4 @@ done
 cd "$dir" || exit 1
 
 wait
-rmdir "$tmpdir"
+rm -r "$tmpdir"
