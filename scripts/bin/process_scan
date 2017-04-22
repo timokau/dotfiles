@@ -45,7 +45,6 @@ if [[ $png -eq 0 ]]; then
 	mv "${process_dir}/converted.jpg" "$target"
 else
 	convert "$src" -trim -contrast-stretch 2% $colorspace_arg "${process_dir}/converted.pnm"
-	rm "$src"
 	optipng -o3 "${process_dir}/converted.pnm"
 	rm "${process_dir}/converted.pnm"
 	mv "${process_dir}/converted.png" "$target"
