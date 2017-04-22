@@ -1,0 +1,28 @@
+#/bin/bash
+
+echo -e "Starting timer ($(date))"
+running=true
+start="$(date +%s)"
+leap=start
+trap 'running=false' SIGINT SIGTERM SIGSTOP
+while $running; do
+	echo -ne "\033[2K" # clear the line
+	cur_time="$(date -u --date @$((`date +%s` - $start)) +%H:%M:%S)"
+	echo -ne "${cur_time}\r";
+
+	read -r -s -n 1 -t 0.1 input
+	case $input in
+		l) # leap
+			echo -e "Leap ${cur_time}\r\r\r";
+			leap="$(date +%s)"
+			;;
+		q|a) # quit, abort
+			running=false
+	esac
+
+	if [ "$running" = false ]; then
+		running=false
+		echo
+		echo -e "Timer ran ${cur_time}\r";
+	fi
+done
