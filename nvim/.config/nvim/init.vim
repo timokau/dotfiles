@@ -193,9 +193,6 @@ let g:deoplete#omni#input_patterns.java = ['[^. \t0-9]\.\w*',
                                           \'[^. \t0-9]\->\w*',
                                           \'[^. \t0-9]\::\w*',
                                           \]
-" Dont auto-import everything I type
-let g:deoplete#ignore_sources = {}
-let g:deoplete#ignore_sources._ = ['javacomplete2']
 
 " Hide preview window after completion
 augroup deoplete_preview
@@ -208,18 +205,6 @@ let g:deoplete#sources#jedi#show_docstring = 1
 
 " echodoc {{{3
 let g:echodoc_enable_at_startup = 1
-
-" java {{{3
-let g:JavaComplete_EnableDefaultMappings = 0
-augroup java
-	autocmd!
-	autocmd FileType java setlocal omnifunc=javacomplete#Complete
-	" javac defaults to printing its errors to stderr
-	autocmd FileType java setlocal shellpipe=2>
-	autocmd FileType java setlocal makeprg=javac\ %
-	autocmd FileType java setlocal errorformat=%A:%f:%l:\ %m,%-Z%p^,%-C%.%#
-	autocmd FileType java nnoremap <buffer> <Leader>ji :silent! call javacomplete#imports#AddMissing()\|call javacomplete#imports#RemoveUnused()<CR>
-augroup END
 
 " neoterm {{{3
 let g:neoterm_size = 15
