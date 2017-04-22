@@ -347,6 +347,9 @@ set wrap
 if has('linebreak')
 	set linebreak
 	set breakindent
+	" Indicate wraps
+	set breakindentopt=sbr
+	set showbreak=↪
 endif
 set textwidth=99
 set colorcolumn=+0
