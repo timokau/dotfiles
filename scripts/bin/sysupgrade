@@ -7,12 +7,12 @@ snapshot_nbr=$(sudo snapper create --type=pre --cleanup-algorithm=number --print
 echo ">>> ${BLUE}New pre snapshot with number ${snapshot_nbr}.${NC}"
 echo ">>> ${BLUE}Updating packages${NC}"
 if [[ "$(cat "$nightly_file" 2> /dev/null)" != "$(date -I)" ]]; then
-pacaur -Syu --devel --needed
-rm "$nightly_file" 2> /dev/null
-mkdir -p "$(dirname "$nightly_file")"
-date -I > "$nightly_file"
+	pacaur -Syu --devel --needed
+	rm "$nightly_file" 2> /dev/null
+	mkdir -p "$(dirname "$nightly_file")"
+	date -I > "$nightly_file"
 else
-pacaur -Syu
+	pacaur -Syu
 fi
 echo ">>> ${BLUE}Removing orphans${NC}"
 pacaur -Rns $(pacaur -Qdtq) 2> /dev/null
