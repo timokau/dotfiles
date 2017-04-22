@@ -698,4 +698,4 @@ function! TmpFile(args)
 endfunction
 
 " Save as root {{{3
-command! -nargs=? Swrite :w !sudo tee %
+cmap w!! w !sudo tee % > /dev/null
