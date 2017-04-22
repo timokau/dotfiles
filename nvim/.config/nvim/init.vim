@@ -25,9 +25,9 @@ Plug 'vim-pandoc/vim-pandoc-syntax'                       " Pandoc syntax
 Plug 'lervag/vimtex'                                      " Latex support
 Plug 'dogrover/vim-pentadactyl', { 'for': 'pentadactyl' } " Pentadactyl
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
-if executable('cargo')
-	Plug 'racer-rust/vim-racer', { 'for': 'rust' }         " Rust Auto-Complete-er
-endif
+" if executable('cargo')
+" 	Plug 'racer-rust/vim-racer', { 'for': 'rust' }         " Rust Auto-Complete-er
+" endif
 " Colorschemes {{{3
 Plug 'morhetz/gruvbox'                                    " Gruvbox
 Plug 'chriskempson/base16-vim'                            " Base16
@@ -35,6 +35,9 @@ Plug 'fcpg/vim-fahrenheit'
 " Appearance {{{3
 Plug 'junegunn/rainbow_parentheses.vim'                   " Color matching parentheses
 " Misc {{{3
+if has('nvim')
+	Plug 'autozimu/LanguageClient-neovim', {'do': ':UpdateRemotePlugins', 'for': 'rust'} " Language server
+endif
 Plug 'godlygeek/csapprox'                                 " Make colorschemes work in terminal
 if executable('zeal')
 	Plug 'KabbAmine/zeavim.vim'                           " Offline documentation
@@ -119,12 +122,15 @@ augroup eclim-java
 	autocmd Filetype java call JavaSetup()
 	autocmd Filetype javadoc_preview nmap <silent> <buffer> K <cr>
 augroup END
+" LanguageClient {{{3
+let g:LanguageClient_serverCommands = {
+			\'rust': ['rustup', 'run', 'nightly', 'rls']
+			\ }
+let g:LanguageClient_autoStart = 1
 
-" racer {{{3
-let rustc_sysroot = substitute(system("rustc --print sysroot"), '\n$', '', '')
-let $RUST_SRC_PATH = rustc_sysroot . '/lib/rustlib/src/rust/src'
-silent execute "!mkdir -p " . shellescape($RUST_SRC_PATH)
-let g:racer_cmd = '/usr/bin/racer'
+augroup lc_bindings
+" vim-ariline {{{3
+let g:airline#extensions#whitespace#mixed_indent_algo = 2
 
 " rust.vim {{{3
 if executable('rustfmt')
@@ -136,6 +142,7 @@ if has('nvim')
 	let g:vimtex_latexmk_progname="nvr"
 endif
 let g:vimtex_view_method="zathura"
+let g:vimtex_indent_on_ampersands=0
 let g:vimtex_quickfix_open_on_warning=0
 let latexmk_options = '-pdf -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
 command! LatexShellescape let g:vimtex_latexmk_options = latexmk_options . ' -shell-escape'
@@ -156,20 +163,14 @@ fun! TexNoSpell()
 	syntax region texNoSpell
 	      \ start="\\begin{tabular}{"rs=s
 	      \ end="}\|%stopzone\>"re=e
-	      \ contains=@NoSpell,texBeginEnd
-	syntax match texTikzParen /(.\+)/ contained contains=@NoSpell transparent
-	syntax region texTikz
-	      \ start="\\begin{tikzpicture}"rs=s
-	      \ end="\\end{tikzpicture}\|%stopzone\>"re=e
-		  \ keepend
-		  \ transparent
-	      \ contains=texStyle,@texPreambleMatchGroup,texTikzParen
-	syntax region texNoSpellBrace
-	      \ start="\\begin{tikzpicture}{"rs=s
-	      \ end="}\|%stopzone\>"re=e
-endfun
-autocmd BufRead,BufNewFile *.tex :call TexNoSpell()
-
+augroup END
+	autocmd!
+	autocmd Filetype rust LanguageClientStart
+	autocmd Filetype rust nnoremap <buffer> gD <Plug>RacerShowDocumentation
+	autocmd Filetype rust nnoremap <buffer> <silent> K :call LanguageClient_textDocument_hover()<CR>
+	autocmd Filetype rust nnoremap <buffer> <silent> gd :call LanguageClient_textDocument_definition()<CR>
+	autocmd Filetype rust nnoremap <buffer> <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
+augroup END
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_ignore_case = 1
@@ -194,12 +195,6 @@ augroup END
 
 " deoplete-jedi {{{3
 let g:deoplete#sources#jedi#show_docstring = 1
-
-" vim-racer {{{3
-augroup racer-bindings
-	autocmd!
-	autocmd Filetype rust nmap <buffer> gD <Plug>RacerShowDocumentation
-augroup END
 
 " echodoc {{{3
 let g:echodoc_enable_at_startup = 1
@@ -233,8 +228,8 @@ let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 augroup neomake_plugin
 	autocmd!
 	if has('nvim')
-		autocmd! BufWritePost * Neomake
-		autocmd! BufWritePost *.rs Neomake! clippy
+		" autocmd! BufWritePost * Neomake
+		" autocmd! BufWritePost *.rs Neomake! clippy
 	endif
 augroup END
 let g:neomake_python_enabled_makers = ['python', 'pyflakes', 'pylint']
