@@ -1,4 +1,4 @@
-" vim: nowrap foldmethod=marker foldlevel=2
+" vim: foldmethod=marker foldlevel=2
 " Plugins {{{1
 
 " Vim-Plug Boilderplate {{{3
