@@ -8,7 +8,7 @@
 	co = checkout
 	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 [core]
-	editor = vim
+	editor = $EDITOR
 	autocrlf = input
 	safecrlf = true
 [credential]
