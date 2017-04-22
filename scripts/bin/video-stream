@@ -3,5 +3,16 @@
 # $1 is the URL
 # Work with embedded youtube
 url="$(echo "$1" | sed 's|.*youtube.com/oembed?.*url=\(.*\)|\1|')"
-# notify-send "$url"
-mpv --ytdl-format='(bestvideo[height<=1080]+bestaudio/best)[protocol!=http_dash_segments]' "$url"
+url="$(echo "$url" | sed 's|.*youtube.com/embed/\(.*\)|https://youtube.com/watch?v=\1|')"
+
+ytdl_format='(bestvideo[height<=1080]+bestaudio/best)[protocol!=http_dash_segments]' 
+ytdl_raw_options="sub-lang=en,write-sub="
+
+if ! mpv --ytdl-format="${ytdl_format}" --ytdl-raw-options="${ytdl_raw_options}" "${url}" ; then
+	if [[ "$url" =~ roosterteeth\.com ]]; then
+		user=$(pass show misc/roosterteeth/user)
+		pass=$(pass show misc/roosterteeth/pass)
+		notify-send "Logging in"
+	fi
+	mpv --ytdl-format="${ytdl_format}" --ytdl-raw-options="${ytdl_raw_options}" --ytdl-raw-options="username=${user},password=${pass}" "${url}"
+fi
