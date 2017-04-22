@@ -1,6 +1,10 @@
 #! /bin/bash
 WIDTH='210' #TODO configurable
-HEIGHT='298'
+HEIGHT='300'
+
+# There are really only 2 qualitys:
+# 600dpi takes about 50 secs/ page, 300 about 14.
+# Space: 600 -> 100M, 500 -> 45M, 300 -> 25M
 
 duplex=1
 jpg_quality=10
