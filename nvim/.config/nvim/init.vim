@@ -352,7 +352,6 @@ if has('linebreak')
 	set showbreak=↪
 endif
 set textwidth=99
-set colorcolumn=+0
 set showmatch
 set ignorecase
 set smartcase
@@ -362,6 +361,10 @@ set nobackup
 if has('nvim')
 	silent execute "!mkdir -p " . &backupdir
 endif
+
+" Highlight chars in the 81st column
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
 
 if has('nvim')
 	set inccommand=split
