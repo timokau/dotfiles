@@ -23,7 +23,6 @@ call plug#begin(vimdir.'/plugged')
 Plug 'vim-pandoc/vim-pandoc'                              " Pandoc
 Plug 'vim-pandoc/vim-pandoc-syntax'                       " Pandoc syntax
 Plug 'lervag/vimtex'                                      " Latex support
-Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }    " Java
 Plug 'dogrover/vim-pentadactyl', { 'for': 'pentadactyl' } " Pentadactyl
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
 if executable('cargo')
@@ -69,8 +68,57 @@ endif
 call plug#end()
 
 " Plugin specific {{{2
-" vim-ariline {{{3
-let g:airline#extensions#whitespace#mixed_indent_algo = 2
+" Eclim (installed through AUR) {{{3
+" to use with nvim: `sudo ln -s /usr/share/vim/vimfiles /etc/xdg/nvim`
+let g:EclimCompletionMethod = 'omnifunc'
+function! JavaSetup()
+	" http://eclim.org/vim/java/methods.html
+	" Import the class under the cursor
+	nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
+	" Run
+	nnoremap <silent> <buffer> <leader>m :Java<cr>
+	" Javadoc boilerplate generation
+	nnoremap <silent> <buffer> <leader>d :JavaDocComment<cr>
+	" Search javadocs
+	nnoremap <silent> <buffer> K :JavaDocPreview<cr>
+	" Online docs
+	nnoremap <silent> <buffer> <leader>K :JavaDocSearch -x declarations<cr>
+	" Context sensitive search
+	nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
+	" Formatting
+	autocmd BufWritePre <buffer> %JavaFormat
+	autocmd BufWritePre <buffer> JavaImportOrganize
+	autocmd BufWritePost <buffer> doautocmd Syntax
+	" Rename
+	nnoremap <buffer> <leader>r :JavaRename 
+	" Generate constructor (setting the fields in the specified range)
+	nnoremap <silent> <buffer> <leader>c :JavaConstructor<cr>
+	vnoremap <silent> <buffer> <leader>c :JavaConstructor<cr>
+	" Generate getters/setters
+	nnoremap <silent> <buffer> <leader>g :JavaGet<cr>
+	vnoremap <silent> <buffer> <leader>g :JavaGet<cr>
+	nnoremap <silent> <buffer> <leader>s :JavaSet<cr>
+	vnoremap <silent> <buffer> <leader>s :JavaSet<cr>
+	" View class/interface hierarchy
+	nnoremap <silent> <buffer> <leader>hi :JavaHierarchy<cr> 
+	" View caller hierarchy
+	nnoremap <silent> <buffer> <leader>hr :JavaCallHierarchy<cr> 
+	" View callee hierarchy
+	nnoremap <silent> <buffer> <leader>he :JavaCallHierarchy!<cr> 
+	" Implement interface
+	nnoremap <silent> <buffer> <leader>I :JavaImpl<cr> 
+	" Delegation
+	nnoremap <silent> <buffer> <leader>T :JavaDelegate<cr> 
+	" Undo refactor
+	nnoremap <silent> <buffer> <leader>u :RefactorUndo<cr>
+	" New
+	nnoremap <buffer> <leader>n :JavaNew 
+endfunction
+augroup eclim-java
+	autocmd!
+	autocmd Filetype java call JavaSetup()
+	autocmd Filetype javadoc_preview nmap <silent> <buffer> K <cr>
+augroup END
 
 " racer {{{3
 let rustc_sysroot = substitute(system("rustc --print sysroot"), '\n$', '', '')
