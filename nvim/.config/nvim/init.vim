@@ -372,6 +372,10 @@ endif
 set mouse+=a
 set copyindent                         " Keep spaces used for alignment
 set preserveindent
+
+" Diffs {{{3
+set diffopt=filler,vertical
+
 " Remember undos {{{3
 if has('persistent_undo')
 	silent call system('mkdir -p $HOME/tmp/vim/undo')
