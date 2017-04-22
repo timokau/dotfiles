@@ -15,8 +15,33 @@ fi
 
 process_dir="$(mktemp --directory)"
 if [[ $png -eq 0 ]]; then
-	convert "$src" -trim -quality "$quality" -auto-level -auto-gamma -contrast-stretch 2% -colorspace Gray "${process_dir}/converted.jpg"
-	rm "$src"
+	convert "$src" \
+		-trim +repage \
+		-contrast-stretch 0%x2% \
+		-fuzz 30% -trim +repage \
+		-level 0%,60%,1.0 \
+		-colorspace Gray \
+		-deskew 40% +repage \
+		"${process_dir}/converted.pnm"
+	width="$(convert "${process_dir}/converted.pnm" -format "%w" info:)"
+	height="$(convert "${process_dir}/converted.pnm" -format "%h" info:)"
+	crop_left='0.07'
+	crop_right='0.07'
+	crop_top='0.03'
+	crop_bot='0.03'
+
+	new_width="$( bc <<< "scale=0; ${width} * (1 - ${crop_right} - ${crop_left})/1" )"
+	new_height="$( bc <<< "scale=0; ${height} * (1 - ${crop_top} - ${crop_bot})/1" )"
+	left_offset="$( bc <<< "scale=0; ${width} * ${crop_left} / 1" )"
+	top_offset="$( bc <<< "scale=0; ${height} * ${crop_top} / 1" )"
+	convert "${process_dir}/converted.pnm" \
+		-crop ${new_width}x"${new_height}"+${left_offset}+${top_offset} \
+		-gravity center \
+		-background white \
+		-quality "$quality" \
+		"${process_dir}/converted.jpg"
+
+	rm "${process_dir}/converted.pnm" "$target"
 	mv "${process_dir}/converted.jpg" "$target"
 else
 	convert "$src" -trim -contrast-stretch 2% $colorspace_arg "${process_dir}/converted.pnm"
