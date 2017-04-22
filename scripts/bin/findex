@@ -1,0 +1,7 @@
+#!/bin/bash
+# Find with reasonable excludes
+# Excluding works by attaching a matching condition (via or) and then pruning all matches.
+
+find $@ \
+	-o \( -type d -name '.snapshots' -prune \) \
+	-o \( -type d -path '/proc' -prune \)
