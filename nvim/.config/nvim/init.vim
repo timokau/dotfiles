@@ -279,13 +279,15 @@ for ign in ['class', 'pdf', 'fdb_latexmk', 'aux', 'fls', 'synctex.gz', 'zip']
 endfor
 let $FZF_DEFAULT_COMMAND = 'ag --nocolor'.fzf_ignores.' --files-with-matches --follow --depth=-1 --hidden --search-zip -g "" 2>/dev/null'
 
-augroup fzf
-	autocmd!
-	" BufEnter isn't triggered when the terminal is first opened
-	autocmd TermOpen term://*fzf* tunmap <ESC><ESC>
-	autocmd BufEnter term://*fzf* tunmap <ESC><ESC>
-	autocmd BufLeave term://*fzf* tnoremap <silent> <ESC><ESC> <C-\><C-n>G:call search(".", "b")<CR>$
-augroup END
+if exists(':terminal')
+	augroup fzf
+		autocmd!
+		" BufEnter isn't triggered when the terminal is first opened
+		autocmd TermOpen term://*fzf* tunmap <ESC><ESC>
+		autocmd BufEnter term://*fzf* tunmap <ESC><ESC>
+		autocmd BufLeave term://*fzf* tnoremap <silent> <ESC><ESC> <C-\><C-n>G:call search(".", "b")<CR>$
+	augroup END
+endif
 
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>a :Buffers<CR>
