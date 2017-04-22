@@ -340,7 +340,7 @@ set hidden
 set autoindent
 set backspace=indent,eol,start
 set hlsearch
-set wildignore+=*~,*.pyc,*.swp,*.class,*.pdf,*.aux,*.fdb_latexmk,*.dfls,*.toc,*.synctex.gz
+set wildignore+=*~,*.pyc,*.swp,*.class,*.pdf,*.aux,*.fdb_latexmk,*.dfls,*.toc,*.synctex.gz,*.fls
 set tabstop=4
 set shiftwidth=4                       " Shiftwidth equals tabstop
 set wrap
