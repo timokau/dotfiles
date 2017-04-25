@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 # Open
 
 open_with() {
@@ -9,7 +9,11 @@ open_with() {
 
 if [[ $# -eq 0 ]]; then
 	if [[ -f Cargo.toml ]]; then
+		# rust project
 		open_with nvim-qt Cargo.toml src/**/*.rs
+	elif [[ -f main.tex ]] || [[ -f style.sty ]]; then
+		# latex project
+		open_with nvim-qt **/*.tex **/*.sty
 	fi
 	exit 0
 fi
