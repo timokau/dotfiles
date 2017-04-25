@@ -36,3 +36,6 @@ snapshot_nbr=$(sudo snapper create --type=post --cleanup-algorithm=number --prin
 echo ">>> ${BLUE}New post snapshot with number ${snapshot_nbr}.${NC}"
 
 [ -e "/tmp/panel-fifo" ] &&	echo "A0" > "/tmp/panel-fifo"
+
+# Initial PlugDiff only so I can use `only`
+nvim +PlugDiff +only +PlugUpdate +PlugDiff
