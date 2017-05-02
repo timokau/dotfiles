@@ -162,9 +162,6 @@ if executable('rustfmt')
 endif
 
 " vimtex {{{3
-" 'fixes' a nvim bug, will not be nessessary after nvim 0.2
-" see https://github.com/lervag/vimtex/issues/750
-let g:vimtex_quickfix_latexlog = {'fix_paths':0}
 if has('nvim')
 	let g:vimtex_latexmk_progname="nvr"
 endif
