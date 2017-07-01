@@ -51,7 +51,7 @@ color attachment brightyellow	red	# MIME attachments
 color search	 brightyellow	red	# search matches
 color tilde	 brightmagenta	default	# ~ at bottom of msg
 color markers	 red		default	# + at beginning of wrapped lines
-color hdrdefault blue		default	# default header lines
+color hdrdefault black		cyan	# default header lines
 color bold	 red		default	# hiliting bold patterns in body
 color underline	 green		default	# hiliting underlined patterns in body
 color quoted	 blue		default	# quoted text
@@ -67,7 +67,7 @@ color quoted9	 cyan		default
 #
 #     object	 foreground backg.   RegExp
 #
-color header	 red	    default  "^(from|subject):"
+color header	 black	    cyan  "^(from|subject):"
 #color body	 cyan	    default  "((ftp|http|https)://|news:)[^ >)\"\t]+"
 color body	 cyan	    default  "((ftp|http|https)://|(file|news):|www\\.)[-a-z0-9_.:]*[a-z0-9](/[^][{} \t\n\r\"<>()]*[^][{} \t\n\r\"<>().,:!])?/?"
 color body	 cyan	    default  "[-a-z_0-9.+]+@[-a-z_0-9.]+"

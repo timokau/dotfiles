@@ -14,9 +14,13 @@ mailboxes "+uni" \
 mailboxes +drafts \
           +search
 
+# avoid warinngs about duplicated bindings
+# (https://www.neomutt.org/guide/configuration.html#bind-warnings)
+bind index g noop
 macro index goy "<change-folder> +yahoo/inbox"<enter>
 macro index gog "<change-folder> +gmx/inbox"<enter>
 macro index gou "<change-folder> +uni/inbox"<enter>
+macro index goo "<change-folder> +ou/inbox"<enter>
 
 # contacts are managed by khard
 set query_command= "khard email --parsable '%s'"
@@ -115,6 +119,9 @@ bind pager k previous-line
 bind pager J next-unread
 bind index,pager \Cn next-unread-mailbox
 bind pager K previous-entry
+# avoid warinngs about duplicated bindings
+# (https://www.neomutt.org/guide/configuration.html#bind-warnings)
+bind pager g noop
 bind pager gg top
 bind pager G bottom
 bind pager R group-reply
