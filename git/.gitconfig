@@ -13,5 +13,3 @@
 	safecrlf = true
 [credential]
 	helper = cache --timeout=9000
-[commit]
-	template = ~/commit-template
