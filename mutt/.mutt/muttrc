@@ -2,6 +2,7 @@
 mailboxes "+gmx" \
           "+gmx/inbox" \
           "+gmx/sent" \
+          "+gmx/sent-archive" \
           "+gmx/archive"
 mailboxes "+yahoo" \
           "+yahoo/inbox" \
