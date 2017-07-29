@@ -99,9 +99,9 @@ function! JavaSetup()
 	" Context sensitive search
 	nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
 	" Formatting
-	autocmd BufWritePre <buffer> %JavaFormat
-	autocmd BufWritePre <buffer> JavaImportOrganize
-	autocmd BufWritePost <buffer> doautocmd Syntax
+	" autocmd BufWritePre <buffer> %JavaFormat
+	" autocmd BufWritePre <buffer> JavaImportOrganize
+	" autocmd BufWritePost <buffer> doautocmd Syntax
 	" Rename
 	nnoremap <buffer> <leader>r :JavaRename 
 	" Generate constructor (setting the fields in the specified range)
@@ -198,6 +198,11 @@ fun! TexNoSpell()
 	syntax region texNoSpellBrace
 	      \ start="\\begin{tikzpicture}{"rs=s
 	      \ end="}\|%stopzone\>"re=e
+
+	syntax match texStatement '\\setcounter' nextgroup=texNoSpellBraces
+	syntax match texStatement '\\newcounter' nextgroup=texNoSpellBraces
+	syntax match texStatement '\\value' nextgroup=texNoSpellBraces
+	syntax region texNoSpellBraces matchgroup=Delimiter start='{' end='}' contained contains=@NoSpell
 endfun
 autocmd BufRead,BufNewFile *.tex :call TexNoSpell()
 
@@ -355,7 +360,7 @@ set ruler
 set cmdheight=2
 set splitright
 set splitbelow
-set nofoldenable
+" set nofoldenable
 set hidden
 set autoindent
 set backspace=indent,eol,start
