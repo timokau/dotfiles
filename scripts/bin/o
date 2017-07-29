@@ -18,24 +18,26 @@ if [[ $# -eq 0 ]]; then
 	exit 0
 fi
 
-while [[ $# -ge 1 ]]; do
+# while [[ $# -ge 1 ]]; do
 	ext=${1##*.}
 	case $ext in
 		"pdf")
 			open_with zathura "$1"
 			;;
-		"pdc"|"tex"|"py"|"sh"|"toml")
-			open_with nvim-qt "$1"
+		"pdc"|"tex"|"py"|"sh"|"toml"|"sql")
+			open_with nvim-qt "$@"
 			;;
 		"epub"|"mobi")
 			open_with ebook-viewer "$1"
 			;;
 		"uxf")
-			open_with umlet "$1"
+			# If umlet is already running, it needs an absolute path of the file to
+			# add to the current instance.
+			open_with umlet "$(pwd)/$1"
 			;;
 		*)
 			open_with xdg-open "$1"
 			;;
 	esac
 	shift
-done
+# done
