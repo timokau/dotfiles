@@ -8,11 +8,12 @@ fi
 if [[ "$1" == "--try-autolock" ]] && [[ "$(pgrep -cx xautolock)" -ge 1 ]]; then
 	xautolock -locknow
 else
-	i3lock --dpms \
-	    --inactivity-timeout 30s \
+	( xset +dpms dpms 10 10 10 \
+	&& i3lock -n \
 	    --color=333333 \
 	    --ignore-empty-password \
-	    --show-failed-attempts
+	    --show-failed-attempts \
+	&& xset dpms 0 0 0 ) & disown
 	# Clear cached passwords
 fi
 pkill -SIGHUP gpg-agent
