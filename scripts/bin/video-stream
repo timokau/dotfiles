@@ -8,11 +8,15 @@ url="$(echo "$url" | sed 's|.*youtube.com/embed/\(.*\)|https://youtube.com/watch
 ytdl_format='(bestvideo[height<=1080]+bestaudio/best)[protocol!=http_dash_segments]' 
 ytdl_raw_options="sub-lang=en,write-sub="
 
-if ! mpv --ytdl-format="${ytdl_format}" --ytdl-raw-options="${ytdl_raw_options}" "${url}" ; then
+if ! mpv --ytdl-format="${ytdl_format}" --ytdl-raw-options="${ytdl_raw_options}" --image-display-duration=inf --force-window=yes --audio-display=attachment "${url}" ; then
 	if [[ "$url" =~ roosterteeth\.com ]]; then
 		user=$(pass show misc/roosterteeth/user)
 		pass=$(pass show misc/roosterteeth/pass)
 		notify-send "Logging in"
+	elif [[ "$url" =~ spotify\.com ]]; then
+		notify-send spotify
+		user=$(pass show misc/spotify/user)
+		pass=$(pass show misc/spotify/pass)
 	fi
 	mpv --ytdl-format="${ytdl_format}" --ytdl-raw-options="${ytdl_raw_options}" --ytdl-raw-options="username=${user},password=${pass}" "${url}"
 fi
