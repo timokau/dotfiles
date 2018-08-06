@@ -1,0 +1,27 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p xtitle xautolock xorg.xset
+
+# xprop -spy -root _NET_ACTIVE_WINDOW
+# | cut -d ' ' -f 5
+# | while read active_id; do
+# 	xprop -id "$active_id"
+# 	break;
+# done
+
+disabled=0
+
+echo "Started"
+
+xtitle -s | while read title; do
+	if echo "$title" | grep -q 'Amazon Instant Video\|- YouTube'; then
+		echo "Disabling lock"
+		xset -dpms
+		xautolock -disable
+		disabled=1
+	elif [[ "$disabled" -eq 1 ]]; then
+		echo "Enabling lock"
+		xset +dpms
+		xautolock -enable
+		disabled=0
+	fi
+done
