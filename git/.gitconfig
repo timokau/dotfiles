@@ -1,15 +1,36 @@
 [user]
 	name = Timo Kaufmann
-	email = eisfreak7@gmail.com
+	email = timokau@zoho.com
+[pretty]
+	lg = %C(red)%h%C(reset) %C(green)%ci%C(reset) %s %C(bold blue)-- %an%C(reset)%C(yellow)%d%C(reset)
+	lge = %C(red)%h%C(reset) %C(green)%ci%C(reset) %s %C(bold blue)-- %an <%ae>%C(reset)%C(yellow)%d%C(reset)
+	reflg = %C(red)%h%C(reset) %C(green)%ci%C(reset) %s %C(bold blue)-- %an%C(reset) %C(yellow)(%gd)%C(reset)
 [alias]
+	; https://news.ycombinator.com/item?id=16681141
+	; lg is the normal log, glg is with the graph, slg lists my stashes in the same format (i find the date really helpful), and blg does the same for branches.
+	; blg can't reuse a pretty definition because it uses a completely different formatting language. The fact that Git contains two different but largely equivalent formatting languages is kind of emblematic of its whole design, really.
+	; Like heipei, i put the fixed-width bits on the left so that they line up. I try to use consistent and distinctive colours for everything; mostly that's obvious, but yellow draws an equivalent between branch names for the normal and branch logs, and stash refs for the stashes. Including committer name for stashes is perhaps foolish consistency, although it would be useful if you do pair programming and use something like git-duet.
+	lg = log --pretty=lg
+	glg = log --graph --pretty=lg
+	slg = stash list --pretty=reflg
+	blg = branch --format '%(color:red)%(objectname:short)%(color:reset) %(color:green)%(committerdate:iso)%(color:reset) %(subject) %(color:bold blue)-- %(authorname)%(color:reset) %(color:yellow)(%(refname:short))%(color:reset)'
 	ci = commit
 	st = status
 	br = branch
 	co = checkout
 	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    # find the merge commit that included a commit
+    # https://stackoverflow.com/questions/8475448/find-merge-commit-which-include-a-specific-commit#8492711
+    find-merge = "!sh -c 'commit=$0 && branch=${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
+	# push the current branch to timokau (automatically applying the suggested -u parameters)
+	track = "!git push --set-upstream timokau \"$(git symbolic-ref --short HEAD)\""
 [core]
 	editor = $EDITOR
 	autocrlf = input
-	safecrlf = true
+	; safecrlf = true
 [credential]
 	helper = cache --timeout=9000
+[init]
+	templatedir = /home/timo/.config/git
+[rerere]
+	enabled = true
