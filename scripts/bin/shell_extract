@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if (( $# != 2 )); then
+	echo "Usage: $0 <arch> <asm file>"
+	echo "Where arch is one of: x86 x86_64"
+	exit 1
+fi
+
+arch="$1"
+asm_file="$2"
+case "$arch" in
+	"x86")
+		nasm_format="elf32";
+		ld_emulation="elf_i386";
+		;;
+	"x86_64")
+		nasm_format="elf64";
+		ld_emulation="elf_x86_64";
+esac
+
+tmpdir="$(mktemp -d)"
+# assemble
+nasm -f "$nasm_format" "$asm_file" -o "$tmpdir/shellcode.o"
+# link
+ld -m "$ld_emulation" "$tmpdir/shellcode.o" -o "$tmpdir/shellcode"
+# dump
+for i in $( objdump -d "$tmpdir/shellcode" | tr '\t' ' ' | tr ' ' '\n' | egrep '^[0-9a-f]{2}$' ) ; do
+	echo -n "\\x$i"
+done
+rm -r "$tmpdir"
