@@ -2,3 +2,5 @@ include ~/.config/task/locations_desktop
 # This file has to configure "taskd.server", "taskd.credentials", "taskd.trust"
 include ~/.config/task/server
 include ~/.config/task/configuration
+uda.blocks.type=string
+uda.blocks.label=Blocks

@@ -8,9 +8,9 @@ verbose=new-id,special,project,special,affected
 uda.priority.values=H,M,,L
 urgency.uda.priority.H.coefficient=4.0
 urgency.uda.priority.M.coefficient=2.0
-urgency.uda.priority.L.coefficient=-1
-urgency.user.tag.OVERDUE.coefficient=100.0
-urgency.due.coefficient=20.0
+urgency.uda.priority.L.coefficient=-3.0
+# urgency.user.tag.OVERDUE.coefficient=100.0
+urgency.due.coefficient=4.0
 urgency.blocking.coefficient=4.0
 
 # Reports
@@ -51,7 +51,7 @@ report.inbox.labels        = ID,Description
 # Show the due date instead of the due age in the next report
 report.next.columns = id,description,start.age,depends,due.age
 report.next.labels = ID,Description,Active,Deps,Due
-report.next.filter = status:pending limit:page -BLOCKED
+report.next.filter = status:pending limit:page -BLOCKED -backlog +READY
 
 # Reviews
 uda.reviewed.type=date
@@ -67,3 +67,7 @@ report._reviewed.filter = -noreview and ( +PENDING or +WAITING ) and ( -PRIORITY
 
 # Recurrence is handled by the server to avoid duplication
 recurrence = off
+recurrence.confirmation=no # don't apply to all instances
+
+# Misc
+task config journal.info = off # don't show task history in `task info`
