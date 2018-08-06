@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+BAG_FILE="$HOME/offline-bag.txt"
+CLI_FOLDER="$HOME/data/code/rust/bag-cli"
+
+if (( "$#" > 0 )); then
+	# Save the file (later)
+	echo "$1" >> "$BAG_FILE"
+	cnt="$(cat "$BAG_FILE" | wc -l)"
+	notify-send --app-name="Wallabag" --urgency=low "Saved $1 (now $cnt saved offline)."
+fi
+
+cd "$CLI_FOLDER"
+while (( "$(cat "$BAG_FILE" | wc -l)" > 0 )); do
+	link=$(head -n1 "$BAG_FILE")
+	# notify-send "$link"
+	cargo run -- add "$link" | grep 'is_archived: false'
+	if [[ "$?" -eq 0 ]]; then
+		# saved successfully, delete from file
+		sed -i '1d' "$BAG_FILE"
+	else
+		# couldn't save, try next time
+		exit 1
+	fi
+done
