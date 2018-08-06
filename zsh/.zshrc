@@ -753,7 +753,7 @@ recursive_spawned_cmdlines() {
 		# ps --no-headers $*
 		for p in $*; do
 			echo -n "$( xargs -0 < /proc/$p/cmdline )\n" 2>/dev/null
-			recursive_spawned_cmdlines $(cat /proc/$p/task/$p/children) 2>/dev/null
+			recursive_spawned_cmdlines $(ps -e -o ppid= -o pid= | awk '$1 == '"$p"' { print $2 }') 2>/dev/null
 		done
 	fi
 }
