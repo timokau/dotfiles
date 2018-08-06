@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+pactl list sinks | grep -B1 'State: RUNNING' | sed -n 's/Sink #\(.*\)/\1/p'
