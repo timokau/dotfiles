@@ -45,7 +45,9 @@ if [[ -n "$target" ]] ; then
 			# The login entry isn't really in the password store.
 			# If it is selected, type the `user` entry, tab, and the `pass` entry.
 			dir=$(dirname "$target")
-			xdotool type "$(pass show "${dir}/user")	$(pass show "${dir}/pass")"
+			pass show "${dir}/user" | xargs xdotool type
+			xdotool key Tab
+			pass show "${dir}/pass" | xargs xdotool type
 		else
 			xdotool type "$(pass show "$target")"
 		fi
