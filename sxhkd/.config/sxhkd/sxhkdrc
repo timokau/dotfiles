@@ -16,12 +16,19 @@ super + e ; s
 	$HOME/bin/lock; \
 	systemctl suspend
 
+# open yanked video link in mpv
+super + m
+	$HOME/bin/video-stream "$(xsel -b)"
+
+@super + @M
+	bash -c 'sleep 0.3 ; xdotool key --clearmodifiers y y; $HOME/bin/video-stream $(xsel -b)'
+
 # media
 super + v : {plus,minus}
-	pactl set-sink-volume 1 {+,-}5%
+	pactl set-sink-volume 0 {+,-}5%
 
 super + v : m
-	pactl set-sink-mute 1 toggle
+	pactl set-sink-mute 0 toggle
 
 super + V : {plus,minus}
 	pactl set-sink-input-volume $(pa_xsink) {+,-}5%
@@ -32,11 +39,11 @@ super + V : m
 {XF86AudioRaiseVolume,XF86AudioLowerVolume,XF86AudioMute}
 	amixer set Master {5%+,5%-,toggle}
 
-super + m ; {p,h,l}
-	mpc {toggle,prev,next}
+super + m ; {p,s,h,l}
+	dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{PlayPause,Stop,Previous,Next} || mpc {toggle,stop,prev,next}
 
 {XF86AudioPlay,XF86AudioStop,XF86AudioPrev,XF86AudioNext}
-	mpc {toggle,stop,prev,next}
+	dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{PlayPause,Stop,Previous,Next} || mpc {toggle,stop,prev,next}
 
 # run
 
@@ -78,7 +85,8 @@ super + @i
 
 # needs dmenu2 (for better configuration) and j4-dmenu-desktop-git from the AUR
 super + space
-	rofi -show run -lines 3 -eh 2 -font "Source Code Pro 18"
+	rofi -combi-modi window,drun -show combi
+	# rofi -combi-modi window,drun -show drun -lines 3 -eh 2 -font "Source Code Pro 18"
 
 # make sxhkd reload its configuration files:
 super + Escape
