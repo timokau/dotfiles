@@ -1,0 +1,8 @@
+if [[ "$1" == "-v" ]]; then
+	shift
+	nix-build -A $@
+else
+	nix build --keep-going -f . $@
+fi
+# TODO en/disable pad build
+# TODO take multiple args with -v
