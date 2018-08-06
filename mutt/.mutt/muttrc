@@ -18,10 +18,12 @@ mailboxes +drafts \
 # avoid warinngs about duplicated bindings
 # (https://www.neomutt.org/guide/configuration.html#bind-warnings)
 bind index g noop
+macro index c "<change-vfolder>"
 macro index goy "<change-folder> +yahoo/inbox"<enter>
 macro index gog "<change-folder> +gmx/inbox"<enter>
 macro index gou "<change-folder> +uni/inbox"<enter>
 macro index goo "<change-folder> +ou/inbox"<enter>
+macro index goz "<change-folder> +zoho/inbox"<enter>
 
 # contacts are managed by khard
 set query_command= "khard email --parsable '%s'"
@@ -42,11 +44,10 @@ set header_cache = "~/.cache/mutt/headers"
 set message_cachedir = "~/.cache/mutt/bodies"
 set certificate_file = "~/.mutt/certificates"
 set mailcap_path = "~/.mutt/mailcap"
+set record = "+gmx/sent"
 
 # Stuff I don't add to github:
-# folder-hook yahoo 'set \
-#     from = "___" \
-#     mbox = "+yahoo/archive" \
+# folder-hook yahoo 'set \ from = "___" \ mbox = "+yahoo/archive" \
 #     record = "+yahoo/sent" \
 #     sendmail = "/usr/bin/msmtp -a yahoo"'
 # folder-hook gmx 'set \
@@ -85,6 +86,7 @@ set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 alternative_order text/enriched text/plain text/html
 auto_view text/html
 set fast_reply
+set include
 set fcc_attach
 set forward_format = "Fwd: %s"
 set mime_forward
@@ -134,9 +136,9 @@ bind index G last-entry
 bind index <tab> sync-mailbox
 bind index <space> collapse-thread
 bind attach <return> view-mailcap
-bind compose p postpone-message
+bind pager O mark-as-new
 
-macro index R '<enter-command>unset wait_key<enter><shell-escape>mbsync -Va<enter>' 'sync the mail'
+macro index R '<enter-command>unset wait_key<enter><shell-escape>syncmails<enter>' 'sync the mail'
 macro index S "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt -o ~/Mail/search -p search<enter><change-folder-readonly>+search<enter>" "search mail (using notmuch)"
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
 macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
@@ -153,9 +155,38 @@ macro index gs "<sidebar-toggle-visible>"
 set sidebar_folder_indent = yes
 set sidebar_visible = no
 set sidebar_width = 24
-color sidebar_new color221 color233
+# color sidebar_new color221 color233
+color sidebar_new yellow default
 # bind index,pager \Cn sidebar-next
 # bind index,pager \Cp sidebar-prev
 # bind index,pager \Co sidebar-open
+# macro index ,@) "<enter-command> set sidebar_visible=no; macro index ~ ,@( 'Toggle sidebar'<Enter>"
+# macro index ,@( "<enter-command> set sidebar_visible=yes; macro index ~ ,@) 'Toggle sidebar'<Enter>"
+# macro index ~ ,@( 'Toggle sidebar'      # toggle the sidebar
 
 set sidebar_sort_method = 'unsorted'
+
+source ~/.mutt/gpg.rc
+set fcc_clear = yes
+set pgp_use_gpg_agent = yes
+set pgp_sign_as = 7D22B33E7D35A638
+set pgp_replyencrypt
+
+# TODO filter mail (see https://notmuchmail.org/mutttips/)
+# notmuch
+set nm_default_uri = "$HOME/Mail"
+set virtual_spoolfile=yes # enable virtual folders
+# TODO see https://notmuchmail.org/mutttips/
+# set sendmail="/PATH/TO/bin/nm_sendmail" # enables parsing of outgoing mail
+virtual-mailboxes \
+    "unread"    "notmuch://?query=tag:unread"\
+    "inbox"     "notmuch://?query=tag:inbox and NOT tag:archive"\
+    "starred"   "notmuch://?query=tag:*"\
+    "sent"      "notmuch://?query=tag:sent" # sets up queries for virtual folders
+# notmuch bindings
+macro index \\\\ "<vfolder-from-query>" # looks up a hand made query
+macro index A "<modify-labels>+archive -unread -inbox\\n" # tag as Archived
+macro index I "<modify-labels>-inbox -unread\\n" # removed from inbox
+macro index S "<modify-labels-then-hide>-inbox -unread +junk\\n" # tag as Junk mail
+macro index + "<modify-labels>+*\\n<sync-mailbox>" # tag as starred
+macro index - "<modify-labels>-*\\n<sync-mailbox>" # tag as unstarred

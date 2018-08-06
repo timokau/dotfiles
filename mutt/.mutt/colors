@@ -1,3 +1,4 @@
+
 #
 # monochrom terminals:
 # (none, bold, underline, reverse, standout)
@@ -41,9 +42,9 @@ mono body	 underline	"(^| )_[-a-z0-9äöüß_]+_[,.?]?[ \n]"
 #     object	 foreground	background
 #
 color normal	 default	default	# normal text
-color indicator	 brightyellow	red	# actual message
+color indicator	 black	cyan	# actual message
 color tree	 brightmagenta	default	# thread arrows
-color status	 brightgreen	blue	# status line
+color status	 brightgreen	black	# status line
 color error	 brightred	default	# errors
 color message	 red		default	# info messages
 color signature	 red		default	# signature
