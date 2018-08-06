@@ -4,4 +4,4 @@ taskd.certificate=~/.local/share/task/timo.cert.pem
 taskd.key=~/.local/share/task/timo.key.pem
 taskd.ca=~/.local/share/task/ca.cert.pem
 
-include /usr/share/doc/task/rc/solarized-dark-256.theme
+include ~/.config/task/solarized-dark-256.theme
