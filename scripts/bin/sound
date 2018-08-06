@@ -1,9 +1,11 @@
 #!/bin/sh
 
 SOUNDS_ROOT='/usr/share/sounds/freedesktop/stereo'
-if [[ "$1" == "list" ]]; then
+sound="$1"
+volume="${2:-30}"
+if [[ "$sound" == "list" ]]; then
 	ls -l "$SOUNDS_ROOT"
 else
-	SOUND="${SOUNDS_ROOT}/${1}.oga"
-	mpv "$SOUND" >/dev/null 2>&1
+	SOUND="${SOUNDS_ROOT}/${sound}.oga"
+	mpv --volume "$volume" "$SOUND" >/dev/null 2>&1
 fi
