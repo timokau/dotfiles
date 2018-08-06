@@ -4,8 +4,8 @@ autoload -U compinit
 compinit
 setopt completealiases
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=1000000
+SAVEHIST=1000000
 
 ############################### Completion
 # allow one error for every three characters typed in approximate completer
@@ -145,6 +145,13 @@ if [[ $TERM == xterm-termite ]]; then
 fi
 
 alias scrott='scrot /tmp/shot-$(date +%FT%T).png'
+alias rss='newsboat'
+
+alias gb='git worktree prune; git branch'
+
+alias gdb='gdb -q'
+
+alias ssh='TERM=xterm ssh'
 
 
 #
@@ -252,7 +259,8 @@ return 1
 #
 # enviroment variables {{{1
 #
-check_com firefox && export BROWSER=firefox
+export BROWSER=firefox
+# export BROWSER=qutebrowser
 if check_com nvim; then
 	export EDITOR=nvim
 elif check_com vim; then
@@ -303,14 +311,60 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 alias grep='grep --color=auto'
-alias ls='ls --color=auto'
+alias ls='BLOCK_SIZE="''1" TIME_STYLE=long-iso ls --color=auto'
 
 #
 # prompt {{{1
 #
 setopt prompt_subst
-export PS1='→ '
-export RPS1="%(?..%B(%?%)%b )%1~"
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' stagedstr 'M' 
+zstyle ':vcs_info:*' unstagedstr 'M' 
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' actionformats '%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+zstyle ':vcs_info:*' formats \
+  '%F{5}[%F{2}%b%F{5}] %F{2}%c%F{3}%u%f'
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
+zstyle ':vcs_info:*' enable git
++vi-git-untracked() {
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+  [[ $(git ls-files --other --directory --exclude-standard | sed q | wc -l | tr -d ' ') == 1 ]] ; then
+  hook_com[unstaged]+='%F{1}??%f'
+fi
+}
+
+# line above prompt
+precmd () {
+	red="\u001b[31m"
+	blue="\u001b[34m"
+	reset="\u001b[0m"
+	LEFT="$red$(whoami)$reset@$blue$(hostname)$reset $PWD"
+	taskc="$( task +READY -backlog count )"
+	(( taskc > 0 )) && tasks="$taskc tasks "
+	mailc="$( notmuch count tag:unread )"
+	(( mailc > 0 )) && mails="$mailc mails "
+	RIGHT="$red$tasks$mails$reset$(date +%T) "
+	# len without ascii escapes
+	LEFTLEN="$(( ${#${(S%%)LEFT//(\%([KF1]|)\{*\}|\%[Bbkf])}} ))"
+	RIGHTLEN="$(( ${#${(S%%)RIGHT//(\%([KF1]|)\{*\}|\%[Bbkf])}} ))"
+	FILLWIDTH=$(($COLUMNS-$LEFTLEN-$RIGHTLEN+57)) # FIXME len without ascii escapes doesn't work
+	print $LEFT${(l:$FILLWIDTH:: :)}$RIGHT
+	vcs_info
+}
+# PROMPT='%F{5}[%F{2}%n%F{5}] %F{3}%3~ ${vcs_info_msg_0_} %f%# '
+# RPROMPT=$'$(vcs_info_wrapper)'
+# export PS1='→ '
+# export PROMPT="$(whoami)@$(hostname) [$(date +%T)] $( task ready | tail -n1 )
+# → "
+# export RPROMPT="%(?..%B(%?%)%b )%1~"
+# git_prompt() {
+# 	ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
+# 	echo $ref
+# }
+PROMPT='\$ '
+RPROMPT='${vcs_info_msg_0_} [%F{yellow}%?%f]'
+autoload -U promptinit
+promptinit
 
 #
 # aliases {{{1
@@ -331,7 +385,8 @@ alias ...='cd ../..'
 alias pastebin='curl -F "sprunge=<-" http://sprunge.us'
 alias pastebinc='pastebin | xsel -b'
 alias ns='notify-send'
-alias mutt='mutt; mailcheck'
+# sync mails in background before and after closing mutt
+alias mutt='( syncmails >/dev/null 2>&1 & ); neomutt; ( syncmails repeat >/dev/null 2>&1 & )'
 check_com rsync && alias smv='rsync -avz --remove-source-files -e ssh'
 check_com translate-shell && alias trans='HOME_LANG=de TARGET_LANG=de trans'
 check_com translate-shell && alias transb='HOME_LANG=de TARGET_LANG=de trans -brief'
@@ -657,3 +712,91 @@ fi;
 ##############################
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+
+# This script prints a bell character when a command finishes
+# if it has been running for longer than $zbell_duration seconds.
+# If there are programs that you know run long that you don't
+# want to bell after, then add them to $zbell_ignore.
+#
+# This script uses only zsh builtins so its fast, there's no needless
+# forking, and its only dependency is zsh and its standard modules
+#
+# Written by Jean-Philippe Ouellet <jpo@vt.edu>
+# Made available under the ISC license.
+
+# only do this if we're in an interactive shell
+[[ -o interactive ]] || return
+
+# get $EPOCHSECONDS. builtins are faster than date(1)
+zmodload zsh/datetime || return
+
+# make sure we can register hooks
+autoload -Uz add-zsh-hook || return
+
+# initialize zbell_duration if not set
+(( ${+zbell_duration} )) || zbell_duration=5
+
+# initialize zbell_ignore if not set
+(( ${+zbell_ignore} )) || zbell_ignore=( $EDITOR $PAGER "vim" "nvim" "ranger" "newsboat" "top" "glances" "htop" "timer" "cntdn" "neomutt" "less" "mpv" "eli")
+
+# initialize it because otherwise we compare a date and an empty string
+# the first time we see the prompt. it's fine to have lastcmd empty on the
+# initial run because it evaluates to an empty string, and splitting an
+# empty string just results in an empty array.
+zbell_timestamp=$EPOCHSECONDS
+
+# lists all cmdlines of child processes
+recursive_spawned_cmdlines() {
+	if [ $# -gt 0 ]; then
+		# ps --no-headers $*
+		for p in $*; do
+			echo -n "$( xargs -0 < /proc/$p/cmdline )\n" 2>/dev/null
+			recursive_spawned_cmdlines $(cat /proc/$p/task/$p/children) 2>/dev/null
+		done
+	fi
+}
+
+# right before we begin to execute something, store the time it started at
+zbell_begin() {
+	zbell_timestamp=$EPOCHSECONDS
+	zbell_lastcmd=$1
+	rm -f /tmp/cmdlines_$$
+	(( sleep "$zbell_duration"; recursive_spawned_cmdlines $$ > /tmp/cmdlines_$$ ) & )
+}
+
+# when it finishes, if it's been running longer than $zbell_duration,
+# and we dont have an ignored command in the line, then print a bell.
+zbell_end() {
+	ran_long=$(( $EPOCHSECONDS - $zbell_timestamp >= $zbell_duration ))
+	if (( ! ran_long )); then
+		return
+	fi
+
+	if [[ -z "$zbell_lastcmd" ]]; then
+		return
+	fi
+	has_ignored_cmd=0
+	while read cmdline; do
+		for cmd in ${(s:;:)cmdline//|/;} "$(basename "$cmdline")"; do
+			words=(${(z)cmd})
+			util=${words[1]}
+			if (( ${zbell_ignore[(i)$util]} <= ${#zbell_ignore} )); then
+				has_ignored_cmd=1
+				break
+			fi
+		done
+	done < /tmp/cmdlines_$$
+	rm -f /tmp/cmdlines_$$
+
+	if (( ! $has_ignored_cmd )) && (( ran_long )); then
+		print -n "\a"
+		( sound complete & ) # TODO conditionally, only when inactive & at home?
+		notify-send "\"$zbell_lastcmd\" finished in $(( EPOCHSECONDS - $zbell_timestamp ))s"
+	fi
+}
+
+# register the functions as hooks
+add-zsh-hook preexec zbell_begin
+add-zsh-hook precmd zbell_end
