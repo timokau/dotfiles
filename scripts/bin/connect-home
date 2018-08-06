@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+while :; do
+	ssh -TN \
+		-L 8000:localhost:8000 \
+		-L 8080:localhost:80 \
+		-L 8385:localhost:8384 \
+		-L 53589:localhost:53589 \
+		-D 4711 home
+	sleep 30s;
+done
