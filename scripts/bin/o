@@ -30,6 +30,12 @@ fi
 		"epub"|"mobi")
 			open_with ebook-viewer "$1"
 			;;
+		"docx"|"ppt")
+			open_with libreoffice "$1"
+			;;
+		"jpg"|"png")
+			open_with sxiv "$1"
+			;;
 		"uxf")
 			# If umlet is already running, it needs an absolute path of the file to
 			# add to the current instance.
