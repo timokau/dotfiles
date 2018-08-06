@@ -22,6 +22,7 @@ endif
 call plug#begin(vimdir.'/plugged')
 Plug 'vim-pandoc/vim-pandoc'                              " Pandoc
 Plug 'vim-pandoc/vim-pandoc-syntax'                       " Pandoc syntax
+Plug 'lnl7/vim-nix'
 Plug 'lervag/vimtex'                                      " Latex support
 Plug 'dogrover/vim-pentadactyl', { 'for': 'pentadactyl' } " Pentadactyl
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }              " Rust
@@ -48,7 +49,6 @@ Plug 'tpope/vim-surround'                                 " Surrounding things
 Plug 'tpope/vim-unimpaired'                               " Mappings
 Plug 'tpope/vim-commentary'                               " Comment stuff out
 Plug 'airblade/vim-gitgutter'                             " Show git diff in gutter
-Plug 'clever-f.vim'                                       " Make F and T repeatable
 Plug 'easymotion/vim-easymotion'                          " Highlight possible targets
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim'                           " Better autocompletion
@@ -173,7 +173,7 @@ command! LatexShellescape let g:vimtex_latexmk_options = latexmk_options . ' -sh
 command! LatexShellescapeOff let g:vimtex_latexmk_options = latexmk_options
 
 " latex spelling {{{3
-autocmd BufRead,BufNewFile *.tex setlocal spell | setlocal spelllang=de
+autocmd BufRead,BufNewFile *.tex setlocal spell | setlocal spelllang=en
 " Ignore spelling inside tabular {}
 fun! TexNoSpell()
 	syntax region texNoSpell
@@ -299,7 +299,7 @@ nmap ga <Plug>(EasyAlign)
 " fzf {{{3
 " Ignore non-text filetypes / generated files
 let fzf_ignores = ''
-for ign in ['class', 'pdf', 'fdb_latexmk', 'aux', 'fls', 'synctex.gz', 'zip']
+for ign in ['class', 'pdf', 'fdb_latexmk', 'aux', 'fls', 'synctex.gz', 'nav', 'snm', 'zip']
 	let fzf_ignores = fzf_ignores . ' --ignore=''*.'.ign.''''
 endfor
 let $FZF_DEFAULT_COMMAND = 'ag --nocolor'.fzf_ignores.' --files-with-matches --follow --depth=-1 --hidden --search-zip -g "" 2>/dev/null'
@@ -365,7 +365,7 @@ set hidden
 set autoindent
 set backspace=indent,eol,start
 set hlsearch
-set wildignore+=*~,*.pyc,*.swp,*.class,*.pdf,*.aux,*.fdb_latexmk,*.dfls,*.toc,*.synctex.gz,*.fls
+set wildignore+=*~,*.pyc,*.swp,*.class,*.pdf,*.aux,*.fdb_latexmk,*.dfls,*.toc,*.synctex.gz,*.fls,*.nav,*.snm
 set tabstop=4
 set shiftwidth=4                       " Shiftwidth equals tabstop
 set wrap
@@ -724,3 +724,8 @@ endfunction
 
 " Save as root {{{3
 cmap w!! w !sudo tee % > /dev/null
+
+" open video
+nmap <leader>m yiW:silent !video-stream '<C-r>0' >/dev/null 2>&1 &<CR>
+
+set termguicolors " true color
