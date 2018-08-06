@@ -1,0 +1,25 @@
+#!/bin/sh
+
+lockfile="/tmp/.maillock"
+
+sync() {
+	touch "$lockfile"
+	mbsync -Va
+
+	notmuch new
+
+	rm "$lockfile"
+}
+
+lockfile="/tmp/.maillock"
+if [[ -f "$lockfile" ]]; then
+	echo "Background sync in progress, waiting for it"
+	while [[ -f "$lockfile" ]]; do
+		sleep 0.1
+	done
+	if [[ "$1" == "repeat" ]]; then
+		sync
+	fi
+else
+	sync
+fi
