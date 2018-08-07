@@ -788,7 +788,7 @@ zbell_end() {
 			fi
 		done
 	done < /tmp/cmdlines_$$
-	rm -f /tmp/cmdlines_$$
+	rm -f /tmp/cmdlines_$$ >/dev/null
 
 	if (( ! $has_ignored_cmd )) && (( ran_long )); then
 		print -n "\a"
