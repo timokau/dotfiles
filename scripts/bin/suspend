@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ ! -f /tmp/suspend-lock ]; then
+	$HOME/bin/lock
+	systemctl suspend
+else
+	notify-send "Suspend is locked"
+fi
