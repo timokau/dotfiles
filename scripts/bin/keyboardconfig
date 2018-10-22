@@ -16,11 +16,11 @@ xmodmap -e 'add Control = Control_L'
 xcape -e 'Control_L=Escape'
 
 # Use tab as alt-gr
-key="ISO_Level3_Shift"
-xmodmap -e "keysym Tab = $key"
-xmodmap -e "remove mod4 = $key"
-xmodmap -e 'keycode any = Tab'
-xcape -e "$key=Tab"
+# key="ISO_Level3_Shift"
+# xmodmap -e "keysym Tab = $key"
+# xmodmap -e "remove mod4 = $key"
+# xmodmap -e 'keycode any = Tab'
+# xcape -e "$key=Tab" # FIXME why not necessary anymore
 
 # I prefer my keys alive
 xmodmap -e 'keysym dead_circumflex = asciicircum'
