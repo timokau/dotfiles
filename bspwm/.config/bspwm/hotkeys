@@ -86,7 +86,7 @@ super + {_,shift + }c
 # 	bspc node --circulate {backward,forward}
 
 super + comma
-	termite -e make_placeholder_tmp '*'
+	"$TERMCMD" -e make_placeholder_tmp '*'
 
 super + bracket{left,right}
 	bspc desktop --focus {prev,next}
