@@ -60,8 +60,8 @@ color.active=bold red
 color.recurring=color4
 color.scheduled=
 color.until=
-color.blocked=color0 on color10
-color.blocking=color15 on color10
+color.blocked= # color0 on color10
+color.blocking= # color15 on color10
 
 # Project
 color.project.none=
