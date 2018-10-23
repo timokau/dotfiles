@@ -46,11 +46,8 @@ super + m ; {p,s,h,l}
 
 # run
 
-super + Return
-	${TERMINAL:-xterm}
-
 super + a
-	termite
+	kitty # TERMCMD
 
 # Since termite doesn't support displaying images inranger, use urxvt
 # borders are needed to avoid Artifacts in images
