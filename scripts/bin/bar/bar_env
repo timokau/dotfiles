@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 # Environment variables to be sourced by scripts that need them
 
 DPI=$(xdpyinfo | awk '/resolution/{print $2}' | sed -e 's/x.*//g')

@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 # Normally, sending this dbus command should inhibit the handle-lid-switch.
 # However, it doesn't (although it doesn't give an error either). Therefore, I use the ugly hack
 # with systemd-inhibit and sleep inf (which sleeps forever) instead.

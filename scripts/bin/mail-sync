@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 . /home/timo/bin/active-xsession
 export GPG_TTY="$(tty)"

@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 
 COLOR_FOREGROUND='#FFA3A6AB'
 COLOR_BACKGROUND='#FF34322E'

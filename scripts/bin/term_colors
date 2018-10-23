@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Author: Judd Vinet
 # https://github.com/jvinet/dotfiles/blob/master/bin/term_colors

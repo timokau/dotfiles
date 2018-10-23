@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Returns the volume of Sink $1
 # pactl is locale-dependent

@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 loc='EUR|DE|33106|Elsen'
 site="http://rss.accuweather.com/rss/liveweather_rss.asp?metric=1&locCode=$loc"
 weather=$(curl -s "$site" --connect-timeout 30 | sed -n 's/^.*Currently: \(.*\): \([0-9]\+\).*$/\1:\2/p')

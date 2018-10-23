@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 pactl set-default-sink $1
 for input in $(pactl list sink-inputs | grep -e '^Sink Input #[0-9]\+' | sed 's/Sink Input #\([0-9]\+\)/\1/'); do

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 # Use taskwarrior in combination with the pomodoro technique.
 # the arguments are passed to taskwarrior as a filter
 

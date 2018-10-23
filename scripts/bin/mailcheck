@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 
 if [[ -z "$DISPLAY" ]]; then
 	. /home/timo/bin/active-xsession

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 remind_tasks="$(\
 		task \
 			"rc.report.remind.description=as" \

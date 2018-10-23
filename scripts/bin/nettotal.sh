@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Gets the network info to show it in a bar
 
 # Obtain the info
