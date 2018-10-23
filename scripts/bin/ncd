@@ -4,9 +4,9 @@ while [ $# -gt 0 ]; do
     if [ -d "$1" ] ; then
         case "$1" in
             /*)
-                setsid termite -d "$1";;
+                setsid "$TERMCMD" -d "$1";;
             *)
-                setsid termite -d "$PWD/$1";;
+                setsid "$TERMCMD" -d "$PWD/$1";;
         esac
     fi
     shift
