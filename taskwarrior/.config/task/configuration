@@ -54,6 +54,16 @@ report.next.columns = id,description,start.age,depends,due.age
 report.next.labels = ID,Description,Active,Deps,Due
 report.next.filter = status:pending limit:page -BLOCKED -backlog +READY
 
+report.bl.columns = id,description,start.age,urgency
+report.bl.labels = ID,Desc,Start,Urg
+report.bl.filter = +READY +backlog -uni limit:10
+report.bl.sort = urgency-
+
+report.uni.columns = id,description,start.age,urgency
+report.uni.labels = ID,Desc,Start,Urg
+report.uni.filter = +READY +uni limit:10
+report.uni.sort = urgency-
+
 # Reviews
 uda.reviewed.type=date
 uda.reviewed.label=Reviewed
