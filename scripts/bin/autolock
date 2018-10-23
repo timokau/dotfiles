@@ -2,11 +2,11 @@
 #! nix-shell -i bash -p xautolock xorg.xset
 
 if [[ "$1" == "enable" ]]; then
-	xset +dpms
+	xset s on +dpms
 	xautolock -enable
 	echo "Autlock enabled"
 else
-	xset -dpms
+	xset s off -dpms
 	xautolock -disable || pkill xautolock
 	echo "Autlock disabled"
 fi
