@@ -726,6 +726,6 @@ endfunction
 cmap w!! w !sudo tee % > /dev/null
 
 " open video
-nmap <leader>m yiW:silent !video-stream '<C-r>0' >/dev/null 2>&1 &<CR>
+nmap <leader>m yiW:silent !video-stream '<C-r>0' >/dev/null 2>&1 &<CR>A watched<ESC>
 
 set termguicolors " true color
