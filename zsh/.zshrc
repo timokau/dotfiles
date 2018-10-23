@@ -7,6 +7,18 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
+# this function checks if a command exists and returns either true or false
+check_com() {
+	emulate -L zsh
+	if   [[ -n ${commands[$1]}    ]] \
+		|| [[ -n ${functions[$1]}   ]] \
+		|| [[ -n ${aliases[$1]}     ]] \
+		|| [[ -n ${reswords[(r)$1]} ]] ; then
+	return 0
+fi
+return 1
+}
+
 ############################### Completion
 # allow one error for every three characters typed in approximate completer
 zstyle ':completion:*:approximate:'    max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )'
@@ -136,13 +148,13 @@ zstyle ':completion:*:hosts' hosts $hosts
 zstyle ':completion:*:pacaur:*' remote-access false
 ###############################
 
-if [[ $TERM == xterm-termite ]]; then
+# if [[ $TERM == xterm-termite ]]; then
 	alias nvim="NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim"
 	alias vimwiki="NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim -c 'VimwikiIndex'"
 	alias vimjour="NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim -c 'VimwikiDiaryIndex'"
 	# In case nvim is started from ranger
 	alias ranger="NVIM_TUI_ENABLE_TRUE_COLOR=1 ranger"
-fi
+# fi
 
 alias scrott='scrot /tmp/shot-$(date +%FT%T).png'
 alias rss='newsboat'
@@ -243,32 +255,6 @@ fi
 rsync --archive --human-readable --info=progress2,stats2,flist1 $*
 notify-send --urgency=low --app-name=cpy "Copying finished."
 }
-
-# this function checks if a command exists and returns either true or false
-check_com() {
-	emulate -L zsh
-	if   [[ -n ${commands[$1]}    ]] \
-		|| [[ -n ${functions[$1]}   ]] \
-		|| [[ -n ${aliases[$1]}     ]] \
-		|| [[ -n ${reswords[(r)$1]} ]] ; then
-	return 0
-fi
-return 1
-}
-
-#
-# enviroment variables {{{1
-#
-export BROWSER=firefox
-# export BROWSER=qutebrowser
-if check_com nvim; then
-	export EDITOR=nvim
-elif check_com vim; then
-	export EDITOR=vim
-fi
-check_com less && export PAGER=less
-
-check_com termite && export TERMCMD=termite
 
 # Rust
 # Enable stack backtraces by default
