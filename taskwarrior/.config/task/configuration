@@ -5,7 +5,8 @@ urgency.waiting.coefficient=-20
 verbose=new-id,special,project,special,affected
 
 # Priority
-uda.priority.values=H,M,,L
+uda.priority.values=HH,H,M,,L
+urgency.uda.priority.HH.coefficient=8.0
 urgency.uda.priority.H.coefficient=4.0
 urgency.uda.priority.M.coefficient=2.0
 urgency.uda.priority.L.coefficient=-3.0
