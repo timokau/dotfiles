@@ -112,7 +112,7 @@ parse_options "$@"
 echo "$@"
 
 echo "Starting pomodoro timer for the following task:"
-task rc.gc=off rc.verbose=no status:pending ls "$uuid" 2>/dev/null
+task rc.gc=off rc.verbose=no status:pending "$uuid" 2>/dev/null
 trap 'break' SIGTERM SIGINT
 for (( i=2; i <= ROUNDS+1; i++)); do
 	start_task
