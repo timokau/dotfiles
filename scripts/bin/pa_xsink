@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Returns the sink id of the currently active X window
 # usage: pactl set-sink-input-volume $(pa_xsink) +5%
 

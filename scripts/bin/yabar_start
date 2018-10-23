@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 bspc config top_padding 24
 yabar & disown
 

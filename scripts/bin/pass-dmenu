@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p pass rofi
+
 # If the "copy" argument is given, copy the selected entry
 # Else, type it
 if [[ $1 == 'copy' ]]; then

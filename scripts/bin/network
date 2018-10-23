@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 # dependencies: ip (from iproute2) and iwconfig (from wireles_tools)
 
 # get all available interfaces

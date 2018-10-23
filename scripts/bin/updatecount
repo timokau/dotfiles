@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 # gives the number of available updates from the official repsoitories as well
 # as the AUR.
 # dependencies: pacaman, pacaur

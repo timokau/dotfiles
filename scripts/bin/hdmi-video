@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 main_monitor='eDP1'
 hdmi_monitor='HDMI1'
 

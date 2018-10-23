@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 # sums up the total CPU load of all running programs
 cores="$(grep -c -i processor /proc/cpuinfo)"
 # ps -eo pcpu | awk '

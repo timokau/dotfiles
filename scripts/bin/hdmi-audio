@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 asoundrc="$HOME/.asoundrc"
 main_monitor='eDP1'
 beamer_monitor='HDMI1'

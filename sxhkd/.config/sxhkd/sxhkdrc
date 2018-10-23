@@ -13,8 +13,7 @@ super + e ; l
 	$HOME/bin/lock
 
 super + e ; s
-	$HOME/bin/lock; \
-	systemctl suspend
+	$HOME/bin/suspend
 
 # open yanked video link in mpv
 super + m

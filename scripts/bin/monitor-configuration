@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Original: https://github.com/codingtony/udev-monitor-hotplug
 
 declare -a monitors

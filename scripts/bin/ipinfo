@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 if grep -P "(([1-9]\d{0,2})\.){3}(?2)" <<< "$1"; then
 	curl ipinfo.io/"$1"
 else

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 # This script notifies the user if there were high priority errors in the last
 # hour. It should be run on a regular basis (for example trough a systemd
 # timer).

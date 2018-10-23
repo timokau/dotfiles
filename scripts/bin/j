@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 # Run a java program. Compile it first if neccessary.
 
 if [[ $# -lt 1 ]]; then

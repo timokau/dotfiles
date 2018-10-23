@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env bash
 # Other scripts run outside of the xsession (udev, systemd etc.)
 # can source this to get the DISPLAY and XAUTHORITY variables and the active user.
 

@@ -1,0 +1,51 @@
+browser "spawn firefox %u"
+auto-reload yes
+reload-threads 14
+macro m set browser "spawn video-stream %u" ; open-in-browser ; set browser "spawn firefox %u"
+macro w set browser "spawn bag %u" ; open-in-browser ; set browser "spawn firefox %u"
+macro M set browser "spawn video-stream %u"
+macro F set browser "spawn firefox %u"
+macro W set browser "spawn bag %u"
+bind-key a redraw
+bind-key j down
+bind-key k up
+bind-key g home
+bind-key G end
+bind-key q hard-quit
+bind-key BACKSPACE quit
+bind-key ESC quit
+datetime-format "%F %R"
+prepopulate-query-feeds yes
+show-keymap-hint no
+#feed-sort-order unreadarticlecount-asc
+#show-read-feeds no
+#error-log "~/newsboat-error.log"
+
+feedlist-format "%S%4U %t"
+articlelist-format "%F %D  %?T?|%-17T| ?%t"
+
+highlight feedlist    "^  *[0-9]+  *N  "                    color156 default
+highlight articlelist "^  *[0-9]+  *N  "                    color156 default
+
+highlight article     "(^Feed:.*)"                          color73  default
+highlight article     "(^Author:.*)"                        color74  default
+highlight article     "(^Title:.*)"                         color75  default bold
+highlight article     "(^Link:.*)"                          color76  default
+highlight article     "(^Date:.*)"                          color77  default
+highlight article     "^Podcast Download URL:.*"            color71  default
+highlight article     "^Links:"                             white    color240 underline
+highlight article     "\\[[0-9][0-9]*\\]"                   color72  default  bold
+highlight article     "\\[image [0-9][0-9]*\\]"             color72  default  bold
+highlight article     "\\[embedded flash: [0-9][0-9]*\\]"   color72  default  bold
+highlight article     ":.*\\(link\\)$"                      color74  default
+highlight article     ":.*\\(image\\)$"                     color74  default
+highlight article     ":.*\\(embedded flash\\)$"            color74  default
+
+color listnormal                                            white    default
+color listfocus                                             default  color240
+color info                                                  default  color240
+
+
+ignore-mode display
+# goodreader only clearink / kindle / waterproof topics
+ignore-article "https://www.youtube.com/feeds/videos.xml?channel_id=UCHhy08xelXhKIOwgsFssaTQ" "title !~ \"clear|kindle|water\""

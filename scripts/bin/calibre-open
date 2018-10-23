@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 calibre_dir="$HOME/data/calibre"
 
 # Ids are seperated by `,`. Read them in as an array.

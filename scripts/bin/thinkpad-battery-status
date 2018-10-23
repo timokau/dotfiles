@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 syspath='/sys/class/power_supply'
 bat0="$syspath/BAT0"

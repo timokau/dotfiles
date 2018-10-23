@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 # This is a simple rsync-wrapper to meet my backup needs.
 # Those needs are:
 # Keep an exact copy of the folders I specify on my home server.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Find with reasonable excludes
 # Excluding works by attaching a matching condition (via or) and then pruning all matches.
 

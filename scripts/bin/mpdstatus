@@ -1,4 +1,4 @@
-#!  /bin/sh
+#!/usr/bin/env bash
 
 if [[ $(mpc status | awk 'NR==2 {print $1}') == "[playing]" ]]; then
 	TTL=$(mpc current --format "%title%")
