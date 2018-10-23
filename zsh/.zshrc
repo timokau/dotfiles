@@ -700,6 +700,21 @@ fi;
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
+#
+# enviroment variables {{{1
+#
+export BROWSER=firefox
+if check_com nvim; then
+	export EDITOR=nvim
+elif check_com vim; then
+	export EDITOR=vim
+fi
+check_com less && export PAGER=less
+
+check_com termite && export TERMCMD=termite
+check_com kitty && export TERMCMD=kitty
+
+
 
 # This script prints a bell character when a command finishes
 # if it has been running for longer than $zbell_duration seconds.
