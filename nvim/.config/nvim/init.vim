@@ -566,13 +566,6 @@ nnoremap <silent> <Leader>+ :resize +3<CR>
 nnoremap <silent> <Leader>< :vertical resize -3<CR>
 nnoremap <silent> <Leader>> :vertical resize +3<CR>
 
-" Move through soft wraps {{{3
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
-nnoremap 0 g^
-nnoremap $ g$
 
 " Spellchecking {{{3
 nnoremap <silent> <leader>s :set spell!<CR>
