@@ -4,6 +4,7 @@
 # If `cmd` exits with exit code 0 the line is moved to `file.sucess`. If it exists with another exit code
 # it is moved to `file.failure`. This handles aborts gracefully (the command will abort, the line will
 # remain in the original file).
+# It can even handle additions and removals to the file at runtime.
 
 # Typical usage: Have some queue of files to process. That is usually a long-running unattended process.
 # Failures can be dealt with after the fact, the process can be aboarted and picked up again any time.
