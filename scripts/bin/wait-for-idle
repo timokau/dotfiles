@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 minutes=${1:-15} # 1, 5 or 15
-thresh=${2:-1.0} # load threshold to consider as idle
+thresh=${2:-0.5} # load threshold to consider as idle
 
 case "$minutes" in
 	1)
@@ -27,7 +27,7 @@ while :; do
 	date
 	echo "$( date -Iseconds ): Load is $load"
 
-	if [[ $load < 0.3 ]]; then
+	if [[ $load < "$thresh" ]]; then
 		echo "$( date -Iseconds): Idle ($load) detected"
 		break
 	fi
