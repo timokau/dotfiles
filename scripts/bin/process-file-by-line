@@ -20,12 +20,7 @@ queue="${2:-queue.txt}"
 while [ -s "$queue" ]; do
 	cur="$(head -n 1 "$queue")"
 
-	date -Iseconds
-	echo "cur: $cur"
-	target_dir="$(dirname "$cur")/target"
-	target_file="$target_dir/$(basename "$cur").mkv"
-	mkdir -p "$target_dir"
-	rm -f "$target_file"
+	echo "$(date -Iseconds): Processing '$cur'"
 
 	if bash -c "$cmd '$cur'"; then
 		echo "$cur" >> "$queue.sucess"
