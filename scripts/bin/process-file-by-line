@@ -17,12 +17,17 @@ fi
 
 cmd="${1}"
 queue="${2:-queue.txt}"
+lines="$( wc -l "$queue")"
+current_line_no=0
+
 while [ -s "$queue" ]; do
 	cur="$(head -n 1 "$queue")"
+	(( current_line_no += 1 ))
 
-	echo "$(date -Iseconds): Processing '$cur'"
+	echo "$(date -Iseconds): Processing '$cur' ($current_line_no/$lines)"
 
 	if bash -c "$cmd '$cur'"; then
+		echo "Failure"
 		echo "$cur" >> "$queue.sucess"
 	else
 		echo "$cur" >> "$queue.failure"
