@@ -1,0 +1,38 @@
+#! /usr/bin/env bash
+
+# Utility for something I often need. Process a file line-by-line, removing the line on successful completion.
+# If `cmd` exits with exit code 0 the line is moved to `file.sucess`. If it exists with another exit code
+# it is moved to `file.failure`. This handles aborts gracefully (the command will abort, the line will
+# remain in the original file).
+
+# Typical usage: Have some queue of files to process. That is usually a long-running unattended process.
+# Failures can be dealt with after the fact, the process can be aboarted and picked up again any time.
+
+if (( $# < 1 )); then
+	echo 'Usage: `process-file-line-by-line <cmd> <file>`' >&2
+	echo '`file` defaults to `queue.txt`, `cmd` takes one argument (the line).' >&2
+	exit 1
+fi
+
+cmd="${1}"
+queue="${2:-queue.txt}"
+while [ -s "$queue" ]; do
+	cur="$(head -n 1 "$queue")"
+
+	date -Iseconds
+	echo "cur: $cur"
+	target_dir="$(dirname "$cur")/target"
+	target_file="$target_dir/$(basename "$cur").mkv"
+	mkdir -p "$target_dir"
+	rm -f "$target_file"
+
+	if bash -c "$cmd '$cur'"; then
+		echo "$cur" >> "$queue.sucess"
+	else
+		echo "$cur" >> "$queue.failure"
+	fi
+	# remove first line of queue
+	cp "$queue" "$queue.bak"
+	tail -n+2 "$queue.bak" > "$queue"
+	rm "$queue.bak"
+done
