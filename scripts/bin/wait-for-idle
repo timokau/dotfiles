@@ -1,0 +1,35 @@
+#! /usr/bin/env bash
+
+minutes=${1:-15} # 1, 5 or 15
+thresh=${2:-1.0} # load threshold to consider as idle
+
+case "$minutes" in
+	1)
+		load_index=0
+		;;
+	5)
+		load_index=1
+		;;
+	15)
+		load_index=2
+		;;
+	*)
+		echo "Interval to be 1, 5 or 15 minutes"
+		exit 1
+		;;
+esac
+
+echo "Idle when average load over $minutes minutes is less than $thresh."
+
+while :; do
+	read -r -a load_array < '/proc/loadavg'
+	load="${load_array["$load_index"]}"
+	date
+	echo "$( date -Iseconds ): Load is $load"
+
+	if [[ $load < 0.3 ]]; then
+		echo "$( date -Iseconds): Idle ($load) detected"
+		break
+	fi
+	sleep "${minutes}m"
+done
