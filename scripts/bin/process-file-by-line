@@ -31,7 +31,7 @@ while [ -s "$queue" ]; do
 	mkdir -p "${logdir}"
 	logfile="${logdir}/${cur_hash}.log"
 	echo "$cur" > "$logfile"
-	if bash -c "$cmd '$cur'" >> "$logfile"; then
+	if bash -c "$cmd '$cur'" >> "$logfile" 2>&1; then
 		echo "$cur" >> "$queue.sucess"
 		rm "$logfile"
 	else
@@ -44,3 +44,5 @@ while [ -s "$queue" ]; do
 	tail -n+2 "$queue.bak" > "$queue"
 	rm "$queue.bak"
 done
+
+rmdir --ignore-fail-on-non-empty "$logdir"
