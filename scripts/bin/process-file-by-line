@@ -19,17 +19,24 @@ cmd="${1}"
 queue="${2:-queue.txt}"
 lines="$( wc -l "$queue")"
 current_line_no=0
+logdir="${queue}-logs"
 
 while [ -s "$queue" ]; do
 	cur="$(head -n 1 "$queue")"
+	cur_hash="$(sha256sum <<< "$cur" | awk '{print $1}')"
 	(( current_line_no += 1 ))
 
 	echo "$(date -Iseconds): Processing '$cur' ($current_line_no/$lines)"
 
-	if bash -c "$cmd '$cur'"; then
-		echo "Failure"
+	mkdir -p "${logdir}"
+	logfile="${logdir}/${cur_hash}.log"
+	echo "$cur" > "$logfile"
+	if bash -c "$cmd '$cur'" >> "$logfile"; then
 		echo "$cur" >> "$queue.sucess"
+		rm "$logfile"
 	else
+		echo "Failure. Logs in $logfile."
+		cat "$logfile"
 		echo "$cur" >> "$queue.failure"
 	fi
 	# remove first line of queue
