@@ -1,5 +1,6 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i bash -p xcape
+#! nix-shell --pure -i bash -p xcape -p xorg.setxkbmap -p xorg.xmodmap -p killall
+# NIX:PATH xcape:xorg.setxkbmap:xorg.xmodmap
 
 # Customize the (German) keyboard with xmodmap and xcape
 
