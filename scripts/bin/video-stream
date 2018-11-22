@@ -1,12 +1,14 @@
-#!/usr/bin/env bash
+#! /usr/bin/env nix-shell
+#! nix-shell --pure -i bash -p mpv
+#python2.pkgs.subliminal
 
 # $1 is the URL
 # Work with embedded youtube
 url="$(echo "$1" | sed 's|.*youtube.com/oembed?.*url=\(.*\)|\1|')"
 url="$(echo "$url" | sed 's|.*youtube.com/embed/\(.*\)|https://youtube.com/watch?v=\1|')"
 
-ytdl_format='(bestvideo[height<=1080]+bestaudio/best)[protocol!=http_dash_segments]' 
-ytdl_raw_options="sub-lang=en,write-sub="
+ytdl_format='(bestvideo[height<=1080]+bestaudio/best)' 
+ytdl_raw_options="sub-lang=en,write-sub=,write-auto-sub="
 
 if ! mpv --ytdl-format="${ytdl_format}" --ytdl-raw-options="${ytdl_raw_options}" --image-display-duration=inf --force-window=yes --audio-display=attachment "${url}" ; then
 	if [[ "$url" =~ roosterteeth\.com ]]; then
