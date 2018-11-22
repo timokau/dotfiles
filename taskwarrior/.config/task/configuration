@@ -13,6 +13,11 @@ urgency.uda.priority.L.coefficient=-3.0
 # urgency.user.tag.OVERDUE.coefficient=100.0
 urgency.due.coefficient=4.0
 urgency.blocking.coefficient=4.0
+urgency.scheduled.coefficient=0.0 # being scheduled doesn't say anything about the urgency
+
+urgency.blocking.coefficient=0.0
+urgency.blocked.coefficient=0.0
+urgency.inherit=on # inherit blocked tasks urgency
 
 # Reports
 report.dsheet.description  = Done today
