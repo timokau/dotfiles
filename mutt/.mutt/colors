@@ -65,6 +65,18 @@ color quoted6	 green	default
 color quoted7	 cyan		default
 color quoted8	 magenta		default
 color quoted9	 red		default
+
+# highlight diffs (http://karelzak.blogspot.com/2010/02/highlighted-patches-inside-mutt.html)
+color body green default "^diff \-.*"
+color body green default "^index [a-f0-9].*"
+color body green default "^\-\-\- .*"
+color body green default "^[\+]{3} .*"
+color body cyan default "^[\+][^\+]+.*"
+color body cyan default "^[\+]$"
+color body red  default "^\-[^\-]+.*"
+color body brightblue default "^@@ .*"
+
+
 #
 #     object	 foreground backg.   RegExp
 #
