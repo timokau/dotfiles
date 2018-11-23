@@ -305,4 +305,11 @@ in
       '';
     }
   ];
+
+  services.xserver.libinput = {
+    enable = isPad;
+    disableWhileTyping = true;
+    scrollButton = 2;
+    scrollMethod = "twofinger";
+  };
 }
