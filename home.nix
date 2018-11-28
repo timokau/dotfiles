@@ -104,7 +104,6 @@ in
     autorandr
     libnotify # notify-send
     nix-review # reviewing nix PRs
-    xorg.xmodmap # TODO use in keyboardconfig
     # TODO
     # highlight
     # sshfs-fuse
@@ -178,19 +177,23 @@ in
     enable = true;
   };
 
-  # TODO udiskie, unclutter, xscreensaver
+  systemd.user.services.keyboardconfig = {
+    Unit = {
+      Description = "Adjust keyboard layout";
+      After = [ "graphical-session-pre.target" ];
+    };
 
-  # TODO window manager
+    Service = {
+      ExecStart = ~/bin/keyboardconfig;
+      Restart = "on-failure";
+    };
 
-  home.keyboard = {
-    layout = "de";
-    #options = [ # xkb options
-      # "ctrl:swapcaps" # swap capslock with left ctrl
-      #"caps:swapescape" # swap capslock with escape
-      #"caps:ctrl_modifier" # caps lock is also a ctrl
-      #"shift:breaks_caps" # shift cancels caps lock
-    #];
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
   };
+
+  # TODO udiskie, unclutter, xscreensaver
 
   programs.command-not-found.enable = true;
 
@@ -214,10 +217,6 @@ in
   home.file.".xprofile".text = ''
 # This is better started by a systemd service, since it tends to crash on my laptop and needs
 # to be automatically restarted.
-keyboardconfig="$HOME/bin/keyboardconfig"
-if [ -f "$keyboardconfig" ]; then
-	bash "$keyboardconfig" & disown
-fi
 
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
