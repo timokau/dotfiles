@@ -169,7 +169,7 @@ in
     Version=1.0
     Type=Application
     Terminal=false
-    Exec=${pkgs.chromium}/bin/chromium --app=https://riot.im/app
+    Exec=${pkgs.chromium}/bin/chromium --class 'Riot' --app=https://riot.im/app
     Name=Riot messenger
   '';
 
