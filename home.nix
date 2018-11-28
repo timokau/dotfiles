@@ -43,9 +43,14 @@ in
     gimp # image editing
     imagemagick # cli image editing
     # for quick python experiments
-    (python3.withPackages (pkgs: [
-      pkgs.six
-      pkgs.requests
+    (python3.withPackages (pkgs: with pkgs; [
+      requests # http
+      ipython # better interactive python
+      numpy # number squashing
+      networkx # graphs
+      graph-tool # more graphs
+      tkinter # matplotlib backend
+      pygraphviz
     ]))
     (python2.withPackages (pkgs: with pkgs; [
       six
