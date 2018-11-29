@@ -15,6 +15,7 @@ in
     ./home/ranger.nix # file manager
     ./home/mutt.nix # mail
     ./home/scripts.nix
+    ./home/kitty.nix
   ];
 
   xsession.enable = true;
