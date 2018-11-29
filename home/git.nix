@@ -11,6 +11,10 @@
         "!git push --set-upstream timokau \"$(git symbolic-ref --short HEAD)\""
       '';
     };
+    extraConfig = {
+      # use ssh-ident to start ssh-agent as necessary
+      core.sshCommand = "BINARY_SSH=${pkgs.openssh}/bin/ssh ${pkgs.ssh-ident}/bin/ssh-ident";
+    };
     # signing = TODO
     userEmail = "timokau@zoho.com";
     userName = "Timo Kaufmann";
