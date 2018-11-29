@@ -57,7 +57,7 @@ report.inbox.labels        = ID,Description
 # Show the due date instead of the due age in the next report
 report.next.columns = id,description,start.age,depends,due.age
 report.next.labels = ID,Description,Active,Deps,Due
-report.next.filter = status:pending limit:page -BLOCKED -backlog +READY
+report.next.filter = status:pending limit:page -BLOCKED (-backlog or due.before:3d) +READY
 
 report.bl.columns = id,description,start.age,urgency
 report.bl.labels = ID,Desc,Start,Urg
