@@ -32,4 +32,6 @@ xmodmap - <<EOF
 	keycode 255 = odiaeresis
 EOF
 
-xcape -d -e "Hyper_L=odiaeresis;Control_L=Escape"
+# -d so that it won't fork, sed so it won't print a keylogger output into the system log (censor
+# keycodes)
+xcape -d -e "Hyper_L=odiaeresis;Control_L=Escape" 2>&1 | sed -e 's/0x[0-9a-fA-F]\+/xx/g' -e 's/[0-9]/x/g'
