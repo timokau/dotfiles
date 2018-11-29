@@ -13,7 +13,9 @@
     foreground #dddddd
     background #000000
 
-     ctrl+shift
+    close_on_child_death yes
+
+    kitty_mod ctrl+shift
     map ctrl+plus change_font_size all +2.0
     map ctrl+minus change_font_size all -2.0
     map ctrl+0 change_font_size all 0
