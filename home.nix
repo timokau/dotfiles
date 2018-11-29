@@ -140,6 +140,12 @@ in
   programs.zsh = {
     enable = true;
     initExtra = builtins.readFile ./zsh/.zshrc;
+    shellAliases = {
+      # use ssh-ident to start ssh-agent as necessary
+      ssh = "BINARY_SSH=${pkgs.openssh}/bin/ssh ${pkgs.ssh-ident}/bin/ssh-ident";
+      scp = "BINARY_SSH=${pkgs.openssh}/bin/scp ${pkgs.ssh-ident}/bin/ssh-ident";
+      rsync = "BINARY_SSH=${pkgs.rsync}/bin/rsync ${pkgs.ssh-ident}/bin/ssh-ident";
+    };
   };
 
   xdg.enable = true;
