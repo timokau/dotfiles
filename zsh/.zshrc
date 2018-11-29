@@ -325,10 +325,6 @@ precmd () {
 	blue="\u001b[34m"
 	reset="\u001b[0m"
 	LEFT="$red$(whoami)$reset@$blue$(hostname)$reset $PWD"
-	taskc="$( task +READY -backlog count )"
-	(( taskc > 0 )) && tasks="$taskc tasks "
-	mailc="$( notmuch count tag:unread )"
-	(( mailc > 0 )) && mails="$mailc mails "
 	RIGHT="$red$tasks$mails$reset$(date +%T) "
 	# len without ascii escapes
 	LEFTLEN="$(( ${#${(S%%)LEFT//(\%([KF1]|)\{*\}|\%[Bbkf])}} ))"
