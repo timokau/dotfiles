@@ -758,40 +758,19 @@ recursive_spawned_cmdlines() {
 # right before we begin to execute something, store the time it started at
 zbell_begin() {
 	zbell_timestamp=$EPOCHSECONDS
-	zbell_lastcmd=$1
-	rm -f /tmp/cmdlines_$$
+	rm -f /tmp/cmdlines_$$ >/dev/null
 	(( sleep "$zbell_duration"; recursive_spawned_cmdlines $$ > /tmp/cmdlines_$$ ) & )
 }
 
 # when it finishes, if it's been running longer than $zbell_duration,
-# and we dont have an ignored command in the line, then print a bell.
+# then print a bell.
 zbell_end() {
 	ran_long=$(( $EPOCHSECONDS - $zbell_timestamp >= $zbell_duration ))
 	if (( ! ran_long )); then
 		return
 	fi
 
-	if [[ -z "$zbell_lastcmd" ]]; then
-		return
-	fi
-	has_ignored_cmd=0
-	while read cmdline; do
-		for cmd in ${(s:;:)cmdline//|/;} "$(basename "$cmdline")"; do
-			words=(${(z)cmd})
-			util=${words[1]}
-			if (( ${zbell_ignore[(i)$util]} <= ${#zbell_ignore} )); then
-				has_ignored_cmd=1
-				break
-			fi
-		done
-	done < /tmp/cmdlines_$$
-	rm -f /tmp/cmdlines_$$ >/dev/null
-
-	if (( ! $has_ignored_cmd )) && (( ran_long )); then
-		print -n "\a"
-		( sound complete & ) # TODO conditionally, only when inactive & at home?
-		notify-send "\"$zbell_lastcmd\" finished in $(( EPOCHSECONDS - $zbell_timestamp ))s"
-	fi
+	print -n "\a"
 }
 
 # register the functions as hooks
