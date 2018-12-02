@@ -190,7 +190,8 @@ in
   #   options snd_hda_intel index=1,0
   # '';
 
-  # programs.zsh.enable = true;
+  # necessary to generate /etc/zsh (so that users can use zsh as a login shell)
+  programs.zsh.enable = true;
 
   # environment.variables = {
   #   EDITOR = "nvim";
