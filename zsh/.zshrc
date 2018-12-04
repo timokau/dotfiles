@@ -781,6 +781,10 @@ add-zsh-hook precmd zbell_end
 # vi-mode pasting
 # https://unix.stackexchange.com/questions/25765/pasting-from-clipboard-to-vi-enabled-zsh-or-bash-shell
 function x11-clip-wrap-widgets() {
+	if [[ -z "$DISPLAY" ]]; then
+		return
+	fi
+
     # NB: Assume we are the first wrapper and that we only wrap native widgets
     # See zsh-autosuggestions.zsh for a more generic and more robust wrapper
     local copy_or_paste=$1
