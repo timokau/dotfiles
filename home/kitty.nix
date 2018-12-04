@@ -19,8 +19,8 @@
     map ctrl+plus change_font_size all +2.0
     map ctrl+minus change_font_size all -2.0
     map ctrl+0 change_font_size all 0
-    map +x kitten hints
-    map +s kitten hints
+    map kitty_mod+x kitten hints
+    map kitty_mod+s kitten hints
     map kitty_mod+c copy_to_clipboard
     map kitty_mod+v paste_from_clipboard
 
