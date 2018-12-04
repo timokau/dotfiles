@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 
 let
-  hostname = lib.fileContents ./hostname;
+  hostname = lib.fileContents ./hostname; # different file for each host, not version controlled
+  dyndns = lib.fileContents ./dyndns; # not version controlled
   isDesk = hostname == "desk";
   isPad = hostname == "pad";
   inherit (pkgs) lib;
