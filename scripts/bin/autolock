@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i bash -p xautolock xorg.xset
+#! nix-shell -i bash -p xautolock xorg.xset procps
 
 if [[ "$1" == "enable" ]]; then
 	xset s on +dpms
