@@ -123,6 +123,10 @@ in
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
+    # fallback is not working
+    # extraConfig = ''
+    #   pinentry-program /home/timo/pinentry
+    # '';
     # defaultCacheTtl = 86400;
     # allow-loopback-pinentry
     # defaultCacheTtlSsh = TODO;
