@@ -83,8 +83,6 @@ in
     texlive.combined.scheme-full # latex
     trash-cli # gentle rm replacement
     nox # nix reviews
-    radare2 # reverse engineering
-    radare2-cutter # radare gui
     firejail # sandboxing
     pavucontrol # volume
     sxiv # image viewer
@@ -118,6 +116,8 @@ in
     home-manager
     sageWithDoc # math software
     retdec # decompiler
+    radare2 # reverse engineering
+    radare2-cutter # radare gui
   ]);
 
   services.gpg-agent = {
