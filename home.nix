@@ -46,6 +46,7 @@ in
     imagemagick # cli image editing
     # for quick python experiments
     (python3.withPackages (pkgs: with pkgs; [
+      tensorflow # machine learning
       requests # http
       ipython # better interactive python
       numpy # number squashing
