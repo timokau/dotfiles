@@ -229,6 +229,7 @@ in
     highlightBaseName = true;
     showProgramPath = false;
     treeView = true;
+    sortKey = "PERCENT_MEM"; # usually the bottleneck
   };
 
   programs.rofi.enable = true;
