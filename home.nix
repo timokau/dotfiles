@@ -1,7 +1,5 @@
 { pkgs, ... }:
 let
-  unstable = import <unstable> { inherit (pkgs) config; };
-  pkgs-unstable = import <pkgs-unstable> { inherit (pkgs) config; };
   headless = false;
 in
 {
@@ -32,7 +30,6 @@ in
     vagrant # VM management
     moreutils # usefull stuff like `vidir` bulk renaming
     ltrace # trace library calls
-    gparted # partitioning
     anki # flash cards
     pdftk # cutting and rotating pdfs
     gdb
@@ -124,13 +121,12 @@ in
     # ssh-ident
     xorg.xbacklight
     # moreutils
-  ] ++ (with unstable; [
     home-manager
     sageWithDoc # math software
     retdec # decompiler
     radare2 # reverse engineering
     radare2-cutter # radare gui
-  ]);
+  ];
 
   services.gpg-agent = {
     enable = true;
