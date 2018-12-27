@@ -2,7 +2,7 @@
 let
   headless = false;
 in
-{
+with pkgs.lib; {
   imports = [
     ./home/neovim.nix # editor
     ./home/taskwarrior.nix # todo list and task management
@@ -30,18 +30,14 @@ in
     vagrant # VM management
     moreutils # usefull stuff like `vidir` bulk renaming
     ltrace # trace library calls
-    anki # flash cards
     pdftk # cutting and rotating pdfs
     gdb
     tmux
     libreoffice
     loc # SLOC language summary
-    xclip # x11 clipboard management
     wireshark # network sniffing
     htop # system monitoring
     pdfgrep # search through pdfs
-    okular # feature-full pdf viewer
-    gimp # image editing
     imagemagick # cli image editing
     # for quick python experiments
     (python3.withPackages (pkgs: with pkgs; [
@@ -75,58 +71,63 @@ in
     p7zip
     nix-index
     tldr # quick usage examples
-    tdesktop # telegram chat
-    spotify # music
-    kitty # terminal emulator
-    digikam # picture management
     mpv # audio and video player
     youtube-dl # media downloader (not just youtube)
     ffmpeg # cli media editor
     beets # music library manager
-    scrot # screenshots
     ncmpcpp # tui mpd music player
     wget
     zathura # minimal pdf viewer with vim contorls
-    evince # more fully featured (and bloated) pdf viewer
     pandoc # convert between markup formats
     texlive.combined.scheme-full # latex
     trash-cli # gentle rm replacement
     nox # nix reviews
     firejail # sandboxing
-    pavucontrol # volume
-    sxiv # image viewer
     httpie # cli http client
-    calibre # ebook management
     exa # "modern" ls replacement
     fd # "modern" find replacement
-    xcape # keyboard management
     psmisc # `killall` command
     khard # calendar
     speedtest-cli # connection speed test
-    rofi # launcher
-    xdotool # x automation
     fasd # cli navigation
     mpd
     mpc_cli # mpd cli client
     jq # cli json handling
     pass # password manager
-    chromium # fallback browser
-    autorandr
-    libnotify # notify-send
     nix-review # reviewing nix PRs
     # TODO
     # highlight
     # sshfs-fuse
     # xsel
     # ssh-ident
-    xorg.xbacklight
     # moreutils
     home-manager
-    sageWithDoc # math software
+    # sageWithDoc # math software
     retdec # decompiler
     radare2 # reverse engineering
+  ] ++ (optionals (! headless) [
+    anki # flash cards
+    xclip # x11 clipboard management
+    okular # feature-full pdf viewer
+    gimp # image editing
+    tdesktop # telegram chat
+    spotify # music
+    kitty # terminal emulator
+    digikam # picture management
+    scrot # screenshots
+    evince # more fully featured (and bloated) pdf viewer
+    pavucontrol # volume
+    sxiv # image viewer
+    calibre # ebook management
+    xcape # keyboard management
+    rofi # launcher
+    xdotool # x automation
+    chromium # fallback browser
+    autorandr
+    libnotify # notify-send
+    xorg.xbacklight
     radare2-cutter # radare gui
-  ];
+  ]);
 
   services.gpg-agent = {
     enable = true;
@@ -175,7 +176,7 @@ in
 
   services.dunst = {
     # TODO
-    enable = true;
+    enable = ! headless;
   };
   xdg.configFile."mpv" = {
     source = ./mpv/.config/mpv;
@@ -183,7 +184,7 @@ in
   };
   # services.gpg-agent = TODO
   xdg.configFile."dunst/dunstrc".source = ./dunst/.config/dunst/dunstrc;
-  xdg.dataFile."applications/riot.desktop".text = ''
+  xdg.dataFile."applications/riot.desktop".text = optionalString (! headless) ''
     [Desktop Entry]
     Encoding=UTF-8
     Version=1.0
@@ -230,7 +231,7 @@ in
     sortKey = "PERCENT_MEM"; # usually the bottleneck
   };
 
-  programs.rofi.enable = true;
+  programs.rofi.enable = ! headless;
 
   # programs.ssh.enable = true; TODO
 
