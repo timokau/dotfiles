@@ -16,7 +16,7 @@
     close_on_child_death yes
 
     kitty_mod ctrl+shift
-    map ctrl+plus change_font_size all +2.0
+    map ctrl+RIGHT_BRACKET change_font_size all +2.0
     map ctrl+minus change_font_size all -2.0
     map ctrl+0 change_font_size all 0
     map kitty_mod+x kitten hints
