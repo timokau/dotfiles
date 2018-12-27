@@ -22,10 +22,9 @@ let
     }
     {
       p = vimtex;
-      startup = true;
-      # r = ''
-      #   autocmd PlugAutoload FileType tex :packadd vimtex
-      # '';
+      startup = true; # FIXME
+      # r = "autocmd PlugAutoload BufReadPre,BufNewFile *.tex :packadd vimtex";
+      # r = "autocmd PlugAutoload FileType tex :packadd vimtex";
       config = ''
         let g:vimtex_view_method="zathura"
         let g:vimtex_indent_on_ampersands=0
@@ -75,7 +74,7 @@ let
       '';
       config = ''
         " Run rustfmt on save
-        let g:rustfmt_command='${pkgs.rustfmt}/bin/rustfmt' 
+        let g:rustfmt_command='${pkgs.rustfmt}/bin/rustfmt'
         let g:rustfmt_autosave = 1
       '';
     }
@@ -121,6 +120,11 @@ let
       '';
     }
     {
+      # make custom actions (like the ones from vim-surround) repeatable (`.`)
+      p = vim-repeat;
+      startup = true;
+    }
+    {
       # show git diff in gutter
       p = vim-gitgutter;
       startup = true;
@@ -138,21 +142,21 @@ let
         nnoremap <silent> <leader>zi <Plug>VimwikiDiaryIndex
       '';
     }
-    {
-      # snippets
-      p = ultisnips;
-      startup = true;
-      config = ''
-        " Trigger configuration. <tab> interferes with YouCompleteMe
-        let g:UltiSnipsExpandTrigger="<c-j>"
-        let g:UltiSnipsJumpForwardTrigger="<c-j>"
-        let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-        let g:UltiSnipsEditSplit="vertical"
-        " FIXME
-        "let g:UltiSnipsSnippetsDir=vimdir . "/UltiSnips"
-        let g:UltiSnipsEnableSnipMate=0
-      '';
-    }
+    # {
+    #   # snippets
+    #   p = ultisnips;
+    #   startup = true;
+    #   config = ''
+    #     " Trigger configuration. <tab> interferes with YouCompleteMe
+    #     let g:UltiSnipsExpandTrigger="<c-j>"
+    #     let g:UltiSnipsJumpForwardTrigger="<c-j>"
+    #     let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+    #     let g:UltiSnipsEditSplit="vertical"
+    #     " FIXME
+    #     "let g:UltiSnipsSnippetsDir=vimdir . "/UltiSnips"
+    #     let g:UltiSnipsEnableSnipMate=0
+    #   '';
+    # }
     {
       # highlight possible motion targets
       p = vim-easymotion;
@@ -165,35 +169,42 @@ let
     }
     {
       # autocompletion
-      p = deoplete-nvim;
+      p = ncm2;
       startup = true;
       config = ''
-        let g:deoplete#enable_at_startup = 1
-        let g:deoplete#enable_ignore_case = 1
-        let g:deoplete#enable_smart_case = 1
-        let g:deoplete#enable_camel_case = 1
-        let g:deoplete#enable_refresh_always = 1
-        let g:deoplete#enable_fuzzy_completion = 1
-        let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-        let g:deoplete#omni#input_patterns.java = ['[^. \t0-9]\.\w*',
-                                                  \'[^. \t0-9]\->\w*',
-                                                  \'[^. \t0-9]\::\w*',
-                                                  \]
+        " enable ncm2 for all buffers
+        autocmd BufEnter * call ncm2#enable_for_buffer()
 
-        " Hide preview window after completion
-        augroup deoplete_preview
-	      autocmd!
-	      autocmd CompleteDone * pclose!
-        augroup END
+        " Ncm2 needs noinsert in completeopt
+        au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+        au User Ncm2PopupClose set completeopt=menuone
+
+        " don't show ins-completeion-menu messages like "Pattern not found"
+        set shortmess+=c
+
+        " latex support, also requires vimtex
+        " :help vimtex-complete-ncm2, more advanced at https://github.com/ncm2/ncm2/pull/23
+        "FIXME
+        "autocmd Filetype tex if exists ('g:vimtex#re#ncm2') call ncm2#register_source({
+        "        \ 'name': 'vimtex',
+        "        \ 'priority': 8,
+        "        \ 'scope': ['tex'],
+        "        \ 'mark': 'tex',
+        "        \ 'word_pattern': '\w+',
+        "        \ 'complete_pattern': g:vimtex#re#ncm2,
+        "        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+        "        \ }) endif
       '';
     }
     {
-      # autocompletion
-      p = deoplete-jedi;
+      # autocomplete paths
+      p = ncm2-path;
       startup = true;
-      config = ''
-        let g:deoplete#sources#jedi#show_docstring = 1
-      '';
+    }
+    {
+      # autocompletion
+      p = ncm2-jedi;
+      r = "autocmd PlugAutoload FileType python :packadd ncm2-jedi";
     }
     {
       # better statusbar
@@ -203,6 +214,7 @@ let
         let g:airline#extensions#whitespace#mixed_indent_algo = 2
       '';
     }
+    # FIXME setup
     {
       # linting
       p = neomake;
@@ -234,15 +246,6 @@ let
       '';
     }
     {
-      # show docstrings
-      p = echodoc;
-      startup = true;
-      config = ''
-        let g:echodoc_enable_at_startup = 1
-      '';
-    }
-    {
-      startup = true;
       p = pkgs.symlinkJoin {
         name = "fzf-vim";
         paths = [
@@ -250,6 +253,7 @@ let
           fzfWrapper
         ];
       };
+      startup = true;
       config = ''
         " Ignore non-text filetypes / generated files
         let fzf_ignores = ""
@@ -329,17 +333,14 @@ in
         # '';
       };
     })
-    (vim_configurable.customize {
-      name = "mvim";
-      vimrcConfig.packages.myVimPackage = with pkgs.vimPlugins; {
-          start = [
-            # colorschemes
-            gruvbox
-            base16-vim
-            #fzfWrapper # TODO ask upstream
-          ] ++ map (pluginRule: pluginRule.p) (pkgs.lib.filter (pluginRule: pluginRule.startup or false) pluginRules);
-          opt = map (pluginRule: pluginRule.p) (pkgs.lib.filter (pluginRule: !(pluginRule.startup or false)) pluginRules);
-      };
-    })
+    # (vim_configurable.customize {
+    #   name = "mvim";
+    #   vimrcConfig = with pkgs.vimPlugins; {
+    #     # loaded on launch
+    #     vam = {
+    #     };
+    #     plug.plugins = [ youcompleteme fugitive elm-vim ];
+    #   };
+    # })
   ];
 }
