@@ -149,11 +149,8 @@ zstyle ':completion:*:pacaur:*' remote-access false
 ###############################
 
 # if [[ $TERM == xterm-termite ]]; then
-	alias nvim="NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim"
-	alias vimwiki="NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim -c 'VimwikiIndex'"
-	alias vimjour="NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim -c 'VimwikiDiaryIndex'"
-	# In case nvim is started from ranger
-	alias ranger="NVIM_TUI_ENABLE_TRUE_COLOR=1 ranger"
+	alias vimwiki="nvim -c 'VimwikiIndex'"
+	alias vimjour="nvim -c 'VimwikiDiaryIndex'"
 # fi
 
 alias scrott='scrot /tmp/shot-$(date +%FT%T).png'
