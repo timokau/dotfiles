@@ -46,21 +46,31 @@ in
     imagemagick # cli image editing
     # for quick python experiments
     (python3.withPackages (pkgs: with pkgs; [
-      tensorflow # machine learning
+      # tensorflow # machine learning (currently not available with python 3.7)
       requests # http
       ipython # better interactive python
       numpy # number squashing
       networkx # graphs
-      graph-tool # more graphs
+      # graph-tool # more graphs
+      matplotlib
       tkinter # matplotlib backend
       pygraphviz
     ]))
-    (python2.withPackages (pkgs: with pkgs; [
-      six
-      requests
-      rpy2
-      ipython
-    ]))
+    (python2.buildEnv.override {
+      extraLibs = with python2.pkgs; [
+        tensorflow
+        jupyter_core
+        jupyter_client
+        jupytext # edit jupyter notebooks in vim like regular python scripts
+        notebook # jupyter
+        tkinter # matplotlib backend
+        matplotlib # plotting
+        numpy
+        requests
+        ipython
+      ];
+      ignoreCollisions = true;
+    })
     ncdu # where is my space gone?
     translate-shell # translate
     p7zip
