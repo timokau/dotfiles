@@ -2,21 +2,23 @@
 let
   unstable = import <unstable> { inherit (pkgs) config; };
   pkgs-unstable = import <pkgs-unstable> { inherit (pkgs) config; };
+  headless = false;
 in
 {
   imports = [
     ./home/neovim.nix # editor
     ./home/taskwarrior.nix # todo list and task management
-    ./home/redshift.nix # shift screen light to red (away from blue) in the evening to tell the brain its night time
     ./home/newsboat.nix # rss reader
-    ./home/herbstluftwm.nix # window manager
     ./home/git.nix
     ./home/r.nix
     ./home/ranger.nix # file manager
     ./home/mutt.nix # mail
     ./home/scripts.nix
-    ./home/kitty.nix
-  ];
+  ] ++ (if ! headless then [
+    ./home/herbstluftwm.nix # window manager
+    ./home/kitty.nix # terminal emulator
+    ./home/redshift.nix # shift screen light to red (away from blue) in the evening to tell the brain its night time
+  ] else [] );
 
   xsession.enable = true;
   # TODO add module
