@@ -22,9 +22,7 @@ let
     }
     {
       p = vimtex;
-      startup = true; # FIXME
-      # r = "autocmd PlugAutoload BufReadPre,BufNewFile *.tex :packadd vimtex";
-      # r = "autocmd PlugAutoload FileType tex :packadd vimtex";
+      r = "autocmd PlugAutoload FileType tex :packadd vimtex";
       config = ''
         let g:vimtex_view_method="zathura"
         let g:vimtex_indent_on_ampersands=0
