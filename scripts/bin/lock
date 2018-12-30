@@ -1,20 +1,17 @@
-#! /usr/bin/env bash
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p xorg.xbacklight xorg.xset i3lock xautolock procps
+
 # enable the screen
 if (( $(xbacklight -get) < 1 )); then
 	xbacklight -set 80
 fi
 
-# locks using i3lock and xautlock (if running)
-if [[ "$1" == "--try-autolock" ]] && [[ "$(pgrep -cx xautolock)" -ge 1 ]]; then
-	xautolock -locknow
-else
-	( xset +dpms dpms 10 10 10 \
-	&& i3lock -n \
-	    --color=333333 \
-	    --ignore-empty-password \
-	    --show-failed-attempts \
-	&& xset dpms 0 0 0 ) & disown
-	# Clear cached passwords
-fi
+( xset dpms force off \
+&& i3lock -n \
+	--color=333333 \
+	--ignore-empty-password \
+	--show-failed-attempts \
+) & disown
+# Clear cached passwords
 pkill -SIGHUP gpg-agent
 echo "gpg-agent cache cleared"
