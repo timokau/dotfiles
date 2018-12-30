@@ -267,10 +267,9 @@ in
   # nix.trustedUsers = [ "timo" ];
   # nix.distributedBuilds = true;
 
-  nix.gc = {
+  nix.optimise = {
     automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
+    dates = [ "19:00" ];
   };
 
   nix.buildCores = 0; # use all available CPUs
