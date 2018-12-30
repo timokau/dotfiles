@@ -204,19 +204,17 @@ let
     }
     {
       # linting
-      p = neomake;
       startup = true;
+      p = neomake;
       config = ''
-        augroup neomake_plugin
-          autocmd!
-          if has('nvim')
-            " autocmd! BufWritePost * Neomake
-            " autocmd! BufWritePost *.rs Neomake! clippy
-          endif
-        augroup END
+        let $PATH .= ':${pkgs.python3.pkgs.pyflakes}/bin:${pkgs.python3.pkgs.pylint}/bin'
         let g:neomake_python_enabled_makers = ['python', 'pyflakes', 'pylint']
         let g:neomake_tex_enabled_makers = ['chktex'] " no lacheck
         let g:neomake_sty_enabled_makers = ['chktex'] " no lacheck
+
+        " execute 500ms after changes ([n]ormal and [i]nsert), after [r]ead and [w]rite
+        call neomake#configure#automake('nrwi', 500)
+
         " Disabled warnings:
         " - command terminated with space (1) (I *want* to terminate some commands with space)
         " - wrong length of dash (8) (may or may not be right)
@@ -280,7 +278,10 @@ let
       p = vim-fugitive;
     }
   ];
-  pluginRc = "augroup PlugAutoload\n"
+  pluginRc = ''
+    augroup PlugAutoload
+    packloadall " actually load packages
+  ''
     + pkgs.lib.concatStringsSep "\n" (map (pluginRule: pluginRule.r or "") pluginRules)
     + pkgs.lib.concatStringsSep "\n" (map (pluginRule: (pluginRule.config or "")) pluginRules);
   hunspell = pkgs.fetchurl {
