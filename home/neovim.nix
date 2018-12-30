@@ -305,7 +305,6 @@ in
             # colorschemes
             gruvbox
             base16-vim
-            #fzfWrapper # TODO ask upstream
           ] ++ map (pluginRule: pluginRule.p) (pkgs.lib.filter (pluginRule: pluginRule.startup or false) pluginRules);
           opt = map (pluginRule: pluginRule.p) (pkgs.lib.filter (pluginRule: !(pluginRule.startup or false)) pluginRules);
         };
@@ -316,19 +315,7 @@ in
         ] [
           "'${pkgs.rustup}/bin/rustup'"
         ] (builtins.readFile ../nvim/.config/nvim/init.vim);
-        # customRC = ''
-        #   # custom config
-        # '';
       };
     })
-    # (vim_configurable.customize {
-    #   name = "mvim";
-    #   vimrcConfig = with pkgs.vimPlugins; {
-    #     # loaded on launch
-    #     vam = {
-    #     };
-    #     plug.plugins = [ youcompleteme fugitive elm-vim ];
-    #   };
-    # })
   ];
 }
