@@ -2,8 +2,7 @@
 
 augroup git-commit
 	autocmd!
-	autocmd Filetype gitcommit setlocal textwidth=72
-	autocmd Filetype gitcommit setlocal wrap
+	autocmd Filetype gitcommit setlocal textwidth=72 | setlocal wrap
 	" Highlight chars in the 51st column in the subject
 	highlight SubjectTooLong ctermbg=Red ctermfg=White
 	call matchaddpos('SubjectTooLong', [[3, 51]], 100)
@@ -25,32 +24,26 @@ set ruler
 set cmdheight=2
 set splitright
 set splitbelow
-" set nofoldenable
 set hidden
 set autoindent
 set backspace=indent,eol,start
 set hlsearch
 set wildignore+=*~,*.pyc,*.swp,*.class,*.pdf,*.aux,*.fdb_latexmk,*.dfls,*.toc,*.synctex.gz,*.fls,*.nav,*.snm
 set tabstop=4
-set shiftwidth=4                       " Shiftwidth equals tabstop
+set shiftwidth=4 " Shiftwidth equals tabstop
 set wrap
-if has('linebreak')
-	set linebreak
-	set breakindent
-	" Indicate wraps
-	set breakindentopt=sbr
-	set showbreak=↪
-endif
-set textwidth=99
+set linebreak
+set breakindent
+" Indicate wraps
+set breakindentopt=sbr
+set showbreak=↪
+set textwidth=80
 set showmatch
 set ignorecase
 set smartcase
 set directory-=.
 set backupdir-=.
 set nobackup
-if has('nvim')
-	silent execute "!mkdir -p " . &backupdir
-endif
 
 " Highlight chars in the 81st column
 highlight ColorColumn ctermbg=magenta
@@ -60,21 +53,21 @@ if has('nvim')
 	set inccommand=split
 endif
 set mouse+=a
-set copyindent                         " Keep spaces used for alignment
+set copyindent " Keep spaces used for alignment
 set preserveindent
 
 " Diffs {{{3
 set diffopt=filler,vertical
 
 " Remember undos {{{3
-if has('persistent_undo')
-	silent call system('mkdir -p $HOME/tmp/vim/undo')
-	if !has("nvim")
-		set undodir=$HOME/tmp/vim/undo
-	endif
-	set undolevels=100000
-	set undoreload=100000
-	set undofile
+set undolevels=100000
+set undoreload=100000
+set undofile
+if !has("nvim")
+	" nvim has sensible defaults, but vim defaults to just dumping it into the
+	" working directory
+	silent call system('mkdir -p $HOME/.local/share/vim/undo')
+	set undodir=$HOME/.local/share/vim/undo
 endif
 
 " Prevent Vim from keeping the contents of tmp files on the system {{{3
@@ -93,27 +86,14 @@ augroup swapskip
 augroup END
 endif
 
-" Don't keep undo files in temp directories or shm
-if has('persistent_undo') && has('autocmd')
+" Don't keep undo files for files in temp directories or shm
+" For exmple when using `sudoedit` this is important.
 augroup undoskip
 	autocmd!
 	silent! autocmd BufWritePre
-	              \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
-	              \ setlocal noundofile
+	              \ */tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
+	              \ setlocal noundofile | setlocal viminfo=
 augroup END
-endif
-
-" Don't keep viminfo for files in temp directories or shm
-if has('viminfo')
-if has('autocmd')
-	augroup viminfoskip
-		autocmd!
-		silent! autocmd BufNewFile,BufReadPre
-		              \ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*
-		              \ setlocal viminfo=
-	augroup END
-endif
-endif
 
 " Helper functions {{{3
 " Execute macro over visual selection {{{3
@@ -126,15 +106,11 @@ function! ExecuteMacroOverVisualRange()
 endfunction
 
 " Appearance {{{3
-if has ("multi_byte_encoding")
-	if !has("nvim")
-		set encoding=utf-8
-	endif
-endif
 set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
 set background=dark
 set guifont=Source\ Code\ Pro\ 11
+
 " Colorscheme (if available)
 let g:gruvbox_italic = 1 " Use italic
 let g:gruvbox_contrast_dark = "hard" " Hard contrast
@@ -149,21 +125,9 @@ if !has("gui_running")
 	endif
 endif
 syntax enable
-" Formating {{{3
-set formatoptions-=t                   " Don't autowrap text
-set formatoptions-=c                   " Don't autowrap comments
-set formatoptions-=o                   " Don't insert comment-leader
-let g:netrw_dirhistmax = 0 " Don't save a file history in the .vim folder
 
 " Email-Settings {{{3
-autocmd FileType mail execute 'normal G' | set formatoptions-=t | set spell
-
-" Use ack/ag if available
-if executable ('ag')
-	set grepprg=ag\ --nogroup\ --nocolor
-elseif executable ('ack')
-	set grepprg=ack\ --nogroup\ --nocolor
-endif
+autocmd FileType mail execute 'normal G' | set spell | set spelllang=de
 
 " Mappings {{{2
 " Use space as leader {{{3
@@ -188,10 +152,6 @@ nnoremap <silent> <Leader>cp :cprevious<CR>
 " search for TODO comments {{{3
 nnoremap <Leader>t :silent grep TODO<CR>
 
-" close {{{3
-nnoremap <Leader>q :quit<CR>
-nnoremap <Leader>Q :qall<CR>
-
 " make C-u in insert mode undoable
 inoremap <C-U> <C-G>u<C-U>
 
@@ -201,6 +161,9 @@ nnoremap <silent> <Leader>w :write<CR>
 " Visual star search
 xnoremap * :<C-u> call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u> call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+
+" search/replace the word under the cursor
+xnoremap <leader>s :<C-u> call <SID>VSetSearch()<CR>:%s /<C-R>=@/<CR>/
 
 function! s:VSetSearch()
 	let temp = @s
@@ -231,22 +194,12 @@ nnoremap <silent> <Leader>+ :resize +3<CR>
 nnoremap <silent> <Leader>< :vertical resize -3<CR>
 nnoremap <silent> <Leader>> :vertical resize +3<CR>
 
-
 " Spellchecking {{{3
-nnoremap <silent> <leader>s :set spell!<CR>
 nnoremap <silent> <leader>sd :set spell spelllang=de_20<CR>
 nnoremap <silent> <leader>se :set spell spelllang=en_us<CR>
 
-" search/replace the word under the cursor {{{3
-nnoremap <leader>s :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>hi
-
 " Stop highlighting the last search {{{3
 nnoremap <silent> <leader>c :nohlsearch<CR>
-
-" Tabs
-nnoremap <C-n> :tabNext<CR>
-nnoremap <C-p> :tabprevious<CR>
-nnoremap <C-p> :tabprevious<CR>
 
 " Navigate between split views with <CTRL>-[h/j/k/l]
 nnoremap <C-h> <C-w>h
@@ -263,29 +216,30 @@ nnoremap <C-M-l> <C-w>L
 " Alignment with tab {{{3
 inoremap <S-Tab> <Space><Space><Space><Space>
 
-" Terminal mode {{{3
-if exists(':terminal')
-	" Leave terminal mode and jump to the last line
-	tnoremap <silent> <ESC><ESC> <C-\><C-n>G:call search(".", "b")<CR>$
-	" Navigation
-	tnoremap <C-h> <C-\><C-n><C-w>h
-	tnoremap <C-j> <C-\><C-n><C-w>j
-	tnoremap <C-k> <C-\><C-n><C-w>k
-	tnoremap <C-l> <C-\><C-n><C-w>l
-	nnoremap <leader>vt :vs term://zsh<CR>i
-	" Re-run last command
-	tnoremap <C-r> <Up><Cr>
+" Tab in insert mode idents
+inoremap <Tab> <C-t>
 
-	augroup terminal
-		autocmd!
-		" Don't show listchars in terminals
-		" Don't list terminals in the buffer list
-		" Delete terminals when no active buffer shows them
-		autocmd TermOpen * setlocal nolist nobuflisted bufhidden=delete
-		" Enter insert mode when switching to a terminal
-		autocmd BufEnter term://* startinsert
-	augroup END
-endif
+" Terminal mode {{{3
+" Leave terminal mode and jump to the last line
+tnoremap <silent> <ESC><ESC> <C-\><C-n>G:call search(".", "b")<CR>$
+" Navigation
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+nnoremap <leader>vt :vs term://zsh<CR>i
+" Re-run last command
+tnoremap <C-r> <Up><Cr>
+
+augroup terminal
+	autocmd!
+	" Don't show listchars in terminals
+	" Don't list terminals in the buffer list
+	" Delete terminals when no active buffer shows them
+	autocmd TermOpen * setlocal nolist nobuflisted bufhidden=delete
+	" Enter insert mode when switching to a terminal
+	autocmd BufEnter term://* startinsert
+augroup END
 
 " Autocommands {{{2
 " Initialize (reset) autocommands {{{3
