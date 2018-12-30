@@ -102,7 +102,7 @@ with pkgs.lib; {
     # ssh-ident
     # moreutils
     home-manager
-    # sageWithDoc # math software
+    sageWithDoc # math software
     retdec # decompiler
     radare2 # reverse engineering
   ] ++ (optionals (! headless) [
