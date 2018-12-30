@@ -5,6 +5,21 @@ let
   dyndns = lib.fileContents ./dyndns; # not version controlled
   isDesk = hostname == "desk";
   isPad = hostname == "pad";
+
+  wireguard = {
+    port = 51822;
+    publicKey = {
+      rpi = "gxkt8JC7F2ExSQkA41sY7e94qag693Cf9y3UiFOGQRE=";
+      pad = "YoUI02AyBRNM7//UTzUlO90mCx7wHX+Jzxf2uaFR3gg=";
+      desk = "d5KwIeKll+z5ZyAVRotC69RXuwM4VLwNtZoRoQEbTjo=";
+    };
+    ip = {
+      rpi = "10.10.10.1";
+      pad = "10.10.10.2";
+      desk = "10.10.10.3";
+    };
+  };
+
   inherit (pkgs) lib;
 in
 {
@@ -105,9 +120,13 @@ in
       enable = true;
       allowedTCPPorts = [
         22000 # syncthing sharing
+        8200 # proxy
       ];
       allowedUDPPorts = [
         21027 # syncthing discovery
+        wireguard.port
+        22
+        8200 # proxy
       ];
     };
   };
@@ -145,8 +164,11 @@ in
 
   networking.hosts = {
     # give names to devices in my home network
-    "192.168.178.22" = [ "desk" ];
-    "192.168.178.38" = [ "rpi" ];
+    "192.168.178.22" = [ "desk-local" ];
+    "${wireguard.ip.desk}" = [ "desk" ];
+    "192.168.178.38" = [ "rpi-local" ];
+    "${wireguard.ip.rpi}" = [ "rpi" ];
+    "${wireguard.ip.pad}" = [ "pad" ];
     "192.168.178.21" = [ "opo" ];
     "192.168.178.20" = [ "laptop" ];
     "192.168.178.26" = [ "kindle" ];
@@ -307,5 +329,28 @@ in
     disableWhileTyping = true;
     scrollButton = 2;
     scrollMethod = "twofinger";
+  };
+
+  # create a virtual homenet
+  networking.wireguard.interfaces.wg0 = {
+    ips = [ "${wireguard.ip.${hostname}}/24" ];
+    listenPort = wireguard.port;
+    privateKeyFile = "/home/timo/wireguard-keys/private"; # FIXME location
+
+    peers = [
+      {
+        publicKey = wireguard.publicKey.desk;
+        allowedIPs = [ "${wireguard.ip.desk}/32" ];
+      }
+      {
+        publicKey = wireguard.publicKey.pad;
+        allowedIPs = [ "${wireguard.ip.pad}/32" ];
+      }
+      {
+        publicKey = wireguard.publicKey.rpi;
+        allowedIPs = [ "${wireguard.ip.rpi}/32" ];
+        endpoint = "${dyndns}:${toString wireguard.port}";
+      }
+    ];
   };
 }
