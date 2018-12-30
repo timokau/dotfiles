@@ -140,21 +140,20 @@ let
         nnoremap <silent> <leader>zi <Plug>VimwikiDiaryIndex
       '';
     }
-    # {
-    #   # snippets
-    #   p = ultisnips;
-    #   startup = true;
-    #   config = ''
-    #     " Trigger configuration. <tab> interferes with YouCompleteMe
-    #     let g:UltiSnipsExpandTrigger="<c-j>"
-    #     let g:UltiSnipsJumpForwardTrigger="<c-j>"
-    #     let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-    #     let g:UltiSnipsEditSplit="vertical"
-    #     " FIXME
-    #     "let g:UltiSnipsSnippetsDir=vimdir . "/UltiSnips"
-    #     let g:UltiSnipsEnableSnipMate=0
-    #   '';
-    # }
+    {
+      # snippets
+      p = ultisnips;
+      startup = true;
+      config = ''
+        " Trigger configuration. <tab> interferes with YouCompleteMe
+        let g:UltiSnipsExpandTrigger="<c-j>"
+        let g:UltiSnipsJumpForwardTrigger="<c-j>"
+        let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+        let g:UltiSnipsEditSplit="vertical"
+        let g:UltiSnipsSnippetsDir='${../nvim/.config/nvim/UltiSnips}'
+        let g:UltiSnipsEnableSnipMate=0
+      '';
+    }
     {
       # highlight possible motion targets
       p = vim-easymotion;
