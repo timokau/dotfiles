@@ -203,15 +203,6 @@ let
       r = "autocmd PlugAutoload FileType python :packadd ncm2-jedi";
     }
     {
-      # better statusbar
-      p = vim-airline;
-      startup = true;
-      config = ''
-        let g:airline#extensions#whitespace#mixed_indent_algo = 2
-      '';
-    }
-    # FIXME setup
-    {
       # linting
       p = neomake;
       startup = true;
