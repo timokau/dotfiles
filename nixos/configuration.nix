@@ -228,17 +228,6 @@ in
     environment.HOME = "/root";
   };
 
-  systemd.timers.sleep-time = {
-    enable = true;
-    description = "Suspend the computer at sleep time";
-    timerConfig = {
-      OnCalendar = "*-*-* 23:00:00";
-      Unit = "suspend.service";
-    };
-    wantedBy = [
-      "timers.target"
-    ];
-  };
 
   systemd.services.suspend = {
     description = "Suspend the computer";
