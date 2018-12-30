@@ -181,16 +181,15 @@ let
 
         " latex support, also requires vimtex
         " :help vimtex-complete-ncm2, more advanced at https://github.com/ncm2/ncm2/pull/23
-        "FIXME
-        "autocmd Filetype tex if exists ('g:vimtex#re#ncm2') call ncm2#register_source({
-        "        \ 'name': 'vimtex',
-        "        \ 'priority': 8,
-        "        \ 'scope': ['tex'],
-        "        \ 'mark': 'tex',
-        "        \ 'word_pattern': '\w+',
-        "        \ 'complete_pattern': g:vimtex#re#ncm2,
-        "        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-        "        \ }) endif
+        autocmd Filetype tex if exists ('g:vimtex#re#ncm2') | call ncm2#register_source({
+                \ 'name': 'vimtex',
+                \ 'priority': 8,
+                \ 'scope': ['tex'],
+                \ 'mark': 'tex',
+                \ 'word_pattern': '\w+',
+                \ 'complete_pattern': g:vimtex#re#ncm2,
+                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+                \ }) | endif
       '';
     }
     {
