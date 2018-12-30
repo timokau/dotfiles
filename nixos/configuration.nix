@@ -272,6 +272,12 @@ in
     dates = [ "19:00" ];
   };
 
+  nix.extraOptions = ''
+    min-free = 2147483648 # automatically collect garbage when <2 GiB free
+    max-free = 3221225472 # stop at 3 GiB
+    max-silent-time = 600
+  '';
+
   nix.buildCores = 0; # use all available CPUs
   nix.maxJobs = 4; # number of jobs (builds) in parallel
 
