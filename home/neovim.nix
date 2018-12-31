@@ -295,10 +295,8 @@ let
     mkdir -p $out/spell
     cp '${hunspell}' "$out/spell/de.utf-8.spl"
   '';
-in
-{
-  home.packages = with pkgs; [
-    (neovim.override {
+
+  mynvim = (pkgs.neovim.override {
       configure = {
         packages.myVimPackage = with pkgs.vimPlugins; {
           start = [
@@ -316,6 +314,11 @@ in
           "'${pkgs.rustup}/bin/rustup'"
         ] (builtins.readFile ../nvim/.config/nvim/init.vim);
       };
-    })
+    });
+in
+{
+  home.packages = with pkgs; [
+    mynvim
+    (neovim-qt.override { neovim = mynvim; })
   ];
 }
