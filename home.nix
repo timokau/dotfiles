@@ -12,17 +12,13 @@ with pkgs.lib; {
     ./home/ranger.nix # file manager
     ./home/mutt.nix # mail
     ./home/scripts.nix
-  ] ++ (if ! headless then [
     ./home/herbstluftwm.nix # window manager
+  ] ++ (if ! headless then [
     ./home/kitty.nix # terminal emulator
     ./home/redshift.nix # shift screen light to red (away from blue) in the evening to tell the brain its night time
   ] else [] );
 
-  xsession.enable = true;
-  # TODO add module
-  xsession.windowManager.command = ''
-    PATH="${pkgs.herbstluftwm}/bin:$PATH" herbstluftwm
-  '';
+  herbstluftwm.enable = !headless;
 
   # only tools I use directly
   # tools used in scripts should be listed somewhere else
