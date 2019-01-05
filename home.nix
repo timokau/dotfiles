@@ -78,7 +78,6 @@ with pkgs.lib; {
     pandoc # convert between markup formats
     texlive.combined.scheme-full # latex
     trash-cli # gentle rm replacement
-    nox # nix reviews
     firejail # sandboxing
     httpie # cli http client
     exa # "modern" ls replacement
