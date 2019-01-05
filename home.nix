@@ -23,6 +23,7 @@ with pkgs.lib; {
   # only tools I use directly
   # tools used in scripts should be listed somewhere else
   home.packages = with pkgs; [
+    skim # fzf clone in rust
     vagrant # VM management
     moreutils # usefull stuff like `vidir` bulk renaming
     ltrace # trace library calls
