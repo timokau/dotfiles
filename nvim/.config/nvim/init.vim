@@ -34,6 +34,7 @@ set shiftwidth=4 " Shiftwidth equals tabstop
 set wrap
 set linebreak
 set breakindent
+set formatoptions-=t " no hard wrapping by default
 " Indicate wraps
 set breakindentopt=sbr
 set showbreak=↪
