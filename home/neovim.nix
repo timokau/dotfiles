@@ -3,12 +3,12 @@ let
   pluginRules = with pkgs.vimPlugins; [
     {
       p = vim-pandoc;
-      r = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc";
+      atStartup = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc";
     }
     {
       p = vim-pandoc-syntax;
-      r = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc";
-      config = ''
+      atStartup = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc";
+      preLoad = ''
         " Continue pandoc enumerations when hitting return in insert mode
         autocmd FileType pandoc call Pandocsettings()
 
@@ -22,8 +22,8 @@ let
     }
     {
       p = vimtex;
-      r = "autocmd PlugAutoload FileType tex :packadd vimtex";
-      config = ''
+      atStartup = "autocmd PlugAutoload FileType tex :packadd vimtex";
+      preLoad = ''
         let g:vimtex_view_method="zathura"
         let g:vimtex_indent_on_ampersands=0
         let g:vimtex_indent_on_ampersands=0
@@ -67,10 +67,10 @@ let
     }
     {
       p = rust-vim;
-      r = ''
+      atStartup = ''
         autocmd PlugAutoload FileType rust :packadd rust-vim
       '';
-      config = ''
+      preLoad = ''
         " Run rustfmt on save
         let g:rustfmt_command='${pkgs.rustfmt}/bin/rustfmt'
         let g:rustfmt_autosave = 1
@@ -78,10 +78,10 @@ let
     }
     {
       p = LanguageClient-neovim;
-      r = ''
+      atStartup = ''
         autocmd PlugAutoload FileType rust :packadd LanguageClient-neovim
       '';
-      config = ''
+      preLoad = ''
         let g:LanguageClient_serverCommands = {
           \'rust': ['${pkgs.rustup}', 'run', 'nightly', 'rls']
           \ }
@@ -99,7 +99,7 @@ let
     }
     {
       p = vim-nix;
-      r = ''
+      atStartup = ''
         autocmd PlugAutoload BufReadPre,BufNewFile *.nix :packadd vim-nix
       '';
     }
@@ -112,7 +112,7 @@ let
       # surround stuff, e.g. ysiw) to surround a word with parentheses
       p = vim-surround;
       startup = true;
-      config = ''
+      preLoad = ''
         " surround with latex command
         let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
       '';
@@ -131,8 +131,8 @@ let
       # personal wiki (`:VimwikiIndex`)
       p = vimwiki;
       startup = true;
-      config = ''
-        let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+      preLoad = ''
+        autocmd SourcePre ${vimwiki}/share/vim-plugins/vimwiki/plugin/vimwiki.vim let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
         " no default mappings please
         nnoremap <silent> <leader>zw <Plug>VimwikiIndex
         nnoremap <silent> <leader>zt <Plug>VimwikiTabIndex
@@ -144,7 +144,7 @@ let
       # snippets
       p = ultisnips;
       startup = true;
-      config = ''
+      preLoad = ''
         " Trigger configuration. <tab> interferes with YouCompleteMe
         let g:UltiSnipsExpandTrigger="<c-j>"
         let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -158,7 +158,7 @@ let
       # highlight possible motion targets
       p = vim-easymotion;
       startup = true;
-      config = ''
+      preLoad = ''
         map , <Plug>(easymotion-prefix)
         map ,/ <Plug>(easymotion-sn)
         omap ,/ <Plug>(easymotion-tn)
@@ -168,7 +168,7 @@ let
       # autocompletion
       p = ncm2;
       startup = true;
-      config = ''
+      postLoad = ''
         " enable ncm2 for all buffers
         autocmd BufEnter * call ncm2#enable_for_buffer()
 
@@ -200,13 +200,13 @@ let
     {
       # autocompletion
       p = ncm2-jedi;
-      r = "autocmd PlugAutoload FileType python :packadd ncm2-jedi";
+      atStartup = "autocmd PlugAutoload FileType python :packadd ncm2-jedi";
     }
     {
       # linting
       startup = true;
       p = neomake;
-      config = ''
+      postLoad = ''
         let $PATH .= ':${pkgs.python3.pkgs.pyflakes}/bin:${pkgs.python3.pkgs.pylint}/bin'
         let g:neomake_python_enabled_makers = ['python', 'pyflakes', 'pylint']
         let g:neomake_tex_enabled_makers = ['chktex'] " no lacheck
@@ -239,7 +239,7 @@ let
         ];
       };
       startup = true;
-      config = ''
+      preLoad = ''
         " Ignore non-text filetypes / generated files
         let fzf_ignores = ""
         "for ign in ['class', 'pdf', 'fdb_latexmk', 'aux', 'fls', 'synctex.gz', 'nav', 'snm', 'zip']
@@ -278,12 +278,50 @@ let
       p = vim-fugitive;
     }
   ];
+
+  singleSourceFile = name: commands: pkgs.writeTextFile {
+      inherit name;
+      text = ''
+        if exists('s:hasBeenSourced')
+          finish
+        else
+          let s:hasBeenSourced = 1
+        endif
+        ${commands}
+      '';
+    };
+
+  preLoadSnippet = pluginRule:
+  let
+    preLoadFile = singleSourceFile "pre-load-${pname}" pluginRule.preLoad;
+    plugin = pluginRule.p;
+    pname = plugin.pname or plugin.name;
+    preLoadAutocmd = "autocmd PlugAutoload SourcePre ${plugin}/* source ${preLoadFile}";
+  in
+  if builtins.hasAttr "preLoad" pluginRule then preLoadAutocmd else "";
+
+  postLoadSnippet = pluginRule:
+  # late load cannot be reliably detected, depends on
+  # https://github.com/vim/vim/issues/3739
+  assert builtins.hasAttr "postLoad" pluginRule -> pluginRule.startup;
+  let
+    postLoadFile = singleSourceFile "post-load-${pname}" pluginRule.postLoad;
+    plugin = pluginRule.p;
+    pname = plugin.pname or plugin.name;
+    # unconditional source, must happen after plugins are loaded
+    postLoadCmd = "source ${postLoadFile}";
+  in
+  if builtins.hasAttr "postLoad" pluginRule then postLoadCmd else "";
+
   pluginRc = ''
     augroup PlugAutoload
-    packloadall " actually load packages
   ''
-    + pkgs.lib.concatStringsSep "\n" (map (pluginRule: pluginRule.r or "") pluginRules)
-    + pkgs.lib.concatStringsSep "\n" (map (pluginRule: (pluginRule.config or "")) pluginRules);
+    + pkgs.lib.concatStringsSep "\n" (map (pluginRule: pluginRule.atStartup or "") pluginRules)
+    + pkgs.lib.concatStringsSep "\n" (map preLoadSnippet pluginRules) + ''
+    packloadall " load startup packages
+  ''
+    + pkgs.lib.concatStringsSep "\n" (map postLoadSnippet pluginRules);
+
   hunspell = pkgs.fetchurl {
     # Donaudampfschifffahrt
     # Donaudampfschifffahrtskapitänskajütentür
