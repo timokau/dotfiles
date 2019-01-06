@@ -13,12 +13,13 @@ with pkgs.lib; {
     ./home/mutt.nix # mail
     ./home/scripts.nix
     ./home/herbstluftwm.nix # window manager
-  ] ++ (if ! headless then [
     ./home/kitty.nix # terminal emulator
+  ] ++ (if ! headless then [
     ./home/redshift.nix # shift screen light to red (away from blue) in the evening to tell the brain its night time
   ] else [] );
 
   herbstluftwm.enable = !headless;
+  kitty.enable = !headless;
 
   # only tools I use directly
   # tools used in scripts should be listed somewhere else
