@@ -23,6 +23,11 @@ with lib; {
       default = true;
       description = "Weather to install a graphical environment or not";
     };
+    full = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Weather to install all packages, regardless of space";
+    };
   };
 
   config = {
@@ -86,7 +91,6 @@ with lib; {
       wget
       zathura # minimal pdf viewer with vim contorls
       pandoc # convert between markup formats
-      texlive.combined.scheme-full # latex
       trash-cli # gentle rm replacement
       firejail # sandboxing
       httpie # cli http client
@@ -108,10 +112,12 @@ with lib; {
       # ssh-ident
       # moreutils
       home-manager
-      sageWithDoc # math software
       retdec # decompiler
       radare2 # reverse engineering
-    ] ++ (optionals cfg.graphical [
+    ] ++ (optionals cfg.full [
+      texlive.combined.scheme-full # latex
+      sageWithDoc # math software
+    ]) ++ (optionals cfg.graphical [
       anki # flash cards
       xclip # x11 clipboard management
       okular # feature-full pdf viewer
