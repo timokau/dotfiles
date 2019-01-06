@@ -132,7 +132,9 @@ let
       p = vimwiki;
       startup = true;
       preLoad = ''
-        autocmd SourcePre ${vimwiki}/share/vim-plugins/vimwiki/plugin/vimwiki.vim let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+        let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+      '';
+      postLoad = ''
         " no default mappings please
         nnoremap <silent> <leader>zw <Plug>VimwikiIndex
         nnoremap <silent> <leader>zt <Plug>VimwikiTabIndex
