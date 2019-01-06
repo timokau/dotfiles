@@ -30,6 +30,8 @@ in
   services.autorandr.enable = true;
 
   nix.useSandbox = true;
+  nix.daemonIONiceLevel = 5;
+  nix.daemonNiceLevel = 10;
 
   # install man pages
   environment.extraOutputsToInstall = [ "man" ];
