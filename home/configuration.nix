@@ -45,7 +45,6 @@ with lib; {
       pdftk # cutting and rotating pdfs
       gdb
       tmux
-      libreoffice
       loc # SLOC language summary
       wireshark # network sniffing
       htop # system monitoring
@@ -90,7 +89,6 @@ with lib; {
       ncmpcpp # tui mpd music player
       wget
       zathura # minimal pdf viewer with vim contorls
-      pandoc # convert between markup formats
       trash-cli # gentle rm replacement
       firejail # sandboxing
       httpie # cli http client
@@ -112,12 +110,16 @@ with lib; {
       # ssh-ident
       # moreutils
       home-manager
-      retdec # decompiler
       radare2 # reverse engineering
     ] ++ (optionals cfg.full [
+      # to find "offenders":
+      # nix-store -q --requisites $( home-manager build ) | while read line; do du -hs "$line"; done | uniq | sort -h
+      retdec # decompiler (~800mb)
+      pandoc # convert between markup formats (pandoc -> ghc -> ~1.4G space)
       texlive.combined.scheme-full # latex
       sageWithDoc # math software
     ]) ++ (optionals cfg.graphical [
+      libreoffice
       anki # flash cards
       xclip # x11 clipboard management
       okular # feature-full pdf viewer
@@ -162,7 +164,7 @@ with lib; {
 
     programs.firefox = {
       # TODO addons
-      enable = true;
+      enable = cfg.graphical;
     };
 
     programs.zsh = {
@@ -278,7 +280,7 @@ with lib; {
 
     # programs.termite.enable = true; #TODO
 
-    xsession.initExtra = ''
+    xsession.initExtra = optionalString cfg.graphical ''
       # no monitor timeout (handled by xautolock)
       ${pkgs.xorg.xset}/bin/xset s off -dpms
     '';
