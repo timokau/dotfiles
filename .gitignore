@@ -1,3 +1,6 @@
+# home-manager configuration files
+/home-configuration
+
 # Plugins can be loaded with 'PlugInstall' inside (neo)vim
 /vim/.vim/plugged
 /vim/.vim/spell

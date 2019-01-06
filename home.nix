@@ -5,6 +5,6 @@
   ];
 
   home = {
-    graphical = true;
+    graphical = !(builtins.pathExists ./home-configuration/headless);
   };
 }
