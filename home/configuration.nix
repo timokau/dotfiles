@@ -74,6 +74,7 @@ with lib; {
           numpy
           requests
           ipython
+          pwntools
         ];
         ignoreCollisions = true;
       })
