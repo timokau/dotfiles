@@ -43,8 +43,6 @@ set showmatch
 set ignorecase
 set smartcase
 set directory-=.
-set backupdir-=.
-set nobackup
 
 " Highlight chars in the 81st column
 highlight ColorColumn ctermbg=magenta
