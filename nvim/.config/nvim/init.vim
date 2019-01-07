@@ -8,9 +8,6 @@ augroup git-commit
 	call matchaddpos('SubjectTooLong', [[3, 51]], 100)
 augroup END
 
-" latex spelling
-autocmd BufRead,BufNewFile *.tex setlocal spell | setlocal spelllang=en
-
 " General {{{1
 " Settings {{{2
 " Misc {{{3
@@ -43,6 +40,8 @@ set showmatch
 set ignorecase
 set smartcase
 set directory-=.
+set spell
+set spelllang=de,en
 
 " Highlight chars in the 81st column
 highlight ColorColumn ctermbg=magenta
@@ -126,7 +125,7 @@ endif
 syntax enable
 
 " Email-Settings {{{3
-autocmd FileType mail execute 'normal G' | set spell | set spelllang=de
+autocmd FileType mail execute 'normal G'
 
 " Mappings {{{2
 " Use space as leader {{{3
@@ -192,10 +191,6 @@ nnoremap <silent> <Leader>- :resize -3<CR>
 nnoremap <silent> <Leader>+ :resize +3<CR>
 nnoremap <silent> <Leader>< :vertical resize -3<CR>
 nnoremap <silent> <Leader>> :vertical resize +3<CR>
-
-" Spellchecking {{{3
-nnoremap <silent> <leader>sd :set spell spelllang=de_20<CR>
-nnoremap <silent> <leader>se :set spell spelllang=en_us<CR>
 
 " Stop highlighting the last search {{{3
 nnoremap <silent> <leader>c :nohlsearch<CR>
