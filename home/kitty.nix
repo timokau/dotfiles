@@ -25,9 +25,14 @@ with lib;
       close_on_child_death yes
 
       kitty_mod ctrl+shift
-      map ctrl+RIGHT_BRACKET change_font_size all +2.0
-      map ctrl+minus change_font_size all -2.0
-      map ctrl+0 change_font_size all 0
+      map ctrl+plus change_font_size current +1.0
+      map ctrl+minus change_font_size current -1.0
+      map ctrl+0 change_font_size current 0
+
+      map ctrl+shift+plus change_font_size all +1.0
+      map ctrl+shift+minus change_font_size all -1.0
+      map ctrl+shift+0 change_font_size all 0
+
       map kitty_mod+x kitten hints
       map kitty_mod+s kitten hints
       map kitty_mod+c copy_to_clipboard
