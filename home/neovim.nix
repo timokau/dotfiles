@@ -1,5 +1,23 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
+  cfg = config.neovim;
+in
+with lib;
+{
+  options.neovim = {
+    # enable = mkEnableOption "Neovim terminal";
+    python3 = mkOption {
+      type = types.package;
+      default = pkgs.python3;
+      description = "Python3 to use";
+    };
+  };
+
+  config = 
+let
+  escapedVimString = str: "'${replaceStrings ["'"] ["''"] str}'";
+  stringListToVim = list: "[" + (concatStringsSep "," (map escapedVimString list)) + "]";
+
   pluginRules = with pkgs.vimPlugins; [
     {
       p = vim-pandoc;
@@ -208,8 +226,20 @@ let
       # linting
       startup = true;
       p = neomake;
-      postLoad = ''
-        let $PATH .= ':${pkgs.python3.pkgs.pyflakes}/bin:${pkgs.python3.pkgs.pylint}/bin'
+      postLoad = let
+        pylintArgs = [
+          "--good-names=x,y"
+          "--include-naming-hint=y" # show the regex that failed to match on "bad" names
+          "--module-rgx=.*" # https://github.com/neomake/neomake/issues/2278
+
+          # Apparently one should use `if seq:` instead of `if len(seq) != 0`.
+          # I disagree.
+          "--disable=len-as-condition" 
+        ];
+      in
+      # TODO how does pylint find its libs
+      ''
+        let $PATH .= ':${cfg.python3}/bin:${cfg.python3.pkgs.pyflakes}/bin:${cfg.python3.pkgs.pylint}/bin'
         let g:neomake_python_enabled_makers = ['python', 'pyflakes', 'pylint']
         let g:neomake_tex_enabled_makers = ['chktex'] " no lacheck
         let g:neomake_sty_enabled_makers = ['chktex'] " no lacheck
@@ -230,6 +260,9 @@ let
         " - should use space with parenthesis (36) (I don't want to use space)
         " - vertical rules in tables (44) (I don't think they are _always_ ugly)
         let g:neomake_tex_chktex_args = ['--nowarn=1', '--nowarn=8', '--nowarn=11', '--nowarn=12', '--nowarn=13', '--nowarn=16', '--nowarn=23', '--nowarn=25', '--nowarn=26', '--nowarn=36', '--nowarn=44']
+        " until https://github.com/neomake/neomake/pull/2161 is merged
+        let g:neomake_python_python_exe = 'python3'
+        let g:neomake_python_pylint_args = neomake#makers#ft#python#pylint().args + ${stringListToVim pylintArgs}
       '';
     }
     {
@@ -361,4 +394,5 @@ in
     mynvim
     (neovim-qt.override { neovim = mynvim; })
   ];
+};
 }
