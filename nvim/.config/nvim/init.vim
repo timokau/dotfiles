@@ -27,21 +27,64 @@ set backspace=indent,eol,start
 set hlsearch
 set wildignore+=*~,*.pyc,*.swp,*.class,*.pdf,*.aux,*.fdb_latexmk,*.dfls,*.toc,*.synctex.gz,*.fls,*.nav,*.snm
 set tabstop=4
-set shiftwidth=4 " Shiftwidth equals tabstop
+set shiftwidth=4 " shiftwidth equals tabstop
 set wrap
 set linebreak
 set breakindent
-set formatoptions-=t " no hard wrapping by default
 " Indicate wraps
 set breakindentopt=sbr
 set showbreak=↪
-set textwidth=80
+set textwidth=0 " no hard wrapping by default
 set showmatch
 set ignorecase
 set smartcase
 set directory-=.
 set spell
 set spelllang=de,en
+
+" simplified version of
+" https://stackoverflow.com/questions/4027222/using-shorter-textwidth-in-comments-and-docstrings/4028423#4028423
+function! GetPythonTextWidth()
+    let normal_text_width = 79
+    let comment_text_width = 72
+
+    " For some reason the very last column (when appending to the line) doesn't
+    " have any syntax applied.
+    let col = min([col("."), col('$') - 1])
+    let cur_syntax = synIDattr(synIDtrans(synID(line("."), col, 0)), "name")
+    if cur_syntax == "Comment"
+        return comment_text_width
+    elseif cur_syntax == "String"
+        " Check to see if we're in a docstring
+        let lnum = line(".")
+        while lnum >= 1 && (synIDattr(synIDtrans(synID(lnum, col([lnum, "$"]) - 1, 0)), "name") == "String" || match(getline(lnum), '\v^\s*$') > -1)
+            if match(getline(lnum), "\\('''\\|\"\"\"\\)") > -1
+                " Assume that any longstring is a docstring
+                return comment_text_width
+            endif
+            let lnum -= 1
+        endwhile
+    endif
+
+    return normal_text_width
+endfunction
+
+function! PythonOptions()
+	" PEP 8 recommends <=72 chars for comments/docstrings, <=79 for code
+    autocmd CursorMoved,CursorMovedI <buffer> exe 'setlocal textwidth='.GetPythonTextWidth()
+endfunction
+
+autocmd Filetype python call PythonOptions()
+
+" Spell ignores
+" URLs (https://gist.github.com/tobym/584909)
+fun! SpellIgnores()
+	syntax match URL /https\?:\/\/\(\w\+\(:\w\+\)\?@\)\?\([A-Za-z][-_0-9A-Za-z]*\.\)\{1,}\(\w\{2,}\.\?\)\{1,}\(:[0-9]\{1,5}\)\?\S*/ contains=@NoSpell transparent
+	syntax cluster Spell add=URL
+endfun
+" spell ignores have to be added *after* syntax definitions for the file have
+" been loaded
+autocmd BufRead,BufNewFile,FileType,Syntax * :call SpellIgnores()
 
 " Highlight chars in the 81st column
 highlight ColorColumn ctermbg=magenta
@@ -57,11 +100,11 @@ set preserveindent
 " Diffs {{{3
 set diffopt=filler,vertical
 
-" Remember undos {{{3
+" Remember undo {{{3
 set undolevels=100000
 set undoreload=100000
 set undofile
-if !has("nvim")
+if !has('nvim')
 	" nvim has sensible defaults, but vim defaults to just dumping it into the
 	" working directory
 	silent call system('mkdir -p $HOME/.local/share/vim/undo')
@@ -107,9 +150,43 @@ endfunction
 set list
 set listchars=tab:▸\ ,eol:¬,trail:␣
 set background=dark
-set guifont=Source\ Code\ Pro\ 11
 
-" Colorscheme (if available)
+let g:fnt_types = ['Source\ Code\ Pro' ]
+let g:default_fnt_sizes = [ 11 ] " default font size per font
+
+let g:fnt_index = 0 " source code pro
+let g:fnt_size = g:default_fnt_sizes[g:fnt_index]
+
+function! CycleFont()
+  let g:fnt_index = (g:fnt_index + 1) % len(g:fnt_types)
+  let g:fnt_size  = g:default_fnt_sizes[g:fnt_index]
+  call ResetFont()
+endfunction
+
+function! ResetFont ()
+  if exists('g:GuiLoaded')
+    exe ':set guifont=' . g:fnt_types[g:fnt_index] . ':h' . string(g:fnt_size)
+  endif
+endfunction
+
+call ResetFont()
+
+function! FontSizePlus ()
+  let g:fnt_size = g:fnt_size + 1
+  call ResetFont()
+endfunction
+
+function! FontSizeMinus ()
+  let g:fnt_size = g:fnt_size - 1
+  call ResetFont()
+endfunction
+
+nnoremap <C-+> :call FontSizePlus()<cr>
+nnoremap <C--> :call FontSizeMinus()<cr>
+nnoremap <C-s> :call CycleFont()<cr>
+
+
+" Color scheme (if available)
 let g:gruvbox_italic = 1 " Use italic
 let g:gruvbox_contrast_dark = "hard" " Hard contrast
 silent! colorscheme gruvbox
@@ -117,7 +194,7 @@ let cur_colorscheme = ''
 redir => cur_colorscheme
 silent colorscheme
 redir END
-if !has("gui_running")
+if !has('gui_running')
 	if split(cur_colorscheme, "\n")[0] != 'gruvbox' || &t_Co < 88
 		silent! colorscheme darkblue
 	endif
@@ -210,7 +287,7 @@ nnoremap <C-M-l> <C-w>L
 " Alignment with tab {{{3
 inoremap <S-Tab> <Space><Space><Space><Space>
 
-" Tab in insert mode idents
+" Tab in insert mode indents
 inoremap <Tab> <C-t>
 
 " Terminal mode {{{3
@@ -277,7 +354,7 @@ augroup encrypted
 	" Switch to normal mode for editing
 	autocmd BufReadPost,FileReadPost *.gpg set nobin
 	autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
-	autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
+	autocmd BufReadPost,FileReadPost *.gpg execute ':doautocmd BufReadPost ' . expand('%:r')
 
 	" Convert all text to encrypted text before writing
 	autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
