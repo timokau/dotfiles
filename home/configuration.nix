@@ -53,28 +53,36 @@ with lib; {
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
         # tensorflow # machine learning (currently not available with python 3.7)
+        pytest
+        # TODO for some reason it is necessary to install this into the
+        # environment in order for it to work properly (with imports) in
+        # neovim
+        pylint
         requests # http
         ipython # better interactive python
         numpy # number squashing
         networkx # graphs
-        # graph-tool # more graphs
+        graph-tool # more graphs
         matplotlib
         tkinter # matplotlib backend
         pygraphviz
+        r2pipe
       ]))
       (python2.buildEnv.override {
         extraLibs = with python2.pkgs; [
-          tensorflow
+          pytest tensorflow
           jupyter_core
           jupyter_client
           jupytext # edit jupyter notebooks in vim like regular python scripts
           notebook # jupyter
           tkinter # matplotlib backend
           matplotlib # plotting
+          graph-tool # more graphs
           numpy
           requests
           ipython
           pwntools
+          r2pipe
         ];
         ignoreCollisions = true;
       })
