@@ -19,6 +19,38 @@ let
   stringListToVim = list: "[" + (concatStringsSep "," (map escapedVimString list)) + "]";
 
   pluginRules = with pkgs.vimPlugins; [
+    # {
+    #   p = vim-slime;
+    #   atStartup = "autocmd PlugAutoload Filetype python :packadd vim-slime";
+    #   startup = true;
+    #   # slime_target has to be set postLoad, otherwise it will be overwritten
+    #   postLoad = ''
+    #     let $PATH .= ':${pkgs.python3}/bin'
+    #     let g:slime_target = "neovim"
+    #     let g:slime_python_ipython = 1
+    #   '';
+    # }
+    {
+      p = neoterm.overrideAttrs (oldAttrs: {
+        patches = [
+          (pkgs.fetchpatch {
+            url = "https://github.com/kassio/neoterm/pull/190/commits/0a4acdba2e83be35fc07be2ffd0d055831d33178.patch";
+            sha256 = "0sbr1mpf6qalv597m1qcxfkx082k47pyrjmk3imqx4zdmxh2id1d";
+          })
+        ];
+      });
+      atStartup = "autocmd PlugAutoload Filetype python :packadd neoterm";
+      # startup = true;
+      preLoad = ''
+        let $PATH .= ':${pkgs.python3.pkgs.ipython}/bin'
+        let g:neoterm_default_mod=':belowright'
+        let g:neoterm_direct_open_repl=1
+        " Use gx{text-object} in normal mode
+        nmap gx <Plug>(neoterm-repl-send)
+        " Send selected contents in visual mode.
+        xmap gx <Plug>(neoterm-repl-send)
+      '';
+    }
     {
       p = vim-pandoc;
       atStartup = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc";
