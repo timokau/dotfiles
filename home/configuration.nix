@@ -120,6 +120,7 @@ with lib; {
       # moreutils
       home-manager
       radare2 # reverse engineering
+      source-code-pro # needed for gui neovim (FIXME)
     ] ++ (optionals cfg.full [
       # to find "offenders":
       # nix-store -q --requisites $( home-manager build ) | while read line; do du -hs "$line"; done | uniq | sort -h
@@ -151,6 +152,8 @@ with lib; {
       xorg.xbacklight
       radare2-cutter # radare gui
     ]);
+
+    fonts.fontconfig.enableProfileFonts = true;
 
     services.gpg-agent = {
       enable = true;
