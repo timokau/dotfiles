@@ -295,7 +295,7 @@ let
 
   preLoadSnippet = pluginRule:
   let
-    preLoadFile = singleSourceFile "pre-load-${pname}" pluginRule.preLoad;
+    preLoadFile = singleSourceFile "pre-load-${pname}.vim" pluginRule.preLoad;
     plugin = pluginRule.p;
     pname = plugin.pname or plugin.name;
     preLoadAutocmd = "autocmd PlugAutoload SourcePre ${plugin}/* source ${preLoadFile}";
@@ -307,7 +307,7 @@ let
   # https://github.com/vim/vim/issues/3739
   assert builtins.hasAttr "postLoad" pluginRule -> pluginRule.startup;
   let
-    postLoadFile = singleSourceFile "post-load-${pname}" pluginRule.postLoad;
+    postLoadFile = singleSourceFile "post-load-${pname}.vim" pluginRule.postLoad;
     plugin = pluginRule.p;
     pname = plugin.pname or plugin.name;
     # unconditional source, must happen after plugins are loaded
