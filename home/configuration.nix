@@ -174,6 +174,8 @@ with lib; {
     # services.screen-locker = TODO
 
 
+    # TODO add simple wrapper that sets XDG_DESKTOP_DIR="$HOME/
+    # https://bugzilla.mozilla.org/show_bug.cgi?id=1082717
     programs.firefox = {
       # TODO addons
       enable = cfg.graphical;
