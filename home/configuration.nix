@@ -183,7 +183,11 @@ with lib; {
 
     programs.zsh = {
       enable = true;
-      initExtra = builtins.readFile ../zsh/.zshrc;
+      initExtra = (builtins.readFile ../zsh/.zshrc) +
+      # temporary workaround for https://github.com/NixOS/nixpkgs/issues/45662#issuecomment-453253372
+      ''
+        export GI_TYPELIB_PATH=${lib.makeSearchPath "lib/girepository-1.0" (with pkgs; [ gtk3 pango.out gdk_pixbuf atk ])}
+      '';
       shellAliases = {
         # use ssh-ident to start ssh-agent as necessary
         ssh = "BINARY_SSH=${pkgs.openssh}/bin/ssh ${pkgs.ssh-ident}/bin/ssh-ident";
