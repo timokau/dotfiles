@@ -2,6 +2,10 @@
 let
   cfg = config.home;
 in
+  # TODO cleanup services
+  # fd --no-ignore --changed-before 7d . ~/.cache --exec rm -f {}
+  # fd --no-ignore --changed-before 1d --type f --type e . ~/.config --exec trash-put {}
+  # TODO something similar .local?
 with lib; {
   imports = [
     ./neovim.nix # editor
