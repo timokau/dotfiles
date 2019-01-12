@@ -183,9 +183,10 @@ let
       startup = true;
       preLoad = ''
         let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+        " no default mappings please
+        let g:vimwiki_map_prefix = '<Leader><Leader>w'
       '';
       postLoad = ''
-        " no default mappings please
         nnoremap <silent> <leader>zw <Plug>VimwikiIndex
         nnoremap <silent> <leader>zt <Plug>VimwikiTabIndex
         nnoremap <silent> <leader>zs <Plug>VimwikiUISelect
