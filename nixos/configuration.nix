@@ -340,17 +340,18 @@ in
     privateKeyFile = "/home/timo/wireguard-keys/private"; # FIXME location
 
     peers = [
-      {
-        publicKey = wireguard.publicKey.desk;
-        allowedIPs = [ "${wireguard.ip.desk}/32" ];
-      }
-      {
-        publicKey = wireguard.publicKey.pad;
-        allowedIPs = [ "${wireguard.ip.pad}/32" ];
-      }
+      # {
+      #   publicKey = wireguard.publicKey.desk;
+      #   allowedIPs = [ "${wireguard.ip.desk}/32" ];
+      # }
+      # {
+      #   publicKey = wireguard.publicKey.pad;
+      #   allowedIPs = [ "${wireguard.ip.pad}/32" ];
+      #   endpoint = "${dyndns}:${toString wireguard.port}";
+      # }
       {
         publicKey = wireguard.publicKey.rpi;
-        allowedIPs = [ "${wireguard.ip.rpi}/32" ];
+        allowedIPs = [ "${wireguard.ip.rpi}/32" "${wireguard.ip.pad}/32" ];
         endpoint = "${dyndns}:${toString wireguard.port}";
       }
     ];
