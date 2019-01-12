@@ -186,7 +186,14 @@ with lib; {
       initExtra = (builtins.readFile ../zsh/.zshrc) +
       # temporary workaround for https://github.com/NixOS/nixpkgs/issues/45662#issuecomment-453253372
       ''
-        export GI_TYPELIB_PATH=${lib.makeSearchPath "lib/girepository-1.0" (with pkgs; [ gtk3 pango.out gdk_pixbuf atk ])}
+        export GI_TYPELIB_PATH=${lib.makeSearchPath "lib/girepository-1.0" (with pkgs; [
+          gtk3
+          pango.out
+          gdk_pixbuf
+          librsvg
+          atk
+        ])}
+        export GDK_PIXBUF_MODULE_FILE="$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)"
       '';
       shellAliases = {
         # use ssh-ident to start ssh-agent as necessary
