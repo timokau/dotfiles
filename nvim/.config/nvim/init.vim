@@ -231,7 +231,7 @@ nnoremap <Leader>t :silent grep TODO<CR>
 inoremap <C-U> <C-G>u<C-U>
 
 " Save {{{3
-nnoremap <silent> <Leader>w :write<CR>
+nnoremap <silent> <Leader>w :update<CR>
 
 " Visual star search
 xnoremap * :<C-u> call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
