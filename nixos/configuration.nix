@@ -338,6 +338,15 @@ in
     ips = [ "${wireguard.ip.${hostname}}/24" ];
     listenPort = wireguard.port;
     privateKeyFile = "/home/timo/wireguard-keys/private"; # FIXME location
+    preSetup = ''
+      # https://github.com/NixOS/nixpkgs/issues/30459
+      # Try to access the DNS for up to 300s
+      for i in {1..300}; do
+        ${pkgs.iputils}/bin/ping -c1 '${dyndns}' && break
+        echo "Attempt $i: DNS still not available"
+        sleep 1s
+      done
+    '';
 
     peers = [
       {
