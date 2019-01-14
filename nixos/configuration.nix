@@ -17,6 +17,7 @@ let
       rpi = "10.10.10.1";
       pad = "10.10.10.2";
       desk = "10.10.10.3";
+      phone = "10.10.10.4";
     };
   };
 
@@ -355,6 +356,7 @@ in
           "${wireguard.ip.rpi}/32"
           "${wireguard.ip.pad}/32"
           "${wireguard.ip.desk}/32"
+          "${wireguard.ip.phone}/32"
         ];
         endpoint = "${dyndns}:${toString wireguard.port}";
       }
