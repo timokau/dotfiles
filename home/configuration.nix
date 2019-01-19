@@ -46,7 +46,6 @@ with lib; {
       vagrant # VM management
       moreutils # usefull stuff like `vidir` bulk renaming
       ltrace # trace library calls
-      pdftk # cutting and rotating pdfs
       gdb
       tmux
       loc # SLOC language summary
