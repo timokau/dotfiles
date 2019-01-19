@@ -2,11 +2,14 @@
 
 lockfile="/tmp/.maillock"
 
+ret=0
+
 sync() {
 	touch "$lockfile"
-	mbsync -Va
+	set -o pipefail
+	mbsync -a 2>&1 | tee "$lockfile" || ret=$?
 
-	notmuch new
+	notmuch new || ret=$?
 
 	rm "$lockfile"
 }
@@ -14,12 +17,16 @@ sync() {
 lockfile="/tmp/.maillock"
 if [[ -f "$lockfile" ]]; then
 	echo "Background sync in progress, waiting for it"
-	while [[ -f "$lockfile" ]]; do
-		sleep 0.1
-	done
-	if [[ "$1" == "repeat" ]]; then
+	timeout 1m tail --follow=name "$lockfile"
+	if (( $? == 124 )); then # timed out
+		echo "Giving up"
+		rm "$lockfile"
+		sync
+	elif [[ "$1" == "repeat" ]]; then
 		sync
 	fi
 else
 	sync
 fi
+
+exit "$ret"
