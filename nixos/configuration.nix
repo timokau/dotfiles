@@ -85,6 +85,11 @@ in
     efi.canTouchEfiVariables = true;
   };
 
+  boot.kernel.sysctl = {
+    # https://wiki.archlinux.org/index.php/zswap
+    "zswap.enabled" = 1;
+  };
+
   # mount /tmp in RAM
   boot.tmpOnTmpfs = true;
 
