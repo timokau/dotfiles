@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Guarantee to re-build a nix-expression, even if a build result is already in
+# the cache or available with a substituter. Useful to debug transient issues.
+# Better than `--check` because it also works when there is no version in the
+# store yet and it won't complain about non-reproducibility.
+expression="with (import ./. {}); $1.overrideAttrs (old: { REBUILD_MARKER=$RANDOM; })"
+echo "Building $expression"
+exec nix-build -E "$expression"
