@@ -51,7 +51,6 @@ with lib; {
       gdb
       tmux
       loc # SLOC language summary
-      wireshark # network sniffing
       htop # system monitoring
       pdfgrep # search through pdfs
       imagemagick # cli image editing
@@ -67,7 +66,6 @@ with lib; {
         ipython # better interactive python
         numpy # number squashing
         networkx # graphs
-        graph-tool # more graphs
         matplotlib
         tkinter # matplotlib backend
         pygraphviz
@@ -75,24 +73,27 @@ with lib; {
         pygobject3
         gobject-introspection
         pillow # FIXME necessary for ranger image preview with kitty
+      ] ++ optionals cfg.full [
+        graph-tool # more graphs (~400M)
       ]))
       (python2.buildEnv.override {
         extraLibs = with python2.pkgs; [
           pillow # FIXME necessary for ranger image preview with kitty
-          pytest tensorflow
+          pytest
           jupyter_core
           jupyter_client
           jupytext # edit jupyter notebooks in vim like regular python scripts
           notebook # jupyter
           tkinter # matplotlib backend
           matplotlib # plotting
-          graph-tool # more graphs
           numpy
           requests
           ipython
           pwntools
           r2pipe
-        ];
+        ] ++ (optionals cfg.full [
+          tensorflow
+        ]);
         ignoreCollisions = true;
       })
       ncdu # where is my space gone?
@@ -160,6 +161,7 @@ with lib; {
       libnotify # notify-send
       xorg.xbacklight
       radare2-cutter # radare gui
+      wireshark # network sniffing
     ]);
 
     fonts.fontconfig.enableProfileFonts = true;
@@ -210,6 +212,7 @@ with lib; {
         scp = "BINARY_SSH=${pkgs.openssh}/bin/scp ${pkgs.ssh-ident}/bin/ssh-ident";
         rsync = "BINARY_SSH=${pkgs.rsync}/bin/rsync ${pkgs.ssh-ident}/bin/ssh-ident";
         # privacy / security / when my addons break something
+      } // mkIf cfg.full {
         fx = "${pkgs.firefox}/bin/firefox --new-instance --profile \"$(mktemp -d)\"";
         cx = "${pkgs.chromium}/bin/chromium --user-data-dir=\"$(mktemp -d)\"";
       };
