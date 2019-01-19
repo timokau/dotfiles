@@ -12,7 +12,6 @@ with lib; {
     ./taskwarrior.nix # todo list and task management
     ./newsboat.nix # rss reader
     ./git.nix
-    ./r.nix
     ./ranger.nix # file manager
     ./mutt.nix # mail
     ./scripts.nix
