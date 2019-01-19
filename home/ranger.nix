@@ -1,7 +1,11 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    ranger
+    (ranger.overridePythonAttrs (oldAttrs: {
+      propagatedBuildInputs = (oldAttrs.propagatedBuildInputs or []) ++ [
+        pkgs.python3.pkgs.pillow
+      ];
+    }))
     ffmpegthumbnailer # for viedeo preview images
     file # for determining mimetypes
   ];

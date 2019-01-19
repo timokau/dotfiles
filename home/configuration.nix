@@ -42,6 +42,7 @@ with lib; {
     # only tools I use directly
     # tools used in scripts should be listed somewhere else
     home.packages = with pkgs; [
+      entr # run command on file changes (nicer interface than inotify)
       skim # fzf clone in rust
       vagrant # VM management
       moreutils # usefull stuff like `vidir` bulk renaming
@@ -71,9 +72,13 @@ with lib; {
         tkinter # matplotlib backend
         pygraphviz
         r2pipe
+        pygobject3
+        gobject-introspection
+        pillow # FIXME necessary for ranger image preview with kitty
       ]))
       (python2.buildEnv.override {
         extraLibs = with python2.pkgs; [
+          pillow # FIXME necessary for ranger image preview with kitty
           pytest tensorflow
           jupyter_core
           jupyter_client
@@ -131,7 +136,7 @@ with lib; {
       retdec # decompiler (~800mb)
       pandoc # convert between markup formats (pandoc -> ghc -> ~1.4G space)
       texlive.combined.scheme-full # latex
-      sageWithDoc # math software
+      # sageWithDoc # math software
     ]) ++ (optionals cfg.graphical [
       libreoffice
       anki # flash cards
@@ -204,6 +209,9 @@ with lib; {
         ssh = "BINARY_SSH=${pkgs.openssh}/bin/ssh ${pkgs.ssh-ident}/bin/ssh-ident";
         scp = "BINARY_SSH=${pkgs.openssh}/bin/scp ${pkgs.ssh-ident}/bin/ssh-ident";
         rsync = "BINARY_SSH=${pkgs.rsync}/bin/rsync ${pkgs.ssh-ident}/bin/ssh-ident";
+        # privacy / security / when my addons break something
+        fx = "${pkgs.firefox}/bin/firefox --new-instance --profile \"$(mktemp -d)\"";
+        cx = "${pkgs.chromium}/bin/chromium --user-data-dir=\"$(mktemp -d)\"";
       };
     };
 
