@@ -10,6 +10,8 @@
       track = ''
         "!git push --set-upstream timokau \"$(git symbolic-ref --short HEAD)\""
       '';
+      # better overview, less details
+      lg = "log --color --graph --oneline --decorate";
     };
     extraConfig = {
       # use ssh-ident to start ssh-agent as necessary
