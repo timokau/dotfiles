@@ -19,11 +19,11 @@ mailboxes +drafts \
 # (https://www.neomutt.org/guide/configuration.html#bind-warnings)
 bind index g noop
 macro index c "<change-vfolder>"
-macro index goy "<change-folder> +yahoo/inbox"<enter>
-macro index gog "<change-folder> +gmx/inbox"<enter>
-macro index gou "<change-folder> +uni/inbox"<enter>
-macro index goo "<change-folder> +ou/inbox"<enter>
-macro index goz "<change-folder> +zoho/inbox"<enter>
+macro index goy "<change-vfolder> yahoo"<enter>
+macro index gog "<change-vfolder> gmx"<enter>
+macro index gou "<change-vfolder> uni"<enter>
+macro index goo "<change-vfolder> ou"<enter>
+macro index goz "<change-vfolder> zoho"<enter>
 
 # contacts are managed by khard
 set query_command= "khard email --parsable '%s'"
@@ -68,12 +68,13 @@ set beep_new
 set status_chars  = " *%A"
 set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
 set date_format = "%y-%m-%d %H:%M"
-set index_format = "[%Z]  %D  %-20.20F  %s"
+tag-formats "participate" "GP"
+set index_format = "[%Z] %?GP?P& ? %D  %-20.20F %s [%g]"
 set sort=threads
 set sort_aux = last-date-received
 set sort_re
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
-set strict_threads=yes
+# set strict_threads=yes
 set charset = 'utf-8'
 set pager_format = "%4C %Z %[!%Y-%m-%d at %H:%M]  %.20n  %s%* -- (%P)"
 set pager_index_lines = 0
@@ -100,7 +101,7 @@ set sendmail_wait = 0
 set abort_nosubject = ask-no
 set abort_unmodified = ask-yes
 set copy = yes
-set delete = yes
+set delete = no
 set forward_edit = ask-yes
 set include = ask-yes
 set mime_forward = ask-yes
@@ -109,7 +110,7 @@ set postpone = ask-no
 set print = ask-no
 set reply_to = ask-yes
 unset collapse_unread
-exec collapse-all
+set collapse_all
 
 # Header Options -------------------------------------
 ignore *
@@ -139,7 +140,7 @@ bind attach <return> view-mailcap
 bind pager O mark-as-new
 
 macro index R '<enter-command>unset wait_key<enter><shell-escape>syncmails<enter>' 'sync the mail'
-macro index S "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt -o ~/Mail/search -p search<enter><change-folder-readonly>+search<enter>" "search mail (using notmuch)"
+macro index Q "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt -o ~/Mail/search -p search<enter><change-folder-readonly>+search<enter>" "search mail (using notmuch)"
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
 macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 macro pager \Cu "|urlview<enter>" "call urlview to open links"
@@ -149,6 +150,12 @@ macro pager \Cu "|urlview<enter>" "call urlview to open links"
 ###----------------------------------------------------------------------------
 
 source ~/.mutt/colors
+color index_tag red white "participate"
+color index_tags brightblue default
+color index_author red default 'Timo Kaufmann'
+color index_collapsed default brightblue
+color index_date green default
+set hidden_tags = 'to-me,sent,unread'
 
 # Sidebar Patch
 macro index gs "<sidebar-toggle-visible>"
@@ -175,18 +182,27 @@ set pgp_replyencrypt
 # TODO filter mail (see https://notmuchmail.org/mutttips/)
 # notmuch
 set nm_default_uri = "$HOME/Mail"
+# set nm_query_type = "threads" # preserve whole threads
 set virtual_spoolfile=yes # enable virtual folders
 # TODO see https://notmuchmail.org/mutttips/
 # set sendmail="/PATH/TO/bin/nm_sendmail" # enables parsing of outgoing mail
 virtual-mailboxes \
+    "inbox"    "notmuch://?query=tag:inbox"\
     "unread"    "notmuch://?query=tag:unread"\
-    "inbox"     "notmuch://?query=tag:inbox and NOT tag:archive"\
     "starred"   "notmuch://?query=tag:*"\
+    "yahoo"   "notmuch://?query=tag:yahoo&limit=100"\
+    "uni"   "notmuch://?query=tag:uni&limit=100"\
+    "zoho"   "notmuch://?query=tag:zoho&limit=100"\
+    "gmx"   "notmuch://?query=tag:gmx&limit=100"\
     "sent"      "notmuch://?query=tag:sent" # sets up queries for virtual folders
 # notmuch bindings
-macro index \\\\ "<vfolder-from-query>" # looks up a hand made query
+macro index // "<vfolder-from-query>" # looks up a hand made query
 macro index A "<modify-labels>+archive -unread -inbox\\n" # tag as Archived
 macro index I "<modify-labels>-inbox -unread\\n" # removed from inbox
 macro index S "<modify-labels-then-hide>-inbox -unread +junk\\n" # tag as Junk mail
+macro index K "<untag-pattern>~A<enter><tag-thread><tag-prefix><modify-labels-then-hide>-inbox -unread +killed<enter><untag-pattern>~A<enter>"
+macro pager K "<read-thread><modify-labels-then-hide>-inbox -unread +killed<enter>"
 macro index + "<modify-labels>+*\\n<sync-mailbox>" # tag as starred
 macro index - "<modify-labels>-*\\n<sync-mailbox>" # tag as unstarred
+macro index T "<entire-thread>"
+macro pager t "<modify-labels-then-hide>" # tag as Junk mail
