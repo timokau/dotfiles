@@ -60,9 +60,8 @@ uda.hidenext.label=Hide from next until
 report.next.columns = id,description,start.age,depends,due.age
 report.next.labels = ID,Description,Active,Deps,Due
 # next report shows all tasks which aren't marked as backlog.
-# backlog tasks are shown when they are due within the next 3 days and are not explicitly hidden
-# with `hidenext`.
-report.next.filter = status:pending limit:page -BLOCKED (-backlog or (due.before:3d and (hidenext.none or hidenext.after:now))) +READY
+# If they are marked as backlog, they are only shown if past their hidenext date (which defaults to due-3).
+report.next.filter = limit:page +READY (-backlog or ((hidenext: and due.before:3d) or hidenext.before:now))
 
 report.bl.columns = id,description,start.age,urgency
 report.bl.labels = ID,Desc,Start,Urg

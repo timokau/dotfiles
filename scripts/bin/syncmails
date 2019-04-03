@@ -7,9 +7,10 @@ ret=0
 sync() {
 	touch "$lockfile"
 	set -o pipefail
+	echo "Syncing" >> "$lockfile"
 	mbsync -a 2>&1 | tee "$lockfile" || ret=$?
 
-	notmuch new || ret=$?
+	notmuch new 2>&1 | tee "$lockfile" || ret=$?
 
 	rm "$lockfile"
 }
