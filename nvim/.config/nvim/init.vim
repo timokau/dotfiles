@@ -41,6 +41,7 @@ set smartcase
 set directory-=.
 set spell
 set spelllang=de,en
+set spellfile=~/.local/share/nvim/spellfile.utf-8.add
 
 " simplified version of
 " https://stackoverflow.com/questions/4027222/using-shorter-textwidth-in-comments-and-docstrings/4028423#4028423
