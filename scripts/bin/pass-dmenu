@@ -48,7 +48,7 @@ if [[ -n "$target" ]] ; then
 			# If it is selected, type the `user` entry, tab, and the `pass` entry.
 			dir=$(dirname "$target")
 			# fall back go mail
-			pass show "${dir}/user" || pass show "${dir}/mail" | xargs xdotool type
+			( pass show "${dir}/user" || pass show "${dir}/mail" ) | xargs xdotool type
 			xdotool key Tab
 			pass show "${dir}/pass" | xargs xdotool type
 		else
