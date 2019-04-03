@@ -205,6 +205,7 @@ with lib; {
           atk
         ])}
         export GDK_PIXBUF_MODULE_FILE="$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)"
+        export XDG_DESKTOP_DIR="$HOME/Downloads" # because firefox creates this on start
       '';
       shellAliases = {
         # use ssh-ident to start ssh-agent as necessary
