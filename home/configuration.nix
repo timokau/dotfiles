@@ -55,7 +55,7 @@ with lib; {
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
         notmuch # notmuch python api to sort mails
-        # tensorflow # machine learning (currently not available with python 3.7)
+        tensorflow # machine learning
         pytest
         # TODO for some reason it is necessary to install this into the
         # environment in order for it to work properly (with imports) in
