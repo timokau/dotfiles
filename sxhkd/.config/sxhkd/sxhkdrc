@@ -93,7 +93,12 @@ super + n
 	/home/timo/bin/keyboardconfig
 
 super + b : {plus,minus}
-	xbacklight -{inc,dec} 5
+	brightnessctl --min-value=1 s 5%{+,-}
 
-super + b : {e,d}
-	xbacklight -set {80, 0}
+# restore brightness
+super + b : e
+	brightnessctl --restore
+
+# turn display off (0 brightness)
+super + b : d
+	brightnessctl --save s 0

@@ -208,6 +208,7 @@ in
 
   # scanner support
   hardware.sane.enable = true;
+  hardware.brightnessctl.enable = true;
 
   sound.enable = true;
   hardware.pulseaudio = {
@@ -241,6 +242,7 @@ in
       "docker"
       "vboxusers"
       "wireshark"
+      "video" # brightnessctl
     ];
     uid = 1000;
     shell = "${pkgs.zsh}/bin/zsh";
