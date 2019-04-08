@@ -139,7 +139,7 @@ with lib; {
       retdec # decompiler (~800mb)
       pandoc # convert between markup formats (pandoc -> ghc -> ~1.4G space)
       texlive.combined.scheme-full # latex
-      # sageWithDoc # math software
+      sageWithDoc # math software
     ]) ++ (optionals cfg.graphical [
       libreoffice
       anki # flash cards
