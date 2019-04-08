@@ -90,8 +90,8 @@ in
     "zswap.enabled" = 1;
   };
 
-  # mount /tmp in RAM
-  boot.tmpOnTmpfs = true;
+  # mount /tmp in RAM. Don't do this on desk, as the machine tends to run out of ram.
+  boot.tmpOnTmpfs = !isDesk;
 
   virtualisation.virtualbox.host = {
     enable = true;
