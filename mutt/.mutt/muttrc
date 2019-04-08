@@ -155,7 +155,7 @@ color index_tags brightblue default
 color index_author red default 'Timo Kaufmann'
 color index_collapsed default brightblue
 color index_date green default
-set hidden_tags = 'to-me,sent,unread'
+set hidden_tags = 'to-me,sent,unread,processed'
 
 # Sidebar Patch
 macro index gs "<sidebar-toggle-visible>"
@@ -187,8 +187,9 @@ set virtual_spoolfile=yes # enable virtual folders
 # TODO see https://notmuchmail.org/mutttips/
 # set sendmail="/PATH/TO/bin/nm_sendmail" # enables parsing of outgoing mail
 virtual-mailboxes \
+    "work unread"    "notmuch://?query=tag:unread and not tag:new and tag:uni"\
+    "unread"    "notmuch://?query=tag:unread and not tag:new"\
     "inbox"    "notmuch://?query=tag:inbox"\
-    "unread"    "notmuch://?query=tag:unread"\
     "starred"   "notmuch://?query=tag:*"\
     "yahoo"   "notmuch://?query=tag:yahoo&limit=100"\
     "uni"   "notmuch://?query=tag:uni&limit=100"\
