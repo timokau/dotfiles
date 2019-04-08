@@ -55,6 +55,7 @@ with lib; {
       imagemagick # cli image editing
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
+        PyGithub
         notmuch # notmuch python api to sort mails
         tensorflow # machine learning
         pip
