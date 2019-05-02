@@ -188,7 +188,7 @@ set virtual_spoolfile=yes # enable virtual folders
 # set sendmail="/PATH/TO/bin/nm_sendmail" # enables parsing of outgoing mail
 virtual-mailboxes \
     "work unread"    "notmuch://?query=tag:unread and not tag:new and tag:uni"\
-    "unread"    "notmuch://?query=tag:unread and not tag:new"\
+    "unread"    "notmuch://?query=tag:unread and not tag:new and not tag:killed"\
     "inbox"    "notmuch://?query=tag:inbox"\
     "starred"   "notmuch://?query=tag:*"\
     "yahoo"   "notmuch://?query=tag:yahoo&limit=100"\
@@ -202,7 +202,7 @@ macro index A "<modify-labels>+archive -unread -inbox\\n" # tag as Archived
 macro index I "<modify-labels>-inbox -unread\\n" # removed from inbox
 macro index S "<modify-labels-then-hide>-inbox -unread +junk\\n" # tag as Junk mail
 macro index K "<untag-pattern>~A<enter><tag-thread><tag-prefix><modify-labels-then-hide>-inbox -unread +killed<enter><untag-pattern>~A<enter>"
-macro pager K "<read-thread><modify-labels-then-hide>-inbox -unread +killed<enter>"
+macro pager K "<modify-labels-then-hide>-inbox -unread +killed<enter><read-thread>"
 macro index + "<modify-labels>+*\\n<sync-mailbox>" # tag as starred
 macro index - "<modify-labels>-*\\n<sync-mailbox>" # tag as unstarred
 macro index T "<entire-thread>"
