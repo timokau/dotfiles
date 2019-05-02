@@ -53,11 +53,14 @@ let
     }
     {
       p = vim-pandoc;
+      # TODO also on explicit filetype switch
       atStartup = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc";
+      startup = true;
     }
     {
       p = vim-pandoc-syntax;
-      atStartup = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc";
+      startup = true;
+      atStartup = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc-syntac";
       preLoad = ''
         " Continue pandoc enumerations when hitting return in insert mode
         autocmd FileType pandoc call Pandocsettings()
