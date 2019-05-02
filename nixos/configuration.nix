@@ -92,6 +92,7 @@ in
 
   # mount /tmp in RAM. Don't do this on desk, as the machine tends to run out of ram.
   boot.tmpOnTmpfs = !isDesk;
+  boot.cleanTmpDir = true;
 
   virtualisation.virtualbox.host = {
     enable = true;
