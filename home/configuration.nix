@@ -198,6 +198,13 @@ with lib; {
       enable = cfg.graphical;
     };
 
+    nixpkgs.config = {
+      allowUnfreePredicate = (pkg: elem (builtins.parseDrvName pkg.name).name [
+        # unfree whitelist
+        "spotify"
+      ]);
+    };
+
     programs.zsh = {
       enable = true;
       initExtra = (builtins.readFile ../zsh/.zshrc) +
