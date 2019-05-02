@@ -67,7 +67,7 @@ in
     setgid = true;
   };
 
-  # programs.adb.enable = true;
+  programs.adb.enable = true;
   # programs.command-not-found.enable = true;
 
   fonts = {
