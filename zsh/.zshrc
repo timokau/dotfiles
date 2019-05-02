@@ -364,8 +364,7 @@ alias ...='cd ../..'
 alias pastebin='curl -F "sprunge=<-" http://sprunge.us'
 alias pastebinc='pastebin | xsel -b'
 alias ns='notify-send'
-# sync mails in background before and after closing mutt
-alias mutt='( syncmails >/dev/null 2>&1 & ); neomutt; ( syncmails repeat >/dev/null 2>&1 & )'
+alias mutt=neomutt
 check_com rsync && alias smv='rsync -avz --remove-source-files -e ssh'
 check_com translate-shell && alias trans='HOME_LANG=de TARGET_LANG=de trans'
 check_com translate-shell && alias transb='HOME_LANG=de TARGET_LANG=de trans -brief'
