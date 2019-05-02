@@ -53,6 +53,7 @@ with lib; {
       htop # system monitoring
       pdfgrep # search through pdfs
       imagemagick # cli image editing
+      superTuxKart # casual gaming
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
         PyGithub
