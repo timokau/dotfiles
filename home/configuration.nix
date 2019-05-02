@@ -292,7 +292,9 @@ with lib; {
       };
 
       Service = {
-        ExecStart = ~/bin/keyboardconfig;
+        ExecStart = ''
+          ${~/bin/keyboardconfig}
+        '';
         Restart = "on-failure";
       };
 
