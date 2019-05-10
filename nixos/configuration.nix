@@ -120,6 +120,7 @@ in
 
     # use cloudflare dns which is uncensored (in contrast to that of my isp)
     nameservers = [ "1.1.1.1" ];
+    networkmanager.insertNameservers = [ "1.1.1.1" ];
 
     # use networkmanager for easy wifi setup
     networkmanager.enable = true;
