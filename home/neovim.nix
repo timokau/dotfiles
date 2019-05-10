@@ -274,8 +274,8 @@ let
       in
       # TODO how does pylint find its libs
       ''
-        let $PATH .= ':${cfg.python3}/bin:${cfg.python3.pkgs.pyflakes}/bin:${cfg.python3.pkgs.pylint}/bin'
-        let g:neomake_python_enabled_makers = ['python', 'pyflakes', 'pylint']
+        let $PATH .= ':${cfg.python3}/bin:${cfg.python3.pkgs.pylint}/bin'
+        let g:neomake_python_enabled_makers = ['python', 'pylint']
         let g:neomake_tex_enabled_makers = ['chktex'] " no lacheck
         let g:neomake_sty_enabled_makers = ['chktex'] " no lacheck
 
