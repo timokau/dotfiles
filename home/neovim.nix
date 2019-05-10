@@ -69,7 +69,6 @@ let
           setlocal comments +=:-
           setlocal formatoptions +=r
           setlocal colorcolumn=0
-          setlocal spelllang=de_20
         endfun
       '';
     }
