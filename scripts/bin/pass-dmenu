@@ -9,7 +9,7 @@ else
 	copy=false
 fi
 
-pwd_store="$HOME/.password-store"
+pwd_store="$HOME/.password-store/"
 
 # Find and format all entries in the password store
 store_entries="$(
