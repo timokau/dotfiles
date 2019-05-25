@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-BAG_FILE="$HOME/offline-bag.txt"
+BAG_FILE="$HOME/todo/offline-bag.txt"
 CLI_FOLDER="$HOME/data/code/rust/bag-cli"
 
+mkdir -p "$( dirname "$BAG_FILE" )"
 if (( "$#" > 0 )); then
 	# Save the file (later)
 	echo "$1" >> "$BAG_FILE"
