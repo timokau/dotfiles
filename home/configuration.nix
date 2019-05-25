@@ -57,6 +57,7 @@ with lib; {
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
         joblib # easy parallelization
+        pycallgraph # profiling
         PyGithub
         notmuch # notmuch python api to sort mails
         tensorflow # machine learning
