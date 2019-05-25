@@ -275,6 +275,8 @@ with lib; {
       enable = true;
     };
 
+    xdg.configFile."tridactyl/tridactylrc".source = ../tridactyl/.config/tridactyl/tridactylrc;
+
     # hide mouse cursor when not moving
     services.unclutter = {
       enable = cfg.graphical;

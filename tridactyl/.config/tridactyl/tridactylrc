@@ -1,0 +1,65 @@
+" "vim-like" behaviour where removing a line from here makes the setting disappear
+sanitise tridactyllocal tridactylsync
+
+"
+" Binds
+"
+
+" Comment toggler for Reddit and Hacker News
+bind ;c hint -c [class*="expand"],[class="togg"]
+
+" GitHub pull request checkout command to clipboard (only works if you're a collaborator or above)
+bind yp composite js (document.getElementById("clone-help-step-1").textContent.replace("git checkout -b", "git checkout -B").replace("git pull ", "git fetch ") + "git reset --hard " + document.getElementById("clone-help-step-1").textContent.split(" ")[3].replace("-","/")).split('\n').join(' && ') | yank
+
+" Git{Hub,Lab} git clone via SSH yank
+bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+
+" Only hint search results on Google
+bindurl www.google.com f hint -Jc .rc > .r > a
+bindurl www.google.com F hint -Jtc .rc>.r>a
+
+bind T fillcmdline tabopen -b
+bind ;w hint -W exclaim_quiet bag
+bind ;m hint -W exclaim_quiet video-stream
+bind gw current_url exclaim_quiet bag
+bind gm current_url exclaim_quiet video-stream
+
+bind J tabnext
+bind K tabprev
+bind + zoom 0.1 true
+bind - zoom -0.1 true
+
+bind O composite url2args | fillcmdline open
+
+" Allow Ctrl-a to select all in the commandline
+unbind --mode=ex <C-a>
+
+" Let Ctrl-c to copy in the commandline
+unbind --mode=ex <C-c>
+
+" Handy multiwindow/multitasking binds
+bind gd tabdetach
+bind gD composite tabduplicate | tabdetach
+
+set searchurls.r https://old.reddit.com/r/%s
+set searchurls.strack https://trac.sagemath.org/search?branch=off?milestone=off?ticket=on?wiki=off?q=%s
+set searchurls.sticket https://trac.sagemath.org/ticket/%s
+
+"
+" Misc settings
+"
+
+" Sane hinting mode
+set hintfiltermode vimperator-reflow
+set hintchars asdfjklwetiomnv
+
+" Apperance
+set theme dark
+
+"
+" URL redirects
+" 
+
+autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
+
+" vim: set filetype=vim:
