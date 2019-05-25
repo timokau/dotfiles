@@ -170,6 +170,9 @@ with lib; {
       xorg.xbacklight
       radare2-cutter # radare gui
       wireshark # network sniffing
+      # TODO add simple wrapper that sets XDG_DESKTOP_DIR="$HOME/
+      # https://bugzilla.mozilla.org/show_bug.cgi?id=1082717
+      firefox
     ]);
 
     fonts.fontconfig.enableProfileFonts = true;
@@ -193,18 +196,14 @@ with lib; {
     # services.screen-locker = TODO
 
 
-    # TODO add simple wrapper that sets XDG_DESKTOP_DIR="$HOME/
-    # https://bugzilla.mozilla.org/show_bug.cgi?id=1082717
-    programs.firefox = {
-      # TODO addons
-      enable = cfg.graphical;
-    };
-
     nixpkgs.config = {
       allowUnfreePredicate = (pkg: elem (builtins.parseDrvName pkg.name).name [
         # unfree whitelist
         "spotify"
       ]);
+      firefox = {
+        enableTridactylNative = true;
+      };
     };
 
     programs.zsh = {
