@@ -56,6 +56,7 @@ with lib; {
       superTuxKart # casual gaming
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
+        joblib # easy parallelization
         PyGithub
         notmuch # notmuch python api to sort mails
         tensorflow # machine learning
