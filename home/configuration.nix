@@ -263,6 +263,13 @@ with lib; {
       Name=Riot messenger
     '';
 
+    home.file.".latexmkrc".text = ''
+      $pdflatex = "pdflatex -synctex=1 -halt-on-error %O %S";
+      $pdf_previewer = 'start zathura';
+      $pdf_mode = 1; # build pdf by default
+      $failure_cmd = 'echo $"\a"; latexmk -C'
+    '';
+
     services.syncthing = {
       # TODO add config
       enable = true;
