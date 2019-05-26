@@ -175,7 +175,7 @@ with lib; {
       firefox
     ]);
 
-    fonts.fontconfig.enableProfileFonts = true;
+    fonts.fontconfig.enable = true;
 
     services.gpg-agent = {
       enable = true;
