@@ -56,6 +56,7 @@ with lib; {
       superTuxKart # casual gaming
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
+        rl-coach # reinforcement learning framework
         joblib # easy parallelization
         pycallgraph # profiling
         PyGithub
