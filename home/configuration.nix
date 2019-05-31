@@ -54,6 +54,7 @@ with lib; {
       pdfgrep # search through pdfs
       imagemagick # cli image editing
       superTuxKart # casual gaming
+      graphviz # for pycallgraph, TODO add as upstream dependency
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
         rl-coach # reinforcement learning framework
