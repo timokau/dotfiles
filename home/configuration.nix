@@ -57,6 +57,7 @@ with lib; {
       graphviz # for pycallgraph, TODO add as upstream dependency
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
+        baselines # rl algorithms
         black # python formatting
         rl-coach # reinforcement learning framework
         joblib # easy parallelization
