@@ -57,7 +57,21 @@ with lib; {
       graphviz # for pycallgraph, TODO add as upstream dependency
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
-        baselines # rl algorithms
+        # rl algorithms
+        (baselines.overrideAttrs (attrs: {
+          # adds graph_nets support, see https://github.com/openai/baselines/pull/931
+          src = fetchFromGitHub {
+            owner = "timokau";
+            repo = "baselines";
+            sha256 = "0wps0ald71v59467fi1l9gh666iw589nd1519l14xak000cbc80c";
+            rev = "b45c99c88469fbb46f32d4c9a43e690a2a224995";
+          };
+          patches = []; # included upstream
+          # not needed for my purposes
+          preBuild = ''
+            sed -ie '/opencv-python/d' setup.py
+          '';
+        }))
         black # python formatting
         rl-coach # reinforcement learning framework
         joblib # easy parallelization
