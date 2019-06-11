@@ -92,6 +92,7 @@ with lib; {
         ipython # better interactive python
         numpy # number squashing
         networkx # graphs
+        pydot # generating graph dot files in python
         matplotlib
         tkinter # matplotlib backend
         pygraphviz
