@@ -63,8 +63,8 @@ with lib; {
           src = fetchFromGitHub {
             owner = "timokau";
             repo = "baselines";
-            sha256 = "0wps0ald71v59467fi1l9gh666iw589nd1519l14xak000cbc80c";
-            rev = "b45c99c88469fbb46f32d4c9a43e690a2a224995";
+            sha256 = "1hf45d7p9aqqa7pnp6kqm2an5hgjv27jgy1whkzn1rppn6a8qbi9";
+            rev = "c80ac03eb585766b422944ef5b900f9037fe725d";
           };
           patches = []; # included upstream
           # not needed for my purposes
