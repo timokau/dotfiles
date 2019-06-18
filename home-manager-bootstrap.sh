@@ -26,10 +26,10 @@ nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 nix-channel --update
 
 # home-manager needs this configuration at a particular place
-NIXPKGS_CONFIG="${XDG_CONFIG_DIR:-$HOME/.config}/nixpkgs"
+XDG_CONFIG_DIR="${XDG_CONFIG_DIR:-$HOME/.config}"
 DOTFILES="$PWD"
-mkdir -p "$NIXPKGS_CONFIG"
-[[ -L "$NIXPKGS_CONFIG" ]] && rm "$NIXPKGS_CONFIG"
-ln -T -s "$DOTFILES" "$NIXPKGS_CONFIG"
+mkdir -p "$XDG_CONFIG_DIR"
+rm -rf "$XDG_CONFIG_DIR/nixpkgs"
+ln -T -s "$DOTFILES" "$XDG_CONFIG_DIR/nixpkgs"
 
 nix run nixpkgs.home-manager -c home-manager switch
