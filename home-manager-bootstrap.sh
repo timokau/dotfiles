@@ -29,6 +29,7 @@ export NIX_PATH="nixpkgs=$HOME/.nix-defexpr/channels/nixos":$NIX_PATH # https://
 NIXPKGS_CONFIG="${XDG_CONFIG_DIR:-$HOME/.config}/nixpkgs"
 DOTFILES="$PWD"
 mkdir -p "$NIXPKGS_CONFIG"
+[[ -L "$NIXPKGS_CONFIG" ]] && rm "$NIXPKGS_CONFIG"
 ln -T -s "$DOTFILES" "$NIXPKGS_CONFIG"
 
 nix run nixpkgs.home-manager -c home-manager switch
