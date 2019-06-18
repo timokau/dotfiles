@@ -21,9 +21,9 @@ case mode in
 esac
 
 # latest version of everything
+export NIX_PATH="nixpkgs=$HOME/.nix-defexpr/channels/nixos":$NIX_PATH # https://github.com/NixOS/nix/issues/2033
 nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 nix-channel --update
-export NIX_PATH="nixpkgs=$HOME/.nix-defexpr/channels/nixos":$NIX_PATH # https://github.com/NixOS/nix/issues/2033
 
 # home-manager needs this configuration at a particular place
 NIXPKGS_CONFIG="${XDG_CONFIG_DIR:-$HOME/.config}/nixpkgs"
