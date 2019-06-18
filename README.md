@@ -1,9 +1,7 @@
 dotfiles
 ===============
 
-# Introduction
-The files are organized by application. Each application has its own folders, in which the config files are placed like they are relative to the home folder.  
-To install one of the configurations, install [GNU Stow][1], clone the repository (for example to `$HOME/dotfiles`), change into the directory and call `stow *application*`.  
-That doesn't work for systemd unit files however, those have to be hardlinked.
+# Setting up a new machine
 
-[1]: https://www.gnu.org/software/stow
+- install nix
+- `./home-manager-bootstrap.sh <mode>`

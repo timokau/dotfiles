@@ -82,18 +82,17 @@ let
         success = isNixShebang;
         depsFile = if isNixShebang then shebangLineToDepsFile secondLine else "";
       };
+
+  scripts = builtins.attrNames (builtins.readDir ../scripts/bin); # assumes there are no subdirectories
+  fileToWrapper = basePath: fileName: {
+    name = "bin/${fileName}";
+    value = {
+      text = staticShell "${basePath}/${fileName}";
+      executable = true;
+    };
+  };
+  scriptFiles = lib.imap0 (i: (fileToWrapper ../scripts/bin)) scripts;
 in
 {
-  home.file = let
-    scripts = builtins.attrNames (builtins.readDir ../scripts/bin); # assumes there are no subdirectories
-    fileToWrapper = basePath: fileName: {
-      name = "bin/${fileName}";
-      value = {
-        text = staticShell "${basePath}/${fileName}";
-        executable = true;
-      };
-    };
-    scriptFiles = lib.imap0 (i: (fileToWrapper ../scripts/bin)) scripts;
-  in
-    builtins.listToAttrs scriptFiles;
+  home.file = builtins.listToAttrs scriptFiles;
 }
