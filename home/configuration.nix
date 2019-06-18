@@ -55,6 +55,7 @@ with lib; {
       imagemagick # cli image editing
       superTuxKart # casual gaming
       graphviz # for pycallgraph, TODO add as upstream dependency
+      dot2tex # graphviz <-> latex
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
         # rl algorithms
