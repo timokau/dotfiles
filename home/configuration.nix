@@ -304,10 +304,12 @@ with lib; {
     '';
 
     home.file.".latexmkrc".text = ''
-      $pdflatex = "pdflatex -synctex=1 -halt-on-error %O %S";
+      # no interaction, enable synctex for vimtex integratoin
+      $pdflatex = "pdflatex -synctex=1 -interaction=nonstopmode -halt-on-error %O %S";
+
       $pdf_previewer = 'start zathura';
       $pdf_mode = 1; # build pdf by default
-      $failure_cmd = 'echo $"\a"; latexmk -C'
+      $failure_cmd = 'echo $"\a"; latexmk -C' # ring bell
     '';
 
     services.syncthing = {
