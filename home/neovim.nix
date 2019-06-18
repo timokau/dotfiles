@@ -74,15 +74,19 @@ let
     }
     {
       p = vimtex;
-      atStartup = "autocmd PlugAutoload FileType tex :packadd vimtex";
-      preLoad = ''
+      startup = true;
+      # atStartup = "autocmd PlugAutoload FileType tex :packadd vimtex";
+      # TODO fix preLoad
+      atStartup = ''
+        let g:tex_flavor = "latex" " work on plain tex files
+        let g:vimtex_enable=1
         let g:vimtex_view_method="zathura"
         let g:vimtex_indent_on_ampersands=0
         let g:vimtex_indent_on_ampersands=0
         let g:vimtex_quickfix_open_on_warning=0
-        let latexmk_options = '-pdf -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
-        command! LatexShellescape let g:vimtex_latexmk_options = latexmk_options . ' -shell-escape'
-        command! LatexShellescapeOff let g:vimtex_latexmk_options = latexmk_options
+        let g:vimtex_quickfix_latexlog = {
+          \ 'ignore_filters': ['LaTeX Warning: Marginpar on page \d\+ moved.'],
+        \}
 
         " Ignore spelling inside tabular {}
         fun! TexNoSpell()
@@ -109,9 +113,17 @@ let
             \ start="\\begin{tikzpicture}{"rs=s
             \ end="}\|%stopzone\>"re=e
 
+          syntax region texDot
+            \ start="\\begin{dot2tex}"rs=s
+            \ end="\\end{dot2tex}\|%stopzone\>"re=e
+            \ keepend
+            \ contains=texBeginEnd,@NoSpell
+
           syntax match texStatement '\\setcounter' nextgroup=texNoSpellBraces
           syntax match texStatement '\\newcounter' nextgroup=texNoSpellBraces
           syntax match texStatement '\\value' nextgroup=texNoSpellBraces
+          syntax match texStatement '\\ac' nextgroup=texNoSpellBraces
+          syntax match texStatement '\\acp' nextgroup=texNoSpellBraces
           syntax region texNoSpellBraces matchgroup=Delimiter start='{' end='}' contained contains=@NoSpell
         endfun
         autocmd BufRead,BufNewFile *.tex :call TexNoSpell()
@@ -199,7 +211,7 @@ let
       # snippets
       p = ultisnips;
       startup = true;
-      preLoad = ''
+      atStartup = ''
         " Trigger configuration. <tab> interferes with YouCompleteMe
         let g:UltiSnipsExpandTrigger="<c-j>"
         let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -246,6 +258,27 @@ let
                 \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
                 \ }) | endif
       '';
+    }
+    {
+      # autocomplete paths
+      p = ncm2-ultisnips;
+      startup = true;
+    }
+    {
+      # autocomplete paths
+      p = neosnippet;
+      atStartup = ''
+        imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+        smap <C-j>     <Plug>(neosnippet_expand_or_jump)
+        xmap <C-j>     <Plug>(neosnippet_expand_target)
+        let g:neosnippet#snippets_directory = '/home/timo/snippets'
+      '';
+      startup = true;
+    }
+    {
+      # autocomplete paths
+      p = neosnippet-snippets;
+      startup = true;
     }
     {
       # autocomplete paths
@@ -406,6 +439,8 @@ let
 
   mynvim = (pkgs.neovim.override {
       configure = {
+        # https://github.com/neovim/neovim/issues/9390
+        pathogen.pluginNames = [ "vimtex" "ultisnips" ];
         packages.myVimPackage = with pkgs.vimPlugins; {
           start = [
             # colorschemes
