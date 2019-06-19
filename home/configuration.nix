@@ -356,7 +356,7 @@ with lib; {
 
       Service = {
         ExecStart = ''
-          ${config.home.file."bin/keyboardconfig".text}
+          ${config.home.file."bin/keyboardconfig".source}
         '';
         Restart = "on-failure";
       };
