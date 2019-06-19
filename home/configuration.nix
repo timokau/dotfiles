@@ -74,7 +74,6 @@ with lib; {
           '';
         }))
         black # python formatting
-        rl-coach # reinforcement learning framework
         joblib # easy parallelization
         pycallgraph # profiling
         PyGithub
