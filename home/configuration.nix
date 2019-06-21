@@ -80,7 +80,6 @@ with lib; {
         notmuch # notmuch python api to sort mails
         tensorflow # machine learning
         graph_nets # neural graph networks with tensorflow
-        scikitlearn # more classical ML (logistic regression etc.)
         pandas # data structures for data analysis
         pip
         pytest
