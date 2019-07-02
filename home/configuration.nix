@@ -130,7 +130,6 @@ with lib; {
       mpv # audio and video player
       youtube-dl # media downloader (not just youtube)
       ffmpeg # cli media editor
-      beets # music library manager
       ncmpcpp # tui mpd music player
       wget
       zathura # minimal pdf viewer with vim contorls
