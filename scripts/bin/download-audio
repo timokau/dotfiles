@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-youtube-dl -o "${2}.%(ext)s" -f 'bestaudio' -x --audio-format=mp3 "$1"
+youtube-dl -o "${2}.%(ext)s.%(ext)s" -f 'bestaudio' -x --audio-format=mp3 "$1"
