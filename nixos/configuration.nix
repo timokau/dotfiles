@@ -212,6 +212,8 @@ in
   hardware.sane.enable = true;
   hardware.brightnessctl.enable = true;
 
+  hardware.cpu.intel.updateMicrocode = true;
+
   sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
