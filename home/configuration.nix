@@ -100,7 +100,6 @@ with lib; {
         gobject-introspection
         pillow # FIXME necessary for ranger image preview with kitty
       ] ++ optionals cfg.full [
-        graph-tool # more graphs (~400M)
       ]))
       (python2.buildEnv.override {
         extraLibs = with python2.pkgs; [
