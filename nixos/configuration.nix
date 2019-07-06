@@ -253,7 +253,7 @@ in
   };
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "18.03";
+  system.stateVersion = if isPad then "18.03" else "19.03";
 
   systemd.services.channelUpdate  = {
     description = "Updates the unstable channel";
