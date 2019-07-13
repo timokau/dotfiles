@@ -146,6 +146,7 @@ with lib; {
       jq # cli json handling
       pass # password manager
       nix-review # reviewing nix PRs
+      sshfs # mount dirs from other machines
       # TODO
       # highlight
       # sshfs-fuse
