@@ -250,6 +250,15 @@ with lib; {
       };
     };
 
+    programs.tmux = {
+      enable = true;
+      keyMode = "vi";
+      newSession = true;
+      extraConfig = ''
+        set -g mouse on
+      '';
+    };
+
     xdg.enable = true;
     # make the sage colorscheme readable
     home.file.".sage/init.sage".text = ''
