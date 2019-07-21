@@ -56,6 +56,7 @@ with lib; {
       superTuxKart # casual gaming
       graphviz # for pycallgraph, TODO add as upstream dependency
       dot2tex # graphviz <-> latex
+      gnuplot # plot generation in latex
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
         # rl algorithms
@@ -73,6 +74,8 @@ with lib; {
             sed -ie '/opencv-python/d' setup.py
           '';
         }))
+        multiprocess # multiprocessing with better pickling
+        psutil # process information for load balancing
         black # python formatting
         joblib # easy parallelization
         pycallgraph # profiling
