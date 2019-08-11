@@ -290,7 +290,29 @@ in
 
   # nix.requireSignedBinaryCaches = false;
   # nix.trustedUsers = [ "timo" ];
-  # nix.distributedBuilds = true;
+  nix.distributedBuilds = true;
+  nix.buildMachines = [
+    {
+      hostName = "aarch64.nixos.community";
+      maxJobs = 64;
+      sshKey = "/root/id_aarch64-builder";
+      sshUser = "timokau";
+      system = "aarch64-linux";
+      supportedFeatures = [ "big-parallel" ];
+    }
+  ];
+  programs.ssh.knownHosts = {
+    aarch64-community-builder = {
+      hostNames = [ "aarch64.nixos.community" ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMUTz5i9u5H2FHNAmZJyoJfIGyUm/HfGhfwnc142L3ds";
+    };
+  };
+  programs.ssh.extraConfig = ''
+    Host aarch64-nix-community
+      Hostname aarch64.nixos.community
+      User timokau
+      IdentityFile /root/id_aarch64-builder
+  '';
 
   nix.optimise = {
     automatic = true;
@@ -301,6 +323,7 @@ in
     min-free = 2147483648 # automatically collect garbage when <2 GiB free
     max-free = 3221225472 # stop at 3 GiB
     max-silent-time = 1800
+    builders-use-substitutes = true
   '';
 
   nix.buildCores = 0; # use all available CPUs
