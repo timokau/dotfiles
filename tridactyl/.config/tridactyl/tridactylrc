@@ -61,5 +61,8 @@ set theme dark
 " 
 
 autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
+" mobile wikipedia is much nicer, wastes less space (especially in portrait
+" orientation)
+autocmd DocStart en.wikipedia.org js tri.excmds.urlmodify("-t", "en", "en.m")
 
 " vim: set filetype=vim:
