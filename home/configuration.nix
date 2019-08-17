@@ -40,7 +40,19 @@ with lib; {
 
     # only tools I use directly
     # tools used in scripts should be listed somewhere else
-    home.packages = with pkgs; [
+    home.packages = let
+      nix-bisect = pkgs.python3.pkgs.buildPythonPackage rec {
+        pname = "nix-bisect";
+        version = "0.1.0";
+        # src = lib.cleanSource /home/timo/repos/nix-bisect;
+        src = pkgs.fetchFromGitHub {
+          owner = "timokau";
+          repo = "nix-bisect";
+          rev = "v${version}";
+          sha256 = "1da3ik7hc9ds9kdf871hyy1khijw4q4zyq32hhx3pnwgadbh7d1v";
+        };
+      };
+    in with pkgs; [
       entr # run command on file changes (nicer interface than inotify)
       skim # fzf clone in rust
       vagrant # VM management
@@ -59,6 +71,7 @@ with lib; {
       gnuplot # plot generation in latex
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
+        nix-bisect # bisect nix packages
         # rl algorithms
         (baselines.overrideAttrs (attrs: {
           # adds graph_nets support, see https://github.com/openai/baselines/pull/931
