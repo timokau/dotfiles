@@ -133,7 +133,6 @@ with lib; {
           pwntools
           r2pipe
         ] ++ (optionals cfg.full [
-          tensorflow
         ]);
         ignoreCollisions = true;
       })
