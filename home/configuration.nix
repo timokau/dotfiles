@@ -53,6 +53,7 @@ with lib; {
         };
       };
     in with pkgs; [
+      pdfpc # latex beamer presentations
       entr # run command on file changes (nicer interface than inotify)
       skim # fzf clone in rust
       vagrant # VM management
