@@ -230,7 +230,7 @@ with lib; {
 
 
     nixpkgs.config = {
-      allowUnfreePredicate = (pkg: elem (pkg.pname or "UNFREE") [
+      allowUnfreePredicate = (pkg: elem (pkg.pname or (builtins.parseDrvName pkg.name).name) [
         # unfree whitelist
         "spotify"
       ]);
