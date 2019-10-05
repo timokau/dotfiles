@@ -88,6 +88,7 @@ in
   boot.kernel.sysctl = {
     # https://wiki.archlinux.org/index.php/zswap
     "zswap.enabled" = 1;
+    "kernel.sysrq" = 1; # enable "magic sysrq" to force OOM reaper
   };
 
   # mount /tmp in RAM. Don't do this on desk, as the machine tends to run out of ram.
