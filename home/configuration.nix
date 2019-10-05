@@ -324,6 +324,15 @@ with lib; {
       Exec=${pkgs.chromium}/bin/chromium --class 'Riot' --app=https://riot.im/app
       Name=Riot messenger
     '';
+    xdg.dataFile."applications/slack.desktop".text = optionalString cfg.graphical ''
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=1.0
+      Type=Application
+      Terminal=false
+      Exec=${pkgs.chromium}/bin/chromium --class 'Slack' --app=https://app.slack.com/client/
+      Name=Slack messenger
+    '';
 
     home.file.".latexmkrc".text = ''
       # no interaction, enable synctex for vimtex integratoin
