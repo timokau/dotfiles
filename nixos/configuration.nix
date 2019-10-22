@@ -2,7 +2,7 @@
 
 let
   hostname = lib.fileContents ./hostname; # different file for each host, not version controlled
-  dyndns = lib.fileContents ./dyndns; # not version controlled
+  homeipv6 = lib.fileContents ./homeipv6; # not version controlled
   isDesk = hostname == "desk";
   isPad = hostname == "pad";
 
@@ -378,7 +378,7 @@ in
       # https://github.com/NixOS/nixpkgs/issues/30459
       # Try to access the DNS for up to 300s
       for i in {1..300}; do
-        ${pkgs.iputils}/bin/ping -c1 '${dyndns}' && break
+        ${pkgs.iputils}/bin/ping -c1 '1.1.1.1' && break
         echo "Attempt $i: DNS still not available"
         sleep 1s
       done
@@ -393,7 +393,8 @@ in
           "${wireguard.ip.desk}/32"
           "${wireguard.ip.phone}/32"
         ];
-        endpoint = "${dyndns}:${toString wireguard.port}";
+        # endpoint = "${dyndns}:${toString wireguard.port}";
+        endpoint = "${homeipv6}:${toString wireguard.port}";
       }
     ];
   };
