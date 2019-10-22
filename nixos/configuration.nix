@@ -175,17 +175,17 @@ in
 
   networking.hosts = {
     # give names to devices in my home network
-    "192.168.178.22" = [ "desk-local" ];
+    "192.168.0.22" = [ "desk-local" ];
     "${wireguard.ip.desk}" = [ "desk" ];
-    "192.168.178.38" = [ "rpi-local" ];
+    "192.168.0.38" = [ "rpi-local" ];
     "${wireguard.ip.rpi}" = [ "rpi" ];
     "${wireguard.ip.pad}" = [ "pad" ];
-    "192.168.178.21" = [ "opo" ];
-    "192.168.178.20" = [ "laptop" ];
-    "192.168.178.26" = [ "kindle" ];
-    "192.168.178.45" = [ "par" ];
-    "192.168.178.1" = [ "fb" ];
-    "192.168.178.100" = [ "eb" ];
+    "192.168.0.21" = [ "opo" ];
+    "192.168.0.20" = [ "laptop" ];
+    "192.168.0.26" = [ "kindle" ];
+    "192.168.0.45" = [ "par" ];
+    "192.168.0.1" = [ "rooter" ];
+    "192.168.0.100" = [ "eb" ];
   };
 
   services.xserver = {
