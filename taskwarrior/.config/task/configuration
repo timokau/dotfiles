@@ -73,6 +73,11 @@ report.uni.labels = ID,Desc,Start,Urg
 report.uni.filter = +READY +uni limit:10
 report.uni.sort = urgency-
 
+report.job.columns = id,description,start.age,urgency
+report.job.labels = ID,Desc,Start,Urg
+report.job.filter = +READY +job limit:10
+report.job.sort = urgency-
+
 # Reviews
 uda.reviewed.type=date
 uda.reviewed.label=Reviewed
