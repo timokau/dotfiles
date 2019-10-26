@@ -74,20 +74,6 @@ with lib; {
       (python3.withPackages (pkgs: with pkgs; [
         nix-bisect # bisect nix packages
         # rl algorithms
-        (baselines.overrideAttrs (attrs: {
-          # adds graph_nets support, see https://github.com/openai/baselines/pull/931
-          src = fetchFromGitHub {
-            owner = "timokau";
-            repo = "baselines";
-            sha256 = "1hf45d7p9aqqa7pnp6kqm2an5hgjv27jgy1whkzn1rppn6a8qbi9";
-            rev = "c80ac03eb585766b422944ef5b900f9037fe725d";
-          };
-          patches = []; # included upstream
-          # not needed for my purposes
-          preBuild = ''
-            sed -ie '/opencv-python/d' setup.py
-          '';
-        }))
         multiprocess # multiprocessing with better pickling
         psutil # process information for load balancing
         black # python formatting
@@ -95,8 +81,6 @@ with lib; {
         pycallgraph # profiling
         PyGithub
         notmuch # notmuch python api to sort mails
-        tensorflow # machine learning
-        graph_nets # neural graph networks with tensorflow
         pandas # data structures for data analysis
         pip
         pytest
