@@ -14,6 +14,9 @@
       track = ''
         "!git push --set-upstream timokau \"$(git symbolic-ref --short HEAD)\""
       '';
+	  bisect-edit = ''
+	    "!sh -c 'git bisect log > /tmp/bisect-log && nvim /tmp/bisect-log && git bisect reset && git bisect replay /tmp/bisect-log'"
+	  '';
       # better overview, less details
       lg = "log --color --graph --oneline --decorate";
     };
