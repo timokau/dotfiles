@@ -187,7 +187,7 @@ set virtual_spoolfile=yes # enable virtual folders
 # TODO see https://notmuchmail.org/mutttips/
 # set sendmail="/PATH/TO/bin/nm_sendmail" # enables parsing of outgoing mail
 virtual-mailboxes \
-    "work unread"    "notmuch://?query=tag:unread and not tag:new and tag:uni"\
+    "work unread"    "notmuch://?query=tag:unread and not tag:new and ( tag:uni or tag:work or tag:important )"\
     "unread"    "notmuch://?query=tag:unread and not tag:new and not tag:killed and not tag:spam"\
     "inbox"    "notmuch://?query=tag:inbox"\
     "starred"   "notmuch://?query=tag:*"\
