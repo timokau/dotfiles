@@ -64,7 +64,7 @@ color quoted5	 red		default
 color quoted6	 green	default
 color quoted7	 cyan		default
 color quoted8	 magenta		default
-color quoted9	 red		default
+# color quoted9	 red		default
 
 # highlight diffs (http://karelzak.blogspot.com/2010/02/highlighted-patches-inside-mutt.html)
 color body green default "^diff \-.*"
