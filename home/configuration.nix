@@ -1,12 +1,17 @@
-{ config, pkgs, lib, ... }:
+{ config
+# , pkgs # nixpkgs is pinned
+, lib
+, ...
+}:
 let
   cfg = config.home;
+  pkgs = import ../nixpkgs.nix;
 in
   # TODO cleanup services
   # fd --no-ignore --changed-before 7d . ~/.cache --exec rm -f {}
   # fd --no-ignore --changed-before 1d --type f --type e . ~/.config --exec trash-put {}
   # TODO something similar .local?
-with lib; {
+with pkgs.lib; {
   imports = [
     ./neovim.nix # editor
     ./taskwarrior.nix # todo list and task management

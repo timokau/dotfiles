@@ -1,6 +1,10 @@
-{ config, pkgs, ... }:
+{ config
+# , pkgs # nixpkgs is pinned
+, ...
+}:
 
 let
+  pkgs = import ./nixpkgs.nix;
   hostname = lib.fileContents ./hostname; # different file for each host, not version controlled
   homeipv6 = lib.fileContents ./homeipv6; # not version controlled
   isDesk = hostname == "desk";

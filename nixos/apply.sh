@@ -6,5 +6,5 @@ diff --color=always -r /etc/nixos .
 echo "Continue?"
 read
 
-sudo install --owner=root --group=root --mode=644 *.nix hostname homeipv6 /etc/nixos
+sudo install --owner=root --group=root --mode=644 *.nix hostname homeipv6 ../nixpkgs.nix /etc/nixos
 sudo nixos-rebuild switch
