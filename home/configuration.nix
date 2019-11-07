@@ -49,13 +49,13 @@ with pkgs.lib; {
       nix-bisect = pkgs.python3.pkgs.buildPythonPackage rec {
         pname = "nix-bisect";
         version = "0.1.0";
-        # src = lib.cleanSource /home/timo/repos/nix-bisect;
-        src = pkgs.fetchFromGitHub {
-          owner = "timokau";
-          repo = "nix-bisect";
-          rev = "v${version}";
-          sha256 = "1da3ik7hc9ds9kdf871hyy1khijw4q4zyq32hhx3pnwgadbh7d1v";
-        };
+        src = lib.cleanSource /home/timo/repos/nix-bisect;
+        # src = pkgs.fetchFromGitHub {
+        #   owner = "timokau";
+        #   repo = "nix-bisect";
+        #   rev = "v${version}";
+        #   sha256 = "1da3ik7hc9ds9kdf871hyy1khijw4q4zyq32hhx3pnwgadbh7d1v";
+        # };
       };
     in with pkgs; [
       pdfpc # latex beamer presentations
@@ -176,7 +176,6 @@ with pkgs.lib; {
       gimp # image editing
       tdesktop # telegram chat
       spotify # music
-      kitty # terminal emulator
       digikam # picture management
       scrot # screenshots
       evince # more fully featured (and bloated) pdf viewer
@@ -184,7 +183,6 @@ with pkgs.lib; {
       sxiv # image viewer
       calibre # ebook management
       xcape # keyboard management
-      rofi # launcher
       xdotool # x automation
       chromium # fallback browser
       autorandr
@@ -355,10 +353,10 @@ with pkgs.lib; {
         ExecStart = ''
           ${pkgs.xautolock}/bin/xautolock \
             -detectsleep \
-            -time 10 \
+            -time 180 \
             -locker /home/timo/bin/lock \
-            -notify 30 \
-            -notifier '${pkgs.libnotify}/bin/notify-send --urgency=low "The screen will lock in 30s"' \
+            -notify 60 \
+            -notifier '${pkgs.libnotify}/bin/notify-send --urgency=low "The screen will lock in 60s"' \
             -noclose
         '';
       };
