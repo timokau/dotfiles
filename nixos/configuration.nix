@@ -4,7 +4,7 @@
 }:
 
 let
-  pkgs = import ./nixpkgs.nix;
+  pkgs = import (import ./nixpkgs.nix) {};
   hostname = lib.fileContents ./hostname; # different file for each host, not version controlled
   homeipv6 = lib.fileContents ./homeipv6; # not version controlled
   isDesk = hostname == "desk";
@@ -34,9 +34,15 @@ in
 
   services.autorandr.enable = true;
 
-  nix.useSandbox = true;
-  nix.daemonIONiceLevel = 5;
-  nix.daemonNiceLevel = 10;
+  nix = {
+    useSandbox = true;
+    daemonIONiceLevel = 5;
+    daemonNiceLevel = 10;
+    nixPath = [
+      "nixpkgs=${import ./nixpkgs.nix}"
+      "nixos-config=/etc/nixos/configuration.nix"
+    ];
+  };
 
   # install man pages
   environment.extraOutputsToInstall = [ "man" ];

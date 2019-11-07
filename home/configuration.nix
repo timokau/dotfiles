@@ -5,7 +5,7 @@
 }:
 let
   cfg = config.home;
-  pkgs = import ../nixpkgs.nix;
+  pkgs = import (import ../nixpkgs.nix) {};
 in
   # TODO cleanup services
   # fd --no-ignore --changed-before 7d . ~/.cache --exec rm -f {}
