@@ -80,6 +80,8 @@ in
   programs.adb.enable = true;
   # programs.command-not-found.enable = true;
 
+  programs.gnupg.agent.enable = true;
+
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
