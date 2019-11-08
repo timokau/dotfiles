@@ -140,7 +140,6 @@ bind attach <return> view-mailcap
 bind pager O mark-as-new
 
 macro index R '<enter-command>unset wait_key<enter><shell-escape>syncmails<enter>' 'sync the mail'
-macro index Q "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt -o ~/Mail/search -p search<enter><change-folder-readonly>+search<enter>" "search mail (using notmuch)"
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
 macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 macro pager \Cu "|urlview<enter>" "call urlview to open links"
@@ -181,7 +180,6 @@ set pgp_replyencrypt
 
 # TODO filter mail (see https://notmuchmail.org/mutttips/)
 # notmuch
-set nm_default_uri = "$HOME/Mail"
 # set nm_query_type = "threads" # preserve whole threads
 set virtual_spoolfile=yes # enable virtual folders
 # TODO see https://notmuchmail.org/mutttips/
