@@ -19,7 +19,7 @@ prepopulate-query-feeds yes
 show-keymap-hint no
 #feed-sort-order unreadarticlecount-asc
 #show-read-feeds no
-#error-log "~/newsboat-error.log"
+error-log "/tmp/newsboat-error.log"
 
 feedlist-format "%S%4U %t"
 articlelist-format "%F %D  %?T?|%-17T| ?%t"
