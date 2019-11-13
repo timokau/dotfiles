@@ -75,7 +75,7 @@ function! PythonOptions()
     autocmd CursorMoved,CursorMovedI <buffer> exe 'setlocal textwidth='.GetPythonTextWidth()
 endfunction
 
-autocmd Filetype python call PythonOptions()
+" autocmd Filetype python call PythonOptions()
 
 " Spell ignores
 " URLs (https://gist.github.com/tobym/584909)
