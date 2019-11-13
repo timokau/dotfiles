@@ -1,4 +1,5 @@
 #!/bin/sh
 (cd nixos; ./apply.sh)
-# twice to apply nix-path update
-sudo nixos-rebuild switch && sudo nixos-rebuild switch && home-manager switch
+NIXPKGS="$(nix eval --raw '(import ./nixpkgs.nix)')"
+# set nixpkgs in NIX_PATH explicitly once, then it gets set as the default
+sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch && home-manager switch
