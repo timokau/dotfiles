@@ -69,6 +69,9 @@ in
     home-manager # manage user configurations
   ]);
 
+  # disable system sounds
+  xdg.sounds.enable = false;
+
 
   # firejail needs to run setuid
   security.wrappers.firejail = {
