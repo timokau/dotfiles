@@ -1,10 +1,13 @@
 { config
-# , pkgs # nixpkgs is pinned
+, pkgs # nixpkgs is pinned
 , ...
 }:
 
 let
-  pkgs = import (import ./nixpkgs.nix) {};
+  # This is done implicitly on the second run by setting nixPath. Doing it
+  # directly leads to quirky behaviour because the NixOS module would still
+  # come from the old nixpkgs.
+  # pkgs = import (import ./nixpkgs.nix) {};
   hostname = lib.fileContents ./hostname; # different file for each host, not version controlled
   homeipv6 = lib.fileContents ./homeipv6; # not version controlled
   isDesk = hostname == "desk";
