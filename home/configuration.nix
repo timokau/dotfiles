@@ -1,11 +1,10 @@
 { config
-# , pkgs # nixpkgs is pinned
+, pkgs # nixpkgs is pinned through nixPath in the system config
 , lib
 , ...
 }:
 let
   cfg = config.home;
-  pkgs = import (import ../nixpkgs.nix) {};
 in
   # TODO cleanup services
   # fd --no-ignore --changed-before 7d . ~/.cache --exec rm -f {}
