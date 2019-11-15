@@ -1,19 +1,13 @@
 # mail is fetched by mbsync
-mailboxes "+gmx" \
-          "+gmx/inbox" \
+mailboxes "+gmx/inbox" \
           "+gmx/sent" \
           "+gmx/sent-archive" \
           "+gmx/archive"
-mailboxes "+yahoo" \
-          "+yahoo/inbox" \
-          "+yahoo/sent" \
-          "+yahoo/archive"
-mailboxes "+uni" \
-          "+uni/inbox" \
-          "+uni/sent" \
-          "+uni/archive"
-mailboxes +drafts \
-          +search
+mailboxes "+yahoo/inbox" \
+          "+yahoo/sent"
+mailboxes "+uni/inbox" \
+          "+uni/sent"
+mailboxes +draft
 
 # avoid warinngs about duplicated bindings
 # (https://www.neomutt.org/guide/configuration.html#bind-warnings)
