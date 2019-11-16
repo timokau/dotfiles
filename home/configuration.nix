@@ -199,10 +199,10 @@ with pkgs.lib; {
     services.gpg-agent = {
       enable = true;
       enableSshSupport = true;
-      # fallback is not working
-      # extraConfig = ''
-      #   pinentry-program /home/timo/pinentry
-      # '';
+      # work around https://github.com/rycee/home-manager/issues/908
+      extraConfig = ''
+        pinentry-program ${pkgs.pinentry.gtk2}/bin/pinentry
+      '';
       # defaultCacheTtl = 86400;
       # allow-loopback-pinentry
       # defaultCacheTtlSsh = TODO;
