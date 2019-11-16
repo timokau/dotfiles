@@ -42,10 +42,16 @@ in
     daemonIONiceLevel = 5;
     daemonNiceLevel = 10;
     nixPath = [
-      "nixpkgs=${import ./nixpkgs.nix}"
+      # Fix the nixpkgs this configuration was built with. To switch to a new
+      # revision, explicitly pass it through NIX_PATH once and then it will be
+      # set as the new default.
+      "nixpkgs=/run/current-system/nixpkgs"
       "nixos-config=/etc/nixos/configuration.nix"
     ];
   };
+  system.extraSystemBuilderCmds = ''
+    ln -sv '${pkgs.path}' "$out/nixpkgs"
+  '';
 
   # install man pages
   environment.extraOutputsToInstall = [ "man" ];
