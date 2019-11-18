@@ -457,8 +457,10 @@ let
           set runtimepath^=${hunspellDir}
         '' + builtins.replaceStrings [
           "'rustup'"
+          "'/usr/bin/env black'"
         ] [
           "'${pkgs.rustup}/bin/rustup'"
+          "'${pkgs.python3.pkgs.black}/bin/black'"
         ] (builtins.readFile ../nvim/.config/nvim/init.vim);
       };
     });

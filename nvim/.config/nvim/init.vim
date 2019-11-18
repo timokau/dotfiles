@@ -401,3 +401,16 @@ cmap w!! w !sudo tee % > /dev/null
 nmap <leader>m yiW:silent !video-stream '<C-r>0' >/dev/null 2>&1 &<CR>A watched<ESC>
 
 set termguicolors " true color
+
+" format with black
+function! s:black(line1, line2, ...) range
+  normal! m`
+  exe a:line1.','.a:line2.'! /usr/bin/env black --quiet '.join(a:000).' -'
+  normal! ``
+  if v:shell_error
+    let error = getline('.')
+    echohl ErrorMsg | echom error | echohl None
+    undo
+  endif
+endfunction
+command! -range=% -nargs=* Black :call s:black(<line1>, <line2>, <f-args>)
