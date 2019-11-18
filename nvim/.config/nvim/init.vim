@@ -375,15 +375,15 @@ function! PanPreview()
 	let tmpfile=system('mktemp --suffix=.pdf')
 	let tmpfile=strpart(tmpfile, 0, len(tmpfile) - 1) " Strip trailing <CR>
 
-	let pandoccmd='pandoc --template=nicolin --to=latex ' . shellescape(expand('%:p'), 1) . ' --output ' . shellescape(tmpfile, 1)
-	let readercmd='xdg-open ' . shellescape(tmpfile, 1) . ' &'
+	let pandoccmd='/usr/bin/env pandoc --to=latex ' . shellescape(expand('%:p'), 1) . ' --output ' . shellescape(tmpfile, 1)
+	let readercmd='/usr/bin/env xdg-open ' . shellescape(tmpfile, 1) . ' &'
 	execute 'silent !' . pandoccmd . ' && ' .readercmd
 
 	" Reload on save
 	augroup panpreview
 		autocmd!
 	augroup END
-	execute 'autocmd panpreview BufWritePost <buffer> silent !' . pandoccmd
+	execute 'autocmd panpreview BufWritePost <buffer> !' . pandoccmd
 endfunction
 
 " Edit a tmp file {{{3

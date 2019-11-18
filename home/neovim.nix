@@ -458,9 +458,13 @@ let
         '' + builtins.replaceStrings [
           "'rustup'"
           "'/usr/bin/env black'"
+          "'/usr/bin/env pandoc'"
+          "'/usr/bin/env xdg-open'"
         ] [
           "'${pkgs.rustup}/bin/rustup'"
           "'${pkgs.python3.pkgs.black}/bin/black'"
+          "'${pkgs.pandoc}/bin/pandoc'"
+          "'${pkgs.xdg_utils}/bin/xdg-open'"
         ] (builtins.readFile ../nvim/.config/nvim/init.vim);
       };
     });
