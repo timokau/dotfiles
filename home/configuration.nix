@@ -160,6 +160,7 @@ with pkgs.lib; {
       home-manager
       radare2 # reverse engineering
       source-code-pro # needed for gui neovim (FIXME)
+      direnv # directory specific environments (used by lorri)
     ] ++ (optionals cfg.full [
       # to find "offenders":
       # nix-store -q --requisites $( home-manager build ) | while read line; do du -hs "$line"; done | uniq | sort -h
@@ -214,6 +215,12 @@ with pkgs.lib; {
 
     # services.screen-locker = TODO
 
+    # project-specific nix-envs with direnv and good caching support
+    services.lorri.enable = true;
+    programs.direnv = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
     nixpkgs.config = {
       allowUnfreePredicate = (pkg: elem (pkg.pname or (builtins.parseDrvName pkg.name).name) [
