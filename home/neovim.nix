@@ -31,6 +31,10 @@ let
     #   '';
     # }
     {
+      p = direnv-vim;
+      startup = true;
+    }
+    {
       p = neoterm.overrideAttrs (oldAttrs: {
         patches = [
           (pkgs.fetchpatch {
