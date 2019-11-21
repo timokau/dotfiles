@@ -21,6 +21,8 @@ case "$minutes" in
 esac
 
 echo "Idle when average load over $minutes minutes is less than $thresh."
+# Wait until one interval has passed to make sure we have an accurate measurement
+sleep "$minutes"m
 
 while :; do
 	read -r -a load_array < '/proc/loadavg'
