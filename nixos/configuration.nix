@@ -49,8 +49,16 @@ in
       "nixos-config=/etc/nixos/configuration.nix"
     ];
   };
-  system.extraSystemBuilderCmds = ''
-    ln -sv '${pkgs.path}' "$out/nixpkgs"
+  # downgrading to read lock on '/nix/var/nix/temproots/18942'
+  # copied source '/nix/store/azqqifyxvlgf48lgqh7zmyj0f4az03v9-nixpkgs-e89b21504f3e61e535229afa0b121defb52d2a50' -> '/nix/store/033x58cj9xx3r1i3y39jvywvw338kabg-azqqifyxvlgf48lgqh7zmyj0f4az03v9-nixpkgs-e89b21504f3e61e535229afa0b121defb52d2a50'
+  # acquiring write lock on '/nix/var/nix/temproots/18942
+  system.extraSystemBuilderCmds = let
+    # make sure store paths are not copied to the store again, which leads to
+    # long filenames (https://github.com/NixOS/nix/issues/1728)
+    nixpkgs_str = if lib.isStorePath pkgs.path then builtins.storePath pkgs.path else pkgs.path;
+  in ''
+    ln -sv '${nixpkgs_str}' "$out/nixpkgs"
+    echo '${pkgs.path}'
   '';
 
   # install man pages
