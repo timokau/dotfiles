@@ -70,7 +70,6 @@ with pkgs.lib; {
       htop # system monitoring
       pdfgrep # search through pdfs
       imagemagick # cli image editing
-      superTuxKart # casual gaming
       graphviz # for pycallgraph, TODO add as upstream dependency
       dot2tex # graphviz <-> latex
       gnuplot # plot generation in latex
