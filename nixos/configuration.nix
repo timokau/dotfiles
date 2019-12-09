@@ -185,19 +185,19 @@ in
 
   services.snapper = {
     snapshotInterval = "hourly";
-    configs.home = {
-      subvolume = "/home";
-      # snapshots are pretty much only used in case I accidentally delete or override something, which usually is caught pretty soon
-      extraConfig = ''
-        TIMELINE_CREATE=yes
-        TIMELINE_CLEANUP=yes
-        TIMELINE_LIMIT_HOURLY=16
-        TIMELINE_LIMIT_DAILY=5
-        TIMELINE_LIMIT_WEEKLY=1
-        TIMELINE_LIMIT_MONTHLY=1
-        TIMELINE_LIMIT_YEARLY=0
-      '';
-    };
+    # configs.home = {
+    #   subvolume = "/home";
+    #   # snapshots are pretty much only used in case I accidentally delete or override something, which usually is caught pretty soon
+    #   extraConfig = ''
+    #     TIMELINE_CREATE=yes
+    #     TIMELINE_CLEANUP=yes
+    #     TIMELINE_LIMIT_HOURLY=16
+    #     TIMELINE_LIMIT_DAILY=5
+    #     TIMELINE_LIMIT_WEEKLY=1
+    #     TIMELINE_LIMIT_MONTHLY=1
+    #     TIMELINE_LIMIT_YEARLY=0
+    #   '';
+    # };
   };
 
   # TODO make it possible to set this dynamically on the laptop
