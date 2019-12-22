@@ -106,25 +106,6 @@ with pkgs.lib; {
         pillow # FIXME necessary for ranger image preview with kitty
       ] ++ optionals cfg.full [
       ]))
-      (python2.buildEnv.override {
-        extraLibs = with python2.pkgs; [
-          pillow # FIXME necessary for ranger image preview with kitty
-          pytest
-          jupyter_core
-          jupyter_client
-          jupytext # edit jupyter notebooks in vim like regular python scripts
-          notebook # jupyter
-          tkinter # matplotlib backend
-          matplotlib # plotting
-          numpy
-          requests
-          ipython
-          pwntools
-          r2pipe
-        ] ++ (optionals cfg.full [
-        ]);
-        ignoreCollisions = true;
-      })
       ncdu # where is my space gone?
       translate-shell # translate
       p7zip
