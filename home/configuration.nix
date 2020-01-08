@@ -85,7 +85,6 @@ with pkgs.lib; {
         pycallgraph # profiling
         PyGithub
         notmuch # notmuch python api to sort mails
-        pandas # data structures for data analysis
         pip
         pytest
         # TODO for some reason it is necessary to install this into the
