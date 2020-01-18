@@ -123,6 +123,23 @@ in
     "kernel.sysrq" = 1; # enable "magic sysrq" to force OOM reaper
   };
 
+  boot.kernelPatches = [
+    {
+      # Revert a commit that broke rmi4, leading to cursor drift on my
+      # thinkpad. I've already reported this and the revert (and a new version
+      # of the original commit) has been accepted upstream. It will just take a
+      # bit until it reaches the released LTS kernel.
+      name = "revert-input-change";
+      patch = (pkgs.fetchpatch {
+        name = "revert-input-change";
+        url = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=a284e11c371e446371675668d8c8120a27227339";
+        sha256 = "0038qywacf3mv14l24952lzgfa5svalk8jdym9cdz3g2j29yv16g";
+        revert = true;
+      });
+    }
+];
+
+
   # mount /tmp in RAM. Don't do this on desk, as the machine tends to run out of ram.
   boot.tmpOnTmpfs = !isDesk;
   boot.cleanTmpDir = true;
