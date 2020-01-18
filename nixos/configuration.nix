@@ -115,6 +115,8 @@ in
     efi.canTouchEfiVariables = true;
   };
 
+  boot.supportedFilesystems = [ "ntfs" ];
+
   boot.kernel.sysctl = {
     # https://wiki.archlinux.org/index.php/zswap
     "zswap.enabled" = 1;
