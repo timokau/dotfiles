@@ -47,14 +47,14 @@ with pkgs.lib; {
     home.packages = let
       nix-bisect = pkgs.python3.pkgs.buildPythonPackage rec {
         pname = "nix-bisect";
-        version = "0.1.0";
-        src = lib.cleanSource /home/timo/repos/nix-bisect;
-        # src = pkgs.fetchFromGitHub {
-        #   owner = "timokau";
-        #   repo = "nix-bisect";
-        #   rev = "v${version}";
-        #   sha256 = "1da3ik7hc9ds9kdf871hyy1khijw4q4zyq32hhx3pnwgadbh7d1v";
-        # };
+        version = "0.2.0";
+        # src = lib.cleanSource /home/timo/repos/nix-bisect;
+        src = pkgs.fetchFromGitHub {
+          owner = "timokau";
+          repo = "nix-bisect";
+          rev = "v${version}";
+          sha256 = "0rg7ndwbn44kximipabfbvvv5jhgi6vs87r64wfs5by81iw0ivam";
+        };
       };
     in with pkgs; [
       sweethome3d.application # home planning
