@@ -147,6 +147,7 @@ with pkgs.lib; {
       pandoc # convert between markup formats (pandoc -> ghc -> ~1.4G space)
       texlive.combined.scheme-full # latex
       sageWithDoc # math software
+      steam-run # fallback environment when I want things with FHS assumptions to Just Work (big closure)
     ]) ++ (optionals cfg.graphical [
       libreoffice
       anki # flash cards
@@ -205,6 +206,7 @@ with pkgs.lib; {
       allowUnfreePredicate = (pkg: elem (pkg.pname or (builtins.parseDrvName pkg.name).name) [
         # unfree whitelist
         "spotify"
+        "steam-runtime" # not actually used, but needed by steam-run
       ]);
       firefox = {
         enableTridactylNative = true;
