@@ -141,6 +141,7 @@ with pkgs.lib; {
       radare2 # reverse engineering
       source-code-pro # needed for gui neovim (FIXME)
       direnv # directory specific environments (used by lorri)
+      bat # "cat" clone in rust with some nice additional features
     ] ++ (optionals cfg.full [
       # to find "offenders":
       # nix-store -q --requisites $( home-manager build ) | while read line; do du -hs "$line"; done | uniq | sort -h
@@ -233,6 +234,7 @@ with pkgs.lib; {
         ssh = "BINARY_SSH=${pkgs.openssh}/bin/ssh ${pkgs.ssh-ident}/bin/ssh-ident";
         scp = "BINARY_SSH=${pkgs.openssh}/bin/scp ${pkgs.ssh-ident}/bin/ssh-ident";
         rsync = "BINARY_SSH=${pkgs.rsync}/bin/rsync ${pkgs.ssh-ident}/bin/ssh-ident";
+        cat = "${pkgs.bat}/bin/bat";
         # privacy / security / when my addons break something
       } // (
         if (cfg.full) then {
