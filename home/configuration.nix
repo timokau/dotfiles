@@ -234,10 +234,12 @@ with pkgs.lib; {
         scp = "BINARY_SSH=${pkgs.openssh}/bin/scp ${pkgs.ssh-ident}/bin/ssh-ident";
         rsync = "BINARY_SSH=${pkgs.rsync}/bin/rsync ${pkgs.ssh-ident}/bin/ssh-ident";
         # privacy / security / when my addons break something
-      } // mkIf cfg.full {
-        fx = "${pkgs.firefox}/bin/firefox --new-instance --profile \"$(mktemp -d)\"";
-        cx = "${pkgs.chromium}/bin/chromium --user-data-dir=\"$(mktemp -d)\"";
-      };
+      } // (
+        if (cfg.full) then {
+          fx = "${pkgs.firefox}/bin/firefox --new-instance --profile \"$(mktemp -d)\"";
+          cx = "${pkgs.chromium}/bin/chromium --user-data-dir=\"$(mktemp -d)\"";
+        } else {}
+      );
     };
 
     programs.tmux = {
