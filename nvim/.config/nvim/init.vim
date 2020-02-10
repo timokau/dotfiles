@@ -40,7 +40,7 @@ set ignorecase
 set smartcase
 set directory-=.
 set spell
-set spelllang=de,en
+set spelllang=de_de,en
 set spellfile=~/.local/share/nvim/spellfile.utf-8.add
 
 " simplified version of

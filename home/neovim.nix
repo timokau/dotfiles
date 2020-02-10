@@ -429,18 +429,6 @@ let
   ''
     + pkgs.lib.concatStringsSep "\n" (map postLoadSnippet pluginRules);
 
-  hunspell = pkgs.fetchurl {
-    # Donaudampfschifffahrt
-    # Donaudampfschifffahrtskapitänskajütentür
-    url = "https://1042.ch/spell/hun-de-DE.utf-8.spl";
-    sha256 = "1z9b4vw8k0ps1k5yq1bgkzrp7b969brwcciry24rga535xhgkbpx";
-  };
-  # override default `de` spelllang, this needs to be *pre*pended to runtimepath
-  hunspellDir = pkgs.runCommand "hunspell-dir" {} ''
-    mkdir -p $out/spell
-    cp '${hunspell}' "$out/spell/de.utf-8.spl"
-  '';
-
   mynvim = (pkgs.neovim.override {
       configure = {
         # https://github.com/neovim/neovim/issues/9390
@@ -453,9 +441,7 @@ let
           ] ++ map (pluginRule: pluginRule.p) (pkgs.lib.filter (pluginRule: pluginRule.startup or false) pluginRules);
           opt = map (pluginRule: pluginRule.p) (pkgs.lib.filter (pluginRule: !(pluginRule.startup or false)) pluginRules);
         };
-        customRC = pluginRc + ''
-          set runtimepath^=${hunspellDir}
-        '' + builtins.replaceStrings [
+        customRC = pluginRc + builtins.replaceStrings [
           "'rustup'"
           "'/usr/bin/env black'"
           "'/usr/bin/env pandoc'"
