@@ -359,18 +359,6 @@ in
   nix.buildCores = 0; # use all available CPUs
   nix.maxJobs = 4; # number of jobs (builds) in parallel
 
-  # r8169 network driver sometimes fails to bring network back up after suspend.
-  # Re-enabling it requires reboot. r8168 can be used instead for the networks
-  # card and doesn't have that bug. r8169 needs to be blacklisted to make sure
-  # r8168 is used.
-  # This network card is used in my desktop pc.
-  boot.extraModulePackages = with pkgs.linuxPackages; lib.optionals isDesk [
-      r8168
-  ];
-  boot.blacklistedKernelModules = lib.optionals isDesk [
-    "r8169"
-  ];
-
   # configure static monitor setup on desk
   services.xserver.xrandrHeads = lib.optionals isDesk [
     {
