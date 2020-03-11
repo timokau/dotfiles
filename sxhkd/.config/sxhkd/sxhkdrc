@@ -49,6 +49,9 @@ super + m ; {p,s,h,l}
 super + a
 	kitty --single-instance # TERMCMD
 
+super + A
+	xterm
+
 # Since termite doesn't support displaying images inranger, use urxvt
 # borders are needed to avoid Artifacts in images
 super + d ; r
