@@ -19,3 +19,6 @@ nix run nixpkgs.home-manager -c home-manager -2 build || exit $?
 # Now switch both systems. If the build succeeded, this hopefully won't fail
 sudo nixos-rebuild switch
 nix run nixpkgs.home-manager -c home-manager -2 switch
+
+# This sometimes gets killed during system updates
+systemctl --user restart keyboardconfig
