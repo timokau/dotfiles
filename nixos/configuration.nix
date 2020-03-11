@@ -240,7 +240,6 @@ in
 
   # scanner support
   hardware.sane.enable = true;
-  hardware.brightnessctl.enable = true;
 
   hardware.cpu.intel.updateMicrocode = true;
 
