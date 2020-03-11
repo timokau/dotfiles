@@ -147,7 +147,7 @@ with pkgs.lib; {
       # nix-store -q --requisites $( home-manager build ) | while read line; do du -hs "$line"; done | uniq | sort -h
       pandoc # convert between markup formats (pandoc -> ghc -> ~1.4G space)
       texlive.combined.scheme-full # latex
-      sageWithDoc # math software
+      # sageWithDoc # math software
       steam-run # fallback environment when I want things with FHS assumptions to Just Work (big closure)
     ]) ++ (optionals cfg.graphical [
       libreoffice
