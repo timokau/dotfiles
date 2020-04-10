@@ -18,7 +18,7 @@ export NIX_PATH="nixpkgs=$NIXPKGS:$NIX_PATH"
 nix build '(with import <nixpkgs/nixos> { }; system)' $( nix run nixpkgs.home-manager -c home-manager instantiate || exit $? ) || exit $?
 
 # Now switch both systems. If the build succeeded, this hopefully won't fail
-sudo NIXPKGS="$NIXPKGS" nixos-rebuild switch
+sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch
 nix run nixpkgs.home-manager -c home-manager -2 switch
 
 # This sometimes gets killed during system updates
