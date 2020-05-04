@@ -106,7 +106,7 @@ with pkgs.lib; {
       ]))
       ncdu # where is my space gone?
       translate-shell # translate
-      p7zip
+      unar
       nix-index
       tldr # quick usage examples
       mpv # audio and video player
