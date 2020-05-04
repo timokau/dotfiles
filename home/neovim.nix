@@ -35,14 +35,7 @@ let
       startup = true;
     }
     {
-      p = neoterm.overrideAttrs (oldAttrs: {
-        patches = [
-          (pkgs.fetchpatch {
-            url = "https://github.com/kassio/neoterm/pull/190/commits/0a4acdba2e83be35fc07be2ffd0d055831d33178.patch";
-            sha256 = "0sbr1mpf6qalv597m1qcxfkx082k47pyrjmk3imqx4zdmxh2id1d";
-          })
-        ];
-      });
+      p = neoterm;
       atStartup = "autocmd PlugAutoload Filetype python :packadd neoterm";
       # startup = true;
       preLoad = ''
