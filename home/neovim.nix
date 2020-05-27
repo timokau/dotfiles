@@ -31,6 +31,10 @@ let
     #   '';
     # }
     {
+      p = nvim-lsp;
+      startup = true;
+    }
+    {
       p = direnv-vim;
       startup = true;
     }
