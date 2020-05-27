@@ -33,6 +33,14 @@ let
     {
       p = nvim-lsp;
       startup = true;
+      # TODO configure, look into pyls-mypy, pyls-black, pyls-isort
+      postLoad = ''
+        lua << EOF
+          require'nvim_lsp'.pyls.setup{
+            cmd = { "${pkgs.python3.pkgs.python-language-server}/bin/pyls" }
+          }
+        EOF
+      '';
     }
     {
       p = direnv-vim;
