@@ -422,7 +422,16 @@ let
   ''
     + pkgs.lib.concatStringsSep "\n" (map postLoadSnippet pluginRules);
 
-  mynvim = (pkgs.neovim.override {
+  mynvim = let
+    neovim-unwrapped-nightly = pkgs.neovim-unwrapped.overrideAttrs (oldAttrs: {
+      src = pkgs.fetchFromGitHub {
+        owner = "neovim";
+        repo = "neovim";
+        rev = "2ca8f02a6461fd4710c4ecc555fbe7ee9f75a70a"; # 2020-05-26
+        sha256 = "1mi1plgmxpdgly82c7nxx8wln1hawhgccbkxnvsvnw9i2alrz4lw";
+      };
+    });
+  in (pkgs.wrapNeovim neovim-unwrapped-nightly {
       configure = {
         # https://github.com/neovim/neovim/issues/9390
         pathogen.pluginNames = [ "vimtex" "ultisnips" ];
