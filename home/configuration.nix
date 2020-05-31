@@ -137,6 +137,7 @@ with pkgs.lib; {
       # ssh-ident
       # moreutils
       home-manager
+      sbt # scala build manager, needed for university lecture
       radare2 # reverse engineering
       source-code-pro # needed for gui neovim (FIXME)
       direnv # directory specific environments (used by lorri)
