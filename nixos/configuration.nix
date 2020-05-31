@@ -236,6 +236,7 @@ in
   environment.shells = with pkgs; [
     bashInteractive
     zsh
+    fish
   ];
 
   # scanner support
