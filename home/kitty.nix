@@ -17,6 +17,8 @@ with lib;
     xdg.configFile."kitty/kitty.conf".text = ''
       scrollback_lines 10000
 
+      shell ${pkgs.fish}/bin/fish
+
       font_size 11.0
 
       foreground #dddddd
