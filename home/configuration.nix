@@ -418,7 +418,20 @@ with pkgs.lib; {
 
     programs.command-not-found.enable = true;
 
-    programs.fzf.enable = true;
+    # TODO try skim instead
+    programs.fzf = {
+      enable = true;
+      enableZshIntegration = true;
+      enableFishIntegration = true;
+      enableBashIntegration = true;
+      changeDirWidgetCommand = "bash -c 'fasd -ld; fd --hidden --follow --no-ignore-vcs --type d'"; # Alt-C
+      changeDirWidgetOptions = [ "--ansi" "--preview 'tree -C {} | head -200'" ];
+      defaultCommand = "fd --type f";
+      fileWidgetCommand = "bash -c 'fasd -l; fd --color=always --hidden --follow --no-ignore-vcs'";
+      # try skim instead
+      fileWidgetOptions = [ "--ansi" ];
+      # defaultOptions = [ "--height 40%" "--border" ]
+    };
 
     # programs.home-manager.enable = true;
 
