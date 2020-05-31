@@ -330,6 +330,7 @@ in
       supportedFeatures = [ "big-parallel" ];
     }
   ];
+  nix.trustedUsers = [ "@wheel" ];
   programs.ssh.knownHosts = {
     aarch64-community-builder = {
       hostNames = [ "aarch64.nixos.community" ];
