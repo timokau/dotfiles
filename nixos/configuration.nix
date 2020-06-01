@@ -37,6 +37,15 @@ in
 
   services.autorandr.enable = true;
 
+  services.grocy = {
+    enable = true;
+    hostName = "localhost";
+    nginx.enableSSL = false;
+    settings = {
+      currency = "EUR";
+    };
+  };
+
   nix = {
     useSandbox = true;
     daemonIONiceLevel = 5;
