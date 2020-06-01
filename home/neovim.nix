@@ -391,6 +391,30 @@ let
       startup = true;
       p = vim-fugitive;
     }
+    {
+      p = nvim-lsp;
+      startup = true;
+      postLoad = ''
+        nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+        nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+        nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+        nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+        nnoremap <silent> gs <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+        nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+        nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
+        nnoremap <silent> <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
+        " Custom gutter signs, taken from the neovim-metals author
+        call sign_define("LspDiagnosticsErrorSign", {"text" : "✘", "texthl" : "LspGutterError"})
+        call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspGutterWarning"})
+        " Set completeopt to have a better completion experience
+        set completeopt=menuone,noinsert,noselect
+        " Avoid showing message extra message when using completion
+        set shortmess+=c
+
+        " always show signcolumns
+        set signcolumn=yes
+      '';
+    }
   ];
 
   singleSourceFile = name: commands: pkgs.writeTextFile {
