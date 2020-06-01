@@ -15,10 +15,18 @@ NIXPKGS="$(nix eval --raw '(import ./nixpkgs.nix)')"
 export NIX_PATH="nixpkgs=$NIXPKGS:$NIX_PATH"
 
 # First build both systems using nix 2
-nix build '(with import <nixpkgs/nixos> { }; system)' $( nix run nixpkgs.home-manager -c home-manager instantiate || exit $? ) || exit $?
+echo "Instantiating"
+home_manager_system="$( nix run nixpkgs.home-manager -c home-manager --show-trace instantiate )"
+[[ $? -ne 0 ]] && exit $?
+echo "Rebuilding"
+nix build --show-trace '(with import <nixpkgs/nixos> { }; system)' $home_manager_system || exit $?
+
+echo "Switching system"
 
 # Now switch both systems. If the build succeeded, this hopefully won't fail
 sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch
+
+echo "Switching home"
 nix run nixpkgs.home-manager -c home-manager -2 switch
 
 # This sometimes gets killed during system updates
