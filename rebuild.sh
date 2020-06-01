@@ -19,7 +19,7 @@ echo "Instantiating"
 home_manager_system="$( nix run nixpkgs.home-manager -c home-manager --show-trace instantiate )"
 [[ $? -ne 0 ]] && exit $?
 echo "Rebuilding"
-nix build --show-trace '(with import <nixpkgs/nixos> { }; system)' $home_manager_system || exit $?
+nix build --no-link --show-trace '(with import <nixpkgs/nixos> { }; system)' $home_manager_system || exit $?
 
 echo "Switching system"
 
