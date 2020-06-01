@@ -439,8 +439,9 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "neovim";
         repo = "neovim";
-        rev = "2ca8f02a6461fd4710c4ecc555fbe7ee9f75a70a"; # 2020-05-26
-        sha256 = "1mi1plgmxpdgly82c7nxx8wln1hawhgccbkxnvsvnw9i2alrz4lw";
+        # https://github.com/neovim/neovim/commits/master
+        rev = "91e41c857622b61adcf84f6a6af87a3f5a4d65f5"; # 2020-05-26
+        sha256 = "1pn99561jgzkz345m8q9a9ay4z133abhchafzyyrpla03jlz5cnh";
       };
     });
   in (pkgs.wrapNeovim neovim-unwrapped-nightly {
