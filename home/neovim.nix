@@ -320,6 +320,8 @@ let
         let g:neomake_python_enabled_makers = ['python']
         let g:neomake_tex_enabled_makers = ['chktex'] " no lacheck
         let g:neomake_sty_enabled_makers = ['chktex'] " no lacheck
+        " see https://github.com/neomake/neomake/pull/1788/files for usage
+        let g:neomake_tempfile_dir = '/tmp/neomake-tempfiles%:p:h'
 
         " execute 500ms after changes ([n]ormal and [i]nsert), after [r]ead and [w]rite
         call neomake#configure#automake('nrwi', 500)
