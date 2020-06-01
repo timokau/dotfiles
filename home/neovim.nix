@@ -473,6 +473,7 @@ in
   home.packages = with pkgs; [
     mynvim
     (neovim-qt.override { neovim = mynvim; })
+    (gnvim.override { neovim = mynvim; })
   ];
 };
 }
