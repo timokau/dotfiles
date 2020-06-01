@@ -77,16 +77,6 @@ endfunction
 
 " autocmd Filetype python call PythonOptions()
 
-" Spell ignores
-" URLs (https://gist.github.com/tobym/584909)
-fun! SpellIgnores()
-	syntax match URL /https\?:\/\/\(\w\+\(:\w\+\)\?@\)\?\([A-Za-z][-_0-9A-Za-z]*\.\)\{1,}\(\w\{2,}\.\?\)\{1,}\(:[0-9]\{1,5}\)\?\S*/ contains=@NoSpell transparent
-	syntax cluster Spell add=URL
-endfun
-" spell ignores have to be added *after* syntax definitions for the file have
-" been loaded
-autocmd BufRead,BufNewFile,FileType,Syntax * :call SpellIgnores()
-
 " Highlight chars in the 81st column
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
