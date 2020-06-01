@@ -47,14 +47,19 @@ with pkgs.lib; {
     home.packages = let
       nix-bisect = pkgs.python3.pkgs.buildPythonPackage rec {
         pname = "nix-bisect";
-        version = "0.2.0";
+        version = "0.4.1";
         # src = lib.cleanSource /home/timo/repos/nix-bisect;
         src = pkgs.fetchFromGitHub {
           owner = "timokau";
           repo = "nix-bisect";
           rev = "v${version}";
-          sha256 = "0rg7ndwbn44kximipabfbvvv5jhgi6vs87r64wfs5by81iw0ivam";
+          sha256 = "1z5j7qjzsxq7i9kklvwn8dv327zrs21k1nwwif54lslck7gy6nyk";
         };
+        propagatedBuildInputs = with pkgs.python3.pkgs; [
+          appdirs
+          pexpect
+          numpy
+        ];
       };
     in with pkgs; [
       pdfpc # latex beamer presentations
