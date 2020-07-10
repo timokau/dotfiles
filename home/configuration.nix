@@ -152,7 +152,8 @@ with pkgs.lib; {
       # nix-store -q --requisites $( home-manager build ) | while read line; do du -hs "$line"; done | uniq | sort -h
       pandoc # convert between markup formats (pandoc -> ghc -> ~1.4G space)
       texlive.combined.scheme-full # latex
-      sageWithDoc # math software
+      # https://github.com/NixOS/nixpkgs/issues/92518
+      # sageWithDoc # math software
     ]) ++ (optionals cfg.graphical [
       libreoffice
       anki # flash cards
