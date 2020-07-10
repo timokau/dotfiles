@@ -456,7 +456,6 @@ let
         "for ign in ['class', 'pdf', 'fdb_latexmk', 'aux', 'fls', 'synctex.gz', 'nav', 'snm', 'zip']
           "let fzf_ignores = fzf_ignores . " --ignore='*." . ign . "'"
         "endfor
-        let $FZF_DEFAULT_COMMAND = 'ag --nocolor'.fzf_ignores.' --files-with-matches --follow --depth=-1 --hidden --search-zip -g "" 2>/dev/null'
 
         if exists(':terminal')
           augroup fzf
