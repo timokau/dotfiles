@@ -18,7 +18,42 @@ let
   escapedVimString = str: "'${replaceStrings ["'"] ["''"] str}'";
   stringListToVim = list: "[" + (concatStringsSep "," (map escapedVimString list)) + "]";
 
-  pluginRules = with pkgs.vimPlugins; [
+  pluginRules = let
+    # plugins that depend on nightly neovim and therefore are not packaged in nixpkgs
+    completion-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+      pname = "completion-nvim";
+      version = "2020-05-28";
+      src = pkgs.fetchFromGitHub {
+        owner = "haorenW1025";
+        repo = "completion-nvim";
+        rev = "c0ac200418911125d97fdfa4d5c8603e17796515";
+        sha256 = "06ksj43ns01j0ffyp7jkq087qnjfnfwyhvj5j33pgvh2sz6z696k";
+      };
+      meta.homepage = "https://github.com/haorenW1025/completion-nvim";
+    };
+    diagnostic-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+      pname = "diagnostic-nvim";
+      version = "2020-05-26";
+      src = pkgs.fetchFromGitHub {
+        owner = "haorenW1025";
+        repo = "diagnostic-nvim";
+        rev = "3baf22173a0c45041ff30707c8d1c955ebf2a2b0";
+        sha256 = "0n4qqmydv2lada93zxa77km1p7yr06lcdp4sfgcj6ih6f9gdkbvz";
+      };
+      meta.homepage = "https://github.com/haorenW1025/diagnostic-nvim";
+    };
+    nvim-metals = pkgs.vimUtils.buildVimPluginFrom2Nix {
+      pname = "nvim-metals";
+      version = "2020-05-28";
+      src = pkgs.fetchFromGitHub {
+        owner = "scalameta";
+        repo = "nvim-metals";
+        rev = "fdee0be08987666c142f8427487bcff821f82976";
+        sha256 = "01mdazrgpafvrzyxv1jwzwb05rs81lqfx9xsl9angvxabgvw6d4h";
+      };
+      meta.homepage = "https://github.com/scalameta/nvim-metals";
+    };
+  in with pkgs.vimPlugins; [
     # {
     #   p = vim-slime;
     #   atStartup = "autocmd PlugAutoload Filetype python :packadd vim-slime";
@@ -31,15 +66,77 @@ let
     #   '';
     # }
     {
+      # TODO instead supply a set of packageConfiguration snippets that depend
+      # on a set of packages each (to make it possible to depend on nvim_lsp
+      # and ncm2 here)
       p = nvim-lsp;
       startup = true;
-      # TODO configure, look into pyls-mypy, pyls-black, pyls-isort
+      # TODO look into pyls-mypy, pyls-black, pyls-isort
       postLoad = ''
+        nnoremap <silent> gd          <cmd>lua vim.lsp.buf.definition()<CR>
+        nnoremap <silent> K           <cmd>lua vim.lsp.buf.hover()<CR>
+        nnoremap <silent> gi          <cmd>lua vim.lsp.buf.implementation()<CR>
+        nnoremap <silent> gr          <cmd>lua vim.lsp.buf.references()<CR>
+        nnoremap <silent> gs          <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+        nnoremap <silent> <leader>rn  <cmd>lua vim.lsp.buf.rename()<CR>
+        nnoremap <silent> <leader>gf  <cmd>lua vim.lsp.buf.formatting()<CR>
+        nnoremap <silent> <leader>ca  <cmd>lua vim.lsp.buf.code_action()<CR>
+
         lua << EOF
-          require'nvim_lsp'.pyls.setup{
-            cmd = { "${pkgs.python3.pkgs.python-language-server}/bin/pyls" }
+          local nvim_lsp = require('nvim_lsp')
+          local completion = require('completion')
+          local diagnostic = require('diagnostic')
+          local metals = require('metals')
+
+          local on_attach_setup = function()
+            --completion.on_attach()
+            diagnostic.on_attach()
+          end
+
+          nvim_lsp.pyls.setup{
+            cmd = { "${pkgs.python3.pkgs.python-language-server}/bin/pyls" },
+            on_attach = on_attach_setup,
+          }
+          nvim_lsp.metals.setup{
+            cmd = { "${pkgs.metals}/bin/metals" };
+            on_attach = on_attach_setup;
+            root_dir = metals.root_pattern("build.sbt", "build.sc");
+            init_options = {
+              -- If you set this, make sure to have the `metals#status()` function
+              -- in your statusline, or you won't see any status messages
+              statusBarProvider            = "on";
+              inputBoxProvider             = true;
+              quickPickProvider            = true;
+              executeClientCommandProvider = true;
+            };
+            callbacks = {
+              ["textDocument/hover"]          = metals['textDocument/hover'];
+              ["metals/status"]               = metals['metals/status'];
+              ["metals/inputBox"]             = metals['metals/inputBox'];
+              ["metals/quickPick"]            = metals['metals/quickPick'];
+              ["metals/executeClientCommand"] = metals["metals/executeClientCommand"];
+            };
+          }
+          nvim_lsp.texlab.setup{
+            cmd = { "${pkgs.texlab}/bin/texlab" },
           }
         EOF
+          "local ncm2 = require('ncm2')
+            "on_init = ncm2.register_lsp_source
+        "set omnifunc=v:lua.vim.lsp.omnifunc
+        " TODO taken from nvim-metals; revisit
+        autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc
+        autocmd FileType tex setlocal omnifunc=v:lua.vim.lsp.omnifunc " instead of vimtex
+        " Needed if you want to set your own gutter signs
+        call sign_define("LspDiagnosticsErrorSign", {"text" : "✘", "texthl" : "LspGutterError"})
+        call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspGutterWarning"})
+        " Set completeopt to have a better completion experience
+        set completeopt=menuone,noinsert,noselect
+        " Avoid showing message extra message when using completion
+        set shortmess+=c
+
+        " always show signcolumns
+        set signcolumn=yes
       '';
     }
     {
@@ -240,65 +337,65 @@ let
         omap ,/ <Plug>(easymotion-tn)
       '';
     }
-    {
-      # autocompletion
-      p = ncm2;
-      startup = true;
-      postLoad = ''
-        " enable ncm2 for all buffers
-        autocmd BufEnter * call ncm2#enable_for_buffer()
+    # autocompletion, for now replaced bei neovim-lsp
+    # {
+    #   p = ncm2;
+    #   startup = true;
+    #   postLoad = ''
+    #     " enable ncm2 for all buffers
+    #     autocmd BufEnter * call ncm2#enable_for_buffer()
 
-        " Ncm2 needs noinsert in completeopt
-        au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-        au User Ncm2PopupClose set completeopt=menuone
+    #     " Ncm2 needs noinsert in completeopt
+    #     au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+    #     au User Ncm2PopupClose set completeopt=menuone
 
-        " don't show ins-completeion-menu messages like "Pattern not found"
-        set shortmess+=c
+    #     " don't show ins-completeion-menu messages like "Pattern not found"
+    #     set shortmess+=c
 
-        " latex support, also requires vimtex
-        " :help vimtex-complete-ncm2, more advanced at https://github.com/ncm2/ncm2/pull/23
-        autocmd Filetype tex if exists ('g:vimtex#re#ncm2') | call ncm2#register_source({
-                \ 'name': 'vimtex',
-                \ 'priority': 8,
-                \ 'scope': ['tex'],
-                \ 'mark': 'tex',
-                \ 'word_pattern': '\w+',
-                \ 'complete_pattern': g:vimtex#re#ncm2,
-                \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-                \ }) | endif
-      '';
-    }
-    {
-      # autocomplete paths
-      p = ncm2-ultisnips;
-      startup = true;
-    }
-    {
-      # autocomplete paths
-      p = neosnippet;
-      atStartup = ''
-        imap <C-j>     <Plug>(neosnippet_expand_or_jump)
-        smap <C-j>     <Plug>(neosnippet_expand_or_jump)
-        xmap <C-j>     <Plug>(neosnippet_expand_target)
-        let g:neosnippet#snippets_directory = '/home/timo/snippets'
-      '';
-      startup = true;
-    }
-    {
-      # autocomplete paths
-      p = neosnippet-snippets;
-      startup = true;
-    }
-    {
-      # autocomplete paths
-      p = ncm2-path;
-      startup = true;
-    }
-    {
-      # autocompletion
-      p = ncm2-jedi;
-      atStartup = "autocmd PlugAutoload FileType python :packadd ncm2-jedi";
-    }
+    #     " latex support, also requires vimtex
+    #     " :help vimtex-complete-ncm2, more advanced at https://github.com/ncm2/ncm2/pull/23
+    #     autocmd Filetype tex if exists ('g:vimtex#re#ncm2') | call ncm2#register_source({
+    #             \ 'name': 'vimtex',
+    #             \ 'priority': 8,
+    #             \ 'scope': ['tex'],
+    #             \ 'mark': 'tex',
+    #             \ 'word_pattern': '\w+',
+    #             \ 'complete_pattern': g:vimtex#re#ncm2,
+    #             \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+    #             \ }) | endif
+    #   '';
+    # }
+    # {
+    #   # autocomplete paths
+    #   p = ncm2-ultisnips;
+    #   startup = true;
+    # }
+    # {
+    #   # autocomplete paths
+    #   p = neosnippet;
+    #   atStartup = ''
+    #     imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+    #     smap <C-j>     <Plug>(neosnippet_expand_or_jump)
+    #     xmap <C-j>     <Plug>(neosnippet_expand_target)
+    #     let g:neosnippet#snippets_directory = '/home/timo/snippets'
+    #   '';
+    #   startup = true;
+    # }
+    # {
+    #   # autocomplete paths
+    #   p = neosnippet-snippets;
+    #   startup = true;
+    # }
+    # {
+    #   # autocomplete paths
+    #   p = ncm2-path;
+    #   startup = true;
+    # }
+    # {
+    #   # autocompletion
+    #   p = ncm2-jedi;
+    #   atStartup = "autocmd PlugAutoload FileType python :packadd ncm2-jedi";
+    # }
     {
       # linting
       startup = true;
@@ -392,27 +489,65 @@ let
       p = vim-fugitive;
     }
     {
-      p = nvim-lsp;
+      p = completion-nvim;
       startup = true;
       postLoad = ''
-        nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-        nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-        nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-        nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-        nnoremap <silent> gs <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-        nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
-        nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
-        nnoremap <silent> <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
-        " Custom gutter signs, taken from the neovim-metals author
-        call sign_define("LspDiagnosticsErrorSign", {"text" : "✘", "texthl" : "LspGutterError"})
-        call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspGutterWarning"})
+        " Use completion-nvim in every buffer
+        " autocmd BufEnter * lua require'completion'.on_attach()
+
+        " Use <Tab> and <S-Tab> to navigate through popup menu
+        inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+        inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
         " Set completeopt to have a better completion experience
         set completeopt=menuone,noinsert,noselect
+
         " Avoid showing message extra message when using completion
         set shortmess+=c
 
-        " always show signcolumns
-        set signcolumn=yes
+        " map <c-p> to manually trigger completion
+        inoremap <silent><expr> <c-p> completion#trigger_completion()
+
+        " Use <Tab> as a trigger key
+        "function! s:check_back_space() abort
+        "    let col = col('.') - 1
+        "    return !col || getline('.')[col - 1]  =~ '\s'
+        "endfunction
+
+        "inoremap <silent><expr> <TAB>
+        "  \ pumvisible() ? "\<C-n>" :
+        "  \ <SID>check_back_space() ? "\<TAB>" :
+        "  \ completion#trigger_completion()
+
+        " TODO look into snippet support
+        " https://github.com/haorenW1025/completion-nvim#enable-snippets-support
+        " Automatically fall back to other completion providers
+        let g:completion_auto_change_source = 1
+
+        " From nvim-metals: Use <Tab> and <S-Tab> to navigate through popup menu
+        " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+        " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+      '';
+    }
+    {
+      p = diagnostic-nvim;
+      startup = true;
+      postLoad = ''
+      " From nvim-metals
+      " This is disabled by default. I'm still unsure if I like this on
+      let g:diagnostic_enable_virtual_text = 1
+      " Again edit this to your liking
+      let g:diagnostic_virtual_text_prefix = ' '
+
+      nnoremap <silent> [c          :NextDiagnostic<CR>
+      nnoremap <silent> ]c          :PrevDiagnostic<CR>
+      nnoremap <silent> go          :OpenDiagnostic<CR>
+      '';
+    }
+    {
+      p = nvim-metals;
+      startup = true;
+      postLoad = ''
       '';
     }
   ];
