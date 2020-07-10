@@ -311,6 +311,11 @@ in
     '';
   };
 
+  systemd.services.nix-daemon.serviceConfig = {
+    MemoryHigh = "6G";
+    MemoryMax = "7G";
+  };
+
   system.autoUpgrade = {
     enable = true;
     dates = "daily";
