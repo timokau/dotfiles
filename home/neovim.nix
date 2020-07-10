@@ -26,8 +26,8 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "haorenW1025";
         repo = "completion-nvim";
-        rev = "c0ac200418911125d97fdfa4d5c8603e17796515";
-        sha256 = "06ksj43ns01j0ffyp7jkq087qnjfnfwyhvj5j33pgvh2sz6z696k";
+        rev = "6d7c66e76ffce6ad06d82cf1842274bddff8b829";
+        sha256 = "1sajay0ki9nnx9y8f6igzmsyi72wydi9fb0xzi9qr0p0xck98k34";
       };
       meta.homepage = "https://github.com/haorenW1025/completion-nvim";
     };
@@ -37,8 +37,8 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "haorenW1025";
         repo = "diagnostic-nvim";
-        rev = "3baf22173a0c45041ff30707c8d1c955ebf2a2b0";
-        sha256 = "0n4qqmydv2lada93zxa77km1p7yr06lcdp4sfgcj6ih6f9gdkbvz";
+        rev = "d7734f12f2c980b08c205583b7756d735222fb9f";
+        sha256 = "1fsya1midzyd46x0y69v2xi0p91yg2cm4vhw36ai99kjbha005pz";
       };
       meta.homepage = "https://github.com/haorenW1025/diagnostic-nvim";
     };
@@ -48,8 +48,8 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "scalameta";
         repo = "nvim-metals";
-        rev = "fdee0be08987666c142f8427487bcff821f82976";
-        sha256 = "01mdazrgpafvrzyxv1jwzwb05rs81lqfx9xsl9angvxabgvw6d4h";
+        rev = "11388266c2d23726bccc589c3d36a051e0434471";
+        sha256 = "16khwbwv9i6233p36dmppn4fppnx6mmzdmsji6knsy5db4h08prd";
       };
       meta.homepage = "https://github.com/scalameta/nvim-metals";
     };
@@ -600,8 +600,8 @@ let
         owner = "neovim";
         repo = "neovim";
         # https://github.com/neovim/neovim/commits/master
-        rev = "e78658348d2b14f2366b9baf2f7ceed19184dbb6"; # 2020-06-11
-        sha256 = "1phdncsgb61q9fwk2dhb4vijiq94an1wk3vavpvnw8sb700xqy79";
+        rev = "a695da7d3fac19624d458e3f2980b4c0e55f50a4"; # 2020-07-10
+        sha256 = "1dwswyfqlj7jpjjbfyikqminmp2h7v5y72ahaild61a58l7jjixi";
       };
     });
   in (pkgs.wrapNeovim neovim-unwrapped-nightly {
