@@ -329,14 +329,14 @@ with pkgs.lib; {
 
     # services.gpg-agent = TODO
     xdg.configFile."dunst/dunstrc".source = ../dunst/.config/dunst/dunstrc;
-    xdg.dataFile."applications/riot.desktop".text = optionalString cfg.graphical ''
+    xdg.dataFile."applications/element.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
       Version=1.0
       Type=Application
       Terminal=false
-      Exec=${pkgs.chromium}/bin/chromium --class 'Riot' --app=https://riot.im/app
-      Name=Riot messenger
+      Exec=${pkgs.chromium}/bin/chromium --class 'Element' --app=https://app.element.io
+      Name=Element messenger
     '';
     xdg.dataFile."applications/slack.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
