@@ -170,7 +170,6 @@ source ~/.mutt/gpg.rc
 set fcc_clear = yes
 set pgp_use_gpg_agent = yes
 set pgp_sign_as = 7D22B33E7D35A638
-set pgp_replyencrypt
 
 # TODO filter mail (see https://notmuchmail.org/mutttips/)
 # notmuch
