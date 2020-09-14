@@ -69,7 +69,7 @@ let
       # TODO instead supply a set of packageConfiguration snippets that depend
       # on a set of packages each (to make it possible to depend on nvim_lsp
       # and ncm2 here)
-      p = nvim-lsp;
+      p = nvim-lspconfig;
       startup = true;
       # TODO look into pyls-mypy, pyls-black, pyls-isort
       postLoad = ''
