@@ -27,7 +27,7 @@ echo "Switching system"
 sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch
 
 echo "Switching home"
-nix run nixpkgs.home-manager -c home-manager -2 switch
+nix run nixpkgs.home-manager -c home-manager switch
 
 # This sometimes gets killed during system updates
 systemctl --user restart keyboardconfig
