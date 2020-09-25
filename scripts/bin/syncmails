@@ -8,6 +8,7 @@ sync() {
 	touch "$lockfile"
 	set -o pipefail
 	echo "Syncing" >> "$lockfile"
+	pass show empty-password >/dev/null # seed the gpg cache
 	mbsync -a 2>&1 | tee "$lockfile" || ret=$?
 
 	notmuch new 2>&1 | tee "$lockfile" || ret=$?
