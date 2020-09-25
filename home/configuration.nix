@@ -213,13 +213,6 @@ with pkgs.lib; {
       enableFishIntegration = true;
     };
 
-    programs.obs-studio = {
-      enable = true;
-      plugins = with pkgs; [
-        obs-v4l2sink
-      ];
-    };
-
     nixpkgs.config = {
       allowUnfreePredicate = (pkg: elem (pkg.pname or (builtins.parseDrvName pkg.name).name) [
         # unfree whitelist
