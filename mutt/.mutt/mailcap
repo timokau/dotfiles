@@ -15,7 +15,7 @@ image/gif; feh --scale-down %s
 application/pdf; zathura %s
 
 # HTML
-text/html; ( cp %s ${TMPDIR:-'/tmp'}/site.html && o ${TMPDIR:-'/tmp'}/site.html && rm ${TMPDIR:-'/tmp'}/site.html  ); test=test -n "$DISPLAY"; needsterminal;
+text/html; xdg-open %s
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
 text/html; 
 
