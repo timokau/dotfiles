@@ -72,6 +72,7 @@ with pkgs.lib; {
       gdb
       hedgewars
       superTuxKart
+      teeworlds
       brightnessctl # controlling brightness on my laptop
       tmux
       loc # SLOC language summary
