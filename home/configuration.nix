@@ -71,6 +71,7 @@ with pkgs.lib; {
       ltrace # trace library calls
       gdb
       hedgewars
+      superTuxKart
       brightnessctl # controlling brightness on my laptop
       tmux
       loc # SLOC language summary
