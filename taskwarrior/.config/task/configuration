@@ -88,7 +88,7 @@ report._reviewed.sort=reviewed+,modified+
 # reviewed in the last week. Exceptions:
 # - tasks without priority are always reviewed (because I should add a priority)
 # - tasks that are *not* due this year are only reviewed once a month
-report._reviewed.filter = -noreview and ( +PENDING or +WAITING ) and ( -PRIORITY or ( ( reviewed.before:now-1week or ( entry.before:now-1week and reviewed.none: ) ) and ( +YEAR or reviewed.before:now-1month ) ) )
+report._reviewed.filter = +OVERDUE or ( -noreview and ( +PENDING or +WAITING ) and ( -PRIORITY or ( ( reviewed.before:now-1week or ( entry.before:now-1week and reviewed.none: ) ) and ( +YEAR or reviewed.before:now-1month ) ) ) )
 
 # Recurrence is handled by the server to avoid duplication
 recurrence = off
