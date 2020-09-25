@@ -34,3 +34,9 @@
 	templatedir = /home/timo/.config/git
 [rerere]
 	enabled = true
+[rebase]
+	autoStash = true
+[pull]
+	rebase = true
+[remote]
+	pushDefault = "timokau"
