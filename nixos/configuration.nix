@@ -261,6 +261,12 @@ in
     # '';
   };
 
+  hardware.bluetooth = {
+    enable = isPad;
+    package = pkgs.bluezFull;
+    # config = {};
+  };
+
   # boot.extraModprobeConfig = ''
   #   options snd_hda_intel index=1,0
   # '';
