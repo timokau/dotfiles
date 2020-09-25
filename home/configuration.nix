@@ -215,7 +215,11 @@ with pkgs.lib; {
         # unfree whitelist
         "spotify"
         "steam-runtime" # not actually used, but needed by steam-run
+        "flashplayer-ppapi"
       ]);
+      chromium = {
+        enablePepperFlash = true;
+      };
       firefox = {
         enableTridactylNative = true;
       };
