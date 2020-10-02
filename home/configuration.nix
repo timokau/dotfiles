@@ -86,30 +86,13 @@ with pkgs.lib; {
       (python3.withPackages (pkgs: with pkgs; [
         nix-bisect # bisect nix packages
         # rl algorithms
-        multiprocess # multiprocessing with better pickling
-        psutil # process information for load balancing
         black # python formatting
-        joblib # easy parallelization
         pycallgraph # profiling
-        PyGithub
         notmuch # notmuch python api to sort mails
-        pip
-        pytest
-        # TODO for some reason it is necessary to install this into the
-        # environment in order for it to work properly (with imports) in
-        # neovim
-        pylint
-        requests # http
         ipython # better interactive python
         numpy # number squashing
-        networkx # graphs
-        pydot # generating graph dot files in python
         matplotlib
         tkinter # matplotlib backend
-        pygraphviz
-        r2pipe
-        pygobject3
-        gobject-introspection
         pillow # FIXME necessary for ranger image preview with kitty
       ] ++ optionals cfg.full [
       ]))
