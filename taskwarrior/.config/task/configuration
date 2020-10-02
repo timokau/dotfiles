@@ -16,6 +16,8 @@ uda.relativeRecurDue.type=duration
 uda.relativeRecurDue.label='Rel. Rec. Due'
 uda.relativeRecurWait.type=duration
 uda.relativeRecurWait.label='Rel. Rec. Wait'
+uda.relativeRecurSched.type=duration
+uda.relativeRecurSched.label='Rel. Rec. Sched'
 
 # urgency.user.tag.OVERDUE.coefficient=100.0
 urgency.due.coefficient=4.0

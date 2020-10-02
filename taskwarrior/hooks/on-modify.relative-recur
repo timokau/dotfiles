@@ -13,6 +13,7 @@ import time
 TIME_FORMAT = "%Y%m%dT%H%M%SZ"
 UDA_DUE = "relativeRecurDue"
 UDA_WAIT = "relativeRecurWait"
+UDA_SCHED = "relativeRecurSched"
 
 env = os.environ.copy()
 env["TZ"] = "UTC0"
@@ -39,7 +40,7 @@ def _main():
 
     # Has a task with UDA been marked as completed?
     if (
-        (UDA_DUE in original or UDA_WAIT in original)
+        (UDA_DUE in original or UDA_WAIT in original or UDA_SCHED in original)
         and original["status"] != "completed"
         and modified["status"] == "completed"
     ):
@@ -53,6 +54,8 @@ def _main():
             original["status"] = "waiting"
         else:
             original["status"] = "pending"
+        if UDA_SCHED in original:
+            original["scheduled"] = calc(modified["end"] + "+" + original[UDA_SCHED])
         print("Created follow-up task")
         original["entry"] = modified["end"]
         original["uuid"] = str(uuid.uuid4())
