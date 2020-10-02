@@ -10,6 +10,13 @@ urgency.uda.priority.HH.coefficient=8.0
 urgency.uda.priority.H.coefficient=4.0
 urgency.uda.priority.M.coefficient=2.0
 urgency.uda.priority.L.coefficient=-3.0
+
+# For https://github.com/JensErat/task-relative-recur
+uda.relativeRecurDue.type=duration
+uda.relativeRecurDue.label='Rel. Rec. Due'
+uda.relativeRecurWait.type=duration
+uda.relativeRecurWait.label='Rel. Rec. Wait'
+
 # urgency.user.tag.OVERDUE.coefficient=100.0
 urgency.due.coefficient=4.0
 urgency.blocking.coefficient=4.0
