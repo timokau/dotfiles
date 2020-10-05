@@ -147,5 +147,5 @@ stop_task
 read -r -n 1 -p "Task done? [y/N]" item
 echo # newline
 case "$item" in
-	y|Y) task 'done' "$uuid" 2>/dev/null ;;
+	y|Y) task 'done' "$uuid" ;;
 esac
