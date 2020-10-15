@@ -202,11 +202,7 @@ with pkgs.lib; {
         "spotify"
         "spotify-unwrapped"
         "steam-runtime" # not actually used, but needed by steam-run
-        "flashplayer-ppapi"
       ]);
-      chromium = {
-        enablePepperFlash = true;
-      };
       firefox = {
         enableTridactylNative = true;
       };
