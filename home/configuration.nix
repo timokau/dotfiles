@@ -71,7 +71,7 @@ with pkgs.lib; {
       ltrace # trace library calls
       gdb
       hedgewars
-      superTuxKart
+      # superTuxKart # disabled since its broken on master (2020-10-20)
       teeworlds
       brightnessctl # controlling brightness on my laptop
       tmux
