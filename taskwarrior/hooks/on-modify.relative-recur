@@ -5,7 +5,6 @@
 import json
 import sys
 import subprocess
-import uuid
 import os
 import tempfile
 import time
@@ -33,11 +32,9 @@ def calc(statement):
 def _main():
     # Parse the modified task
     original = json.loads(sys.stdin.readline())
-    modified = sys.stdin.readline()
-    # Return the unmodified modified task, so it is actually changed
-    print(modified)
-    modified = json.loads(modified)
+    modified = json.loads(sys.stdin.readline())
 
+    repurpose = False
     # Has a task with UDA been marked as completed?
     if (
         (UDA_DUE in original or UDA_WAIT in original or UDA_SCHED in original)
@@ -56,34 +53,15 @@ def _main():
             original["status"] = "pending"
         if UDA_SCHED in original:
             original["scheduled"] = calc("today" + "+" + original[UDA_SCHED])
-        print("Created follow-up task")
         original["entry"] = modified["end"]
-        original["uuid"] = str(uuid.uuid4())
+        repurpose = True
 
-        # Wait for taskwarrior to finish, so we can safely `task import` the new task
-        sys.stdout.flush()
-        task_pid = os.getppid()
-        if 0 < os.fork():
-            sys.exit(0)
-        else:
-            # Taskwarrior also waits for stdout to close
-            try:
-                os.close(sys.stdout.fileno())
-            except OSError:
-                pass  # Thrown because of closing stdout. Don't worry, that's fine.
+    if repurpose:
+        print(json.dumps(original))
+        print("Task rescheduled.")
+    else:
+        print(json.dumps(modified))
 
-            # Wait for taskwarrior to finish
-            while os.path.exists("/proc/%s" % str(task_pid)):
-                time.sleep(0.25)
-
-            # Import the follow-up task
-            with tempfile.NamedTemporaryFile(mode="wt") as new_task:
-                new_task.write(json.dumps(original))
-                new_task.flush()
-                add = subprocess.Popen(
-                    ["task", "rc.verbose=nothing", "import", new_task.name], env=env
-                )
-                add.communicate()
 
 if __name__ == "__main__":
     _main()
