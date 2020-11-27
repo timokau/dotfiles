@@ -70,7 +70,6 @@ with pkgs.lib; {
       moreutils # usefull stuff like `vidir` bulk renaming
       ltrace # trace library calls
       gdb
-      hedgewars
       # superTuxKart # disabled since its broken on master (2020-10-20)
       teeworlds
       brightnessctl # controlling brightness on my laptop
