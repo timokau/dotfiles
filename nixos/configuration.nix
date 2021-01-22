@@ -133,10 +133,7 @@ in
   };
 
   # mount /tmp in RAM. Don't do this on desk, as the machine tends to run out of ram.
-  # Should be !isDesk. Temporarily disabled because of a bug (nixpkgs#109118).
-  # The fix is already in nixpkgs master, so the workaround should be removed
-  # on the next update.
-  boot.tmpOnTmpfs = false;
+  boot.tmpOnTmpfs = !isDesk;
   boot.cleanTmpDir = true;
 
   virtualisation.virtualbox.host = {
