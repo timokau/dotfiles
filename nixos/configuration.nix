@@ -402,9 +402,11 @@ in
 
   services.xserver.libinput = {
     enable = isPad;
-    disableWhileTyping = true;
-    scrollButton = 2;
-    scrollMethod = "twofinger";
+    touchpad = {
+      disableWhileTyping = true;
+      scrollButton = 2;
+      scrollMethod = "twofinger";
+    };
   };
 
   # create a virtual homenet
