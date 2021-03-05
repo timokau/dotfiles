@@ -67,7 +67,7 @@ let
     # }
     {
       # TODO instead supply a set of packageConfiguration snippets that depend
-      # on a set of packages each (to make it possible to depend on nvim_lsp
+      # on a set of packages each (to make it possible to depend on lspconfig
       # and ncm2 here)
       p = nvim-lspconfig;
       startup = true;
@@ -83,7 +83,7 @@ let
         nnoremap <silent> <leader>ca  <cmd>lua vim.lsp.buf.code_action()<CR>
 
         lua << EOF
-          local nvim_lsp = require('nvim_lsp')
+          local lspconfig = require('lspconfig')
           local completion = require('completion')
           local diagnostic = require('diagnostic')
           local metals = require('metals')
@@ -93,11 +93,11 @@ let
             diagnostic.on_attach()
           end
 
-          nvim_lsp.pyls.setup{
+          lspconfig.pyls.setup{
             cmd = { "${pkgs.python3.pkgs.python-language-server}/bin/pyls" },
             on_attach = on_attach_setup,
           }
-          nvim_lsp.metals.setup{
+          lspconfig.metals.setup{
             cmd = { "${pkgs.metals}/bin/metals" };
             on_attach = on_attach_setup;
             root_dir = metals.root_pattern("build.sbt", "build.sc");
@@ -117,7 +117,7 @@ let
               ["metals/executeClientCommand"] = metals["metals/executeClientCommand"];
             };
           }
-          nvim_lsp.texlab.setup{
+          lspconfig.texlab.setup{
             cmd = { "${pkgs.texlab}/bin/texlab" },
           }
         EOF
