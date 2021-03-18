@@ -27,6 +27,9 @@
     }
   ];
 
+  # https://github.com/NixOS/nixpkgs/pull/111551#issuecomment-802082766
+  services.xserver.videoDrivers = ["radeon"];
+
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "19.03";
 }
