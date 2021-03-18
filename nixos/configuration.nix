@@ -8,10 +8,7 @@ let
   # directly leads to quirky behaviour because the NixOS module would still
   # come from the old nixpkgs.
   # pkgs = import (import ./nixpkgs.nix) {};
-  hostname = lib.fileContents ./hostname; # different file for each host, not version controlled
-  homeipv6 = lib.fileContents ./homeipv6; # not version controlled
-  isDesk = hostname == "desk";
-  isPad = hostname == "pad";
+  homeipv6 = builtins.readFile ./homeipv6; # not version controlled
 
   wireguard = {
     port = 51822;
@@ -33,6 +30,10 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    # Different file for each host. Symlink one of the files in `hosts`, e.g.
+    # `ln -s hosts/desk.nix host.nix`. The symlink is not version controlled.
+    # Needs to set `networking.hostName` and `system.stateVersion`.
+    ./host.nix
   ];
 
   services.autorandr.enable = true;
@@ -132,8 +133,6 @@ in
     "kernel.sysrq" = 1; # enable "magic sysrq" to force OOM reaper
   };
 
-  # mount /tmp in RAM. Don't do this on desk, as the machine tends to run out of ram.
-  boot.tmpOnTmpfs = !isDesk;
   boot.cleanTmpDir = true;
 
   virtualisation.virtualbox.host = {
@@ -155,8 +154,6 @@ in
   time.timeZone = "Europe/Berlin";
 
   networking = {
-    hostName = hostname;
-
     # use cloudflare dns which is uncensored (in contrast to that of my isp)
     nameservers = [ "1.1.1.1" ];
     networkmanager.insertNameservers = [ "1.1.1.1" ];
@@ -186,9 +183,6 @@ in
 
     # log boots and wakes from suspend
     powerUpCommands = "date -Ih >> /var/log/power_up.log";
-
-    # enable powertop autotuning when using the laptop
-    powertop.enable = isPad;
   };
 
   services.snapper = {
@@ -227,8 +221,6 @@ in
   };
 
   services.xserver = {
-    dpi = if isPad then 120 else null;
-
     # Enable the X11 windowing system.
     enable = true;
     layout = "de";
@@ -259,12 +251,6 @@ in
     # extraConfig = ''
     #   unload-module module-stream-restore
     # '';
-  };
-
-  hardware.bluetooth = {
-    enable = isPad;
-    package = pkgs.bluezFull;
-    # config = {};
   };
 
   # boot.extraModprobeConfig = ''
@@ -298,9 +284,6 @@ in
     # needs to be changed, default is for VMs
     initialPassword = "password";
   };
-
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = if isPad then "18.03" else "19.03";
 
   systemd.services.channelUpdate  = {
     description = "Updates the unstable channel";
@@ -380,38 +363,9 @@ in
   nix.buildCores = 0; # use all available CPUs
   nix.maxJobs = 4; # number of jobs (builds) in parallel
 
-  # configure static monitor setup on desk
-  services.xserver.xrandrHeads = lib.optionals isDesk [
-    {
-      output = "HDMI-3";
-      primary = true;
-      monitorConfig = ''
-        Option "Position" "2280 417"
-        Option "PreferredMode" "1920x1080"
-      '';
-    }
-    {
-      output = "DisplayPort-3";
-      monitorConfig = ''
-        Option "Rotate" "left"
-        Option "Position" "1080 70"
-        Option "PreferredMode" "1920x1200"
-      '';
-    }
-  ];
-
-  services.xserver.libinput = {
-    enable = isPad;
-    touchpad = {
-      disableWhileTyping = true;
-      scrollButton = 2;
-      scrollMethod = "twofinger";
-    };
-  };
-
   # create a virtual homenet
   networking.wireguard.interfaces.wg0 = {
-    ips = [ "${wireguard.ip.${hostname}}/24" ];
+    ips = [ "${wireguard.ip.${config.networking.hostName}}/24" ];
     listenPort = wireguard.port;
     privateKeyFile = "/home/timo/wireguard-keys/private"; # FIXME location
     preSetup = ''
