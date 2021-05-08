@@ -293,25 +293,6 @@ with pkgs.lib; {
       source = ../mpv/.config/mpv;
       recursive = true;
     };
-    xdg.configFile."mpv/scripts/find_subtitles.lua" = let
-      script = builtins.readFile (pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/directorscut82/find_subtitles/8508fb53cab32e8500deb0838dd84797acbd37ed/find_subtitles.lua";
-        sha256 = "0vqkiscswzj2ah3bbq0pr3aymvyc67nlm2i2pp7ll5v747x5ybdq";
-      });
-    in {
-      # would be easier to just include a copy in my dotfiles, but there is no
-      # license...
-      # alternative: https://github.com/vayan/autosub-mpv
-      text = lib.replaceStrings [
-        # Fix subliminal path
-        "subliminal"
-         # I don't want to *always* search for subtitles, just when triggered
-        ''mp.register_event("start-file''
-      ] [
-        "${pkgs.python3.pkgs.subliminal}/bin/subliminal"
-        "-- " # comment out
-      ] script;
-    };
 
     # services.gpg-agent = TODO
     xdg.configFile."dunst/dunstrc".source = ../dunst/.config/dunst/dunstrc;
