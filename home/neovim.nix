@@ -19,18 +19,6 @@ let
   stringListToVim = list: "[" + (concatStringsSep "," (map escapedVimString list)) + "]";
 
   pluginRules = let
-    # plugins that depend on nightly neovim and therefore are not packaged in nixpkgs
-    completion-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-      pname = "completion-nvim";
-      version = "2020-05-28";
-      src = pkgs.fetchFromGitHub {
-        owner = "haorenW1025";
-        repo = "completion-nvim";
-        rev = "6d7c66e76ffce6ad06d82cf1842274bddff8b829";
-        sha256 = "1sajay0ki9nnx9y8f6igzmsyi72wydi9fb0xzi9qr0p0xck98k34";
-      };
-      meta.homepage = "https://github.com/haorenW1025/completion-nvim";
-    };
   in with pkgs.vimPlugins; [
     # {
     #   p = vim-slime;
