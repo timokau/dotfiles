@@ -532,10 +532,17 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "neovim";
         repo = "neovim";
-        # https://github.com/neovim/neovim/commits/master
-        rev = "a695da7d3fac19624d458e3f2980b4c0e55f50a4"; # 2020-07-10
-        sha256 = "1dwswyfqlj7jpjjbfyikqminmp2h7v5y72ahaild61a58l7jjixi";
+        # https://github.com/neovim/neovim/releases/tag/nightly
+        rev = "b585f723bcbaa10a091fce5a61659b331b1467b9"; # 2021-06-21
+        sha256 = "092vgwhgjmgyz272qpmp4grldrbzjklvh3ziaahydbp9xjcmzvmq";
       };
+      # See https://github.com/NixOS/nixpkgs/pull/110837
+      buildInputs = oldAttrs.buildInputs ++ [
+        pkgs.tree-sitter
+      ];
+      cmakeFlags = oldAttrs.cmakeFlags ++ [
+        "-DUSE_BUNDLED=OFF"
+      ];
     });
   in (pkgs.wrapNeovim neovim-unwrapped-nightly {
       configure = {
