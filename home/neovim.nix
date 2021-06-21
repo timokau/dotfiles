@@ -42,17 +42,6 @@ let
       };
       meta.homepage = "https://github.com/haorenW1025/diagnostic-nvim";
     };
-    nvim-metals = pkgs.vimUtils.buildVimPluginFrom2Nix {
-      pname = "nvim-metals";
-      version = "2020-05-28";
-      src = pkgs.fetchFromGitHub {
-        owner = "scalameta";
-        repo = "nvim-metals";
-        rev = "11388266c2d23726bccc589c3d36a051e0434471";
-        sha256 = "16khwbwv9i6233p36dmppn4fppnx6mmzdmsji6knsy5db4h08prd";
-      };
-      meta.homepage = "https://github.com/scalameta/nvim-metals";
-    };
   in with pkgs.vimPlugins; [
     # {
     #   p = vim-slime;
@@ -86,7 +75,6 @@ let
           local lspconfig = require('lspconfig')
           local completion = require('completion')
           local diagnostic = require('diagnostic')
-          local metals = require('metals')
 
           local on_attach_setup = function()
             --completion.on_attach()
@@ -97,26 +85,6 @@ let
             cmd = { "${pkgs.python3.pkgs.python-language-server}/bin/pyls" },
             on_attach = on_attach_setup,
           }
-          lspconfig.metals.setup{
-            cmd = { "${pkgs.metals}/bin/metals" };
-            on_attach = on_attach_setup;
-            root_dir = metals.root_pattern("build.sbt", "build.sc");
-            init_options = {
-              -- If you set this, make sure to have the `metals#status()` function
-              -- in your statusline, or you won't see any status messages
-              statusBarProvider            = "on";
-              inputBoxProvider             = true;
-              quickPickProvider            = true;
-              executeClientCommandProvider = true;
-            };
-            callbacks = {
-              ["textDocument/hover"]          = metals['textDocument/hover'];
-              ["metals/status"]               = metals['metals/status'];
-              ["metals/inputBox"]             = metals['metals/inputBox'];
-              ["metals/quickPick"]            = metals['metals/quickPick'];
-              ["metals/executeClientCommand"] = metals["metals/executeClientCommand"];
-            };
-          }
           lspconfig.texlab.setup{
             cmd = { "${pkgs.texlab}/bin/texlab" },
           }
@@ -124,8 +92,6 @@ let
           "local ncm2 = require('ncm2')
             "on_init = ncm2.register_lsp_source
         "set omnifunc=v:lua.vim.lsp.omnifunc
-        " TODO taken from nvim-metals; revisit
-        autocmd FileType scala setlocal omnifunc=v:lua.vim.lsp.omnifunc
         autocmd FileType tex setlocal omnifunc=v:lua.vim.lsp.omnifunc " instead of vimtex
         " Needed if you want to set your own gutter signs
         call sign_define("LspDiagnosticsErrorSign", {"text" : "✘", "texthl" : "LspGutterError"})
@@ -522,10 +488,6 @@ let
         " https://github.com/haorenW1025/completion-nvim#enable-snippets-support
         " Automatically fall back to other completion providers
         let g:completion_auto_change_source = 1
-
-        " From nvim-metals: Use <Tab> and <S-Tab> to navigate through popup menu
-        " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-        " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
       '';
     }
     {
@@ -541,12 +503,6 @@ let
       nnoremap <silent> [c          :NextDiagnostic<CR>
       nnoremap <silent> ]c          :PrevDiagnostic<CR>
       nnoremap <silent> go          :OpenDiagnostic<CR>
-      '';
-    }
-    {
-      p = nvim-metals;
-      startup = true;
-      postLoad = ''
       '';
     }
   ];
