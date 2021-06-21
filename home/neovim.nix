@@ -31,17 +31,6 @@ let
       };
       meta.homepage = "https://github.com/haorenW1025/completion-nvim";
     };
-    diagnostic-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-      pname = "diagnostic-nvim";
-      version = "2020-05-26";
-      src = pkgs.fetchFromGitHub {
-        owner = "haorenW1025";
-        repo = "diagnostic-nvim";
-        rev = "d7734f12f2c980b08c205583b7756d735222fb9f";
-        sha256 = "1fsya1midzyd46x0y69v2xi0p91yg2cm4vhw36ai99kjbha005pz";
-      };
-      meta.homepage = "https://github.com/haorenW1025/diagnostic-nvim";
-    };
   in with pkgs.vimPlugins; [
     # {
     #   p = vim-slime;
