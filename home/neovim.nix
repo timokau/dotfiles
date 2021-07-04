@@ -524,24 +524,7 @@ let
   ''
     + pkgs.lib.concatStringsSep "\n" (map postLoadSnippet pluginRules);
 
-  mynvim = let
-    neovim-unwrapped-nightly = pkgs.neovim-unwrapped.overrideAttrs (oldAttrs: {
-      src = pkgs.fetchFromGitHub {
-        owner = "neovim";
-        repo = "neovim";
-        # https://github.com/neovim/neovim/releases/tag/nightly
-        rev = "b585f723bcbaa10a091fce5a61659b331b1467b9"; # 2021-06-21
-        sha256 = "092vgwhgjmgyz272qpmp4grldrbzjklvh3ziaahydbp9xjcmzvmq";
-      };
-      # See https://github.com/NixOS/nixpkgs/pull/110837
-      buildInputs = oldAttrs.buildInputs ++ [
-        pkgs.tree-sitter
-      ];
-      cmakeFlags = oldAttrs.cmakeFlags ++ [
-        "-DUSE_BUNDLED=OFF"
-      ];
-    });
-  in (pkgs.wrapNeovim neovim-unwrapped-nightly {
+  mynvim = (pkgs.wrapNeovim pkgs.neovim-unwrapped {
       configure = {
         # https://github.com/neovim/neovim/issues/9390
         pathogen.pluginNames = [ "vimtex" "ultisnips" ];
