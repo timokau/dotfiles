@@ -78,6 +78,7 @@ let
           }
           lspconfig.texlab.setup{
             cmd = { "${pkgs.texlab}/bin/texlab" },
+            on_attach = on_attach_setup,
           }
         EOF
           "local ncm2 = require('ncm2')
