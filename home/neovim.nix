@@ -51,11 +51,25 @@ let
         lua << EOF
           local lspconfig = require('lspconfig')
           local completion = require('completion')
-          local diagnostic = require('diagnostic')
 
-          local on_attach_setup = function()
+          local on_attach_setup = function(client, bufnr)
             --completion.on_attach()
-            diagnostic.on_attach()
+            vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+              vim.lsp.diagnostic.on_publish_diagnostics, {
+                virtual_text = {
+                  prefix = '',
+                },
+              }
+            )
+
+            -- Adapted from [1].
+            -- [1] https://github.com/neovim/nvim-lspconfig/blob/32843975789ad52b10eb27e4fba2d0043aa276fa/README.md#keybindings-and-completion
+            local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+            local opts = { noremap = true, silent = true }
+            buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+            buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+            buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+            buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
           end
 
           lspconfig.pyls.setup{
@@ -462,21 +476,6 @@ let
         " https://github.com/haorenW1025/completion-nvim#enable-snippets-support
         " Automatically fall back to other completion providers
         let g:completion_auto_change_source = 1
-      '';
-    }
-    {
-      p = diagnostic-nvim;
-      startup = true;
-      postLoad = ''
-      " From nvim-metals
-      " This is disabled by default. I'm still unsure if I like this on
-      let g:diagnostic_enable_virtual_text = 1
-      " Again edit this to your liking
-      let g:diagnostic_virtual_text_prefix = ' '
-
-      nnoremap <silent> [c          :NextDiagnostic<CR>
-      nnoremap <silent> ]c          :PrevDiagnostic<CR>
-      nnoremap <silent> go          :OpenDiagnostic<CR>
       '';
     }
   ];
