@@ -85,8 +85,8 @@ let
             buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
           end
 
-          lspconfig.pyls.setup{
-            cmd = { "${pkgs.python3.pkgs.python-language-server}/bin/pyls" },
+          lspconfig.pylsp.setup{
+            cmd = { "${pkgs.python3.pkgs.python-lsp-server}/bin/pyls" },
             on_attach = on_attach_setup,
           }
           lspconfig.texlab.setup{
