@@ -29,8 +29,8 @@ echo "Switching system"
 # Now switch both systems. If the build succeeded, this hopefully won't fail
 sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch
 
-echo "Switching home"
-nix run nixpkgs.home-manager -c home-manager switch
-
 # This sometimes gets killed during system updates
 systemctl --user restart keyboardconfig
+
+echo "Switching home"
+nix run nixpkgs.home-manager -c home-manager switch
