@@ -21,6 +21,9 @@ home_manager_system="$( nix run nixpkgs.home-manager -c home-manager --show-trac
 echo "Rebuilding"
 nix build --no-link --show-trace '(with import <nixpkgs/nixos> { }; system)' $home_manager_system || exit $?
 
+echo "Waiting for attention: Permission to switch"
+while ! sudo echo "Sudo password cached"; do :; done
+
 echo "Switching system"
 
 # Now switch both systems. If the build succeeded, this hopefully won't fail
