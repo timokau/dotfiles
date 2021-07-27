@@ -115,20 +115,6 @@ let
       startup = true;
     }
     {
-      p = neoterm;
-      atStartup = "autocmd PlugAutoload Filetype python :packadd neoterm";
-      # startup = true;
-      preLoad = ''
-        let $PATH .= ':${pkgs.python3.pkgs.ipython}/bin'
-        let g:neoterm_default_mod=':belowright'
-        let g:neoterm_direct_open_repl=1
-        " Use gx{text-object} in normal mode
-        nmap gx <Plug>(neoterm-repl-send)
-        " Send selected contents in visual mode.
-        xmap gx <Plug>(neoterm-repl-send)
-      '';
-    }
-    {
       p = vim-pandoc;
       # TODO also on explicit filetype switch
       atStartup = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc";
