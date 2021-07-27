@@ -236,20 +236,6 @@ let
       '';
     }
     {
-      # snippets
-      p = ultisnips;
-      startup = true;
-      atStartup = ''
-        " Trigger configuration. <tab> interferes with YouCompleteMe
-        let g:UltiSnipsExpandTrigger="<c-j>"
-        let g:UltiSnipsJumpForwardTrigger="<c-j>"
-        let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-        let g:UltiSnipsEditSplit="vertical"
-        let g:UltiSnipsSnippetsDir='${../nvim/.config/nvim/UltiSnips}'
-        let g:UltiSnipsEnableSnipMate=0
-      '';
-    }
-    {
       # highlight possible motion targets
       p = vim-easymotion;
       startup = true;
