@@ -190,27 +190,6 @@ let
       '';
     }
     {
-      p = LanguageClient-neovim;
-      atStartup = ''
-        autocmd PlugAutoload FileType rust :packadd LanguageClient-neovim
-      '';
-      preLoad = ''
-        let g:LanguageClient_serverCommands = {
-          \'rust': ['${pkgs.rustup}', 'run', 'nightly', 'rls']
-          \ }
-        let g:LanguageClient_autoStart = 1
-
-        augroup lc_bindings
-          autocmd!
-          autocmd Filetype rust LanguageClientStart
-          autocmd Filetype rust nnoremap <buffer> gD <Plug>RacerShowDocumentation
-          autocmd Filetype rust nnoremap <buffer> <silent> K :call LanguageClient_textDocument_hover()<CR>
-          autocmd Filetype rust nnoremap <buffer> <silent> gd :call LanguageClient_textDocument_definition()<CR>
-          autocmd Filetype rust nnoremap <buffer> <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
-        augroup END
-      '';
-    }
-    {
       p = vim-nix;
       atStartup = ''
         autocmd PlugAutoload BufReadPre,BufNewFile *.nix :packadd vim-nix
