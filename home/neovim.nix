@@ -190,17 +190,6 @@ let
       '';
     }
     {
-      p = rust-vim;
-      atStartup = ''
-        autocmd PlugAutoload FileType rust :packadd rust-vim
-      '';
-      preLoad = ''
-        " Run rustfmt on save
-        let g:rustfmt_command='${pkgs.rustfmt}/bin/rustfmt'
-        let g:rustfmt_autosave = 1
-      '';
-    }
-    {
       p = LanguageClient-neovim;
       atStartup = ''
         autocmd PlugAutoload FileType rust :packadd LanguageClient-neovim
