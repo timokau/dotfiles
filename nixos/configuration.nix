@@ -107,6 +107,16 @@ in
     setgid = true;
   };
 
+  programs.firejail = {
+    enable = true;
+    wrappedBinaries = {
+      anki = {
+        executable = "${lib.getBin pkgs.anki}/bin/anki";
+        profile = "${pkgs.firejail}/etc/firejail/anki.profile";
+      };
+    };
+  };
+
   programs.adb.enable = true;
   # programs.command-not-found.enable = true;
 

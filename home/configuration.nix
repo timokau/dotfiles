@@ -142,7 +142,6 @@ with pkgs.lib; {
       # sageWithDoc # math software
     ]) ++ (optionals cfg.graphical [
       libreoffice
-      anki # flash cards
       xclip # x11 clipboard management
       okular # feature-full pdf viewer
       gimp # image editing
