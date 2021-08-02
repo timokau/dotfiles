@@ -5,7 +5,8 @@ diff --color=always -r /etc/nixos nixos
 echo "Continue?"
 read
 
-# THIS REMOVES THE OLD CONFIG
+# This overwrites the old config. Old files are not removed automatically. If
+# you remove a file from this list, you should delete it manually.
 sudo install --owner=root --group=root --mode=644 nixos/*.nix nixos/server_address nixpkgs.nix /etc/nixos
 
 echo "Rebuilding"
