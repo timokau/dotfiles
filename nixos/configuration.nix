@@ -8,17 +8,17 @@ let
   # directly leads to quirky behaviour because the NixOS module would still
   # come from the old nixpkgs.
   # pkgs = import (import ./nixpkgs.nix) {};
-  homeipv6 = builtins.readFile ./homeipv6; # not version controlled
+  server_address = builtins.readFile ./server_address; # not version controlled
 
   wireguard = {
     port = 51822;
     publicKey = {
-      rpi = "gxkt8JC7F2ExSQkA41sY7e94qag693Cf9y3UiFOGQRE=";
+      server = "MRA6FjAwPViS/qsAOpa/eAbeMuHcal6zt/8m4u4hI0w=";
       pad = "YoUI02AyBRNM7//UTzUlO90mCx7wHX+Jzxf2uaFR3gg=";
       desk = "d5KwIeKll+z5ZyAVRotC69RXuwM4VLwNtZoRoQEbTjo=";
     };
     ip = {
-      rpi = "10.10.10.1";
+      server = "10.10.10.1";
       pad = "10.10.10.2";
       desk = "10.10.10.3";
       phone = "10.10.10.4";
@@ -219,8 +219,7 @@ in
     # give names to devices in my home network
     "192.168.0.22" = [ "desk-local" ];
     "${wireguard.ip.desk}" = [ "desk" ];
-    "192.168.0.38" = [ "rpi-local" ];
-    "${wireguard.ip.rpi}" = [ "rpi" ];
+    "${wireguard.ip.server}" = [ "server" ];
     "${wireguard.ip.pad}" = [ "pad" ];
     "192.168.0.21" = [ "opo" ];
     "192.168.0.20" = [ "laptop" ];
@@ -380,15 +379,14 @@ in
     privateKeyFile = "/home/timo/wireguard-keys/private"; # FIXME location
     peers = [
       {
-        publicKey = wireguard.publicKey.rpi;
+        publicKey = wireguard.publicKey.server;
         allowedIPs = [
-          "${wireguard.ip.rpi}/32"
+          "${wireguard.ip.server}/32"
           "${wireguard.ip.pad}/32"
           "${wireguard.ip.desk}/32"
           "${wireguard.ip.phone}/32"
         ];
-        # endpoint = "${dyndns}:${toString wireguard.port}";
-        endpoint = "${homeipv6}:${toString wireguard.port}";
+        endpoint = "${server_address}:${toString wireguard.port}";
       }
     ];
   };

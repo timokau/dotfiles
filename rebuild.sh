@@ -6,7 +6,7 @@ echo "Continue?"
 read
 
 # THIS REMOVES THE OLD CONFIG
-sudo install --owner=root --group=root --mode=644 nixos/*.nix nixos/homeipv6 nixpkgs.nix /etc/nixos
+sudo install --owner=root --group=root --mode=644 nixos/*.nix nixos/server_address nixpkgs.nix /etc/nixos
 
 echo "Rebuilding"
 
