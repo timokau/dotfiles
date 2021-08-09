@@ -50,6 +50,7 @@ in {
   # [1] https://lore.kernel.org/git/YQHAasrmcbdiCDQF@google.com/T/#m248c2de60a10879d24691e1b835bcf46af2aca09
   home.file.".config/git/hooks/commit-msg" = delegateToLocalHook "commit-msg";
   home.file.".config/git/hooks/pre-commit" = delegateToLocalHook "pre-commit";
+  home.file.".config/git/hooks/post-commit" = delegateToLocalHook "post-commit";
   home.file.".config/git/hooks/pre-rebase" = delegateToLocalHook "pre-rebase";
   home.file.".config/git/hooks/prepare-commit-msg" = delegateToLocalHook "prepare-commit-msg";
   # Check for a "NOPUSH" marker in the commit message before pushing. Abort if
