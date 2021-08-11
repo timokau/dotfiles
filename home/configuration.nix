@@ -62,6 +62,7 @@ with pkgs.lib; {
         ];
       };
     in with pkgs; [
+      neuron-notes # note management
       ripgrep-all # search non-text files such as pdfs
       pdfpc # latex beamer presentations
       entr # run command on file changes (nicer interface than inotify)
