@@ -351,7 +351,7 @@ let
     }
     {
       p = pkgs.symlinkJoin {
-        name = "fzf-vim";
+        inherit (fzf-vim) pname name;
         paths = [
           fzf-vim
           fzfWrapper
