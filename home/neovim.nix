@@ -479,8 +479,6 @@ let
 
   mynvim = (pkgs.wrapNeovim pkgs.neovim-unwrapped {
       configure = {
-        # https://github.com/neovim/neovim/issues/9390
-        pathogen.pluginNames = [ "vimtex" "ultisnips" ];
         packages.myVimPackage = with pkgs.vimPlugins; {
           start = [
             # colorschemes
