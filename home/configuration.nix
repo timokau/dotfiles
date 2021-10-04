@@ -149,7 +149,6 @@ with pkgs.lib; {
       gimp # image editing
       tdesktop # telegram chat
       spotify # music
-      digikam # picture management
       scrot # screenshots
       evince # more fully featured (and bloated) pdf viewer
       pavucontrol # volume
