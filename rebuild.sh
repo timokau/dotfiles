@@ -26,7 +26,7 @@ export NIX_PATH="nixpkgs=$NIXPKGS:$NIX_PATH"
 # First build both systems using nix 2
 echo "Instantiating"
 home_manager_system="$( nixpkgs_hm --show-trace instantiate )"
-nixos_system="$( nix_cmd eval --impure --raw --expr '((import <nixpkgs/nixos>) {}).system' )"
+nixos_system="$( nix-instantiate -E '(with import <nixpkgs/nixos> {}; system)' )"
 [[ $? -ne 0 ]] && exit $?
 echo "Rebuilding"
 nix_cmd build --no-link --show-trace $nixos_system $home_manager_system || exit $?
