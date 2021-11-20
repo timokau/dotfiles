@@ -49,8 +49,6 @@ in
 
   nix = {
     useSandbox = true;
-    daemonIONiceLevel = 5;
-    daemonNiceLevel = 10;
     nixPath = [
       # Fix the nixpkgs this configuration was built with. To switch to a new
       # revision, explicitly pass it through NIX_PATH once and then it will be
