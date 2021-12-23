@@ -10,7 +10,7 @@ url="$(echo "$url" | sed 's|.*youtube.com/embed/\(.*\)|https://youtube.com/watch
 ytdl_format='(bestvideo[height<=1080]+bestaudio/best)' 
 ytdl_raw_options="sub-lang=en,write-sub=,write-auto-sub="
 
-if ! mpv --ytdl-format="${ytdl_format}" --ytdl-raw-options="${ytdl_raw_options}" --image-display-duration=inf --force-window=yes --audio-display=attachment "${url}" ; then
+if ! mpv --ytdl-format="${ytdl_format}" --ytdl-raw-options="${ytdl_raw_options}" --image-display-duration=inf --force-window=yes "${url}" ; then
 	if [[ "$url" =~ roosterteeth\.com ]]; then
 		user=$(pass show misc/roosterteeth/user)
 		pass=$(pass show misc/roosterteeth/pass)
