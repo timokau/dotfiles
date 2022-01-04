@@ -256,7 +256,7 @@ with pkgs.lib; {
           };
         }
       ];
-      promptInit = ''
+      interactiveShellInit = ''
         set -l nix_shell_info (
           if test -n "$IN_NIX_SHELL"
             echo -n "<nix-shell> "
@@ -410,10 +410,12 @@ with pkgs.lib; {
 
     programs.htop = {
       enable = true;
-      highlightBaseName = true;
-      showProgramPath = false;
-      treeView = true;
-      sortKey = "PERCENT_MEM"; # usually the bottleneck
+      settings = {
+        highlight_base_name = true;
+        show_program_path = false;
+        tree_view = true;
+        sort_key = "PERCENT_MEM"; # usually the bottleneck
+      };
     };
 
     programs.rofi.enable = cfg.graphical;
