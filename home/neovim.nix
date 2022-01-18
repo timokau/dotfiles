@@ -86,7 +86,7 @@ let
           end
 
           lspconfig.pylsp.setup{
-            cmd = { "${pkgs.python3.pkgs.python-lsp-server}/bin/pyls" },
+            cmd = { "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp" },
             on_attach = on_attach_setup,
           }
           lspconfig.texlab.setup{
