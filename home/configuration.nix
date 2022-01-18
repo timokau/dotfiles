@@ -103,7 +103,7 @@ with pkgs.lib; {
       nix-index
       tldr # quick usage examples
       mpv # audio and video player
-      youtube-dl # media downloader (not just youtube)
+      yt-dlp # media downloader (not just youtube)
       ffmpeg # cli media editor
       ncmpcpp # tui mpd music player
       wget
