@@ -47,6 +47,12 @@ in
     };
   };
 
+  # Run fstrim weekly to maintain SSD performance
+  services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
+
   nix = {
     useSandbox = true;
     nixPath = [
