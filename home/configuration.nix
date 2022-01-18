@@ -369,6 +369,9 @@ with pkgs.lib; {
       };
     };
 
+    # Do not let home-manager manage the keyboard. Home-manager uses
+    # `setxkbmap` otherwise, which interferes with the keyboardconfig script.
+    home.keyboard = null;
     systemd.user.services.keyboardconfig = {
       Unit = {
         Description = "Adjust keyboard layout";
