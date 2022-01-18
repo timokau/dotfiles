@@ -305,6 +305,15 @@ with pkgs.lib; {
       Exec=${pkgs.chromium}/bin/chromium --class 'Element' --app=https://app.element.io
       Name=Element messenger
     '';
+    xdg.dataFile."applications/google-calendar.desktop".text = optionalString cfg.graphical ''
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=1.0
+      Type=Application
+      Terminal=false
+      Exec=${pkgs.chromium}/bin/chromium --class 'Google Calendar' --app=https://calendar.google.com
+      Name=Google Calendar
+    '';
     xdg.dataFile."applications/slack.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
