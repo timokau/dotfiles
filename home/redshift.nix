@@ -12,11 +12,18 @@ let
       transition = 40;
       night = 1;
     };
+    "intel_backlight" = {
+      # Passed to brightnessctl as percentages
+      day = 100;
+      transition = 60;
+      night = 10;
+    };
   };
   # Snippet to be inserted into the `brightness.sh` hook.
   brightness_script = new_period: ''
     maybe_set_ddc "DEL" "DELL U2415" '${toString brightness."DELL U2415".${new_period}}'
     maybe_set_ddc_retry "ACR" "G276HL" '${toString brightness."G276HL".${new_period}}'
+    maybe_set_brightnessctl "intel_backlight" '${toString brightness."intel_backlight".${new_period}}'
   '';
 in
 with lib;
@@ -72,6 +79,17 @@ with lib;
               log "Configuring $2 failed. Retrying."
               sleep 1
             done
+          fi
+        }
+
+        maybe_set_brightnessctl() {
+          device="$1"
+          target_percent="$2"
+          if ${pkgs.brightnessctl}/bin/brightnessctl --device="$device" g >/dev/null 2>&1; then
+            log "Configuring $device"
+            ${pkgs.brightnessctl}/bin/brightnessctl --device="$device" s "''${target_percent}%" >> "$LOGFILE" 2>&1
+          else
+            log "Skipping $device (likely not connected)"
           fi
         }
 
