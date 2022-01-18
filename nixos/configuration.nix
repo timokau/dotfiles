@@ -38,6 +38,13 @@ in
 
   services.autorandr.enable = true;
 
+  # Load the i2c module, grant access to users in the i2c group and users with
+  # a seat. This is required by ddccontrol.
+  hardware.i2c.enable = true;
+  # https://github.com/jonls/redshift/issues/436
+  # Control monitor brightness, useful for redshift hooks on the user level.
+  services.ddccontrol.enable = true;
+
   services.grocy = {
     enable = true;
     hostName = "localhost";
