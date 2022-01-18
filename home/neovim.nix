@@ -350,13 +350,7 @@ let
       '';
     }
     {
-      p = pkgs.symlinkJoin {
-        inherit (fzf-vim) pname name;
-        paths = [
-          fzf-vim
-          fzfWrapper
-        ];
-      };
+      p = fzf-vim;
       startup = true;
       preLoad = ''
         " Ignore non-text filetypes / generated files
