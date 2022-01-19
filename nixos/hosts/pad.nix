@@ -5,7 +5,7 @@
 }:
 
 {
-  networking.hostName = "desk";
+  networking.hostName = "pad";
 
   # mount /tmp in RAM. Don't do this on pad, as the machine tends to run out of ram.
   boot.tmpOnTmpfs = true;
