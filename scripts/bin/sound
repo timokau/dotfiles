@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 TMPDIR=$(mktemp -d)
-pushd "$TMPDIR"
+pushd "$TMPDIR" >/dev/null
 nix build nixpkgs.sound-theme-freedesktop
 SOUNDS_ROOT="$TMPDIR/result/share/sounds/freedesktop/stereo"
 sound="$1"
@@ -12,5 +12,5 @@ else
 	SOUND="${SOUNDS_ROOT}/${sound}.oga"
 	mpv --volume="$volume" "$SOUND" >/dev/null 2>&1
 fi
-popd
+popd >/dev/null
 rm -r "$TMPDIR"
