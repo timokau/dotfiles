@@ -30,11 +30,11 @@
 
   services.xserver.dpi = 120;
 
-    hardware.bluetooth = {
-      enable = true;
-      package = pkgs.bluezFull;
-      # config = {};
-    };
+  hardware.bluetooth = {
+    enable = true;
+    package = pkgs.bluezFull;
+    # config = {};
+  };
 
   services.xserver.libinput = {
     enable = true;
