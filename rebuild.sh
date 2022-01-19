@@ -29,7 +29,7 @@ while ! sudo echo "Sudo password cached"; do :; done
 echo "Switching system"
 
 # Now switch both systems. If the build succeeded, this hopefully won't fail
-sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch
+sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch || exit $?
 
 # This sometimes gets killed during system updates
 systemctl --user restart keyboardconfig
