@@ -1,26 +1,18 @@
 #!/usr/bin/env bash
 
-BAG_FILE="$HOME/todo/offline-bag.txt"
-CLI_FOLDER="$HOME/data/code/rust/bag-cli"
+# Save a link into a file in the "offline bag" to read it later
+
+BAG_DIR="$HOME/state/offline-bag"
+BAG_FILE="$BAG_DIR/$( date -Is | sed -e 's/://g' )-$(uuidgen)"
 
 mkdir -p "$( dirname "$BAG_FILE" )"
 if (( "$#" > 0 )); then
-	# Save the file (later)
-	echo "$1" >> "$BAG_FILE"
-	cnt="$(cat "$BAG_FILE" | wc -l)"
-	notify-send --app-name="Wallabag" --urgency=low "Saved $1 (now $cnt saved offline)."
+	# One line per argument
+	while (( "$#" > 0 )); do
+		echo "$1" >> "$BAG_FILE"
+		shift
+	done
+	entry_count="$(ls -l "$BAG_DIR" | wc -l)"
+	notify-send --app-name="Bag" --urgency=low "Saved $1 (now $entry_count saved offline)."
 fi
-
-cd "$CLI_FOLDER"
-while (( "$(cat "$BAG_FILE" | wc -l)" > 0 )); do
-	link=$(head -n1 "$BAG_FILE")
-	# notify-send "$link"
-	cargo run -- add "$link" | grep 'is_archived: false'
-	if [[ "$?" -eq 0 ]]; then
-		# saved successfully, delete from file
-		sed -i '1d' "$BAG_FILE"
-	else
-		# couldn't save, try next time
-		exit 1
-	fi
-done
+echo "$BAG_FILE"
