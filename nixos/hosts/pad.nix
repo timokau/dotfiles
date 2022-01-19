@@ -36,6 +36,14 @@
     # config = {};
   };
 
+  # For hardware-accelerated video playback
+  hardware.opengl.extraPackages = with pkgs; [
+    intel-media-driver
+    vaapiIntel
+    vaapiVdpau
+    libvdpau-va-gl
+  ];
+
   services.xserver.libinput = {
     enable = true;
     touchpad = {
