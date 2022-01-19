@@ -2,7 +2,7 @@
 
 TMPDIR=$(mktemp -d)
 pushd "$TMPDIR" >/dev/null
-nix build nixpkgs.sound-theme-freedesktop
+nix-build '<nixpkgs>' -A sound-theme-freedesktop
 SOUNDS_ROOT="$TMPDIR/result/share/sounds/freedesktop/stereo"
 sound="$1"
 volume="${2:-100}"
