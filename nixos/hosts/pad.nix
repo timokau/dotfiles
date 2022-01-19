@@ -10,8 +10,6 @@
   # mount /tmp in RAM. Don't do this on pad, as the machine tends to run out of ram.
   boot.tmpOnTmpfs = true;
 
-  # enable powertop autotuning when using the laptop
-  powerManagement.powertop.enable = true;
 
   services.xserver.dpi = 120;
 
