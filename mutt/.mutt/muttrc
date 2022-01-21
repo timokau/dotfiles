@@ -54,7 +54,6 @@ set record = "+gmx/sent"
 source ~/.mutt/personal
 
 set wait_key = no
-set mail_check = 0
 set timeout = 3
 set mark_old = no
 set edit_headers
