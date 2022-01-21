@@ -37,6 +37,13 @@
   };
   services.blueman.enable = true;
   programs.dconf.enable = true; # used by blueman
+  hardware.pulseaudio = {
+    extraConfig = ''
+      # Automatically switch the default to a new sink or source. Useful for
+      # bluetooth headsets.
+      load-module module-switch-on-connect
+    '';
+  };
 
   # For hardware-accelerated video playback
   hardware.opengl.extraPackages = with pkgs; [
