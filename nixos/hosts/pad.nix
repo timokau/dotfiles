@@ -35,6 +35,8 @@
     package = pkgs.bluezFull;
     # config = {};
   };
+  services.blueman.enable = true;
+  programs.dconf.enable = true; # used by blueman
 
   # For hardware-accelerated video playback
   hardware.opengl.extraPackages = with pkgs; [
