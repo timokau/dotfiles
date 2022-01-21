@@ -87,6 +87,15 @@ let
 
           lspconfig.pylsp.setup{
             cmd = { "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp" },
+            settings = {
+              pylsp = {
+                plugins = {
+                  pycodestyle = {
+                    maxLineLength = 88, -- As used by Black
+                  },
+                }
+              },
+            },
             on_attach = on_attach_setup,
           }
           lspconfig.texlab.setup{
