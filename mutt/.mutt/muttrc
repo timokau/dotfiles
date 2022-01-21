@@ -107,9 +107,9 @@ set collapse_all
 
 # Header Options -------------------------------------
 ignore *
-unignore from: to: cc: date: subject: # show only these
+unignore from: to: cc: date: List-Unsubscribe: X-GitHub-Reason: subject: # show only these
 unhdr_order *
-hdr_order from: to: cc: date: subject: # and in this order
+hdr_order from: to: cc: date: List-Unsubscribe: X-GitHub-Reason: subject: # and in this order
 
 bind pager j next-line
 bind pager k previous-line
