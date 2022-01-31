@@ -61,7 +61,7 @@ in
   };
 
   nix = {
-    useSandbox = true;
+    settings.sandbox = true;
     nixPath = [
       # Fix the nixpkgs this configuration was built with. To switch to a new
       # revision, explicitly pass it through NIX_PATH once and then it will be
@@ -354,7 +354,7 @@ in
       supportedFeatures = [ "big-parallel" ];
     }
   ];
-  nix.trustedUsers = [ "@wheel" ];
+  nix.settings.trusted-users = [ "@wheel" ];
   programs.ssh.knownHosts = {
     aarch64-community-builder = {
       hostNames = [ "aarch64.nixos.community" ];
@@ -380,8 +380,8 @@ in
     builders-use-substitutes = true
   '';
 
-  nix.buildCores = 0; # use all available CPUs
-  nix.maxJobs = 4; # number of jobs (builds) in parallel
+  nix.settings.cores = 0; # use all available CPUs
+  nix.settings.max-jobs = 4; # number of jobs (builds) in parallel
 
   # create a virtual homenet
   networking.wireguard.interfaces.wg0 = {
