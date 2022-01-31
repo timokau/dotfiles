@@ -357,7 +357,7 @@ in
   nix.settings.trusted-users = [ "@wheel" ];
   programs.ssh.knownHosts = {
     aarch64-community-builder = {
-      hostNames = [ "aarch64.nixos.community" ];
+      extraHostNames = [ "aarch64.nixos.community" ];
       publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMUTz5i9u5H2FHNAmZJyoJfIGyUm/HfGhfwnc142L3ds";
     };
   };
