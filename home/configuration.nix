@@ -80,7 +80,6 @@ with pkgs.lib; {
       htop # system monitoring
       pdfgrep # search through pdfs
       imagemagick # cli image editing
-      graphviz # for pycallgraph, TODO add as upstream dependency
       dot2tex # graphviz <-> latex
       gnuplot # plot generation in latex
       # for quick python experiments
@@ -88,7 +87,6 @@ with pkgs.lib; {
         nix-bisect # bisect nix packages
         # rl algorithms
         black # python formatting
-        pycallgraph # profiling
         notmuch # notmuch python api to sort mails
         ipython # better interactive python
         numpy # number squashing
