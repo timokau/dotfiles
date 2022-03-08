@@ -87,7 +87,7 @@ in
 
   # only some administrative packages are installed at the system level
   environment.systemPackages = (with pkgs; [
-    manpages
+    man-pages
     # android-udev-rules
     # noto-fonts
     # dhcpcd
@@ -316,7 +316,7 @@ in
   systemd.services.suspend = {
     description = "Suspend the computer";
     script = ''
-      ${pkgs.libudev}/bin/systemctl suspend
+      ${pkgs.udev}/bin/systemctl suspend
     '';
   };
 

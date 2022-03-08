@@ -213,7 +213,7 @@ with pkgs.lib; {
         export GI_TYPELIB_PATH=${lib.makeSearchPath "lib/girepository-1.0" (with pkgs; [
           gtk3
           pango.out
-          gdk_pixbuf
+          gdk-pixbuf
           librsvg
           atk
         ])}
