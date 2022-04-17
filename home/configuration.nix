@@ -151,7 +151,6 @@ with pkgs.lib; {
       evince # more fully featured (and bloated) pdf viewer
       pavucontrol # volume
       sxiv # image viewer
-      calibre # ebook management
       xcape # keyboard management
       xdotool # x automation
       chromium # fallback browser
