@@ -189,7 +189,6 @@ with pkgs.lib; {
     programs.direnv = {
       enable = true;
       enableZshIntegration = true;
-      enableFishIntegration = true;
     };
 
     nixpkgs.config = {
