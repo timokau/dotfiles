@@ -25,6 +25,7 @@ with lib;
       background #000000
 
       close_on_child_death yes
+      confirm_os_window_close 0
 
       kitty_mod ctrl+shift
       map ctrl+plus change_font_size current +1.0
