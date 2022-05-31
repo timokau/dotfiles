@@ -12,6 +12,11 @@ let
       transition = 40;
       night = 1;
     };
+    "LG HDR 4K" = {
+      day = 100;
+      transition = 40;
+      night = 1;
+    };
     "intel_backlight" = {
       # Passed to brightnessctl as percentages
       day = 100;
@@ -22,6 +27,7 @@ let
   # Snippet to be inserted into the `brightness.sh` hook.
   brightness_script = new_period: ''
     maybe_set_ddc "DEL" "DELL U2415" '${toString brightness."DELL U2415".${new_period}}'
+    maybe_set_ddc "GSM" "LG HDR 4K" '${toString brightness."LG HDR 4K".${new_period}}'
     maybe_set_ddc_retry "ACR" "G276HL" '${toString brightness."G276HL".${new_period}}'
     maybe_set_brightnessctl "intel_backlight" '${toString brightness."intel_backlight".${new_period}}'
   '';
