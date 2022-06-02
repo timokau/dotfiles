@@ -316,8 +316,8 @@ with pkgs.lib; {
       Version=1.0
       Type=Application
       Terminal=false
-      Exec=${pkgs.chromium}/bin/chromium --class 'Slack' --app=https://app.slack.com/client/
-      Name=Slack messenger
+      Exec=${pkgs.chromium}/bin/chromium --class 'Slack' --app=https://kiml-workspace.slack.com/
+      Name=Slack KIML
     '';
     xdg.dataFile."applications/zulip-upb.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
