@@ -7,6 +7,8 @@ mailboxes "+yahoo/inbox" \
           "+yahoo/sent"
 mailboxes "+uni/inbox" \
           "+uni/sent"
+mailboxes "+lmu/inbox" \
+          "+lmu/sent"
 mailboxes +draft
 
 # avoid warinngs about duplicated bindings
@@ -16,6 +18,7 @@ macro index c "<change-vfolder>"
 macro index goy "<change-vfolder> yahoo"<enter>
 macro index gog "<change-vfolder> gmx"<enter>
 macro index gou "<change-vfolder> uni"<enter>
+macro index gol "<change-vfolder> lmu"<enter>
 macro index goo "<change-vfolder> ou"<enter>
 macro index goz "<change-vfolder> zoho"<enter>
 
@@ -188,6 +191,7 @@ virtual-mailboxes \
     "starred"   "notmuch://?query=tag:*"\
     "yahoo"   "notmuch://?query=tag:yahoo&limit=100"\
     "uni"   "notmuch://?query=tag:uni&limit=100"\
+    "lmu"   "notmuch://?query=tag:lmu&limit=100"\
     "zoho"   "notmuch://?query=tag:zoho&limit=100"\
     "gmx"   "notmuch://?query=tag:gmx&limit=100"\
     "sent"      "notmuch://?query=tag:sent" # sets up queries for virtual folders
