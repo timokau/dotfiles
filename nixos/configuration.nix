@@ -161,6 +161,11 @@ in
     # enableExtensionPack = true; # unfree
   };
 
+  # Container runtime & builder, needs subuids and subgids
+  virtualisation.podman = {
+    enable = true;
+  };
+
   services.openssh = {
     enable = true;
     passwordAuthentication = false;
