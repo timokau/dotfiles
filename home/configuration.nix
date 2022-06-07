@@ -13,6 +13,7 @@ in
 with pkgs.lib; {
   imports = [
     ./neovim.nix # editor
+    ./emacs.nix # editor and more
     ./taskwarrior.nix # todo list and task management
     ./newsboat.nix # rss reader
     ./git.nix
@@ -41,6 +42,7 @@ with pkgs.lib; {
     herbstluftwm.enable = cfg.graphical;
     kitty.enable = cfg.graphical;
     redshift.enable = cfg.graphical;
+    emacs.enable = true;
 
     # only tools I use directly
     # tools used in scripts should be listed somewhere else
