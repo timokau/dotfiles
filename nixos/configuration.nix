@@ -38,6 +38,10 @@ in
 
   services.autorandr.enable = true;
 
+  services.printing = {
+    enable = true;
+  };
+
   # Load the i2c module, grant access to users in the i2c group and users with
   # a seat. This is required by ddccontrol.
   hardware.i2c.enable = true;
