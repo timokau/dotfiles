@@ -2,7 +2,6 @@ browser "spawn firefox %u"
 auto-reload yes
 reload-threads 14
 macro m set browser "spawn video-stream %u" ; open-in-browser ; set browser "spawn firefox %u"
-macro w set browser "spawn bag %u" ; open-in-browser ; set browser "spawn firefox %u"
 macro M set browser "spawn video-stream %u"
 macro F set browser "spawn firefox %u"
 macro W set browser "spawn bag %u"
