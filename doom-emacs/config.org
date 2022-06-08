@@ -1,0 +1,4 @@
+#+BEGIN_SRC elisp
+; Run `~/.emacs.d/bin/doom sync` after modifying.
+#+END_SRC
+
