@@ -1,4 +1,8 @@
+* Emacs Config
+
+My literate emacs configuration. Run ~doom sync~ after modifying.
+
 #+BEGIN_SRC elisp
-; Run `~/.emacs.d/bin/doom sync` after modifying.
+; Nothing here yet
 #+END_SRC
 
