@@ -2,7 +2,25 @@
 
 My literate emacs configuration. Run ~doom sync~ after modifying.
 
+** Org configuration
+
+*** Locations
+
 #+BEGIN_SRC elisp
-; Nothing here yet
+(setq org-directory "~/data/documents/logseq/")
 #+END_SRC
 
+** Org-roam (v1) configuration
+
+Note that we use org-roam v1 for now.
+
+*** Locations
+
+Configure org-roam to use the folder structure that was initialized by logseq. Note that logseq and org-roam are not perfectly compatible, so take care when mixing both tools.
+
+#+BEGIN_SRC elisp
+(setq org-roam-directory "~/data/documents/logseq/")
+(setq org-roam-dailies-directory "journals/")
+; Exclude logseq artifacts
+(setq org-roam-file-exclude-regexp (concat (regexp-quote "logseq/bak") "\\|" (regexp-quote "logseq/.recycle")))
+#+END_SRC

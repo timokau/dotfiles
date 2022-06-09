@@ -22,9 +22,10 @@ in
           # configuration directory (which is occupied by a read-only copy of
           # doom-emacs).
           # Ensure `ripgrep` is in the PATH, since it is used by doom-emacs.
+          # Ensure `sqlite` is in the PATH, since it is used by org-roam-v1.
           wrapProgram "$binary" \
             --set-default "DOOMLOCALDIR" "~/.local/share/doom" \
-            --prefix PATH : "${pkgs.ripgrep}/bin"
+            --prefix PATH : "${pkgs.sqlite}/bin:${pkgs.ripgrep}/bin"
         done
       '';
     };
