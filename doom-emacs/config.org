@@ -24,3 +24,17 @@ Configure org-roam to use the folder structure that was initialized by logseq. N
 ; Exclude logseq artifacts
 (setq org-roam-file-exclude-regexp (concat (regexp-quote "logseq/bak") "\\|" (regexp-quote "logseq/.recycle")))
 #+END_SRC
+
+*** Backlinks buffer
+
+Configure the org-roam backlinks buffer to only show when explicitly toggled.
+#+BEGIN_SRC elisp
+(after! org
+  ; Disable the doom-emacs hook that opens the org-roam buffer on find-file
+  (setq +org-roam-open-buffer-on-find-file nil)
+  (map!
+    ; Toggle the org-roam buffer (displaying backlinks)
+    :n "SPC n r t" #'org-roam-buffer-toggle-display
+  )
+)
+#+END_SRC
