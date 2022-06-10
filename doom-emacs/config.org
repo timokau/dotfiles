@@ -2,6 +2,22 @@
 
 My literate emacs configuration. Run ~doom sync~ after modifying.
 
+** Appearance
+
+*** Controlling font size
+
+We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less intuitive to me.
+
+#+BEGIN_SRC elisp
+(after! evil
+    (map!
+      :n "C-+" #'doom/increase-font-size
+      :n "C--" #'doom/decrease-font-size
+      :n "C-0" #'doom/reset-font-size
+    )
+)
+#+END_SRC
+
 ** Org configuration
 
 *** Locations
