@@ -7,8 +7,12 @@
 {
   networking.hostName = "pad";
 
-  # mount /tmp in RAM. Don't do this on pad, as the machine tends to run out of ram.
+  # Mount /tmp in RAM.
+  # Use 150% of RAM = 18G. We have 12G of RAM + 16G swap = 28G total available,
+  # that leaves 10G even if /tmp is full -- in that case the tmpfs should be
+  # moved to swap first.
   boot.tmpOnTmpfs = true;
+  boot.tmpOnTmpfsSize = "150%";
 
   services.tlp = {
     enable = true;
