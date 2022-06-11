@@ -261,6 +261,7 @@ with pkgs.lib; {
       enable = true;
       shellAliases = {
         cat = "${pkgs.bat}/bin/bat";
+        tp = "${pkgs.trash-cli}/bin/trash-put";
       };
       shellInit = ''
         export EDITOR=nvim
