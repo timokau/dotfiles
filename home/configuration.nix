@@ -169,6 +169,27 @@ with pkgs.lib; {
 
     fonts.fontconfig.enable = true;
 
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "text/plain" = "nvim-qt.desktop";
+        "text/markdown" = "nvim-qt.desktop";
+        "application/pdf" = "zathura.desktop";
+        "application/x-extension-htm" = "firefox.desktop";
+        "application/x-extension-html" = "firefox.desktop";
+        "application/x-extension-shtml" = "firefox.desktop";
+        "application/x-extension-xht" = "firefox.desktop";
+        "application/x-extension-xhtml" = "firefox.desktop";
+        "application/xhtml+xml" = "firefox.desktop";
+        "text/html" = "firefox.desktop";
+        "x-scheme-handler/chrome" = "firefox.desktop";
+        "x-scheme-handler/ftp" = "firefox.desktop";
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
+        "x-scheme-handler/tg" = "telegramdesktop.desktop";
+      };
+    };
+
     services.gpg-agent = {
       enable = true;
       enableSshSupport = true;
