@@ -66,11 +66,24 @@ in
       ${doom-emacs}/bin/doom --yes sync -u
       echo "Remember to restart the emacs daemon: systemctl --user restart emacs.service"
     '';
+    org-protocol-handler-script = pkgs.writeScript "handlerScript.sh" ''
+      #!${pkgs.bash}/bin/bash
+      ${pkgs.libnotify}/bin/notify-send --expire-time=1000 --urgency=low "Captured"
+      exec ${emacspkg}/bin/emacsclient -- "$@"
+    '';
+    org-protocol-handler-registration = pkgs.makeDesktopItem {
+      name = "org-protocol";
+      exec = "${org-protocol-handler-script} %u";
+      desktopName = "org-protocol";
+      mimeTypes = ["x-scheme-handler/org-protocol"];
+    };
   in lib.mkIf cfg.enable {
     home = {
       packages = with pkgs; [
         emacspkg # The emacs package, configured to use doom-emacs.
         doom-emacs # Include the doom-emacs executables in the PATH
+        # A desktop file to register emacsclient as a handler for org-protocol
+        org-protocol-handler-registration
       ];
       file.".doom.d/config.org" = {
        source = ../doom-emacs/config.org;

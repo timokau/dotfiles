@@ -65,4 +65,6 @@ autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www",
 " orientation)
 autocmd DocStart en.wikipedia.org js tri.excmds.urlmodify("-t", "en", "en.m")
 
+# Capture the current website in org
+bind ,c composite js "org-protocol:///capture?template=c&url=" + encodeURIComponent(location.href) + "&title=" + encodeURIComponent(document.title) + "&body=" + encodeURIComponent(window.getSelection()) | open
 " vim: set filetype=vim:

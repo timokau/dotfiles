@@ -26,6 +26,28 @@ We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less
 (setq org-directory "~/data/documents/logseq/")
 #+END_SRC
 
+*** Capture
+
+Set up capture templates.
+
+#+BEGIN_SRC elisp
+(after! org-capture
+  (setq
+    org-capture-templates
+    (quote
+      (
+        ; Capture a link to the inbox with
+        ; org-protocol:///capture?template=c&url=some_url&title=some_title&body=some_text
+        (
+          "c" "org-protocol-capture" entry (file "~/data/documents/logseq/pages/inbox.org")
+          "* TODO [[%:link][%:description]]\n %i" :immediate-finish t
+        )
+      )
+    )
+  )
+)
+#+END_SRC
+
 ** Org-roam (v1) configuration
 
 Note that we use org-roam v1 for now.
