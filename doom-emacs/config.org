@@ -48,6 +48,20 @@ Set up capture templates.
 )
 #+END_SRC
 
+*** Agenda
+
+#+BEGIN_SRC elisp
+(after! org
+  ; Use all org-roam files as agenda files
+  (defun my/refresh-agenda-list ()
+    (interactive)
+    (setq org-agenda-files (org-roam--list-all-files)))
+  ; Initialize the agenda list
+  (my/refresh-agenda-list)
+  ; Rebuild it after 5 minutes of idle time
+  (run-with-idle-timer 300 t (lambda () (my/refresh-agenda-list)))
+)
+#+END_SRC
 ** Org-roam (v1) configuration
 
 Note that we use org-roam v1 for now.
