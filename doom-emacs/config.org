@@ -4,6 +4,12 @@ My literate emacs configuration. Run ~doom sync~ after modifying.
 
 ** Appearance
 
+*** General
+
+#+BEGIN_SRC elisp
+(setq doom-theme 'doom-tomorrow-day)
+#+END_SRC
+
 *** (Mixed pitch) fonts
 
 Set fonts and enable mixed pitch mode.
