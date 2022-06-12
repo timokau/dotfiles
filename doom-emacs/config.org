@@ -43,6 +43,29 @@ We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less
 (setq org-directory "~/data/documents/logseq/")
 #+END_SRC
 
+*** Utils
+
+#+BEGIN_SRC elisp
+(defun my/internalize-asset-and-link (source)
+  "Moves an asset to the assets directory and inserts a link to it."
+  (interactive
+   ; Interactively choose a file to move
+   (list (expand-file-name (read-file-name "Select a file to move and link:" "~/"))))
+  (let (
+        ; Set the base for `expand-file-name`
+        (default-directory "/home/timo/data/documents/logseq/assets/")
+        ; Keep the filename from the chosen file
+        (tgt-filename (file-name-nondirectory source)))
+    (let (
+          ; Combine the original filename with the assets directory
+          (target (expand-file-name tgt-filename)))
+      ; Move
+      (rename-file source target)
+      ; Link to the moved file
+      (org-insert-link nil target tgt-filename)
+    )))
+#+END_SRC
+
 *** Capture
 
 Set up capture templates.
