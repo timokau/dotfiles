@@ -4,6 +4,17 @@ My literate emacs configuration. Run ~doom sync~ after modifying.
 
 ** Appearance
 
+*** (Mixed pitch) fonts
+
+Set fonts and enable mixed pitch mode.
+
+#+BEGIN_SRC elisp
+(setq
+ doom-variable-pitch-font (font-spec :family "Inter" :height 1.0)
+)
+(add-hook 'text-mode-hook #'mixed-pitch-mode)
+#+END_SRC
+
 *** Controlling font size
 
 We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less intuitive to me.

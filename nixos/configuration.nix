@@ -141,6 +141,7 @@ in
       source-code-pro
       inconsolata
       terminus_font
+      inter # Used in the emacs config
     ];
   };
 
