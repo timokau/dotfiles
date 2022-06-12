@@ -73,6 +73,14 @@ Set up capture templates.
   (run-with-idle-timer 300 t (lambda () (my/refresh-agenda-list)))
 )
 #+END_SRC
+
+*** Refiling
+
+#+BEGIN_SRC
+(after! org
+  (setq org-refile-use-cache t)
+)
+#+END_SRC
 ** Org-roam (v1) configuration
 
 Note that we use org-roam v1 for now.
