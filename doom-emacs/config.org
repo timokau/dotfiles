@@ -43,6 +43,25 @@ We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less
 (setq org-directory "~/data/documents/logseq/")
 #+END_SRC
 
+*** Append instead of inserting
+
+By default links are inserted before the cursor in evil-mode. That is inconvenient, since I commonly want to append a link to the end of a line. We can work around this by temporarily leaving normal mode (append) before calling the insertion command.
+
+#+BEGIN_SRC elisp
+; Inspired by https://github.com/syl20bnr/spacemacs/issues/14137#issuecomment-735437329
+(defun advice-around-append-first (orig-fun &rest args)
+  "Insert links after the cursor when in evil normal mode."
+  (let ((is-in-evil-normal-mode (and (bound-and-true-p evil-mode)
+                                     (not (bound-and-true-p evil-insert-state-minor-mode)))))
+    (if (not is-in-evil-normal-mode)
+        (apply orig-fun args)
+      (evil-append 0)
+      (apply orig-fun args)
+      (evil-normal-state))))
+(advice-add 'org-roam-insert :around #'advice-around-append-first)
+(advice-add 'org-insert-link :around #'advice-around-append-first)
+#+END_SRC
+
 *** Utils
 
 #+BEGIN_SRC elisp
