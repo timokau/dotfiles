@@ -201,6 +201,8 @@ Set up capture templates.
   ; Do not use deadline warnings, as those can't easily be dismissed and
   ; clutter the view.
   (setq org-deadline-warning-days 0)
+  ; Show logged events in the agenda
+  (setq org-agenda-start-with-log-mode t)
 )
 #+END_SRC
 
