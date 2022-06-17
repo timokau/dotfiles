@@ -124,6 +124,18 @@ Set up org-appear to reveal hidden text (such as link targets) when entering evi
     )))
 #+END_SRC
 
+*** Bindings
+
+Custom org-relate bindings.
+
+#+BEGIN_SRC elisp
+(after! evil
+  (map!
+   :n "SPC l f" #'my/internalize-asset-and-link ; "link file"
+   )
+  )
+#+END_SRC
+
 *** Capture
 
 Set up capture templates.
