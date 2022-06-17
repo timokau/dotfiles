@@ -62,6 +62,45 @@ By default links are inserted before the cursor in evil-mode. That is inconvenie
 (advice-add 'org-insert-link :around #'advice-around-append-first)
 #+END_SRC
 
+*** Org-appear
+
+Set up org-appear to reveal hidden text (such as link targets) when entering evil insert mode. The text is hidden again when the cursor leaves the object.
+
+#+BEGIN_SRC elisp
+(after! org
+  ; Enable org-appear
+  (add-hook 'org-mode-hook 'org-appear-mode)
+  ; Configure to toggle with org-appear
+  (setq
+    org-appear-autolinks t
+    org-appear-autosubmarkers t
+    org-appear-autoentities t
+    org-appear-autokeywords t
+    org-appear-inside-latex t
+  )
+  ; Do not toggle visibility automatically based on cursor location. That tends to
+  ; cause jumps and is annoying when navigating in evil mode.
+  (setq org-appear-trigger 'manual)
+  ; Instead, reveal hidden content when entering insert mode. Stop org-appear when
+  ; leaving insert mode, but do not immediatly hide the element again (due to the
+  ; org-appear-manual-linger setting).
+  (add-hook 'org-mode-hook (lambda ()
+                             (add-hook 'evil-insert-state-entry-hook
+                                       #'org-appear-manual-start
+                                       nil
+                                       t)
+                             (add-hook 'evil-insert-state-exit-hook
+                                       #'org-appear-manual-stop
+                                       nil
+                                       t)
+  ))
+  ; Keep the current item open until the cursor moves away from it. That makes it
+  ; possible to reveal an item by entering insert mode and then navigating within
+  ; the revealed item in normal mode.
+  (setq org-appear-manual-linger t)
+)
+#+END_SRC
+
 *** Utils
 
 #+BEGIN_SRC elisp
