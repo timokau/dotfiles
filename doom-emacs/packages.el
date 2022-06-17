@@ -43,6 +43,7 @@
 (package! mixed-pitch :pin "519e05f74825abf04b7d2e0e38ec040d013a125a")
 ; Make it easy to reveal hidden content such as link locations
 (package! org-appear :pin "8dd1e564153d8007ebc4bb4e14250bde84e26a34")
+(package! org-modern :pin "b352680d9ee8c6e6966cc21d595513c3595e3bb7")
 
 
 ;; Doom's packages are pinned to a specific commit and updated from release to

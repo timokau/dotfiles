@@ -21,6 +21,24 @@ Set fonts and enable mixed pitch mode.
 (add-hook 'text-mode-hook #'mixed-pitch-mode)
 #+END_SRC
 
+*** Org-modern
+
+Enable org-modern mode, which makes some stylistic changes (bullets instead of starts for headings, "pretty" tables, borders around tags, TODOs and time stamps etc.).
+
+#+BEGIN_SRC elisp
+(after! org
+  ; Set org-specific line spacing. This is not strictly org-modern specific, but
+  ; it is very related since the appearance of tag borders depends on it. Also
+  ; see the org-modern-label-border setting.
+  (defun org-line-spacing() (setq line-spacing 0.3))
+  (add-hook 'org-mode-hook 'org-line-spacing)
+  (global-org-modern-mode)
+  (setq
+   org-modern-label-border 3 ; Depends on line spacing
+   )
+)
+#+END_SRC
+
 *** Controlling font size
 
 We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less intuitive to me.
