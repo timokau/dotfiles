@@ -176,6 +176,13 @@ Set up capture templates.
 )
 #+END_SRC
 
+*** Task management
+
+#+BEGIN_SRC elisp
+(setq org-log-done 'time)
+(setq org-log-into-drawer t)
+#+END_SRC
+
 *** Agenda
 
 #+BEGIN_SRC elisp
