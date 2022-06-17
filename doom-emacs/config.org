@@ -216,6 +216,26 @@ Set up capture templates.
   (setq org-refile-use-cache t)
 )
 #+END_SRC
+
+*** Linking
+
+Make sure =org-id-store-link= works together with =org-insert-link=.
+#+BEGIN_SRC elisp
+(after! org
+  ; For some reason org-id-store-link stores the links in the
+  ; org-store-link-plist variable while org-insert-link uses org-stored-links.
+  ; Advise org-id-store-link to add the link to org-stored-links as well.
+  ; Source: https://github.com/doomemacs/doomemacs/issues/3085#issuecomment-627071545
+  (defadvice! +org--store-id-link-a (link)
+    :filter-return #'org-id-store-link
+    (when (and link org-store-link-plist)
+      (add-to-list 'org-stored-links
+                   (list (plist-get org-store-link-plist :link)
+                         (plist-get org-store-link-plist :description))))
+    link)
+)
+#+END_SRC
+
 ** Org-roam (v1) configuration
 
 Note that we use org-roam v1 for now.
