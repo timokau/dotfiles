@@ -188,6 +188,8 @@ Set up capture templates.
   (my/refresh-agenda-list)
   ; Rebuild it after 5 minutes of idle time
   (run-with-idle-timer 300 t (lambda () (my/refresh-agenda-list)))
+
+  (setq org-agenda-start-day "+0d") ; start agenda today
 )
 #+END_SRC
 
