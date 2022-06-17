@@ -160,6 +160,7 @@ Set up capture templates.
 
 #+BEGIN_SRC elisp
 (after! org-capture
+  (setq org-id-link-to-org-use-id t) ; make sure the capture annotations (%a) use id links
   (setq
     org-capture-templates
     (quote
@@ -170,6 +171,8 @@ Set up capture templates.
           "c" "org-protocol-capture" entry (file "~/data/documents/logseq/pages/inbox.org")
           "* TODO [[%:link][%:description]]\n %i" :immediate-finish t
         )
+        ("t" "Tasks")
+        ("tl" "Task linking to the current position" entry (file "~/data/documents/logseq/pages/inbox.org") "* TODO %? %<%I:%M %p>\n  %U \n  %a\n  %i" :empty-lines 1)
       )
     )
   )
