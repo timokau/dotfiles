@@ -82,6 +82,13 @@ We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less
 )
 #+END_SRC
 
+** General behavior
+
+#+BEGIN_SRC elisp
+; Automatically reload files from disk if they have changed
+(global-auto-revert-mode t)
+#+END_SRC
+
 ** Org configuration
 
 *** Locations
