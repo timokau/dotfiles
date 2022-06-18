@@ -12,6 +12,24 @@ My literate emacs configuration. Run ~doom sync~ after modifying.
 (set-face-attribute 'default nil :height 120)
 #+END_SRC
 
+*** Property styles
+
+Hide =#+title:= and style the actual title text (orange, semi-bold, somewhat larger).
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-hidden-keywords '(title))
+  (add-hook 'org-mode-hook (lambda()
+    (set-face-attribute
+      'org-document-title
+      nil
+      :foreground "DarkOrange3"
+      :weight 'semi-bold
+      :height 1.3
+    )
+  ))
+)
+#+END_SRC
+
 *** (Mixed pitch) fonts
 
 Set fonts and enable mixed pitch mode.
