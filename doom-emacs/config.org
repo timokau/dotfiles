@@ -193,6 +193,11 @@ Set up capture templates.
 #+BEGIN_SRC elisp
 (setq org-log-done 'time)
 (setq org-log-into-drawer t)
+(setq org-todo-keywords '(
+   (sequence "TODO(t)" "DOING(n)" "|" "DONE(d)" "CANCELLED(c)")
+   (sequence "PROJ" "ACTIVE" "|" "FINISHED")
+  )
+)
 #+END_SRC
 
 *** Agenda
