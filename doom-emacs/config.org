@@ -214,6 +214,7 @@ Set up capture templates.
 #+BEGIN_SRC
 (after! org
   (setq org-refile-use-cache t)
+  (advice-add 'org-refile :after 'org-save-all-org-buffers) ; save after refiling
 )
 #+END_SRC
 
