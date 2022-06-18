@@ -297,6 +297,34 @@ Configure org-roam to use the folder structure that was initialized by logseq. N
 (setq org-roam-file-exclude-regexp (concat (regexp-quote "logseq/bak") "\\|" (regexp-quote "logseq/.recycle")))
 #+END_SRC
 
+*** Templates
+
+#+BEGIN_SRC elisp
+  (setq org-roam-capture-templates '(
+    (
+      "d"
+      "default"
+      plain
+      (function org-roam-capture--get-point)
+      "%?"
+      :file-name "pages/${slug}"
+      :head "#+title: ${title}\n"
+      :unnarrowed t
+    )
+  ))
+  (setq org-roam-dailies-capture-templates '(
+    (
+      "d"
+      "default"
+      entry
+      (function org-roam-capture--get-point)
+      "* %?"
+      :file-name "journals/%<%Y-%m-%d>"
+      :head "#+title: %<%Y-%m-%d>\n\n"
+    )
+  ))
+#+END_SRC
+
 *** Backlinks buffer
 
 Configure the org-roam backlinks buffer to only show when explicitly toggled.
