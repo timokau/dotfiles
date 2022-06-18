@@ -21,6 +21,15 @@ Set fonts and enable mixed pitch mode.
 (add-hook 'text-mode-hook #'mixed-pitch-mode)
 #+END_SRC
 
+*** Line wrapping
+
+Configure emacs to soft-wrap on - and / to get nicer url wrapping.
+#+BEGIN_SRC elisp
+; https://emacs.stackexchange.com/questions/19027/how-to-wrap-line-at-some-characters-other-than-space/19029#19029
+(setq word-wrap-by-category t)
+(modify-category-entry '(?- . ?/) ?|)
+#+END_SRC
+
 *** Org-modern
 
 Enable org-modern mode, which makes some stylistic changes (bullets instead of starts for headings, "pretty" tables, borders around tags, TODOs and time stamps etc.).
