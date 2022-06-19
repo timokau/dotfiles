@@ -22,10 +22,13 @@ in
           # configuration directory (which is occupied by a read-only copy of
           # doom-emacs).
           # Ensure `ripgrep` is in the PATH, since it is used by doom-emacs.
-          # Ensure `sqlite` is in the PATH, since it is used by org-roam-v1.
+          # Ensure `gcc` is in PATH so that emacsql-sqlite can build its custom
+          # sqlite (needed for org-roam v2, at least until the emacs sqlite
+          # buildin is ready [1]).
+          # https://github.com/org-roam/org-roam/issues/2206#issuecomment-1139743639
           wrapProgram "$binary" \
             --set-default "DOOMLOCALDIR" "~/.local/share/doom" \
-            --prefix PATH : "${pkgs.sqlite}/bin:${pkgs.ripgrep}/bin"
+            --prefix PATH : "${pkgs.ripgrep}/bin:${pkgs.gcc}/bin"
         done
       '';
     };

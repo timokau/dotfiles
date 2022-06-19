@@ -238,7 +238,7 @@ Set up capture templates.
   ; Use all org-roam files as agenda files
   (defun my/refresh-agenda-list ()
     (interactive)
-    (setq org-agenda-files (org-roam--list-all-files)))
+    (setq org-agenda-files (org-roam-list-files)))
   ; Initialize the agenda list
   (my/refresh-agenda-list)
   ; Rebuild it after 5 minutes of idle time
@@ -282,9 +282,7 @@ Make sure =org-id-store-link= works together with =org-insert-link=.
 )
 #+END_SRC
 
-** Org-roam (v1) configuration
-
-Note that we use org-roam v1 for now.
+** Org-roam  configuration
 
 *** Locations
 
@@ -305,10 +303,8 @@ Configure org-roam to use the folder structure that was initialized by logseq. N
       "d"
       "default"
       plain
-      (function org-roam-capture--get-point)
       "%?"
-      :file-name "pages/${slug}"
-      :head "#+title: ${title}\n"
+      :target (file+head "pages/${slug}.org" "#+title: ${title}\n")
       :unnarrowed t
     )
   ))
@@ -317,10 +313,8 @@ Configure org-roam to use the folder structure that was initialized by logseq. N
       "d"
       "default"
       entry
-      (function org-roam-capture--get-point)
       "* %?"
-      :file-name "journals/%<%Y-%m-%d>"
-      :head "#+title: %<%Y-%m-%d>\n\n"
+      :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n\n")
     )
   ))
 #+END_SRC
