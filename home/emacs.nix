@@ -14,7 +14,15 @@ in
   config = let
     emacspkg = pkgs.symlinkJoin {
       name = "emacs-with-env";
-      paths = [ pkgs.emacs ];
+      paths = [
+        ((pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages (epkgs: with epkgs; [
+          # Most emacs packages are managed by doom-emacs. Pdf-tools is an
+          # exception, since it requires a binary that is more conveniently
+          # managed by nix. This comes at the cost of potential version
+          # conflicts with what org-roam expects.
+          pdf-tools
+        ]))
+      ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         for binary in "$out/bin/"*; do
