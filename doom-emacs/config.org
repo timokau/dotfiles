@@ -236,20 +236,20 @@ Set up capture templates.
 #+BEGIN_SRC elisp
 (after! org
   ; Build agenda files from org roam notes with a certain tag
-  ; Source: https://systemcrafters.net/build-a-second-brain-in-emacs/5-org-roam-hacks/#build-your-org-agenda-from-org-roam-notes
+  ; Adapted from: https://systemcrafters.net/build-a-second-brain-in-emacs/5-org-roam-hacks/#build-your-org-agenda-from-org-roam-notes
   (defun my/org-roam-filter-by-tag (tag-name)
     (lambda (node)
       (member tag-name (org-roam-node-tags node))))
 
-  (defun my/org-roam-list-notes-by-tag (tag-name)
-    (mapcar #'org-roam-node-file
+  (defun my/org-roam-list-note-files-by-tag (tag-name)
+    (delete-dups (mapcar #'org-roam-node-file
             (seq-filter
              (my/org-roam-filter-by-tag tag-name)
-             (org-roam-node-list))))
+             (org-roam-node-list)))))
 
   (defun my/refresh-agenda-list ()
     (interactive)
-    (setq org-agenda-files (my/org-roam-list-notes-by-tag "agenda")))
+    (setq org-agenda-files (my/org-roam-list-note-files-by-tag "agenda")))
 
   ; Initialize the agenda list
   (my/refresh-agenda-list)
