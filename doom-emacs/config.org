@@ -209,7 +209,7 @@ Set up capture templates.
         ; org-protocol:///capture?template=c&url=some_url&title=some_title&body=some_text
         (
           "c" "org-protocol-capture" entry (file "~/data/documents/logseq/pages/inbox.org")
-          "* TODO [[%:link][%:description]]\n %i" :immediate-finish t
+          "* TODO Process [[%:link][%:description]]\n %i" :immediate-finish t
         )
         ("t" "Tasks")
         ("tl" "Task linking to the current position" entry (file "~/data/documents/logseq/pages/inbox.org") "* TODO %? %<%I:%M %p>\n  %U \n  %a\n  %i" :empty-lines 1)
