@@ -16,6 +16,16 @@
 
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  services.snapper = {
+    configs.persist = {
+      subvolume = "/home/timo/p";
+      extraConfig = ''
+        TIMELINE_CREATE=yes
+        TIMELINE_CLEANUP=yes
+      '';
+    };
+  };
+
   services.tlp = {
     enable = true;
     settings = {
