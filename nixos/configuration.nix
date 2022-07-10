@@ -248,10 +248,8 @@ in
     layout = "de";
     xkbOptions = "eurosign:e";
     displayManager = {
-      # use sddm (KDE) for login
-      sddm.enable = true;
+      startx.enable = true;
       # job.preStart = "${pkgs.xorg.setxkbmap}/bin/setxkbmap de";
-      # sddm.stopScript # executed when stopping the x server
       sessionCommands = "/home/timo/.xprofile"; # TODO setupCommands?
     };
   };

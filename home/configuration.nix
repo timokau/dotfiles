@@ -468,5 +468,10 @@ with pkgs.lib; {
       # no monitor timeout (handled by xautolock)
       ${pkgs.xorg.xset}/bin/xset s off -dpms
     '';
+
+    # Needed for startx
+    home.file.".xinitrc".text = ''
+      exec ~/.xsession
+    '';
   };
 }
