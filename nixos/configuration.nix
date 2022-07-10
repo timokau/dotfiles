@@ -218,6 +218,13 @@ in
 
   services.snapper = {
     snapshotInterval = "hourly";
+    configs.root = {
+      subvolume = "/";
+      extraConfig = ''
+        TIMELINE_CREATE=yes
+        TIMELINE_CLEANUP=yes
+      '';
+    };
   };
 
   networking.hosts = {
