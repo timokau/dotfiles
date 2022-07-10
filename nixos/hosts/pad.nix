@@ -14,6 +14,8 @@
   boot.tmpOnTmpfs = true;
   boot.tmpOnTmpfsSize = "150%";
 
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
   services.tlp = {
     enable = true;
     settings = {
