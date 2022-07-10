@@ -29,10 +29,13 @@ while ! sudo echo "Sudo password cached"; do :; done
 echo "Switching system"
 
 # Now switch both systems. If the build succeeded, this hopefully won't fail
-sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch || exit $?
+sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch
+exit_code=$?
 
 # This sometimes gets killed during system updates
 systemctl --user restart keyboardconfig
 
 echo "Switching home"
 nix-shell --packages home-manager --run 'home-manager --show-trace switch'
+
+exit "$exit_code"
