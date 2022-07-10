@@ -218,6 +218,7 @@ in
 
   services.snapper = {
     snapshotInterval = "hourly";
+    snapshotRootOnBoot = true;
     configs.root = {
       subvolume = "/";
       extraConfig = ''
