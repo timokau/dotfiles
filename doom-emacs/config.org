@@ -260,6 +260,14 @@ Set up capture templates.
   ; Rebuild it after 5 minutes of idle time
   (run-with-idle-timer 300 t (lambda () (my/refresh-agenda-list)))
 
+  ; Specify the agenda prefix. In particular, do not show the category in the
+  ; "todo" agenda.
+  (setq org-agenda-prefix-format '(
+    (agenda . " %i %-12:c%?-12t% s")
+    (todo . "")
+    (tags . " %i %-12:c")
+    (search . " %i %-12:c")))
+
   (setq org-agenda-start-day "+0d") ; start agenda today
   (setq org-agenda-span 5) ; show the next 5 days
   ; Do not use deadline warnings, as those can't easily be dismissed and
