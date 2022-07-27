@@ -251,6 +251,10 @@ Set up capture templates.
     (interactive)
     (setq org-agenda-files (my/org-roam-list-note-files-by-tag "agenda")))
 
+  ; Hide the "agenda" tag in the agenda (by definition all tasks that show up
+  ; in the agenda have this tag, so it doesn't add any information.)
+  (setq org-agenda-hide-tags-regexp "agenda")
+
   ; Initialize the agenda list
   (my/refresh-agenda-list)
   ; Rebuild it after 5 minutes of idle time
