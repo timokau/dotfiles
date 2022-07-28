@@ -275,7 +275,14 @@ Set up capture templates.
   (setq org-deadline-warning-days 0)
   ; Show logged events in the agenda
   (setq org-agenda-start-with-log-mode t)
-)
+
+  (setq org-agenda-custom-commands
+      '(
+      ("p" "Planning view"
+         ((tags-todo "-someday")))
+      ("s" "Someday view"
+         ((tags-todo "someday")))
+         )))
 #+END_SRC
 
 *** Refiling
