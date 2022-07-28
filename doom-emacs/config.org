@@ -265,7 +265,7 @@ Set up capture templates.
   (setq org-agenda-prefix-format '(
     (agenda . " %i %-12:c%?-12t% s")
     (todo . "")
-    (tags . " %i %-12:c")
+    (tags . "")
     (search . " %i %-12:c")))
 
   (setq org-agenda-start-day "+0d") ; start agenda today
