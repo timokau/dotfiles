@@ -278,8 +278,10 @@ Set up capture templates.
 
   (setq org-agenda-custom-commands
       '(
-      ("p" "Planning view"
-         tags-todo "-someday")
+      ("p" "Planning view" tags-todo "-someday"
+       ((org-agenda-todo-ignore-scheduled 'future)
+        (org-agenda-tags-todo-honor-ignore-options t)
+        ))
       ("s" "Someday view"
          tags-todo "someday")
          )))
