@@ -279,9 +279,9 @@ Set up capture templates.
   (setq org-agenda-custom-commands
       '(
       ("p" "Planning view"
-         ((tags-todo "-someday")))
+         tags-todo "-someday")
       ("s" "Someday view"
-         ((tags-todo "someday")))
+         tags-todo "someday")
          )))
 #+END_SRC
 
