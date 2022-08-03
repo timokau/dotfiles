@@ -278,6 +278,10 @@ Set up capture templates.
 
   (setq org-agenda-custom-commands
       '(
+      ("a" "Week agenda" agenda ""
+       ((org-agenda-skip-scheduled-if-done t)
+        (org-agenda-skip-deadline-if-done t))
+       )
       ("p" "Planning view" tags-todo "-someday"
        ((org-agenda-todo-ignore-scheduled 'future)
         (org-agenda-tags-todo-honor-ignore-options t)
