@@ -288,6 +288,8 @@ Set up capture templates.
         ))
       ("s" "Someday view"
          tags-todo "someday")
+      ("r" "Reading list"
+         tags-todo "reading")
          )))
 #+END_SRC
 
