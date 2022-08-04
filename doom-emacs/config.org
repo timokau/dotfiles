@@ -268,19 +268,19 @@ Set up capture templates.
     (tags . "")
     (search . " %i %-12:c")))
 
-  (setq org-agenda-start-day "+0d") ; start agenda today
-  (setq org-agenda-span 5) ; show the next 5 days
-  ; Do not use deadline warnings, as those can't easily be dismissed and
-  ; clutter the view.
-  (setq org-deadline-warning-days 0)
-  ; Show logged events in the agenda
-  (setq org-agenda-start-with-log-mode t)
-
   (setq org-agenda-custom-commands
       '(
       ("a" "Week agenda" agenda ""
        ((org-agenda-skip-scheduled-if-done t)
-        (org-agenda-skip-deadline-if-done t))
+        (org-agenda-skip-deadline-if-done t)
+        ; start agenda today
+        (org-agenda-start-day "+0d")
+        (org-agenda-span 5) ; show the next 5 days
+        ; Do not use deadline warnings, as those can't easily be dismissed and
+        ; clutter the view.
+        (org-deadline-warning-days 0)
+        ; Show logged events in the agenda
+        (org-agenda-start-with-log-mode t))
        )
       ("p" "Planning view" tags-todo "-someday"
        ((org-agenda-todo-ignore-scheduled 'future)
