@@ -334,6 +334,14 @@ Make sure =org-id-store-link= works together with =org-insert-link=.
 )
 #+END_SRC
 
+*** Document annotation (org-noter)
+
+#+BEGIN_SRC elisp
+; Use two separate frames for notes and the document to support multi-monitor
+; workflows.
+(setq org-noter-notes-window-location 'other-frame)
+#+END_SRC
+
 ** Org-roam  configuration
 
 *** Locations
