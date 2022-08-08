@@ -42,13 +42,13 @@ in
     };
     doom-emacs = pkgs.stdenv.mkDerivation rec {
       pname = "doom-emacs";
-      version = "bea3cc161c0a803dcf574f32ee555dccf565a5ce";
+      version = "0f43c3eed5532e63c3b475f5385ded40278b12fe";
 
       src = pkgs.fetchFromGitHub {
         owner = "hlissner";
         repo = "doom-emacs";
         rev = version;
-        hash = "sha256-B4N+UQ0SvnCH0Hqc62Wl1KS6WcTBGLag0BoH3UZGbgo=";
+        hash = "sha256-qi14qIXFUX+SCKDzHxvg4VBV7+tcex52M1O3wYNyh6k=";
       };
 
       nativeBuildInputs = [
@@ -73,8 +73,9 @@ in
     };
     doomSync = ''
       # Pass "-u" to "upgrade" packages. Since packages are pinned, this only
-      # updates packages when the pins are updated.
-      ${doom-emacs}/bin/doom --yes sync -u
+      # updates packages when the pins are updated. Avoid interactive prompts
+      # with `--force`.
+      ${doom-emacs}/bin/doom --force sync -u
       echo "Remember to restart the emacs daemon: systemctl --user restart emacs.service"
     '';
     org-protocol-handler-script = pkgs.writeScript "handlerScript.sh" ''
