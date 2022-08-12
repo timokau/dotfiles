@@ -22,6 +22,8 @@ with lib;
       recursive = true;
     };
 
+    programs.autorandr.hooks.postswitch.hc-reload = "${pkgs.herbstluftwm}/bin/herbstclient reload";
+
     xsession.enable = true;
     xsession.windowManager.command = ''
       PATH="${pkgs.herbstluftwm}/bin:$PATH" herbstluftwm
