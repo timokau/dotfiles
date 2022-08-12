@@ -169,6 +169,9 @@ with pkgs.lib; {
 
     fonts.fontconfig.enable = true;
 
+    # Adjust randr configuration when monitors are (un)plugged
+    programs.autorandr.enable = true;
+
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
