@@ -17,6 +17,59 @@
 
   services.xserver.wacom.enable = true;
 
+  # Support iio-sensor-proxy, required by the autorotate script
+  hardware.sensor.iio.enable = true;
+  systemd.user.services.autorotate = {
+    description = "Rotate the screen depending on the current orientation.";
+    script = let
+      internal-display-name = "eDP-1";
+      input-to-transform = "Wacom HID 527A Finger touch";
+    in builtins.toString (pkgs.writeScript "auto-rotate.sh" ''
+      #!${pkgs.bash}/bin/bash
+      # Rotate the display and the input to normal/left-up/right-up/bottom-up
+      rotate() {
+        case "$1" in
+          normal)
+            transform="1 0 0 0 1 0 0 0 1"
+            rotation="normal"
+            ;;
+          left-up)
+            transform="0 -1 1 1 0 0 0 0 1"
+            rotation="left"
+            ;;
+          right-up)
+            transform="0 1 0 -1 0 1 0 0 1"
+            rotation="right"
+            ;;
+          bottom-up)
+            transform="-1 0 1 0 -1 1 0 0 1"
+            rotation="inverted"
+            ;;
+        esac
+        ${pkgs.xorg.xrandr}/bin/xrandr --output '${internal-display-name}' --rotate "$rotation"
+        # $transform is not quoted on purpose since splitting is desired
+        ${pkgs.xorg.xinput}/bin/xinput set-prop '${input-to-transform}' --type=float 'Coordinate Transformation Matrix' $transform
+      }
+
+      # Parse monitor-sensor output to extract the orientation and pass it to
+      # the `rotate` function
+      ${pkgs.iio-sensor-proxy}/bin/monitor-sensor | while read line; do
+        case "$line" in
+          '=== Has accelerometer (orientation: '*')')
+            orientation="$( echo "$line" | sed -e 's/^.*(orientation: \(.*\))$/\1/' )"
+            rotate "$orientation"
+            ;;
+          'Accelerometer orientation changed: '*)
+            orientation="$( echo "$line" | sed -e 's/^.*changed: \(.*\)$/\1/' )"
+            rotate "$orientation"
+            ;;
+        esac
+      done
+    '');
+    after = [ "graphical-session.target" ];
+    wantedBy = [ "graphical-session.target" ];
+  };
+
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "22.05";
 }
