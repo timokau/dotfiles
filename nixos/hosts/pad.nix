@@ -9,6 +9,7 @@
     ./battery.nix
     ./bluetooth.nix
     ./intel-graphics.nix
+    ./touchpad.nix
   ];
   networking.hostName = "pad";
 
@@ -22,15 +23,6 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   services.xserver.dpi = 120;
-
-  services.xserver.libinput = {
-    enable = true;
-    touchpad = {
-      disableWhileTyping = true;
-      scrollButton = 2;
-      scrollMethod = "twofinger";
-    };
-  };
 
 
   # The NixOS release to be compatible with for stateful data such as databases.
