@@ -178,18 +178,7 @@ nnoremap <C-s> :call CycleFont()<cr>
 
 
 " Color scheme (if available)
-let g:gruvbox_italic = 1 " Use italic
-let g:gruvbox_contrast_dark = "hard" " Hard contrast
 silent! colorscheme gruvbox
-let cur_colorscheme = ''
-redir => cur_colorscheme
-silent colorscheme
-redir END
-if !has('gui_running')
-	if split(cur_colorscheme, "\n")[0] != 'gruvbox' || &t_Co < 88
-		silent! colorscheme darkblue
-	endif
-endif
 syntax enable
 
 " Email-Settings {{{3
