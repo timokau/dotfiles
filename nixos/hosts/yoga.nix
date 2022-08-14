@@ -15,6 +15,8 @@
 
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  services.xserver.wacom.enable = true;
+
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "22.05";
 }
