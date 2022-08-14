@@ -219,12 +219,21 @@ in
   services.snapper = {
     snapshotInterval = "hourly";
     snapshotRootOnBoot = true;
-    configs.root = {
-      subvolume = "/";
-      extraConfig = ''
-        TIMELINE_CREATE=yes
-        TIMELINE_CLEANUP=yes
-      '';
+    configs = {
+      root = {
+        subvolume = "/";
+        extraConfig = ''
+          TIMELINE_CREATE=yes
+          TIMELINE_CLEANUP=yes
+        '';
+      };
+      persist = {
+        subvolume = "/home/timo/p";
+        extraConfig = ''
+          TIMELINE_CREATE=yes
+          TIMELINE_CLEANUP=yes
+        '';
+      };
     };
   };
 
