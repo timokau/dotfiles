@@ -23,26 +23,18 @@ error-log "/tmp/newsboat-error.log"
 feedlist-format "%S%4U %t"
 articlelist-format "%F %D  %?T?|%-17T| ?%t"
 
-highlight feedlist    "^  *[0-9]+  *N  "                    color156 default
-highlight articlelist "^  *[0-9]+  *N  "                    color156 default
-
 highlight article     "(^Feed:.*)"                          color73  default
 highlight article     "(^Author:.*)"                        color74  default
 highlight article     "(^Title:.*)"                         color75  default bold
 highlight article     "(^Link:.*)"                          color76  default
 highlight article     "(^Date:.*)"                          color77  default
 highlight article     "^Podcast Download URL:.*"            color71  default
-highlight article     "^Links:"                             white    color240 underline
 highlight article     "\\[[0-9][0-9]*\\]"                   color72  default  bold
 highlight article     "\\[image [0-9][0-9]*\\]"             color72  default  bold
 highlight article     "\\[embedded flash: [0-9][0-9]*\\]"   color72  default  bold
 highlight article     ":.*\\(link\\)$"                      color74  default
 highlight article     ":.*\\(image\\)$"                     color74  default
 highlight article     ":.*\\(embedded flash\\)$"            color74  default
-
-color listnormal                                            white    default
-color listfocus                                             default  color240
-color info                                                  default  color240
 
 
 ignore-mode display
