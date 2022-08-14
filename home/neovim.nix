@@ -485,7 +485,6 @@ let
         packages.myVimPackage = with pkgs.vimPlugins; {
           start = [
             # colorschemes
-            gruvbox
             base16-vim
           ] ++ map (pluginRule: pluginRule.p) (pkgs.lib.filter (pluginRule: pluginRule.startup or false) pluginRules);
           opt = map (pluginRule: pluginRule.p) (pkgs.lib.filter (pluginRule: !(pluginRule.startup or false)) pluginRules);

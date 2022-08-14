@@ -21,8 +21,10 @@ with lib;
 
       font_size 11.0
 
-      foreground #dddddd
-      background #000000
+      include ${pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/dexpota/kitty-themes/b1abdd54ba655ef34f75a568d78625981bf1722c/themes/Tomorrow.conf";
+        hash = "sha256-jZPchAiZj52VD4ZdJAo/JNBxC42IiembtHyt44rXSnw=";
+      }}
 
       close_on_child_death yes
       confirm_os_window_close 0

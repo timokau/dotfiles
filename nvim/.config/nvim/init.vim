@@ -178,7 +178,7 @@ nnoremap <C-s> :call CycleFont()<cr>
 
 
 " Color scheme (if available)
-silent! colorscheme gruvbox
+silent! colorscheme base16-tomorrow
 syntax enable
 
 " Email-Settings {{{3
