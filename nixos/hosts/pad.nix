@@ -8,6 +8,7 @@
   imports = [
     ./battery.nix
     ./bluetooth.nix
+    ./intel-graphics.nix
   ];
   networking.hostName = "pad";
 
@@ -21,14 +22,6 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   services.xserver.dpi = 120;
-
-  # For hardware-accelerated video playback
-  hardware.opengl.extraPackages = with pkgs; [
-    intel-media-driver
-    vaapiIntel
-    vaapiVdpau
-    libvdpau-va-gl
-  ];
 
   services.xserver.libinput = {
     enable = true;
