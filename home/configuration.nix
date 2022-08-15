@@ -167,6 +167,11 @@ with pkgs.lib; {
       firefox
     ]);
 
+    home.sessionVariables = {
+      # Enable touchscreen scrolling for firefox
+      "MOZ_USE_XINPUT2" = 1;
+    };
+
     fonts.fontconfig.enable = true;
 
     # Adjust randr configuration when monitors are (un)plugged
