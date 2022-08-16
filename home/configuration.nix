@@ -466,6 +466,37 @@ with pkgs.lib; {
       };
     };
 
+    # Configure touchegg. Note that the touchegg daemon is not managed by
+    # home-manager, but by the system configuration. This config will only have
+    # an effect if touchegg is running.
+    home.file.".config/touchegg/touchegg.conf".text = ''
+      <touchégg>
+
+        <settings>
+          <property name="animation_delay">150</property>
+          <property name="action_execute_threshold">20</property>
+          <property name="color">auto</property>
+          <property name="borderColor">auto</property>
+        </settings>
+
+        <!--
+          Global (application-independent) configuration
+        -->
+        <application name="All">
+          <!--
+            Right-click with two fingers
+          -->
+          <gesture type="TAP" fingers="2">
+            <action type="MOUSE_CLICK">
+              <button>3</button>
+              <on>begin</on>
+            </action>
+          </gesture>
+        </application>
+
+      </touchégg>
+    '';
+
     programs.rofi.enable = cfg.graphical;
 
     # programs.ssh.enable = true; TODO

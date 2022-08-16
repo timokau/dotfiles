@@ -17,6 +17,9 @@
 
   services.xserver.wacom.enable = true;
 
+  # For touchscreen gestures, configured on a per-user basis through home-manager.
+  services.touchegg.enable = true;
+
   # Support iio-sensor-proxy, required by the autorotate script
   hardware.sensor.iio.enable = true;
   systemd.user.services.autorotate = {
