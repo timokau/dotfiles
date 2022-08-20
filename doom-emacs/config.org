@@ -231,6 +231,14 @@ Set up capture templates.
     )
   )
 )
+(setq org-tag-alist '(
+                      ("someday" . ?s)
+
+                      (:startgroup . nil)
+                      ("work" . ?w)
+                      ("life" . ?l)
+                      (:endgroup . nil)
+                      ))
 #+END_SRC
 
 *** Agenda
