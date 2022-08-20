@@ -239,6 +239,7 @@ Set up capture templates.
                       ("life" . ?l)
                       (:endgroup . nil)
                       ))
+(setq org-use-fast-tag-selection 't)
 #+END_SRC
 
 *** Agenda
