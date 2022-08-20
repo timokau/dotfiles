@@ -42,13 +42,13 @@ in
     };
     doom-emacs = pkgs.stdenv.mkDerivation rec {
       pname = "doom-emacs";
-      version = "0f43c3eed5532e63c3b475f5385ded40278b12fe";
+      version = "c44bc81a05f3758ceaa28921dd9c830b9c571e61";
 
       src = pkgs.fetchFromGitHub {
         owner = "hlissner";
         repo = "doom-emacs";
         rev = version;
-        hash = "sha256-qi14qIXFUX+SCKDzHxvg4VBV7+tcex52M1O3wYNyh6k=";
+        hash = "sha256-3apl0eQlfBj3y0gDdoPp2M6PXYnhxs0QWOHp8B8A9sc=";
       };
 
       nativeBuildInputs = [
