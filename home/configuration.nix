@@ -265,6 +265,11 @@ with pkgs.lib; {
       );
     };
 
+    programs.bat = {
+      enable = true;
+      config.theme = "ansi";
+    };
+
     programs.fish = {
       enable = true;
       shellAliases = {
