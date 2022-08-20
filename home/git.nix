@@ -12,7 +12,12 @@ let
 in {
   programs.git = {
     enable = true;
-    delta.enable = true;
+    delta = {
+      enable = true;
+      options = {
+        light = true;
+      };
+    };
     aliases = {
       co = "checkout";
       # create a quick new feature branch in a separate dir
