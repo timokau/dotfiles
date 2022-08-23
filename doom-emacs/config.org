@@ -240,6 +240,17 @@ Set up capture templates.
                       (:endgroup . nil)
                       ))
 (setq org-use-fast-tag-selection 't)
+
+; From Sacha Chua http://disq.us/p/29ngaud
+(defun my/org-archive-done-tasks (&optional scope)
+    "Archive finished or cancelled tasks. SCOPE can be 'file or 'tree."
+    (interactive)
+    (org-map-entries
+     (lambda ()
+       (org-archive-subtree)
+       (setq org-map-continue-from (outline-previous-heading)))
+     "TODO=\"DONE\"|TODO=\"CANCELLED\"" (or scope (if (org-before-first-heading-p) 'file 'tree))))
+
 #+END_SRC
 
 *** Agenda
