@@ -147,6 +147,19 @@ with pkgs.lib; {
       libreoffice
       xclip # x11 clipboard management
       okular # feature-full pdf viewer
+      # handwritten notes and pdf annotations
+      (pkgs.symlinkJoin {
+        # xournalpp with the workaround from [1]
+        # [1] https://github.com/NixOS/nixpkgs/issues/163107#issuecomment-1100569484
+        name = "xournalpp";
+        paths = [pkgs.xournalpp];
+        buildInputs = [pkgs.makeWrapper];
+        postBuild = ''
+          for binary in $out/bin/*; do
+            wrapProgram "$binary" --prefix XDG_DATA_DIRS : '${pkgs.gnome.adwaita-icon-theme}/share:${pkgs.shared-mime-info}/share'
+          done
+        '';
+      })
       gimp # image editing
       tdesktop # telegram chat
       spotify # music
