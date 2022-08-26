@@ -52,7 +52,11 @@
     description = "Rotate the screen depending on the current orientation.";
     script = let
       internal-display-name = "eDP-1";
-      input-to-transform = "Wacom HID 527A Finger touch";
+      inputs-to-transform = [
+        "Wacom HID 527A Finger touch"
+        "Wacom HID 527A Pen stylus"
+        "Wacom HID 527A Pen eraser"
+      ];
     in builtins.toString (pkgs.writeScript "auto-rotate.sh" ''
       #!${pkgs.bash}/bin/bash
       # Rotate the display and the input to normal/left-up/right-up/bottom-up
@@ -76,8 +80,10 @@
             ;;
         esac
         ${pkgs.xorg.xrandr}/bin/xrandr --output '${internal-display-name}' --rotate "$rotation"
-        # $transform is not quoted on purpose since splitting is desired
-        ${pkgs.xorg.xinput}/bin/xinput set-prop '${input-to-transform}' --type=float 'Coordinate Transformation Matrix' $transform
+        for input in ${lib.concatMapStrings (x: " " + (lib.escapeShellArg x)) inputs-to-transform}; do
+          # $transform is not quoted on purpose since splitting is desired
+          ${pkgs.xorg.xinput}/bin/xinput set-prop "$input" --type=float 'Coordinate Transformation Matrix' $transform
+        done
       }
 
       # Parse monitor-sensor output to extract the orientation and pass it to
