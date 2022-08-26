@@ -20,6 +20,16 @@
   # For touchscreen gestures, configured on a per-user basis through home-manager.
   services.touchegg.enable = true;
 
+  # Autorandr is managed in the user config. This just adds system-wide hooks.
+  services.autorandr.hooks.postswitch = {
+    # Map stylus, eraser and regular touch to the internal screen
+    "map-touch-input" = ''
+      for input in "Wacom HID 527A Pen stylus" "Wacom HID 527A Finger touch" "Wacom HID 527A Pen eraser"; do
+        xinput --map-to-output "$input" eDP-1
+      done
+    '';
+  };
+
   # Support iio-sensor-proxy, required by the autorotate script
   hardware.sensor.iio.enable = true;
   systemd.user.services.autorotate = {
