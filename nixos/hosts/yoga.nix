@@ -28,6 +28,22 @@
         xinput --map-to-output "$input" eDP-1
       done
     '';
+    # Configure the stylus buttons to enable long press, right-click and
+    # panning
+    "configure-stylus-buttons" = ''
+      # Emulate left-click when touching the screen with the stylus. This is the
+      # default behavior, but by default touching the screen triggers a
+      # ButtonRelease immediately after ButtonPress, regardless of whether or not
+      # the screen is still touches. The "+" changes that behavior (release is
+      # sent when the pen stops touching the screen).
+      xsetwacom set "Wacom HID 527A Pen stylus" Button 1 "button +1"
+      # Emulate scrolling with button 2
+      xsetwacom set "Wacom HID 527A Pen stylus" Button 2 "pan"
+      # Emulate right-click with the first button + pen touch (technically the
+      # first button toggle the pen into eraser mode, which then triggers button
+      # 1 of the eraser).
+      xsetwacom set "Wacom HID 527A Pen eraser" Button 1 "button +3"
+    '';
   };
 
   # Support iio-sensor-proxy, required by the autorotate script
