@@ -317,6 +317,13 @@ Set up capture templates.
                     ; Start where the "5 days in detail" stop
                     (org-agenda-start-day "+5d")))
         ))
+      ("g" "Grouped view"
+       ; Tasks grouped by mutually exclusive tags
+       ((tags-todo "work")
+        (tags-todo "life")
+        ; All tasks not included in any of the previous groups
+        (tags-todo "-work-life")
+        ))
       ("p" "Planning view" tags-todo "-someday"
        ((org-agenda-todo-ignore-scheduled 'future)
         (org-agenda-tags-todo-honor-ignore-options t)
