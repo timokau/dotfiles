@@ -39,6 +39,9 @@ in
 
   services.autorandr.enable = true;
 
+  # Firmware updates
+  services.fwupd.enable = true;
+
   services.printing = {
     enable = true;
   };
