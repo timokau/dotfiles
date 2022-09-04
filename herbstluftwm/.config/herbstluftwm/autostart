@@ -178,15 +178,34 @@ herbstclient set tree_style '╾│ ├└╼─┐'
 # or simply:
 hc detect_monitors
 
-# find the panel
-panel=~/.config/herbstluftwm/panel.sh
-[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
-for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
-    # start it on each monitor
-    "$panel" $monitor &
-    # see also https://herbstluftwm.org/faq.html
-done
-
+manage_panels() {
+	# Start one panel for each monitor and restart them whenever the monitor
+	# count changes
+	herbstclient watch monitors.count # make sure monitor changes trigger attribute_changed hooks
+	panel_pids=() # keep track of started panels so that we can later stop them again
+	( echo "initial" ; herbstclient --idle attribute_changed monitors.count ) | while read line; do
+		for pid in "${panel_pids[@]}"; do
+			echo "Killing $pid"
+			kill "$pid"
+		done
+		panel_pids=()
+		# find the panel
+		panel=~/.config/herbstluftwm/panel.sh
+		[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
+		echo Starting
+		# The herbstclient monitors output is sometimes not accurate immediately
+		# after a monitor has been plugged in, give it a second.
+		sleep 1
+		for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
+			# start it on each monitor
+			"$panel" $monitor &
+			panel_pids+=("$!")
+			echo "Starting panel $!"
+			# see also https://herbstluftwm.org/faq.html
+		done
+	done
+}
+manage_panels &
 
 # Apply layout
 hc split vertical 0.5; hc remove
