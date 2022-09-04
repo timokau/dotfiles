@@ -1,16 +1,19 @@
 #!/usr/bin/env nix-shell
-#! nix-shell --pure -i bash -p xcape -p xorg.setxkbmap -p xorg.xmodmap -p killall nixos.procps
-# NIX:PATH xcape:xorg.setxkbmap:xorg.xmodmap
+#! nix-shell --pure -i bash -p xcape -p xorg.setxkbmap -p xorg.xmodmap -p killall nixos.procps unixtools.watch xorg.xinput coreutils
+# NIX:PATH xcape:xorg.setxkbmap:xorg.xmodmap:unixtools.watch:xorg.xinput:coreutils
 
 # Customize the (German) keyboard with xmodmap and xcape
 
-# Reset
-killall --signal SIGKILL xcape
-setxkbmap de \
-	-option ctrl:swapcaps # \
-	#-option lv3:win_switch # use win as Alt_Gr
+# Configure all connected keyboards once. Starts xcape in the background, does
+# not block.
+configure_keyboards() {
+	# Reset
+	killall --signal SIGKILL xcape
+	setxkbmap de \
+		-option ctrl:swapcaps # \
+		#-option lv3:win_switch # use win as Alt_Gr
 
-xmodmap - <<EOF
+	xmodmap - <<EOF
 	! make ^ key alive (meaning it shows up immediately instead of modifying the next key)
 	keysym dead_circumflex = asciicircum
 
@@ -32,6 +35,27 @@ xmodmap - <<EOF
 	keycode 255 = odiaeresis
 EOF
 
-# -d so that it won't fork, sed so it won't print a keylogger output into the system log (censor
-# keycodes)
-xcape -d -e "Hyper_L=odiaeresis;Control_L=Escape" 2>&1 | sed -e 's/0x[0-9a-fA-F]\+/xx/g' -e 's/[0-9]/x/g'
+	# -d so that it won't fork, sed so it won't print a keylogger output into the system log (censor
+	# keycodes)
+	xcape -d -e "Hyper_L=odiaeresis;Control_L=Escape" 2>&1 | sed -e 's/0x[0-9a-fA-F]\+/xx/g' -e 's/[0-9]/x/g' &
+}
+
+# Initialize the hash to an arbitrary value that will differ from the detected
+# input hash so that the configuration is done at least once.
+input_hash="INITIAL"
+while :; do
+	# Wait for changes in `xinput --list | grep keyboard`. This is a bit of a
+	# hack. Alternatives would be to listen to `udevadm monitor` or to use
+	# inputplug [1]
+	# [1] https://unix.stackexchange.com/a/657718
+	while :; do
+		new_hash="$(xinput --list | grep keyboard | sha256sum)"
+		if [[ "$new_hash" != "$input_hash" ]]; then
+			input_hash="$new_hash"
+			break
+		fi
+		sleep 3
+	done
+	echo "Keyboard inputs changed, reconfiguring keyboards."
+	configure_keyboards
+done
