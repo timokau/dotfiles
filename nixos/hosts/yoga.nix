@@ -45,6 +45,14 @@
       xsetwacom set "Wacom HID 527A Pen eraser" Button 1 "button +3"
     '';
   };
+  # Run autorandr on startup
+  systemd.user.services.autorandr-init = {
+    description = "Apply autorandr configuration once the graphical session is ready.";
+    script = "${pkgs.autorandr}/bin/autorandr --change";
+    serviceConfig.Type = "oneshot";
+    after = [ "graphical-session.target" ];
+    wantedBy = [ "graphical-session.target" ];
+  };
 
   # Support iio-sensor-proxy, required by the autorotate script
   hardware.sensor.iio.enable = true;
