@@ -212,7 +212,7 @@ Set up capture templates.
           "* TODO Process [[%:link][%:description]]\n %i" :immediate-finish t
         )
         ("t" "Tasks")
-        ("tl" "Task linking to the current position" entry (file "~/data/documents/logseq/pages/inbox.org") "* TODO %? %<%I:%M %p>\n  %U \n  %a\n  %i" :empty-lines 1)
+        ("tl" "Task linking to the current position" entry (file "~/data/documents/logseq/pages/inbox.org") "* TODO %?%a \n  %U \n  %i" :empty-lines 1)
       )
     )
   )
