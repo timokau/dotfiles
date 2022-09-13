@@ -399,6 +399,7 @@ Make sure =org-id-store-link= works together with =org-insert-link=.
 ; Use two separate frames for notes and the document to support multi-monitor
 ; workflows.
 (setq org-noter-notes-window-location 'other-frame)
+(setq org-noter-insert-selected-text-inside-note t)
 #+END_SRC
 
 ** Org-roam  configuration
