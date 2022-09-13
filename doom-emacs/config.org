@@ -235,7 +235,12 @@ Set up capture templates.
                       ("someday" . ?s)
 
                       (:startgroup . nil)
-                      ("work" . ?w)
+                      ("research_experiment" . ?e)
+                      ("research_reading" . ?r)
+                      ("research_writing" . ?w)
+                      ("consideration" . ?c)
+                      ("work_admin" . ?a)
+                      ("work_process" . ?p)
                       ("life" . ?l)
                       (:endgroup . nil)
                       ))
@@ -319,10 +324,15 @@ Set up capture templates.
         ))
       ("g" "Grouped view"
        ; Tasks grouped by mutually exclusive tags
-       ((tags-todo "work")
+       ((tags-todo "research_experiment")
+        (tags-todo "research_reading")
+        (tags-todo "research_writing")
+        (tags-todo "consideration")
+        (tags-todo "work_admin")
+        (tags-todo "work_process")
         (tags-todo "life")
         ; All tasks not included in any of the previous groups
-        (tags-todo "-work-life")
+        (tags-todo "-research_experiment-research_reading-research_writing-consideration-work_admin-work_process-life")
         ))
       ("p" "Planning view" tags-todo "-someday"
        ((org-agenda-todo-ignore-scheduled 'future)
