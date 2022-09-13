@@ -201,6 +201,8 @@ Set up capture templates.
 #+BEGIN_SRC elisp
 (after! org
   (setq org-id-link-to-org-use-id t) ; make sure the capture annotations (%a) use id links
+  ; The roam-local version of org-id-link-to-org-use-id, defined by doom-emacs
+  (setq +org-roam-link-to-org-use-id t)
   (setq
     org-capture-templates
     (quote
