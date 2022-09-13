@@ -253,7 +253,7 @@ Set up capture templates.
 
 #+END_SRC
 
-*** Agenda
+*** Agenda and Review
 
 #+BEGIN_SRC elisp
 (after! org
@@ -330,9 +330,29 @@ Set up capture templates.
         ))
       ("s" "Someday view"
          tags-todo "someday")
+      ("R" "Review tasks" tags-todo "-CANCELLED"
+         ((org-agenda-overriding-header "Reviews Scheduled")
+          (org-agenda-skip-function 'org-review-agenda-skip)
+          (org-agenda-cmp-user-defined 'org-review-compare)
+          (org-agenda-sorting-strategy '(user-defined-down))))
       ("r" "Reading list"
          tags-todo "reading")
-         )))
+         ))
+
+  ; Configure org-review
+  (setq org-review-sets-next-date nil) ; Compute next date dynamically
+  (setq org-review-delay "+0d") ; Use the review timestamp for ordering only, not for scheduling
+  ; Assume last review at epoch 0 if none is specified
+  (advice-add #'org-review-last-review-prop :after-until (lambda (&rest r)
+    (format-time-string "%Y-%m-%d %a %H:%M:%S" (seconds-to-time 0))
+    ))
+
+  ; Add a keybinding to mark an item as reviewed
+  (map! :after org-agenda
+        :map org-agenda-mode-map
+        :desc "Mark current item as reviewed and go to the next item."
+        "gl" (lambda () (interactive) (org-review-insert-last-review) (org-agenda-next-item 1)))
+ )
 #+END_SRC
 
 *** Refiling
