@@ -199,7 +199,7 @@ Custom org-relate bindings.
 Set up capture templates.
 
 #+BEGIN_SRC elisp
-(after! org-capture
+(after! org
   (setq org-id-link-to-org-use-id t) ; make sure the capture annotations (%a) use id links
   (setq
     org-capture-templates
