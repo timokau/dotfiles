@@ -45,8 +45,8 @@ in
       version = "c44bc81a05f3758ceaa28921dd9c830b9c571e61";
 
       src = pkgs.fetchFromGitHub {
-        owner = "hlissner";
-        repo = "doom-emacs";
+        owner = "doomemacs";
+        repo = "doomemacs";
         rev = version;
         hash = "sha256-3apl0eQlfBj3y0gDdoPp2M6PXYnhxs0QWOHp8B8A9sc=";
       };
