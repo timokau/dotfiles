@@ -87,6 +87,10 @@ super + space
 	rofi -combi-modi window,drun -show combi
 	# rofi -combi-modi window,drun -show drun -lines 3 -eh 2 -font "Source Code Pro 18"
 
+# capture something
+super + c
+	emacsclient --eval '(+org-capture/open-frame)'
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd; \
