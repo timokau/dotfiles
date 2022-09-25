@@ -90,6 +90,12 @@ in
       mimeTypes = ["x-scheme-handler/org-protocol"];
     };
   in lib.mkIf cfg.enable {
+    programs.fish = {
+      shellAliases = {
+        # Emacs TUI
+        em = "${emacspkg}/bin/emacs --no-window-system";
+      };
+    };
     home = {
       packages = with pkgs; [
         emacspkg # The emacs package, configured to use doom-emacs.
