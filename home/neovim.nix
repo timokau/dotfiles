@@ -498,7 +498,7 @@ let
           "'${pkgs.rustup}/bin/rustup'"
           "'${pkgs.python3.pkgs.black}/bin/black'"
           "'${pkgs.pandoc}/bin/pandoc'"
-          "'${pkgs.xdg_utils}/bin/xdg-open'"
+          "'${pkgs.xdg-utils}/bin/xdg-open'"
         ] (builtins.readFile ../nvim/.config/nvim/init.vim);
       };
     });
