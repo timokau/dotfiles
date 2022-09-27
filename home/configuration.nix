@@ -132,7 +132,6 @@ with pkgs.lib; {
       # moreutils
       home-manager
       sbt # scala build manager, needed for university lecture
-      radare2 # reverse engineering
       source-code-pro # needed for gui neovim (FIXME)
       direnv # directory specific environments (used by lorri)
       bat # "cat" clone in rust with some nice additional features
@@ -173,7 +172,6 @@ with pkgs.lib; {
       autorandr
       libnotify # notify-send
       xorg.xbacklight
-      radare2-cutter # radare gui
       wireshark # network sniffing
       # TODO add simple wrapper that sets XDG_DESKTOP_DIR="$HOME/
       # https://bugzilla.mozilla.org/show_bug.cgi?id=1082717
