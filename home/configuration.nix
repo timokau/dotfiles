@@ -122,7 +122,7 @@ with pkgs.lib; {
       mpc_cli # mpd cli client
       jq # cli json handling
       pass # password manager
-      nix-review # reviewing nix PRs
+      nixpkgs-review # reviewing nix PRs
       sshfs # mount dirs from other machines
       # TODO
       # highlight
