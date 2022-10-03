@@ -17,6 +17,8 @@ See [[this blog post][https://nullprogram.com/blog/2016/12/22/]] for reasons to 
 (setq doom-theme 'doom-tomorrow-day)
 ; Increase default font size
 (set-face-attribute 'default nil :height 120)
+; Auto-save by default
+(setq auto-save-default t)
 #+END_SRC
 
 *** Property styles
