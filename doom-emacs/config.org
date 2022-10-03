@@ -2,6 +2,13 @@
 
 My literate emacs configuration. Run ~doom sync~ after modifying.
 
+See [[this blog post][https://nullprogram.com/blog/2016/12/22/]] for reasons to enable lexical binding.
+
+#+BEGIN_SRC elisp
+;;; config.el -*- lexical-binding: t; -*-
+#+END_SRC
+
+
 ** Appearance
 
 *** General
