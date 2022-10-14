@@ -377,6 +377,109 @@ Set up capture templates.
  )
 #+END_SRC
 
+Indicate in the agenda whether a TODO entry has further content. Source: [[https://emacs.stackexchange.com/questions/38014/org-agenda-show-whether-entry-has-text][stackoverflow]].
+
+#+BEGIN_SRC elisp
+(defun org-agenda-delete-property-regions (property value)
+  "Kill all regions where text PROPERTY has VALUE."
+  (let ((pos (point-min)))
+    (while (setq pos (next-single-property-change pos property))
+      (when (eq (get-text-property pos property) value)
+        (kill-region pos (next-single-property-change pos property))))))
+
+(defcustom org-agenda-ignore-lines-list
+  '(org-scheduled-time-regexp
+    "$" ;; empty lines are ignored
+    (":PROPERTIES:" . ":END:") ;; property lists are ignored
+    )
+  "Regular expressions for lines that are ignored when lines are counted.
+Each entry is either a regular expression as string or as variable containing the regexp string
+or a cons cell with the car being the start regexp and the cdr being the end regexp."
+  :type '(repeat
+      (choice
+       regexp
+       symbol
+       (cons (choice regexp symbol)
+         (choice regexp symbol))))
+  :group 'org-agenda)
+
+(defsubst org-agenda-count-lines-regexp (matcher)
+  "If MATCHER is a symbol return its value
+otherwise return MATCHER directly."
+  (or (and (symbolp matcher) (symbol-value matcher))
+      matcher))
+
+(defun org-agenda-count-lines-looking-at (list)
+  "A variant of `looking-at'.
+It takes a LIST of form `org-agenda-ignore-lines-list'
+instead of a regular expression and returns the
+matching entry of that list."
+  (cl-loop
+   with cmp
+   for item in list do
+   (setq cmp item)
+   (when (consp cmp)
+     (setq cmp (car cmp)))
+   when (looking-at (org-agenda-count-lines-regexp cmp))
+   return item))
+;; Test:
+;; (org-agenda-count-lines-looking-at '(org-scheduled-time-regexp (":properties:" . ":end:")))SCHEDULED: <2019-01-04>
+;; (org-agenda-count-lines-looking-at '(org-scheduled-time-regexp (":properties:" . ":end:"))):PROPERTIES:
+
+(defun org-agenda-count-lines (&optional b e)
+  "Count lines in the region from B to E.
+If B is a string the lines in that string are counted.
+Whitespace at the beginning of the lines is skipped over.
+Afterwards lines are ignored if they match
+one of the entries in `org-agenda-ignore-lines-list'.
+B and E default to `point-min' and `point-max', respectively."
+  (if (stringp b)
+      (with-temp-buffer
+    (insert b)
+    (org-agenda-count-lines))
+    (unless b (setq b (point-min)))
+    (if e
+    (save-excursion
+      (goto-char e)
+      (setq e (line-end-position)))
+      (setq e (point-max)))
+    (let ((count 0)
+      match)
+      (save-excursion
+    (goto-char b)
+    (forward-line 0)
+    (while
+        (< (point) e)
+      (skip-syntax-forward " ")
+      (if (setq match (org-agenda-count-lines-looking-at org-agenda-ignore-lines-list))
+          (when (consp match)
+        (re-search-forward (concat "^ *" (org-agenda-count-lines-regexp (cdr match))) e))
+        (cl-incf count))
+      (forward-line)))
+      count)))
+;; Test: (org-agenda-count-lines " SCHEDULED: <2019-01-01>\n Some text.\n :PROPERTIES:\n :TEST: some line\n :END:\n\n\n")
+
+(defun org-agenda-add-num-of-contents-lines ()
+  "Add number of contents lines for each entry in the agenda buffer."
+  ;; Text properties are already added.
+  (message "Running org-agenda-add-num-of-contents-lines.")
+  (org-agenda-delete-property-regions 'org-agenda-num-of-contents-lines t)
+  (cl-loop with hd-marker
+           for int being the intervals property 'org-hd-marker
+           if (setq hd-marker (get-text-property (car int) 'org-hd-marker))
+           do
+           (goto-char (cdr int))
+           (insert
+        (propertize
+         (format
+          " (%d)"
+          (org-agenda-count-lines (org-agenda-get-some-entry-text hd-marker (buffer-size))))
+             'org-agenda-num-of-contents-lines t)
+            )))
+
+(add-hook 'org-agenda-finalize-hook #'org-agenda-add-num-of-contents-lines)
+#+END_SRC
+
 *** Refiling
 
 #+BEGIN_SRC
