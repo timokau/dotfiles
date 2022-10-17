@@ -29,26 +29,29 @@ in
           # Set DOOMLOCALDIR to a writable location outside of the emacs
           # configuration directory (which is occupied by a read-only copy of
           # doom-emacs).
+          # Similarly set DOOMPROFILELOADFILE to a writeable location [1].
           # Ensure `ripgrep` is in the PATH, since it is used by doom-emacs.
           # Ensure `gcc` is in PATH so that emacsql-sqlite can build its custom
           # sqlite (needed for org-roam v2, at least until the emacs sqlite
-          # buildin is ready [1]).
-          # https://github.com/org-roam/org-roam/issues/2206#issuecomment-1139743639
+          # buildin is ready [2]).
+          # [1] https://github.com/doomemacs/doomemacs/issues/6794#issuecomment-1250155441
+          # [2] https://github.com/org-roam/org-roam/issues/2206#issuecomment-1139743639
           wrapProgram "$binary" \
             --set-default "DOOMLOCALDIR" "~/.local/share/doom" \
+            --set-default "DOOMPROFILELOADFILE" "~/.local/cache/doom-profile-load.el" \
             --prefix PATH : "${pkgs.ripgrep}/bin:${pkgs.gcc}/bin"
         done
       '';
     };
     doom-emacs = pkgs.stdenv.mkDerivation rec {
       pname = "doom-emacs";
-      version = "29e30e8af4b937cd0d4c9b5eb900205f22bddf7b";
+      version = "1c4217aa27de64ee7348a3c4b973d27ac16fd41d";
 
       src = pkgs.fetchFromGitHub {
         owner = "doomemacs";
         repo = "doomemacs";
         rev = version;
-        hash = "sha256-OFsl18szdR63gBtCOQPka4IIwwULnDZjGpUf2+Obq28=";
+        hash = "sha256-3iokcyQjsfH76nUVhdH4K7+QOS5SU3HI2Qdp5c2lQgY=";
       };
 
       nativeBuildInputs = [
