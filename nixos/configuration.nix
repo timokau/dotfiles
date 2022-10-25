@@ -279,11 +279,8 @@ in
   hardware.cpu.intel.updateMicrocode = true;
 
   sound.enable = true;
-  services.pipewire = {
+  hardware.pulseaudio = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
   };
 
   # necessary to generate /etc/zsh (so that users can use zsh as a login shell)
