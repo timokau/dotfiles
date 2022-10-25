@@ -44,6 +44,8 @@ with pkgs.lib; {
     redshift.enable = cfg.graphical;
     emacs.enable = true;
 
+    home.stateVersion = "18.09";
+
     # only tools I use directly
     # tools used in scripts should be listed somewhere else
     home.packages = let
