@@ -146,7 +146,6 @@ with pkgs.lib; {
       # https://github.com/NixOS/nixpkgs/issues/92518
       # sageWithDoc # math software
     ]) ++ (optionals cfg.graphical [
-      libreoffice
       xclip # x11 clipboard management
       okular # feature-full pdf viewer
       # handwritten notes and pdf annotations
