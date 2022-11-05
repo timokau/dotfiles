@@ -334,17 +334,17 @@ Set up capture templates.
                     ; Start where the "5 days in detail" stop
                     (org-agenda-start-day "+5d")))
         ))
-      ("g" "Grouped view"
+      ("g" "Grouped view of soon tasks"
        ; Tasks grouped by mutually exclusive tags
-       ((tags-todo "research_experiment")
-        (tags-todo "research_reading")
-        (tags-todo "research_writing")
-        (tags-todo "consideration")
-        (tags-todo "work_admin")
-        (tags-todo "work_process")
-        (tags-todo "life")
+       ((tags-todo "research_experiment-someday")
+        (tags-todo "research_reading-someday")
+        (tags-todo "research_writing-someday")
+        (tags-todo "consideration-someday")
+        (tags-todo "work_admin-someday")
+        (tags-todo "work_process-someday")
+        (tags-todo "life-someday")
         ; All tasks not included in any of the previous groups
-        (tags-todo "-research_experiment-research_reading-research_writing-consideration-work_admin-work_process-life")
+        (tags-todo "-research_experiment-research_reading-research_writing-consideration-work_admin-work_process-life-someday")
         ))
       ("p" "Planning view" tags-todo "-someday"
        ((org-agenda-todo-ignore-scheduled 'future)
