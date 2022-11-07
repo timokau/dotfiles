@@ -57,7 +57,8 @@ set record = "+gmx/sent"
 source ~/.mutt/personal
 
 set wait_key = no
-set timeout = 3
+set timeout = 1
+timeout-hook 'exec sync-mailbox'
 set mark_old = no
 set edit_headers
 set beep_new
