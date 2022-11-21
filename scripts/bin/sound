@@ -6,11 +6,13 @@ nix-build '<nixpkgs>' -A sound-theme-freedesktop
 SOUNDS_ROOT="$TMPDIR/result/share/sounds/freedesktop/stereo"
 sound="$1"
 volume="${2:-100}"
+# 65536 is max volume
+paplay_volume="$( echo "print(round($volume * 65536 / 100))" | python3)"
 if [[ "$sound" == "list" ]]; then
 	ls -l "$SOUNDS_ROOT"
 else
 	SOUND="${SOUNDS_ROOT}/${sound}.oga"
-	mpv --volume="$volume" "$SOUND" >/dev/null 2>&1
+	paplay --volume="$paplay_volume" "$SOUND"
 fi
 popd >/dev/null
 rm -r "$TMPDIR"
