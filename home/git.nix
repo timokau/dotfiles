@@ -30,6 +30,12 @@ in {
       track = ''
         !git push --set-upstream timokau "$(git symbolic-ref --short HEAD)"
       '';
+      # Create a tagged snapshot of the current state of the working directory.
+      # Useful when for example before cleaning up a known-working (but hacky)
+      # solution.
+      snapshot = ''
+        !sh -c 'name="snapshot-''$( date -Is | sed -e 's/://g' )" && git add . && git commit -m "$name" && git tag "$name" && git reset HEAD~1'
+      '';
       bisect-edit = ''
         !sh -c 'git bisect log > /tmp/bisect-log && nvim /tmp/bisect-log && git bisect reset && git bisect replay /tmp/bisect-log'
       '';
