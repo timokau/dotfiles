@@ -1,3 +1,4 @@
+#+PROPERTY: header-args:elisp :tangle yes
 * Emacs Config
 
 My literate emacs configuration. Run ~doom sync~ after modifying.

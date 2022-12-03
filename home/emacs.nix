@@ -12,75 +12,18 @@ in
   # all its packages. Doom saves us a lot of effort, so this is a compromise
   # for practicality's sake.
   config = let
-    emacspkg = pkgs.symlinkJoin {
-      name = "emacs-with-env";
-      paths = [
-        ((pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages (epkgs: with epkgs; [
-          # Most emacs packages are managed by doom-emacs. Pdf-tools is an
-          # exception, since it requires a binary that is more conveniently
-          # managed by nix. This comes at the cost of potential version
-          # conflicts with what org-roam expects.
-          pdf-tools
-        ]))
-      ];
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        for binary in "$out/bin/"*; do
-          # Set DOOMLOCALDIR to a writable location outside of the emacs
-          # configuration directory (which is occupied by a read-only copy of
-          # doom-emacs).
-          # Similarly set DOOMPROFILELOADFILE to a writeable location [1].
-          # Ensure `ripgrep` is in the PATH, since it is used by doom-emacs.
-          # Ensure `gcc` is in PATH so that emacsql-sqlite can build its custom
-          # sqlite (needed for org-roam v2, at least until the emacs sqlite
-          # buildin is ready [2]).
-          # [1] https://github.com/doomemacs/doomemacs/issues/6794#issuecomment-1250155441
-          # [2] https://github.com/org-roam/org-roam/issues/2206#issuecomment-1139743639
-          wrapProgram "$binary" \
-            --set-default "DOOMLOCALDIR" "~/.local/share/doom" \
-            --set-default "DOOMPROFILELOADFILE" "~/.local/cache/doom-profile-load.el" \
-            --prefix PATH : "${pkgs.ripgrep}/bin:${pkgs.gcc}/bin"
-        done
-      '';
+    emacspkg = pkgs.callPackage (
+      # To use the latest version (impure)
+      # builtins.fetchTarball {url = "https://github.com/nix-community/nix-doom-emacs/archive/master.tar.gz"; }
+      pkgs.fetchFromGitHub {
+        owner = "nix-community";
+        repo = "nix-doom-emacs";
+        rev = "da227e13707789198870deb3222af0f5f12b475d";
+        hash = "sha256-gTF/TuQmRMdEqPM1W752A2QHKyGnXo6/2cD94b+8OSg=";
+      }
+    ) {
+      doomPrivateDir = pkgs.callPackage ../doom-emacs {};
     };
-    doom-emacs = pkgs.stdenv.mkDerivation rec {
-      pname = "doom-emacs";
-      version = "1c4217aa27de64ee7348a3c4b973d27ac16fd41d";
-
-      src = pkgs.fetchFromGitHub {
-        owner = "doomemacs";
-        repo = "doomemacs";
-        rev = version;
-        hash = "sha256-3iokcyQjsfH76nUVhdH4K7+QOS5SU3HI2Qdp5c2lQgY=";
-      };
-
-      nativeBuildInputs = [
-        pkgs.makeWrapper
-      ];
-
-      installPhase = ''
-        runHook preInstall
-        cp -r . "$out";
-        runHook postInstall
-      '';
-
-      # Make sure the scripts use our emacs package
-      preFixup = ''
-        for binary in "$out/bin/"*; do
-          if [[ -x "$binary" ]]; then
-            wrapProgram "$binary" \
-              --prefix PATH : "${emacspkg}/bin"
-          fi
-        done
-      '';
-    };
-    doomSync = ''
-      # Pass "-u" to "upgrade" packages. Since packages are pinned, this only
-      # updates packages when the pins are updated. Avoid interactive prompts
-      # with `--force`.
-      ${doom-emacs}/bin/doom --force sync -u
-      echo "Remember to restart the emacs daemon: systemctl --user restart emacs.service"
-    '';
     org-protocol-handler-script = pkgs.writeScript "handlerScript.sh" ''
       #!${pkgs.bash}/bin/bash
       ${pkgs.libnotify}/bin/notify-send --expire-time=1000 --urgency=low "Captured"
@@ -102,32 +45,9 @@ in
     home = {
       packages = with pkgs; [
         emacspkg # The emacs package, configured to use doom-emacs.
-        doom-emacs # Include the doom-emacs executables in the PATH
         # A desktop file to register emacsclient as a handler for org-protocol
         org-protocol-handler-registration
       ];
-      file.".doom.d/config.org" = {
-       source = ../doom-emacs/config.org;
-       onChange = doomSync;
-      };
-      file.".doom.d/init.el" = {
-       source = ../doom-emacs/init.el;
-       onChange = doomSync;
-      };
-      file.".doom.d/packages.el" = {
-       source = ../doom-emacs/packages.el;
-       onChange = doomSync;
-      };
-    };
-    xdg = {
-      enable = true;
-      # Write / symlink a copy of the doom-emacs distribution to the emacs
-      # configuration directory. The "real" user config is in DOOMDIR
-      # (~/.doom.d).
-      configFile."emacs" = {
-        source = doom-emacs;
-        onChange = doomSync;
-      };
     };
     services.emacs = {
       enable = true;
