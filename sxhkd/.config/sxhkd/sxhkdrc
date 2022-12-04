@@ -89,7 +89,7 @@ super + space
 
 # capture something
 super + c
-	emacsclient --eval '(+org-capture/open-frame nil "tt")'
+	org-capture -k tt
 
 # make sxhkd reload its configuration files:
 super + Escape
