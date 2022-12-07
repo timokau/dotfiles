@@ -431,6 +431,25 @@ with pkgs.lib; {
         WantedBy = [ "graphical-session.target" ];
       };
     };
+    systemd.user.services.ovmtunnel = {
+      Unit = {
+        Description = "OVM tunnel";
+        After="network.target";
+      };
+
+      Service = {
+        Type="simple";
+        Restart="on-failure";
+        RestartSec=1;
+        ExecStart = ''
+            ${pkgs.openssh}/bin/ssh -o ServerAliveInterval=60 -o ExitOnForwardFailure=Yes -i ~/.ssh/tunnel-auth -L 43800:localhost:43800 tunnel@ovm -N -T
+        '';
+      };
+
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
 
     # Do not let home-manager manage the keyboard. Home-manager uses
     # `setxkbmap` otherwise, which interferes with the keyboardconfig script.
