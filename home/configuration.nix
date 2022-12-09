@@ -431,9 +431,9 @@ with pkgs.lib; {
         WantedBy = [ "graphical-session.target" ];
       };
     };
-    systemd.user.services.ovmtunnel = {
+    systemd.user.services.ovmtunnel-43800 = {
       Unit = {
-        Description = "OVM tunnel";
+        Description = "OVM tunnel (port 43800)";
         After="network.target";
       };
 
@@ -443,6 +443,25 @@ with pkgs.lib; {
         RestartSec=1;
         ExecStart = ''
             ${pkgs.openssh}/bin/ssh -o ServerAliveInterval=60 -o ExitOnForwardFailure=Yes -i ~/.ssh/tunnel-auth -L 43800:localhost:43800 tunnel@ovm -N -T
+        '';
+      };
+
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+    systemd.user.services.ovmtunnel-53800 = {
+      Unit = {
+        Description = "OVM tunnel (port 53800)";
+        After="network.target";
+      };
+
+      Service = {
+        Type="simple";
+        Restart="on-failure";
+        RestartSec=1;
+        ExecStart = ''
+            ${pkgs.openssh}/bin/ssh -o ServerAliveInterval=60 -o ExitOnForwardFailure=Yes -i ~/.ssh/tunnel-auth -L 53800:localhost:53800 tunnel@ovm -N -T
         '';
       };
 
