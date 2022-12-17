@@ -163,6 +163,13 @@ in
     "kernel.sysrq" = 1; # enable "magic sysrq" to force OOM reaper
   };
 
+  # Work around a sound bug with linux 5.15.81. Upstream is aware. See
+  # https://lore.kernel.org/all/dc65501c-c2fd-5608-c3d9-7cea184c3989@opensource.cirrus.com/
+  # https://bbs.archlinux.org/viewtopic.php?pid=2072040
+  # https://bbs.archlinux.org/viewtopic.php?pid=2073226
+  # for discussion.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   boot.cleanTmpDir = true;
 
   virtualisation.virtualbox.host = {
