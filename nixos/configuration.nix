@@ -342,17 +342,6 @@ in
     dates = "daily";
   };
 
-  nix.distributedBuilds = true;
-  nix.buildMachines = [
-    {
-      hostName = "aarch64.nixos.community";
-      maxJobs = 64;
-      sshKey = "/root/id_aarch64-builder";
-      sshUser = "timokau";
-      system = "aarch64-linux";
-      supportedFeatures = [ "big-parallel" ];
-    }
-  ];
   nix.settings.trusted-users = [ "@wheel" ];
   programs.ssh.knownHosts = {
     aarch64-community-builder = {
