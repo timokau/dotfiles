@@ -102,6 +102,15 @@ super + n
 super + b : {plus,minus}
 	brightnessctl --min-value=1 s 5%{+,-}
 
+XF86MonBrightnessDown
+	brightnessctl --min-value=1 s 5%-
+
+XF86MonBrightnessUp
+	brightnessctl --min-value=1 s 5%+
+
+XF86Display
+	brightnessctl --save s 0
+
 # restore brightness
 super + b : e
 	brightnessctl --restore
