@@ -105,6 +105,13 @@ We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less
 
 ** Org configuration
 
+Open pdfs in firefox by default.
+#+BEGIN_SRC elisp
+(after! org
+	(add-to-list 'org-file-apps '("\\.pdf\\'" . "firefox %s"))
+)
+#+END_SRC
+
 *** Locations
 
 #+BEGIN_SRC elisp
