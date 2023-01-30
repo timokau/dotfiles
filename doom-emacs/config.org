@@ -10,6 +10,34 @@ See [[this blog post][https://nullprogram.com/blog/2016/12/22/]] for reasons to 
 #+END_SRC
 
 
+** Filetype specific
+
+*** Latex
+
+Add command to count words with texcount ([[original][https://app.uio.no/ifi/texcount/faq.html#emacs]).
+#+BEGIN_SRC elisp
+(defun texcount ()
+  (interactive)
+  (let*
+    ( (this-file (buffer-file-name))
+      (enc-str (symbol-name buffer-file-coding-system))
+      (enc-opt
+        (cond
+          ((string-match "utf-8" enc-str) "-utf8")
+          ((string-match "latin" enc-str) "-latin1")
+          ("-encoding=guess")
+      ) )
+      (word-count
+        (with-output-to-string
+          (with-current-buffer standard-output
+            (call-process "texcount" nil t nil "-sum" "-1" enc-opt this-file)
+    ) ) ) )
+    (message word-count)
+) )
+(add-hook 'LaTeX-mode-hook (lambda () (define-key LaTeX-mode-map "\C-cw" 'texcount)))
+(add-hook 'latex-mode-hook (lambda () (define-key latex-mode-map "\C-cw" 'texcount)))
+#+END_SRC
+
 ** Appearance
 
 *** General
