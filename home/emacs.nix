@@ -18,8 +18,8 @@ in
       pkgs.fetchFromGitHub {
         owner = "nix-community";
         repo = "nix-doom-emacs";
-        rev = "2150fd40b2110bbd11dcb62fa5f307ec345b0fb0";
-        hash = "sha256-OI6M2/Kcd1bJuodxV6rV5KtDJMUeewsqKy1B2PLNVys=";
+        rev = "e92e5b6021b1ad4290e051111010ba51921507cd";
+        hash = "sha256-mf+RaqdCqqLraVVOQ5c8LRj+9ChnVzsUNlOjJSPdBbc=";
       }
     ) {
       doomPrivateDir = pkgs.callPackage ../doom-emacs {};
