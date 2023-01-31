@@ -604,3 +604,52 @@ Configure the org-roam backlinks buffer to only show when explicitly toggled.
   )
 )
 #+END_SRC
+
+** Academic workflow
+*** Locations
+#+BEGIN_SRC elisp
+(setq
+   zotero-bib (concat org-directory "zotero.bib")
+)
+#+END_SRC
+
+*** Org-cite configuration
+Configure org-cite to use the zotero-generated biblatex file.
+#+BEGIN_SRC elispp
+(setq
+   org-cite-global-bibliography (list zotero-bib)
+)
+#+END_SRC
+
+*** Citar configuration
+Use citar as the org-cite frontend and configure it to use the same bibliography as org-cite.
+#+BEGIN_SRC elisp
+(setq citar-bibliography (list zotero-bib))
+(after! citar
+  (setq
+     org-cite-insert-processor 'citar
+     org-cite-follow-processor 'citar
+     org-cite-activate-processor 'citar
+  )
+)
+#+END_SRC
+
+*** Org-roam-bibtex configuration
+Configure org-roam-bibtex to connect to citar. We want to use org-roam to manage the notes attached to bibliography items. This has been [[https://github.com/doomemacs/doomemacs/pull/6728][added]] to doom biblio module, can be removed on next doom update.
+#+BEGIN_SRC elisp
+(use-package! org-roam-bibtex :after citar org-roam)
+(use-package! citar-org-roam :after citar org-roam :no-require :config (citar-org-roam-mode))
+(after! (citar citar-org-roam org-roam-bibtex)
+  (citar-register-notes-source
+    'orb-citar-source (list :name "Org-Roam Notes"
+           :category 'org-roam-node
+           :items #'citar-org-roam--get-candidates
+           :hasitems #'citar-org-roam-has-notes
+           :open #'citar-org-roam-open-note
+           :create #'orb-citar-edit-note
+           :annotate #'citar-org-roam--annotate))
+  (setq citar-notes-source 'orb-citar-source)
+)
+(setq orb-preformat-keywords '("citekey" "author" "year"))
+(setq citar-org-roam-note-title-template "Paper/${year}/${author}/${title}")
+#+END_SRC

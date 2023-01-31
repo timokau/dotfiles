@@ -46,6 +46,11 @@
 (package! org-modern :pin "d0f13dc88781f51368c479c83d00753b78f55d46")
 ; Add review timestamps to tasks and schedule reviews
 (package! org-review :pin "466f7d8f183f226f1e665cf806cb094471903d9c")
+; Pinned implicitly by nix-doom-emacs
+(package! org-roam-bibtex)
+; Has been added [1] to doom biblio module, can be removed on next doom update
+; [1] https://github.com/doomemacs/doomemacs/pull/6728
+(package! citar-org-roam)
 
 
 ;; Doom's packages are pinned to a specific commit and updated from release to
