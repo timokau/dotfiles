@@ -651,5 +651,5 @@ Configure org-roam-bibtex to connect to citar. We want to use org-roam to manage
   (setq citar-notes-source 'orb-citar-source)
 )
 (setq orb-preformat-keywords '("citekey" "author" "year"))
-(setq citar-org-roam-note-title-template "Paper/${year}/${author}/${title}")
+(setq citar-org-roam-note-title-template "Paper/${year}/${author}/${title}\n* Notes\n:PROPERTIES:\n:NOTER_DOCUMENT: ${file}\n:NOTER_PAGE: \n:END:\n\n")
 #+END_SRC
