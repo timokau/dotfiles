@@ -67,6 +67,7 @@ with pkgs.lib; {
       };
     in with pkgs; [
       zotero # reference management
+      libreoffice # office suite
       easyeffects # audio effects, such as microphone noise reduction
       ripgrep-all # search non-text files such as pdfs
       pdfpc # latex beamer presentations
