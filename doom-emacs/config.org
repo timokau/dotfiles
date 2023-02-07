@@ -600,7 +600,7 @@ Configure the org-roam backlinks buffer to only show when explicitly toggled.
   (setq +org-roam-open-buffer-on-find-file nil)
   (map!
     ; Toggle the org-roam buffer (displaying backlinks)
-    :n "SPC n r t" #'org-roam-buffer-toggle-display
+    :n "SPC n r t" #'org-roam-buffer-toggle
   )
 )
 #+END_SRC
