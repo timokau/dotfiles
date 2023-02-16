@@ -196,7 +196,7 @@ with pkgs.lib; {
       defaultApplications = {
         "text/plain" = "nvim-qt.desktop";
         "text/markdown" = "nvim-qt.desktop";
-        "application/pdf" = "zathura.desktop";
+        "application/pdf" = "org.pwmt.zathura.desktop";
         "application/x-extension-htm" = "firefox.desktop";
         "application/x-extension-html" = "firefox.desktop";
         "application/x-extension-shtml" = "firefox.desktop";
