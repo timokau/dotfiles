@@ -620,6 +620,12 @@ Configure org-cite to use the zotero-generated biblatex file.
    org-cite-global-bibliography (list zotero-bib)
 )
 #+END_SRC
+Add a keybinding to insert a citation.
+#+BEGIN_SRC elisp
+(after! org
+  (map! :i "M-e" #'org-cite-insert)
+)
+#+END_SRC
 
 *** Citar configuration
 Use citar as the org-cite frontend and configure it to use the same bibliography as org-cite.
