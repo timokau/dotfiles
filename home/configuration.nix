@@ -66,6 +66,7 @@ with pkgs.lib; {
         ];
       };
     in with pkgs; [
+      rmapi # interface with remarkable tablet
       zotero # reference management
       libreoffice # office suite
       easyeffects # audio effects, such as microphone noise reduction
