@@ -40,6 +40,7 @@ in
       shellAliases = {
         # Emacs TUI
         em = "${emacspkg}/bin/emacsclient --tty";
+        emg = "${emacspkg}/bin/emacsclient --create-frame --no-wait";
       };
     };
     home = {
