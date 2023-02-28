@@ -66,6 +66,7 @@ with pkgs.lib; {
         ];
       };
     in with pkgs; [
+      umlet # quick diagram sketching
       rmapi # interface with remarkable tablet
       zotero # reference management
       libreoffice # office suite
