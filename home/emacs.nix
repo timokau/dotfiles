@@ -39,7 +39,7 @@ in
     programs.fish = {
       shellAliases = {
         # Emacs TUI
-        em = "${emacspkg}/bin/emacs --no-window-system";
+        em = "${emacspkg}/bin/emacsclient --tty";
       };
     };
     home = {
