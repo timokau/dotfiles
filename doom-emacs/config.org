@@ -131,6 +131,20 @@ We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 #+END_SRC
 
+
+** Make it possible to open a file in an external program
+
+I find this most useful with PDFs. Based on [[this][https://emacs.stackexchange.com/a/7222]] stackoverflow response.
+
+#+BEGIN_SRC elisp
+(defun open-external (&optional executable)
+  (interactive "sOpen with: ")
+    (if (executable-find executable)
+        (if buffer-file-name (call-process (executable-find executable) nil 0 nil buffer-file-name)
+          (user-error "Current buffer has no associated file."))
+      (user-error "`%s` not found in PATH" executable)))
+#+END_SRC
+
 ** Org configuration
 
 Open pdfs in firefox by default.
