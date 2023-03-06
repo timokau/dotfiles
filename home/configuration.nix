@@ -51,13 +51,13 @@ with pkgs.lib; {
     home.packages = let
       nix-bisect = pkgs.python3.pkgs.buildPythonPackage rec {
         pname = "nix-bisect";
-        version = "0.4.1";
+        version = "3b18985913cf32e62f3a5d3f9ccafb507fed9080";
         # src = lib.cleanSource /home/timo/repos/nix-bisect;
         src = pkgs.fetchFromGitHub {
           owner = "timokau";
           repo = "nix-bisect";
-          rev = "v${version}";
-          sha256 = "1z5j7qjzsxq7i9kklvwn8dv327zrs21k1nwwif54lslck7gy6nyk";
+          rev = version;
+          hash = "sha256-wvB8Km+DY0DJNaTAemUPZOfTCmCg6ZDnOSgGP4NEO68=";
         };
         propagatedBuildInputs = with pkgs.python3.pkgs; [
           appdirs
