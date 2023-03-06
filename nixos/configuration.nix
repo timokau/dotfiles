@@ -345,6 +345,7 @@ in
   };
 
   nix.settings.trusted-users = [ "@wheel" ];
+  nix.settings.experimental-features = [ "nix-command" ];
   programs.ssh.knownHosts = {
     aarch64-community-builder = {
       extraHostNames = [ "aarch64.nixos.community" ];
