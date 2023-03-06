@@ -65,6 +65,19 @@ with pkgs.lib; {
           numpy
         ];
       };
+      callPyZotero = pypkgs: (pypkgs.buildPythonPackage rec {
+        pname = "pyzotero";
+        version = "1.5.5";
+        src = pypkgs.fetchPypi {
+          inherit pname version;
+          sha256 = "sha256-4sxGPKLg13gc39COjTpq8cXo921Tfy7EXad1cujtKf0=";
+        };
+        nativeBuildInputs = [ pypkgs.setuptools-scm ];
+        propagatedBuildInputs = with pypkgs; [
+          feedparser pytz requests bibtexparser
+        ];
+        doCheck = false;
+      });
     in with pkgs; [
       umlet # quick diagram sketching
       rmapi # interface with remarkable tablet
@@ -94,6 +107,7 @@ with pkgs.lib; {
       # for quick python experiments
       (python3.withPackages (pkgs: with pkgs; [
         nix-bisect # bisect nix packages
+        (callPyZotero pkgs)
         # rl algorithms
         black # python formatting
         notmuch # notmuch python api to sort mails
