@@ -14,8 +14,6 @@ configure_keyboards() {
 		#-option lv3:win_switch # use win as Alt_Gr
 
 	xmodmap - <<EOF
-	! make ^ key alive (meaning it shows up immediately instead of modifying the next key)
-	keysym dead_circumflex = asciicircum
 
 	! make backtick key alive
 	keysym dead_acute = acute grave
