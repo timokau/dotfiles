@@ -79,6 +79,9 @@ super + d ; o
 super + d ; w
 	rofi -show window
 
+super + @z
+	scrot '/tmp/%F_%T_$wx$h.png' --select --line mode=edge --exec 'xclip -selection clipboard -target image/png -in $f; rm $f'
+
 # needs dmenu2 (for better configuration) and j4-dmenu-desktop-git from the AUR
 super + space
 	rofi -combi-modi window,drun -show combi
