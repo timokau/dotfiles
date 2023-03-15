@@ -79,9 +79,6 @@ super + d ; o
 super + d ; w
 	rofi -show window
 
-super + @i
-	scrot -u -e 'xclip -selection clipboard -target image/png -i $f; rm $f'
-
 # needs dmenu2 (for better configuration) and j4-dmenu-desktop-git from the AUR
 super + space
 	rofi -combi-modi window,drun -show combi
