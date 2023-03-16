@@ -52,6 +52,9 @@
 ; [1] https://github.com/doomemacs/doomemacs/pull/6728
 (package! citar-org-roam)
 
+; Get images into org mode
+(package! org-download)
+
 
 ;; Doom's packages are pinned to a specific commit and updated from release to
 ;; release. The `unpin!' macro allows you to unpin single packages...

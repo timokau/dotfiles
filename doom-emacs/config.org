@@ -218,6 +218,16 @@ Set up org-appear to reveal hidden text (such as link targets) when entering evi
 )
 #+END_SRC
 
+*** Get images into org
+
+#+BEGIN_SRC elisp
+(use-package! org-download
+  :after org
+  :config
+  (setq org-download-image-dir "/home/timo/data/documents/logseq/assets/")
+  (bind-key "C-M-v" #'org-download-clipboard))
+#+END_SRC
+
 *** Utils
 
 #+BEGIN_SRC elisp
