@@ -124,6 +124,15 @@ let
       startup = true;
     }
     {
+      p = copilot-vim;
+      startup = true;
+      preLoad = ''
+        let g:copilot_node_command = "${pkgs.nodejs}/bin/node"
+        imap <silent><script><expr> <C-e> copilot#Accept("")
+        let g:copilot_no_tab_map = v:true
+      '';
+    }
+    {
       p = vim-pandoc;
       # TODO also on explicit filetype switch
       atStartup = "autocmd PlugAutoload BufReadPre,BufNewFile *.md,*.pdc :packadd vim-pandoc";
