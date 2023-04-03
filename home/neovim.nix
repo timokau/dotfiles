@@ -130,6 +130,11 @@ let
         let g:copilot_node_command = "${pkgs.nodejs}/bin/node"
         imap <silent><script><expr> <C-e> copilot#Accept("")
         let g:copilot_no_tab_map = v:true
+        let g:copilot_filetypes = {
+              \ '*': v:false,
+              \ 'python': v:true,
+              \ 'mail': v:true,
+              \ }
       '';
     }
     {
