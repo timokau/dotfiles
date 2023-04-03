@@ -204,6 +204,14 @@ with pkgs.lib; {
 
     fonts.fontconfig.enable = true;
 
+    # (Incomplete) replacement for wingdings from wine, "WineWingdings".
+    # Required e.g. to render powerpoint online bullet points.
+    # https://wiki.winehq.org/Create_Fonts#Truetype_Fonts
+    home.file.".local/share/fonts/wingding.ttf".source = pkgs.fetchurl {
+      url = "https://github.com/wine-mirror/wine/raw/02876a4b1320a1ee03b04c264fe31ccf6ec06d1c/fonts/wingding.ttf";
+      hash = "sha256-z1eEtT42Xs+tFmG4sj0TPv+h07VPt6URN8ipVI8NsI4=";
+    };
+
     # Adjust randr configuration when monitors are (un)plugged
     programs.autorandr.enable = true;
 
