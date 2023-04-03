@@ -79,6 +79,7 @@ with pkgs.lib; {
         doCheck = false;
       });
     in with pkgs; [
+      poppler_utils # work with pdfs
       umlet # quick diagram sketching
       rmapi # interface with remarkable tablet
       zotero # reference management
