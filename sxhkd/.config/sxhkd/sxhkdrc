@@ -79,11 +79,17 @@ super + d ; o
 super + d ; w
 	rofi -show window
 
+# Screenshot to clipboard
 super + @z
 	scrot '/tmp/%F_%T_$wx$h.png' --select --line mode=edge --exec 'xclip -selection clipboard -target image/png -in $f; notify-send --urgency=low "Saved screenshot: $f"'
 
+# Screenshot to clipboard (cropped to content)
 super + @Z
 	scrot '/tmp/%F_%T_$wx$h.png' --select --line mode=edge --exec 'mogrify -trim "$f"; xclip -selection clipboard -target image/png -in $f; notify-send --urgency=low "Saved trimmed screenshot: $f"'
+
+# Screenshot to clipboard (cropped + transparent background)
+super + ctrl + @Z
+	scrot '/tmp/%F_%T_$wx$h.png' --select --line mode=edge --exec 'mogrify -trim -transparent white "$f"; xclip -selection clipboard -target image/png -in $f; notify-send --urgency=low "Saved trimmed screenshot with transparency: $f"'
 
 # needs dmenu2 (for better configuration) and j4-dmenu-desktop-git from the AUR
 super + space
