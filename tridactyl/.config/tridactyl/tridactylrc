@@ -67,4 +67,8 @@ autocmd DocStart en.wikipedia.org js tri.excmds.urlmodify("-t", "en", "en.m")
 
 # Capture the current website in org
 bind ,c composite js "org-protocol:///capture?template=c&url=" + encodeURIComponent(location.href) + "&title=" + encodeURIComponent(document.title) + "&body=" + encodeURIComponent(window.getSelection()) | open
+
+
+# Capture the current video with a timestamp
+bind ,C composite js "org-protocol:///capture?template=c&url=" + encodeURIComponent(location.href + "&t=" + Math.floor(document.querySelector('video').currentTime.toFixed() / 60) + "m" + Math.floor(document.querySelector('video').currentTime.toFixed() % 60) + "s") + "&title=" + encodeURIComponent(document.title) + "&body=YouTube video at " + Math.floor(document.querySelector('video').currentTime.toFixed() / 60) + "m" + Math.floor(document.querySelector('video').currentTime.toFixed() % 60) + "s" | open
 " vim: set filetype=vim:
