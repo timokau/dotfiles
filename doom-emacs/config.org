@@ -143,6 +143,10 @@ I find this most useful with PDFs. Based on [[this][https://emacs.stackexchange.
         (if buffer-file-name (call-process (executable-find executable) nil 0 nil buffer-file-name)
           (user-error "Current buffer has no associated file."))
       (user-error "`%s` not found in PATH" executable)))
+
+(defun open-external-ff ()
+  (interactive)
+    (open-external "firefox"))
 #+END_SRC
 
 ** Org configuration
