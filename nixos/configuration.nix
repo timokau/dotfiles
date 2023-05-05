@@ -170,7 +170,7 @@ in
   # for discussion.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   virtualisation.virtualbox.host = {
     enable = true;
