@@ -79,6 +79,7 @@ with pkgs.lib; {
         doCheck = false;
       });
     in with pkgs; [
+      zip # creating archives
       poppler_utils # work with pdfs
       umlet # quick diagram sketching
       rmapi # interface with remarkable tablet
