@@ -172,11 +172,6 @@ in
 
   boot.tmp.cleanOnBoot = true;
 
-  virtualisation.virtualbox.host = {
-    enable = true;
-    # enableExtensionPack = true; # unfree
-  };
-
   # Container runtime & builder, needs subuids and subgids
   virtualisation.podman = {
     enable = true;
