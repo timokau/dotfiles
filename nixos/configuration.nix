@@ -229,18 +229,14 @@ in
     snapshotRootOnBoot = true;
     configs = {
       root = {
-        subvolume = "/";
-        extraConfig = ''
-          TIMELINE_CREATE=yes
-          TIMELINE_CLEANUP=yes
-        '';
+        SUBVOLUME = "/";
+        TIMELINE_CREATE = true;
+        TIMELINE_CLEANUP = true;
       };
       persist = {
-        subvolume = "/home/timo/p";
-        extraConfig = ''
-          TIMELINE_CREATE=yes
-          TIMELINE_CLEANUP=yes
-        '';
+        SUBVOLUME = "/home/timo/p";
+        TIMELINE_CREATE = true;
+        TIMELINE_CLEANUP = true;
       };
     };
   };
