@@ -5,14 +5,7 @@
     notmuch-mutt # mutt integration
     # mail client
     neomutt
-    (isync.override {
-      # https://github.com/cyrusimap/cyrus-sasl/issues/543
-      cyrus_sasl = (pkgs.cyrus_sasl.overrideAttrs (oldAttrs: {
-        postInstall = (oldAttrs.postInstall or "") + ''
-          rm "$out/lib/sasl2/libgssapiv2.so"*
-        '';
-      }));
-    }) # mail sync
+    isync # mail sync
     msmtp # send mail
     w3m # display html emails
   ];
