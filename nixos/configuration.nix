@@ -53,15 +53,6 @@ in
   # Control monitor brightness, useful for redshift hooks on the user level.
   services.ddccontrol.enable = true;
 
-  services.grocy = {
-    enable = true;
-    hostName = "localhost";
-    nginx.enableSSL = false;
-    settings = {
-      currency = "EUR";
-    };
-  };
-
   # Run fstrim weekly to maintain SSD performance
   services.fstrim = {
     enable = true;
