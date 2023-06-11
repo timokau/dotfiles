@@ -21,7 +21,7 @@ echo "Instantiating"
 # home-manager requires its sources to be in the NIX_PATH. Installing it from
 # nixpgks is not the preferred method of installation, which is why this is a
 # bit complicated.
-export HOME_MANAGER_PATH=$( nix-build "$NIXPKGS" -A home-manager.src )
+export HOME_MANAGER_PATH=$( nix-build --no-out-link "$NIXPKGS" -A home-manager.src )
 export NIX_PATH="$NIX_PATH:home-manager=$HOME_MANAGER_PATH"
 home_manager_system="$( nix-shell --packages home-manager --run 'home-manager --show-trace instantiate' )"
 nixos_system="$( nix-instantiate -E '((import <nixpkgs/nixos>) {}).system' )"
