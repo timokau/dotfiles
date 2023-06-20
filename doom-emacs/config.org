@@ -149,6 +149,16 @@ I find this most useful with PDFs. Based on [[this][https://emacs.stackexchange.
     (open-external "firefox"))
 #+END_SRC
 
+Add keybindings to open the current pdf externally.
+#+BEGIN_SRC elisp
+(after! pdf-tools
+  (map! :map pdf-view-mode-map
+        :n "e" #'open-external)
+  (map! :map pdf-view-mode-map
+        :n "E" #'open-external-ff))
+#+END_SRC
+
+
 ** Org configuration
 
 Open pdfs in firefox by default.
