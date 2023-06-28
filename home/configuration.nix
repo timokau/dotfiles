@@ -397,6 +397,15 @@ with pkgs.lib; {
       Exec=${pkgs.chromium}/bin/chromium --class 'Slack' --app=https://kiml-workspace.slack.com/
       Name=Slack KIML
     '';
+    xdg.dataFile."applications/overleaf.desktop".text = optionalString cfg.graphical ''
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=1.0
+      Type=Application
+      Terminal=false
+      Exec=${pkgs.chromium}/bin/chromium --class 'Overleaf' --app=https://overleaf.com/
+      Name=Overleaf
+    '';
 
     home.file.".latexmkrc".text = ''
       # no interaction, enable synctex for vimtex integratoin
