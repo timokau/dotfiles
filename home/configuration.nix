@@ -397,15 +397,6 @@ with pkgs.lib; {
       Exec=${pkgs.chromium}/bin/chromium --class 'Slack' --app=https://kiml-workspace.slack.com/
       Name=Slack KIML
     '';
-    xdg.dataFile."applications/zulip-upb.desktop".text = optionalString cfg.graphical ''
-      [Desktop Entry]
-      Encoding=UTF-8
-      Version=1.0
-      Type=Application
-      Terminal=false
-      Exec=${pkgs.chromium}/bin/chromium --class 'Zulip UPB' --app=https://chat.cs.upb.de/
-      Name=Zulip messenger hosted by UPB
-    '';
 
     home.file.".latexmkrc".text = ''
       # no interaction, enable synctex for vimtex integratoin
