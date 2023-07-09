@@ -299,7 +299,7 @@ Set up capture templates.
         )
         ("t" "Tasks")
         ("tl" "Task linking to the current position" entry (file "~/data/documents/logseq/pages/inbox.org") "* TODO %?%a \n  %U \n  %i" :empty-lines 1)
-        ("tt" "Task" entry (file "~/data/documents/logseq/pages/inbox.org") "* TODO %? \n  %U" :empty-lines 1)
+        ("tt" "Task" entry (file "~/data/documents/logseq/pages/inbox.org") "* TODO %?" :empty-lines 0)
       )
     )
   )
