@@ -5,11 +5,11 @@ application/msword; libreoffice %s
 text/plain; less %s
 
 # Images
-image/jpg; feh --scale-down %s
-image/jpeg; feh --scale-down %s
-image/pjpeg; feh --scale-down %s
-image/png; feh --scale-down %s
-image/gif; feh --scale-down %s
+image/jpg; sxiv %s
+image/jpeg; sxiv %s
+image/pjpeg; sxiv %s
+image/png; sxiv %s
+image/gif; sxiv %s
 
 # PDFs
 application/pdf; zathura %s
