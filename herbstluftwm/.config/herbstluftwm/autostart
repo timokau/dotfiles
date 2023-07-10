@@ -96,6 +96,7 @@ hc keybind $Mod-comma  use_index -1 --skip-visible
 hc keybind $Mod-r chain , remove , $fm
 hc keybind $Mod-s floating toggle
 hc keybind $Mod-f fullscreen toggle
+hc keybind $Mod-m set_attr clients.focus.minimized toggle # can be restored with `jumpto <winid>` or by jumping to the window with rofi.
 hc keybind $Mod-t spawn "$SCRIPTS/maximize.sh" # like "monocle" in bspwm
 hc keybind $Mod-p pseudotile toggle
 # The following cycles through the available layouts within a frame, but skips
