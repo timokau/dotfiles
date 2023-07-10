@@ -93,7 +93,7 @@ super + ctrl + @Z
 
 # needs dmenu2 (for better configuration) and j4-dmenu-desktop-git from the AUR
 super + space
-	rofi -combi-modi window,drun -show combi
+	rofi -combi-modi window,drun -window-command "herbstclient bring \{window\}" -kb-accept-entry "Shift+Return" -kb-accept-alt "Return" -show combi
 	# rofi -combi-modi window,drun -show drun -lines 3 -eh 2 -font "Source Code Pro 18"
 
 # capture something
