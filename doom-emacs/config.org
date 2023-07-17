@@ -318,19 +318,20 @@ Set up capture templates.
     )
   )
 )
-(setq org-tag-alist '(
-                      ("someday" . ?s)
+(setq my/topic-tags
+      '(("research_experiment" . ?e)
+        ("research_reading" . ?r)
+        ("research_writing" . ?w)
+        ("consideration" . ?c)
+        ("work_admin" . ?a)
+        ("work_process" . ?p)
+        ("life" . ?l)))
 
-                      (:startgroup . nil)
-                      ("research_experiment" . ?e)
-                      ("research_reading" . ?r)
-                      ("research_writing" . ?w)
-                      ("consideration" . ?c)
-                      ("work_admin" . ?a)
-                      ("work_process" . ?p)
-                      ("life" . ?l)
-                      (:endgroup . nil)
-                      ))
+(setq org-tag-alist
+      `(("someday" . ?s)
+        (:startgroup)
+        ,@my/topic-tags
+        (:endgroup)))
 (setq org-use-fast-tag-selection 't)
 
 ; From Sacha Chua http://disq.us/p/29ngaud
