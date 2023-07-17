@@ -319,13 +319,13 @@ Set up capture templates.
   )
 )
 (setq my/topic-tags
-      '(("research_experiment" . ?e)
-        ("research_reading" . ?r)
-        ("research_writing" . ?w)
-        ("consideration" . ?c)
-        ("work_admin" . ?a)
-        ("work_process" . ?p)
-        ("life" . ?l)))
+      '(("research_experiment" . ?E)
+        ("research_reading" . ?R)
+        ("research_writing" . ?W)
+        ("consideration" . ?C)
+        ("work_admin" . ?A)
+        ("work_process" . ?P)
+        ("life" . ?L)))
 
 (setq org-tag-alist
       `(("someday" . ?s)
