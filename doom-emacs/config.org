@@ -318,6 +318,10 @@ Set up capture templates.
     )
   )
 )
+(setq my/project-tags
+      '(("proj_srv" . ?v)
+        ("proj_rhf" . ?r)
+        ("proj_misc" . ?m)))
 (setq my/topic-tags
       '(("research_experiment" . ?E)
         ("research_reading" . ?R)
@@ -329,6 +333,9 @@ Set up capture templates.
 
 (setq org-tag-alist
       `(("someday" . ?s)
+        (:startgroup)
+        ,@my/project-tags
+        (:endgroup)
         (:startgroup)
         ,@my/topic-tags
         (:endgroup)))
@@ -409,6 +416,11 @@ Set up capture templates.
                     (org-deadline-warning-days 0)
                     ; Start where the "5 days in detail" stop
                     (org-agenda-start-day "+5d")))
+        ))
+      ("p" "Grouped view of project tasks"
+       ((tags-todo "proj_srv")
+        (tags-todo "proj_rhf")
+        (tags-todo "proj_misc")
         ))
       ("g" "Grouped view of soon tasks"
        ; Tasks grouped by mutually exclusive tags
