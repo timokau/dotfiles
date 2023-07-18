@@ -442,7 +442,7 @@ Set up capture templates.
         ))
       ("s" "Someday view"
          tags-todo "someday")
-      ("R" "Review tasks" tags-todo "-CANCELLED"
+      ("R" "Review tasks" tags-todo "-CANCELLED -proj_srv -proj_rhf -proj_life -proj_misc"
          ((org-agenda-overriding-header "Reviews Scheduled")
           (org-agenda-skip-function 'org-review-agenda-skip)
           (org-agenda-cmp-user-defined 'org-review-compare)
