@@ -321,6 +321,7 @@ Set up capture templates.
 (setq my/project-tags
       '(("proj_srv" . ?v)
         ("proj_rhf" . ?r)
+        ("proj_life" . ?l)
         ("proj_misc" . ?m)))
 (setq my/topic-tags
       '(("research_experiment" . ?E)
@@ -420,6 +421,7 @@ Set up capture templates.
       ("p" "Grouped view of project tasks"
        ((tags-todo "proj_srv")
         (tags-todo "proj_rhf")
+        (tags-todo "proj_life")
         (tags-todo "proj_misc")
         ))
       ("g" "Grouped view of soon tasks"
