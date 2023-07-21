@@ -101,6 +101,7 @@ in
     rsync
     ripgrep
     home-manager # manage user configurations
+    virt-manager
   ]);
 
   # disable system sounds
@@ -167,6 +168,10 @@ in
   virtualisation.podman = {
     enable = true;
   };
+
+  # Needed to use virt-manager
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
 
   services.openssh = {
     enable = true;
@@ -294,6 +299,7 @@ in
       "vboxusers"
       "wireshark"
       "video" # brightnessctl
+      "libvirtd" # Needed to use virt-manager
     ];
     uid = 1000;
     shell = "${pkgs.zsh}/bin/zsh";
