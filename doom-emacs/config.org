@@ -423,6 +423,8 @@ Set up capture templates.
                     ; start agenda today
                     (org-agenda-start-day "+0d")
                     (org-agenda-span 5) ; show the next 5 days
+                    (org-agenda-show-all-dates nil)
+                    (org-agenda-entry-types '(:deadline :scheduled))
                     ; Do not use deadline warnings, as those can't easily be dismissed and
                     ; clutter the view.
                     (org-deadline-warning-days 0)
