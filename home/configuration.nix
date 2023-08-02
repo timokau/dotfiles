@@ -91,8 +91,7 @@ with pkgs.lib; {
       entr # run command on file changes (nicer interface than inotify)
       skim # fzf clone in rust
       logseq # note taking
-      # Disabled since its broken on master (2020-07-27) and not currently used.
-      # vagrant # VM management
+      vagrant # VM management
       moreutils # usefull stuff like `vidir` bulk renaming
       ltrace # trace library calls
       gdb
