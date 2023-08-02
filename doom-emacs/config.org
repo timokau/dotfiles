@@ -193,6 +193,29 @@ By default links are inserted before the cursor in evil-mode. That is inconvenie
 (advice-add 'org-insert-link :around #'advice-around-append-first)
 #+END_SRC
 
+*** Find and open org-roam nodes by title
+
+Sometimes it is useful to be able to access an org-roam node noninteractively. Here we add some functions to do so.
+
+#+BEGIN_SRC elisp
+; https://github.com/org-roam/org-roam/issues/1902
+(defun org-roam-node-id-by-title (title)
+  "Get a node ID by its title, whether original title or alias"
+  (caar (org-roam-db-query [:select id
+                            :from [:select [(as node_id id)
+                                            (as alias title)]
+                                   :from aliases
+                                   :union-all
+                                   :select [id title]
+                                   :from nodes]
+                            :where (= title $s1)
+                            :limit 1] title)))
+(defun org-roam-node-open-by-title (title)
+  "Noninteractively open a node by title or alias."
+  (org-roam-node-open (org-roam-node-from-id (org-roam-node-id-by-title "week-2023-07-31"))))
+;(org-roam-node-open-by-title "week-2023-07-31")
+#+END_SRC
+
 *** Org-appear
 
 Set up org-appear to reveal hidden text (such as link targets) when entering evil insert mode. The text is hidden again when the cursor leaves the object.
