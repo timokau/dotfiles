@@ -204,6 +204,16 @@ with pkgs.lib; {
       "MOZ_USE_XINPUT2" = 1;
     };
 
+
+    # Set up virt-manager to connect to qemu/kvm by default.
+    # https://nixos.wiki/wiki/Virt-manager
+    dconf.settings = {
+      "org/virt-manager/virt-manager/connections" = {
+        autoconnect = ["qemu:///system"];
+        uris = ["qemu:///system"];
+      };
+    };
+
     fonts.fontconfig.enable = true;
 
     # (Incomplete) replacement for wingdings from wine, "WineWingdings".
