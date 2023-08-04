@@ -439,6 +439,15 @@ with pkgs.lib; {
       }
       Name=Emacs Org Roam Current Week
     '';
+    xdg.dataFile."applications/emacs-inbox.desktop".text = optionalString cfg.graphical ''
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=1.0
+      Type=Application
+      Terminal=false
+      Exec=${pkgs.emacs}/bin/emacsclient -c -e "(org-roam-node-open-by-title \"inbox\")"
+      Name=Emacs Org Roam Inbox
+    '';
 
     home.file.".latexmkrc".text = ''
       # no interaction, enable synctex for vimtex integratoin
