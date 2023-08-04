@@ -415,6 +415,15 @@ with pkgs.lib; {
       Exec=${pkgs.chromium}/bin/chromium --class 'Overleaf' --app=https://overleaf.com/
       Name=Overleaf
     '';
+    xdg.dataFile."applications/virt-manager_rdpwindows.desktop".text = optionalString cfg.graphical ''
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=1.0
+      Type=Application
+      Terminal=false
+      Exec=${pkgs.virt-manager}/bin/virt-manager --connect 'qemu:///system' --show-domain-console 'RDPWindows'
+      Name=RDPWindows VM
+    '';
 
     home.file.".latexmkrc".text = ''
       # no interaction, enable synctex for vimtex integratoin
