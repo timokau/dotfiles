@@ -424,6 +424,21 @@ with pkgs.lib; {
       Exec=${pkgs.virt-manager}/bin/virt-manager --connect 'qemu:///system' --show-domain-console 'RDPWindows'
       Name=RDPWindows VM
     '';
+    xdg.dataFile."applications/emacs-current-week.desktop".text = optionalString cfg.graphical ''
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=1.0
+      Type=Application
+      Terminal=false
+      Exec=${
+        pkgs.writeScript "desktopexec.sh" ''
+          #!${pkgs.bash}/bin/bash
+          monday_iso="$( ${pkgs.python3}/bin/python -c "from datetime import date, timedelta; today = date.today(); monday = today - timedelta(days=today.weekday()); print(monday.isoformat())" )"
+          ${pkgs.emacs}/bin/emacsclient -c -e "(org-roam-node-open-by-title \"week-$monday_iso\")"
+        ''
+      }
+      Name=Emacs Org Roam Current Week
+    '';
 
     home.file.".latexmkrc".text = ''
       # no interaction, enable synctex for vimtex integratoin
