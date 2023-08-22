@@ -1,0 +1,19 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p xclip
+
+# Paste image from clipboard to target file.
+
+if [ "$#" -ne 1 ]; then
+	echo "Usage: $0 <targetfile>" >&2
+	exit 1
+fi
+
+outfile="$1"
+extra_args=""
+case "$outfile" in
+	*.png)
+		extra_args="-t image/png $extra_args"
+		;;
+esac
+echo "Saving clipboard to $outfile"
+xclip -selection clipboard $extra_args -o > "$outfile"
