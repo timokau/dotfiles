@@ -86,7 +86,6 @@ with pkgs.lib; {
       zotero # reference management
       libreoffice # office suite
       easyeffects # audio effects, such as microphone noise reduction
-      ripgrep-all # search non-text files such as pdfs
       pdfpc # latex beamer presentations
       entr # run command on file changes (nicer interface than inotify)
       skim # fzf clone in rust
