@@ -210,6 +210,9 @@ with pkgs.lib; {
         autoconnect = ["qemu:///system"];
         uris = ["qemu:///system"];
       };
+      "org/virt-manager/virt-manager/details" = {
+        show-toolbar = false; # No toolbar in VM view.
+      };
     };
 
     fonts.fontconfig.enable = true;
