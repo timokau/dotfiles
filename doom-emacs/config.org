@@ -212,8 +212,7 @@ Sometimes it is useful to be able to access an org-roam node noninteractively. H
                             :limit 1] title)))
 (defun org-roam-node-open-by-title (title)
   "Noninteractively open a node by title or alias."
-  (org-roam-node-open (org-roam-node-from-id (org-roam-node-id-by-title "week-2023-07-31"))))
-;(org-roam-node-open-by-title "week-2023-07-31")
+  (org-roam-node-open (org-roam-node-from-id (org-roam-node-id-by-title title))))
 #+END_SRC
 
 *** Org-appear
