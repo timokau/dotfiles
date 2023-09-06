@@ -213,6 +213,9 @@ with pkgs.lib; {
       "org/virt-manager/virt-manager/details" = {
         show-toolbar = false; # No toolbar in VM view.
       };
+      "org/virt-manager/virt-manager/vms/56642324e11d4801994836e4dd455202" = {
+        resize-guest = 1; # Resize guest to fit window
+      };
     };
 
     fonts.fontconfig.enable = true;
