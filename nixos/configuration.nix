@@ -132,8 +132,8 @@ in
   # programs.command-not-found.enable = true;
 
   fonts = {
-    enableDefaultFonts = true;
-    fonts = with pkgs; [
+    enableDefaultPackages = true;
+    packages = with pkgs; [
       source-code-pro
       inconsolata
       terminus_font
