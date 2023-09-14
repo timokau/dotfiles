@@ -132,7 +132,7 @@ with pkgs.lib; {
       trash-cli # gentle rm replacement
       firejail # sandboxing
       httpie # cli http client
-      exa # "modern" ls replacement
+      eza # "modern" ls replacement
       fd # "modern" find replacement
       psmisc # `killall` command
       khard # calendar
