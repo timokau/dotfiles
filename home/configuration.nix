@@ -393,6 +393,15 @@ with pkgs.lib; {
       Exec=${pkgs.chromium}/bin/chromium --class 'Element' --app=https://app.element.io
       Name=Element messenger
     '';
+    xdg.dataFile."applications/chatgpt.desktop".text = optionalString cfg.graphical ''
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=1.0
+      Type=Application
+      Terminal=false
+      Exec=${pkgs.chromium}/bin/chromium --class 'ChatGPT' --app=https://chat.openai.com/
+      Name=ChatGPT
+    '';
     xdg.dataFile."applications/google-calendar.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
