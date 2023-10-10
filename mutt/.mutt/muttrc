@@ -208,3 +208,5 @@ macro index + "<modify-labels>+*\\n<sync-mailbox>" # tag as starred
 macro index - "<modify-labels>-*\\n<sync-mailbox>" # tag as unstarred
 macro index T "<entire-thread>"
 macro pager t "<modify-labels-then-hide>" # tag as Junk mail
+
+macro index,pager U "<pipe-entry>~/.mutt/process<enter>"
