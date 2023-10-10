@@ -187,7 +187,8 @@ virtual-mailboxes \
     "work"    "notmuch://?query=tag:unread and not tag:new and not tag:killed and ( tag:uni or tag:work or tag:important ) and not tag:maba"\
     "maba"    "notmuch://?query=tag:unread and not tag:new and ( tag:maba )"\
     "job"    "notmuch://?query=tag:unread and tag:work"\
-    "unread"    "notmuch://?query=tag:unread and not tag:new and not tag:killed and not tag:spam"\
+    "unread"    "notmuch://?query=tag:unread and not tag:new and not tag:killed and not tag:spam and not tag:hidden"\
+    "aunread"    "notmuch://?query=tag:unread and not tag:new and not tag:killed and not tag:spam"\
     "inbox"    "notmuch://?query=tag:inbox"\
     "starred"   "notmuch://?query=tag:*"\
     "yahoo"   "notmuch://?query=tag:yahoo&limit=100"\
