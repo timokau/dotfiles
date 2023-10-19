@@ -17,7 +17,6 @@ application/pdf; zathura %s
 # HTML
 text/html; xdg-open %s
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
-text/html; 
 
 # Unidentified files
 application/octet-stream;nvim %s
