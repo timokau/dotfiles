@@ -210,3 +210,8 @@ macro index T "<entire-thread>"
 macro pager t "<modify-labels-then-hide>" # tag as Junk mail
 
 macro index,pager U "<pipe-entry>~/.mutt/process<enter>"
+
+# Quickly view the html attachment
+# https://demu.red/blog/2017/11/neomutt-macro-opening-texthtml-attachment-from-the-index-view/
+bind index,pager V  noop        ## Unbinds V from version
+macro index,pager V "<view-attachments><search>html<enter><view-mailcap><exit>"
