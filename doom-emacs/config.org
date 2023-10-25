@@ -103,6 +103,8 @@ Enable org-modern mode, which makes some stylistic changes (bullets instead of s
   (setq
    org-modern-label-border 3 ; Depends on line spacing
    )
+  ; Disable org-modern for tables due to difficulties with rendering the horizontal separation line
+  (custom-set-variables '(org-modern-table nil))
 )
 #+END_SRC
 
