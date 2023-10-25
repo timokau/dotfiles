@@ -717,6 +717,29 @@ Use citar as the org-cite frontend and configure it to use the same bibliography
      org-cite-activate-processor 'citar
   )
 )
+
+(defun org-get-global-prop (property)
+  "Retrieve a global PROPERTY from the current org document."
+  (save-excursion
+    (goto-char (point-min))
+    (org-entry-get nil property)))
+
+(defun citar-get-citekey-current-note ()
+  "Retrieve the citekey of the current org-roam note."
+  (let ((raw-citekey (org-get-global-prop "ROAM_REFS")))
+    (if raw-citekey
+        (string-trim-left raw-citekey "@")
+      nil)))
+
+(defun citar-open-file-for-note ()
+  "Open the file associated with the current org-roam note."
+  (interactive)
+  (let ((citekey (citar-get-citekey-current-note)))
+    (if citekey
+        (citar-open-files citekey)
+      (message "No citekey found."))))
+
+(map! :after evil :map evil-normal-state-map "F" #'citar-open-file-for-note)
 #+END_SRC
 
 *** Org-roam-bibtex configuration
