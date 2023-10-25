@@ -43,7 +43,7 @@
 (package! mixed-pitch :pin "519e05f74825abf04b7d2e0e38ec040d013a125a")
 ; Make it easy to reveal hidden content such as link locations
 (package! org-appear :pin "60ba267c5da336e75e603f8c7ab3f44e6f4e4dac")
-(package! org-modern :pin "d0f13dc88781f51368c479c83d00753b78f55d46")
+(package! org-modern :pin "240026f0bef6dabff1e86ab092a678beddd301c3")
 ; Add review timestamps to tasks and schedule reviews
 (package! org-review :pin "466f7d8f183f226f1e665cf806cb094471903d9c")
 ; Pinned implicitly by nix-doom-emacs
