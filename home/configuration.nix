@@ -284,6 +284,10 @@ with pkgs.lib; {
         "spotify-unwrapped"
         "steam-runtime" # not actually used, but needed by steam-run
       ]);
+      permittedInsecurePackages = [
+        "zotero-6.0.27"
+        "electron-24.8.6"
+      ];
       firefox = {
         enableTridactylNative = true;
       };
