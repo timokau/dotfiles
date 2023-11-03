@@ -716,6 +716,8 @@ Use citar as the org-cite frontend and configure it to use the same bibliography
      org-cite-follow-processor 'citar
      org-cite-activate-processor 'citar
   )
+  ; Open notes by default instead of showing me a menu which allows selection between notes, files, etc.
+  (setq citar-default-action 'citar-open-notes)
 )
 
 (defun org-get-global-prop (property)
