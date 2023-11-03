@@ -79,6 +79,7 @@ with pkgs.lib; {
         doCheck = false;
       });
     in with pkgs; [
+      ripgrep-all # search through various files (mainly pdfs)
       zip # creating archives
       poppler_utils # work with pdfs
       umlet # quick diagram sketching
