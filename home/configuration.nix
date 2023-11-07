@@ -404,7 +404,7 @@ with pkgs.lib; {
       Version=1.0
       Type=Application
       Terminal=false
-      Exec=${pkgs.chromium}/bin/chromium --class 'ChatGPT' --app=https://chat.openai.com/
+      Exec=${pkgs.chromium}/bin/chromium --user-data-dir=.config/chromium/chatgpt --class 'ChatGPT' --app=https://chat.openai.com/
       Name=ChatGPT
     '';
     xdg.dataFile."applications/google-calendar.desktop".text = optionalString cfg.graphical ''
