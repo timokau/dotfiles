@@ -6,6 +6,25 @@
     timewarrior
   ];
 
+  systemd.user.services.timewarrior-stop = {
+    Unit = {
+      Description = "Stop Timewarrior tracking on logout";
+      # Run ExitStop when default.target is no longer active.
+      PartOf = ["default.target"];
+    };
+
+    Service = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+      ExecStart = "${pkgs.coreutils}/bin/true";
+      ExecStop = "${pkgs.timewarrior}/bin/timew stop";
+    };
+
+    Install = {
+      WantedBy = ["default.target"];
+    };
+  };
+
   xdg.configFile."task" = {
     # TODO .config/task/server
     recursive = true;
