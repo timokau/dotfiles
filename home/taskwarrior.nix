@@ -3,7 +3,13 @@
   home.packages = with pkgs; [
     taskwarrior
     tasksh
-    timewarrior
+    (timewarrior.overrideDerivation (oldAttrs: { patches = oldAttrs.patches ++ [
+      # Apply a patch that allows excluding tags (with -tag syntax)
+      (pkgs.fetchpatch {
+        url = "https://github.com/hiliev/timewarrior/commit/025b36c051c70fef2beeb456df5ef9ad9221f2e9.patch";
+        hash = "sha256-yuH0zORS7xQ54MI25gB3kVPHQl4ebPw9F/CfZfzdW/g=";
+      })
+    ]; }))
   ];
 
   systemd.user.services.timewarrior-stop = {
