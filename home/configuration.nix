@@ -82,6 +82,7 @@ with pkgs.lib; {
       ripgrep-all # search through various files (mainly pdfs)
       zip # creating archives
       poppler_utils # work with pdfs
+      watson # time tracking
       umlet # quick diagram sketching
       rmapi # interface with remarkable tablet
       zotero # reference management
