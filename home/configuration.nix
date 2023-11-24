@@ -459,6 +459,21 @@ with pkgs.lib; {
       }
       Name=Emacs Org Roam Current Week
     '';
+    xdg.dataFile."applications/emacs-next-week.desktop".text = optionalString cfg.graphical ''
+      [Desktop Entry]
+      Encoding=UTF-8
+      Version=1.0
+      Type=Application
+      Terminal=false
+      Exec=${
+        pkgs.writeScript "desktopexec.sh" ''
+          #!${pkgs.bash}/bin/bash
+          monday_iso="$( ${pkgs.python3}/bin/python -c "from datetime import date, timedelta; today = date.today(); monday = today + timedelta(days=7 - today.weekday()); print(monday.isoformat())" )"
+          ${pkgs.emacs}/bin/emacsclient -c -e "(org-roam-node-open-by-title \"week-$monday_iso\")"
+        ''
+      }
+      Name=Emacs Org Roam Next Week
+    '';
     xdg.dataFile."applications/emacs-inbox.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
