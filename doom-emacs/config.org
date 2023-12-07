@@ -43,7 +43,7 @@ Add command to count words with texcount ([[original][https://app.uio.no/ifi/tex
 *** General
 
 #+BEGIN_SRC elisp
-(setq doom-theme 'doom-tomorrow-day)
+(setq doom-theme 'base16-github)
 ; Increase default font size
 (set-face-attribute 'default nil :height 120)
 ; Auto-save by default
