@@ -30,7 +30,10 @@ echo "Rebuilding"
 nix-build --no-link --show-trace $nixos_system $home_manager_system || exit $?
 
 echo "Waiting for attention: Permission to switch"
-while ! sudo echo "Sudo password cached"; do :; done
+if ! sudo -S true < /dev/null 2> /dev/null; then
+	notify-send --app-name="rebuild" "User input necessary"
+	while ! sudo echo "Sudo password cached"; do :; done
+fi
 
 echo "Switching system"
 
@@ -44,4 +47,5 @@ systemctl --user restart keyboardconfig
 echo "Switching home"
 nix-shell --packages home-manager --run 'home-manager --show-trace switch' || exit $?
 
+notify-send --app-name="rebuild" "Finished!"
 exit "$exit_code"
