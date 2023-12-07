@@ -55,6 +55,8 @@
 ; Get images into org mode
 (package! org-download)
 
+; Nice theme collection
+(package! base16-theme)
 
 ;; Doom's packages are pinned to a specific commit and updated from release to
 ;; release. The `unpin!' macro allows you to unpin single packages...
