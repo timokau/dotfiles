@@ -718,6 +718,15 @@ Use citar as the org-cite frontend and configure it to use the same bibliography
   )
   ; Open notes by default instead of showing me a menu which allows selection between notes, files, etc.
   (setq citar-default-action 'citar-open-notes)
+  (defun my/citar-open-file-at-point ()
+    (interactive)
+    (citar-open-files (citar-key-at-point)))
+  ; Unbind any existing binding for S-RET in Org mode and bind it to the custom function
+  ; Fixme not working
+  (map! :after org
+        :map org-mode-map
+        :n "S-RET" nil  ; Unbind existing binding
+        :n "S-RET" #'my/citar-open-file-at-point)
 )
 
 (defun org-get-global-prop (property)
