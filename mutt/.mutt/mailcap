@@ -15,7 +15,7 @@ image/gif; sxiv %s
 application/pdf; zathura %s
 
 # HTML
-text/html; xdg-open %s &> /dev/null &; nametemplate=%s.html
+text/html; xdg-open %s & sleep 2 &> /dev/null &; x-neomutt-keep
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
 
 # Unidentified files
