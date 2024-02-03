@@ -124,9 +124,12 @@ We want to control font size with =Ctrl-{+,-,0}=. The default bindings seem less
 
 ** General behavior
 
+https://old.reddit.com/r/emacs/comments/10he3fc/globalautorevertmode_stopped_working/
+
 #+BEGIN_SRC elisp
 ; Automatically reload files from disk if they have changed
 (global-auto-revert-mode t)
+(setq auto-revert-use-notify nil)
 
 ; Do not override the s binding with evil-snipe
 ; https://github.com/hlissner/doom-emacs/blob/400fa0836d830ac409a67a4c4af3012b5e07dc60/modules/editor/evil/README.org#restoring-old-substitution-behavior-on-ss
