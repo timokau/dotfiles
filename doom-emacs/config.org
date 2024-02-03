@@ -688,7 +688,7 @@ Configure the org-roam backlinks buffer to only show when explicitly toggled.
 *** Locations
 #+BEGIN_SRC elisp
 (setq
-   zotero-bib (concat org-directory "zotero.bib")
+   zotero-bib (concat org-directory "zotero.biblatex.bib")
 )
 #+END_SRC
 
