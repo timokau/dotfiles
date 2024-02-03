@@ -23,6 +23,9 @@ in
       }
     ) {
       doomPrivateDir = pkgs.callPackage ../doom-emacs {};
+      # Does not support emacs 29
+      # https://github.com/nix-community/nix-doom-emacs/issues/502
+      emacsPackages = pkgs.emacsPackagesFor pkgs.emacs28;
     };
     org-protocol-handler-script = pkgs.writeScript "handlerScript.sh" ''
       #!${pkgs.bash}/bin/bash
