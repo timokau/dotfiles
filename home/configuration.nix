@@ -91,7 +91,6 @@ with pkgs.lib; {
       pdfpc # latex beamer presentations
       entr # run command on file changes (nicer interface than inotify)
       skim # fzf clone in rust
-      vagrant # VM management
       moreutils # usefull stuff like `vidir` bulk renaming
       ltrace # trace library calls
       gdb
