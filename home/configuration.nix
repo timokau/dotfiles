@@ -85,7 +85,7 @@ with pkgs.lib; {
       watson # time tracking
       umlet # quick diagram sketching
       rmapi # interface with remarkable tablet
-      zotero # reference management
+      zotero_7 # reference management
       libreoffice # office suite
       easyeffects # audio effects, such as microphone noise reduction
       pdfpc # latex beamer presentations
