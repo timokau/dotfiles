@@ -271,7 +271,6 @@ in
 
   hardware.cpu.intel.updateMicrocode = true;
 
-  sound.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
