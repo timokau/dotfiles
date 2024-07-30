@@ -74,7 +74,6 @@ with pkgs.lib; {
       rmapi # interface with remarkable tablet
       zotero_7 # reference management
       libreoffice # office suite
-      easyeffects # audio effects, such as microphone noise reduction
       pdfpc # latex beamer presentations
       entr # run command on file changes (nicer interface than inotify)
       skim # fzf clone in rust
