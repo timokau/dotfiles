@@ -159,7 +159,7 @@ with pkgs.lib; {
         buildInputs = [pkgs.makeWrapper];
         postBuild = ''
           for binary in $out/bin/*; do
-            wrapProgram "$binary" --prefix XDG_DATA_DIRS : '${pkgs.gnome.adwaita-icon-theme}/share:${pkgs.shared-mime-info}/share'
+            wrapProgram "$binary" --prefix XDG_DATA_DIRS : '${pkgs.adwaita-icon-theme}/share:${pkgs.shared-mime-info}/share'
           done
         '';
       })
