@@ -12,21 +12,38 @@ in
   # all its packages. Doom saves us a lot of effort, so this is a compromise
   # for practicality's sake.
   config = let
-    emacspkg = pkgs.callPackage (
-      # To use the latest version (impure)
-      # builtins.fetchTarball {url = "https://github.com/nix-community/nix-doom-emacs/archive/master.tar.gz"; }
-      pkgs.fetchFromGitHub {
-        owner = "nix-community";
-        repo = "nix-doom-emacs";
-        rev = "f7413022370f24bb53cb450bfb2803233510113e";
-        hash = "sha256-MBXR7x7Ua8qystlGr+lenwjQd7dsFNFpEFmtHhh10zM=";
-      }
-    ) {
-      doomPrivateDir = pkgs.callPackage ../doom-emacs {};
-      # Does not support emacs 29
-      # https://github.com/nix-community/nix-doom-emacs/issues/502
-      emacsPackages = pkgs.emacsPackagesFor pkgs.emacs28;
+    # Use flake-compat to get the outputs of nix-doom-emacs-unstraightened [1]
+    # https://nixos.wiki/wiki/Flakes#Using_flakes_with_stable_Nix
+    ndeu-flake-compat = (import (
+      fetchTarball {
+        url = "https://github.com/edolstra/flake-compat/archive/ff81ac966bb2cae68946d5ed5fc4994f96d0ffec.tar.gz";
+        sha256 = "19d2z6xsvpxm184m41qrpi1bplilwipgnzv9jy17fgw421785q1m";
+    }) {
+      src = pkgs.fetchFromGitHub {
+        owner = "marienz";
+        repo = "nix-doom-emacs-unstraightened";
+        rev = "2114185d509acd203ad0051dbbb736bfbc18a240";
+        hash = "sha256-09QeTRFT+sfFenPIH7biUxyjc/XwRJuanW9qKwWvc4o=";
+      };
+    }).defaultNix;
+    # Pass the nixpkgs that the nix-doom-emacs-unstraightened flake uses through
+    # it's own overlay to get a nixpkgs version that has the ndeu packages.
+    # This is hack, which is necessary because adding the overlay to
+    # `nixpkgs.overlays` causes an infinite recursion for some reason and the
+    # flake only gives direct access to doomEmacs, not emacsWithDoom (which
+    # provides the standard emacs binaries).
+    ndeu-nixpkgs = (ndeu-flake-compat.overlays.default ndeu-flake-compat.inputs.nixpkgs.legacyPackages."x86_64-linux" null);
+    emacspkg = ndeu-nixpkgs.emacsWithDoom {
+      doomDir = ../doom-emacs;
+      doomLocalDir="~/.local/share/nix-doom-unstraightened";
+      tangleArgs = ".";
     };
+    # nix-doom-emacs-unstraightened does not provide org-capture
+    org-capture = pkgs.writeScriptBin "org-capture" ''
+      #!${pkgs.bash}/bin/bash
+      ${ndeu-flake-compat.inputs.doomemacs}/bin/org-capture "$@"
+    '';
+
     org-protocol-handler-script = pkgs.writeScript "handlerScript.sh" ''
       #!${pkgs.bash}/bin/bash
       ${pkgs.libnotify}/bin/notify-send --expire-time=1000 --urgency=low "Captured"
@@ -51,6 +68,7 @@ in
         emacspkg # The emacs package, configured to use doom-emacs.
         # A desktop file to register emacsclient as a handler for org-protocol
         org-protocol-handler-registration
+        org-capture
       ];
     };
     services.emacs = {
