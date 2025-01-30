@@ -84,7 +84,6 @@ with pkgs.lib; {
       teeworlds
       brightnessctl # controlling brightness on my laptop
       tmux
-      loc # SLOC language summary
       htop # system monitoring
       pdfgrep # search through pdfs
       imagemagick # cli image editing
