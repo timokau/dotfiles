@@ -22,8 +22,8 @@ in
       src = pkgs.fetchFromGitHub {
         owner = "marienz";
         repo = "nix-doom-emacs-unstraightened";
-        rev = "2114185d509acd203ad0051dbbb736bfbc18a240";
-        hash = "sha256-09QeTRFT+sfFenPIH7biUxyjc/XwRJuanW9qKwWvc4o=";
+        rev = "f43726780f6f9990ccc0af7e05cd43be24b1d3d5";
+        hash = "sha256-3a7DCdYs3MIxsF4wXpEknsAjRk4CUyhVkhUReFwyQEI=";
       };
     }).defaultNix;
     # Pass the nixpkgs that the nix-doom-emacs-unstraightened flake uses through
