@@ -118,6 +118,7 @@ in
     setgid = true;
   };
 
+  programs.i3lock.enable = true; # Required for i3lock to work https://github.com/NixOS/nixpkgs/issues/401891
   programs.firejail = {
     enable = true;
     wrappedBinaries = {
