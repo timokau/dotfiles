@@ -148,7 +148,7 @@ with pkgs.lib; {
       # sageWithDoc # math software
     ]) ++ (optionals cfg.graphical [
       xclip # x11 clipboard management
-      okular # feature-full pdf viewer
+      kdePackages.okular # feature-full pdf viewer
       # handwritten notes and pdf annotations
       (pkgs.symlinkJoin {
         # xournalpp with the workaround from [1]
