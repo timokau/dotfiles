@@ -1,6 +1,6 @@
 let
   # `git ls-remote https://github.com/nixos/nixpkgs-channels nixos-unstable`
-  nixpkgs-rev = "9e83b64f727c88a7711a2c463a7b16eedb69a84c";
+  nixpkgs-rev = "08f22084e6085d19bcfb4be30d1ca76ecb96fe54";
 in builtins.fetchTarball {
   name = "nixpkgs-${nixpkgs-rev}";
   url = "https://github.com/nixos/nixpkgs/archive/${nixpkgs-rev}.tar.gz";
