@@ -52,6 +52,7 @@ with pkgs.lib; {
       nix-bisect = pkgs.python3.pkgs.buildPythonPackage rec {
         pname = "nix-bisect";
         version = "3b18985913cf32e62f3a5d3f9ccafb507fed9080";
+        pyproject = true;
         # src = lib.cleanSource /home/timo/repos/nix-bisect;
         src = pkgs.fetchFromGitHub {
           owner = "timokau";
@@ -64,6 +65,7 @@ with pkgs.lib; {
           pexpect
           numpy
         ];
+        build-system = with pkgs.python3.pkgs; [setuptools];
       };
     in with pkgs; [
       ripgrep-all # search through various files (mainly pdfs)
