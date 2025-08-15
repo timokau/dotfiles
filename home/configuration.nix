@@ -5,6 +5,7 @@
 }:
 let
   cfg = config.home;
+  chromium-widevine = (pkgs.chromium.override { enableWideVine = true; });
 in
   # TODO cleanup services
   # fd --no-ignore --changed-before 7d . ~/.cache --exec rm -f {}
@@ -173,7 +174,7 @@ with pkgs.lib; {
       sxiv # image viewer
       xcape # keyboard management
       xdotool # x automation
-      chromium # fallback browser
+      chromium-widevine # fallback browser
       autorandr
       libnotify # notify-send
       xorg.xbacklight
@@ -269,6 +270,11 @@ with pkgs.lib; {
         "spotify"
         "spotify-unwrapped"
         "steam-runtime" # not actually used, but needed by steam-run
+
+        # For chromium-widevine
+        "chromium-unwrapped"
+        "chromium"
+        "widevine-cdm"
       ]);
       permittedInsecurePackages = [
         "zotero-6.0.27"
@@ -304,7 +310,7 @@ with pkgs.lib; {
       } // (
         if (cfg.full) then {
           fx = "${pkgs.firefox}/bin/firefox --new-instance --profile \"$(mktemp -d)\"";
-          cx = "${pkgs.chromium}/bin/chromium --user-data-dir=\"$(mktemp -d)\"";
+          cx = "${chromium-widevine}/bin/chromium --user-data-dir=\"$(mktemp -d)\"";
         } else {}
       );
     };
@@ -380,7 +386,7 @@ with pkgs.lib; {
       Version=1.0
       Type=Application
       Terminal=false
-      Exec=${pkgs.chromium}/bin/chromium --class 'Element' --app=https://app.element.io
+      Exec=${chromium-widevine}/bin/chromium --class 'Element' --app=https://app.element.io
       Name=Element messenger
     '';
     xdg.dataFile."applications/chatgpt.desktop".text = optionalString cfg.graphical ''
@@ -389,7 +395,7 @@ with pkgs.lib; {
       Version=1.0
       Type=Application
       Terminal=false
-      Exec=${pkgs.chromium}/bin/chromium --user-data-dir=.config/chromium/chatgpt --class 'ChatGPT' --app=https://chat.openai.com/
+      Exec=${chromium-widevine}/bin/chromium --user-data-dir=.config/chromium/chatgpt --class 'ChatGPT' --app=https://chat.openai.com/
       Name=ChatGPT
     '';
     xdg.dataFile."applications/google-calendar.desktop".text = optionalString cfg.graphical ''
@@ -398,7 +404,7 @@ with pkgs.lib; {
       Version=1.0
       Type=Application
       Terminal=false
-      Exec=${pkgs.chromium}/bin/chromium --class 'Google Calendar' --app=https://calendar.google.com
+      Exec=${chromium-widevine}/bin/chromium --class 'Google Calendar' --app=https://calendar.google.com
       Name=Google Calendar
     '';
     xdg.dataFile."applications/slack.desktop".text = optionalString cfg.graphical ''
@@ -407,7 +413,7 @@ with pkgs.lib; {
       Version=1.0
       Type=Application
       Terminal=false
-      Exec=${pkgs.chromium}/bin/chromium --class 'Slack' --app=https://kiml-workspace.slack.com/
+      Exec=${chromium-widevine}/bin/chromium --class 'Slack' --app=https://kiml-workspace.slack.com/
       Name=Slack KIML
     '';
     xdg.dataFile."applications/overleaf.desktop".text = optionalString cfg.graphical ''
@@ -416,7 +422,7 @@ with pkgs.lib; {
       Version=1.0
       Type=Application
       Terminal=false
-      Exec=${pkgs.chromium}/bin/chromium --class 'Overleaf' --app=https://overleaf.com/
+      Exec=${chromium-widevine}/bin/chromium --class 'Overleaf' --app=https://overleaf.com/
       Name=Overleaf
     '';
     xdg.dataFile."applications/virt-manager_rdpwindows.desktop".text = optionalString cfg.graphical ''
