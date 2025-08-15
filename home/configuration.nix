@@ -430,6 +430,7 @@ with pkgs.lib; {
       Name=Google Calendar
     '';
     xdg.dataFile."applications/slack-kiml.desktop".text = makeChromiumDesktopApp "Slack KIML" "https://kiml-workspace.slack.com/" "";
+    xdg.dataFile."applications/wandb.desktop".text = makeChromiumDesktopApp "Wandb" "https://wandb.ai" "";
     xdg.dataFile."applications/overleaf.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
