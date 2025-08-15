@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# NOTE: This PATH is only effective within this script, but *not* used by the
+# home-manager process that responds to keybinds.
 export PATH="$PATH:$HOME/bin"
 SCRIPTS="$HOME/.config/herbstluftwm/scripts"
 hc() {
@@ -23,7 +25,9 @@ Mod=Mod4   # super
 
 hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
-hc keybind $Mod-w close
+# Prevents accidentally closing protected windows
+hc keybind $Mod-w spawn $HOME/bin/hc_close_protected
+hc keybind $Mod-Shift-w close
 
 # basic movement
 # focusing clients

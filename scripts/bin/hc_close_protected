@@ -1,0 +1,40 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p herbstluftwm -p xdotool -p libnotify -p python3
+
+# A wrapper around `herbstclient close` that first checks the window ID against
+# a list of protected windows, and then only closes the window if it is not in
+# the list.
+
+import subprocess
+import re
+
+# (name, class) tuples
+# regex supported
+PROTECTED_LIST = [
+    ("TelegramDesktop", ".*"),
+    ("", ".* - KIML -.* Slack"),
+    ("", "Google Kalender - .*"),
+    ("Zotero", ".* - Zotero"),
+]
+
+def main():
+    window_id = subprocess.check_output(['herbstclient', 'attr', 'clients.focus.winid']).decode('utf-8').strip()
+    window_class = subprocess.check_output(['xdotool', 'getwindowclassname', window_id]).decode('utf-8').strip()
+    window_title = subprocess.check_output(['xdotool', 'getwindowname', window_id]).decode('utf-8').strip()
+
+    is_protected = False
+    for cls, name in PROTECTED_LIST:
+        if re.fullmatch(cls, window_class):
+            if re.fullmatch(name, window_title):
+                is_protected = True
+                break
+
+    if is_protected:
+        subprocess.Popen(['notify-send', '--urgency', 'low', '--expire-time', '1000', '--app-name', 'Close', 'Window not closed', f'{window_class}:{window_title} is protected.']).communicate()
+    else:
+        subprocess.Popen(['herbstclient', 'close', window_id]).communicate()
+        print(f"Closed window `{window_class}':`{window_title}'")
+
+
+if __name__ == '__main__':
+    main()
