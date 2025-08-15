@@ -79,7 +79,7 @@ hc keybind $Mod-Control-Shift-Up      resize up +$smallresize
 hc keybind $Mod-Control-Shift-Right   resize right +$smallresize
 
 # tags
-tag_names=( {1..9} )
+tag_names=( {1..9} h)
 tag_keys=( {1..9} 0 )
 
 hc rename default "${tag_names[0]}" || true
@@ -100,7 +100,12 @@ hc keybind $Mod-comma  use_index -1 --skip-visible
 hc keybind $Mod-r chain , remove , $fm
 hc keybind $Mod-s floating toggle
 hc keybind $Mod-f fullscreen toggle
-hc keybind $Mod-m set_attr clients.focus.minimized toggle # can be restored with `jumpto <winid>` or by jumping to the window with rofi.
+
+# Two ways of hiding windows: Send to dedicated workspace or minimize entirely
+# (not visible in any workspace).
+# Minimized windows can be restored #with `jumpto <winid>` or by jumping to the window with rofi.
+hc keybind $Mod-m move_index 9
+hc keybind $Mod-Shift-m set_attr clients.focus.minimized toggle
 hc keybind $Mod-t spawn "$SCRIPTS/maximize.sh" # like "monocle" in bspwm
 hc keybind $Mod-p pseudotile toggle
 # The following cycles through the available layouts within a frame, but skips
