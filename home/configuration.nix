@@ -419,6 +419,7 @@ with pkgs.lib; {
     xdg.dataFile."applications/notion.desktop".text = makeChromiumDesktopApp "Notion" "https://www.notion.so/" "";
     xdg.dataFile."applications/readwise_reader.desktop".text = makeChromiumDesktopApp "Readwise Reader" "https://read.readwise.io/home" "";
     xdg.dataFile."applications/readwise_feed.desktop".text = makeChromiumDesktopApp "Readwise Feed" "https://read.readwise.io/feed" "";
+    xdg.dataFile."applications/claude.desktop".text = makeChromiumDesktopApp "Claude" "https://claude.ai/" "";
     xdg.dataFile."applications/google-calendar.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
