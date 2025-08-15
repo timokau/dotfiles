@@ -410,6 +410,7 @@ with pkgs.lib; {
     '';
     xdg.dataFile."applications/figma.desktop".text = makeChromiumDesktopApp "Figma" "https://www.figma.com/" "";
     xdg.dataFile."applications/brain.fm.desktop".text = makeChromiumDesktopApp "Brain.fm" "https://www.brain.fm/app" "";
+    xdg.dataFile."applications/gemini.desktop".text = makeChromiumDesktopApp "Gemini" "https://gemini.google.com/app" "";
     xdg.dataFile."applications/google-calendar.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
