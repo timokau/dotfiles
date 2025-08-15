@@ -429,15 +429,7 @@ with pkgs.lib; {
       Exec=${chromium-widevine}/bin/chromium --class 'Google Calendar' --app=https://calendar.google.com
       Name=Google Calendar
     '';
-    xdg.dataFile."applications/slack.desktop".text = optionalString cfg.graphical ''
-      [Desktop Entry]
-      Encoding=UTF-8
-      Version=1.0
-      Type=Application
-      Terminal=false
-      Exec=${chromium-widevine}/bin/chromium --class 'Slack' --app=https://kiml-workspace.slack.com/
-      Name=Slack KIML
-    '';
+    xdg.dataFile."applications/slack-kiml.desktop".text = makeChromiumDesktopApp "Slack KIML" "https://kiml-workspace.slack.com/" "";
     xdg.dataFile."applications/overleaf.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
