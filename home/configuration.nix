@@ -409,6 +409,7 @@ with pkgs.lib; {
       Name=ChatGPT
     '';
     xdg.dataFile."applications/figma.desktop".text = makeChromiumDesktopApp "Figma" "https://www.figma.com/" "";
+    xdg.dataFile."applications/brain.fm.desktop".text = makeChromiumDesktopApp "Brain.fm" "https://www.brain.fm/app" "";
     xdg.dataFile."applications/google-calendar.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
