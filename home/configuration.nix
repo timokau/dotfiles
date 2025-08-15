@@ -6,6 +6,16 @@
 let
   cfg = config.home;
   chromium-widevine = (pkgs.chromium.override { enableWideVine = true; });
+  # Wrap a web app to make it seem similar to a native application with a desktop file
+  makeChromiumDesktopApp = name: url: extraArgs: (lib.optionalString cfg.graphical ''
+    [Desktop Entry]
+    Encoding=UTF-8
+    Version=1.0
+    Type=Application
+    Terminal=false
+    Exec=${chromium-widevine}/bin/chromium --class '${name}' --app=${url} ${extraArgs}
+    Name=${name}
+  '');
 in
   # TODO cleanup services
   # fd --no-ignore --changed-before 7d . ~/.cache --exec rm -f {}
@@ -398,6 +408,7 @@ with pkgs.lib; {
       Exec=${chromium-widevine}/bin/chromium --user-data-dir=.config/chromium/chatgpt --class 'ChatGPT' --app=https://chat.openai.com/
       Name=ChatGPT
     '';
+    xdg.dataFile."applications/figma.desktop".text = makeChromiumDesktopApp "Figma" "https://www.figma.com/" "";
     xdg.dataFile."applications/google-calendar.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
