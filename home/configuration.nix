@@ -414,6 +414,7 @@ with pkgs.lib; {
     xdg.dataFile."applications/aistudio.desktop".text = makeChromiumDesktopApp "Google AI Studio" "https://aistudio.google.com/prompts/new_chat" "";
     xdg.dataFile."applications/perplexity.desktop".text = makeChromiumDesktopApp "Perplexity" "https://www.perplexity.ai/" "";
     xdg.dataFile."applications/webwhiteboard.desktop".text = makeChromiumDesktopApp "Web Whiteboard" "https://webwhiteboard.com/" "--user-data-dir=/tmp/chromium-webwhiteboard";
+    xdg.dataFile."applications/ticktick.desktop".text = makeChromiumDesktopApp "TickTick" "https://ticktick.com/webapp/" "";
     xdg.dataFile."applications/google-calendar.desktop".text = optionalString cfg.graphical ''
       [Desktop Entry]
       Encoding=UTF-8
