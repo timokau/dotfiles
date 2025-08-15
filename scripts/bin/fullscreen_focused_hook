@@ -1,0 +1,106 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p herbstluftwm -p dunst -p python3
+
+# A herbstluftwm event listener that redraws dunst notifications when a
+# fullscreen window is active to work around
+# https://github.com/dunst-project/dunst/discussions/1254
+
+
+import subprocess
+import threading
+import time
+
+
+def redraw_dunst():
+    """Redraws Dunst notifications."""
+    pause_level = subprocess.check_output(["dunstctl", "get-pause-level"]).strip()
+    pause_level = int(pause_level.decode())
+    # Hide all notifications by setting a high pause level
+    subprocess.run(["dunstctl", "set-pause-level", "99"])
+    # Redraw notifications by restoring original pause level
+    subprocess.run(["dunstctl", "set-pause-level", str(pause_level)])
+
+
+def monitor_fullscreen_window(window_id):
+    """Monitors a fullscreen window and redraws Dunst every 10 seconds.
+
+    Exits if the window is no longer fullscreen or focused.
+    """
+    while True:
+        try:
+            fullscreen = (
+                subprocess.check_output(
+                    ["herbstclient", "attr", f"clients.{window_id}.fullscreen"]
+                )
+                .strip()
+                .decode()
+                == "true"
+            )
+            focused_window = (
+                subprocess.check_output(["herbstclient", "attr", "clients.focus.winid"])
+                .strip()
+                .decode()
+            )
+
+            if not fullscreen or focused_window != window_id:
+                print(f"Window {window_id} is no longer fullscreen or focused.")
+                break
+
+            redraw_dunst()
+            time.sleep(10)
+        except subprocess.CalledProcessError as e:
+            print(f"Error monitoring window {window_id}: {e}")
+            break
+
+def listen_to_events():
+    """Listens for events from `herbstclient` and reacts to fullscreen and focus changes."""
+    print("Starting herbstclient event listener...")
+    for retry in range(10):
+        process = subprocess.Popen(
+            ["herbstclient", "--idle"], stdout=subprocess.PIPE, text=True
+        )
+
+        for line in process.stdout:
+            try:
+                event_parts = line.strip().split()
+                event = event_parts[0]
+
+                if event == "fullscreen" and len(event_parts) >= 3:
+                    state, window_id = event_parts[1], event_parts[2]
+                    if state == "on":
+                        print(f"Window {window_id} is now fullscreen!")
+                        redraw_dunst()
+                        threading.Thread(
+                            target=monitor_fullscreen_window, args=(window_id,)
+                        ).start()
+
+                elif event == "focus_changed" and len(event_parts) >= 2:
+                    focused_window = event_parts[1]
+                    if focused_window == "0x0":
+                        continue
+                    fullscreen = (
+                        subprocess.check_output(
+                            ["herbstclient", "attr", "clients.focus.fullscreen"]
+                        )
+                        .strip()
+                        .decode()
+                    )
+                    if fullscreen == "true":
+                        print(f"Focused window {focused_window} is fullscreen!")
+                        redraw_dunst()
+                        threading.Thread(
+                            target=monitor_fullscreen_window, args=(focused_window,)
+                        ).start()
+
+            except (subprocess.CalledProcessError, IndexError) as e:
+                print(f"Error processing event: {e}")
+
+        sleep_duration = min(2**retry, 60)
+        print(
+            f"herbstclient exited with return code {process.wait()}. Retrying in {sleep_duration} seconds..."
+        )
+        time.sleep(sleep_duration)
+
+
+if __name__ == "__main__":
+    listen_to_events()

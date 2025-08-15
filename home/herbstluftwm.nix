@@ -26,5 +26,23 @@ with lib;
     xsession.windowManager.command = ''
       PATH="${pkgs.herbstluftwm}/bin:$PATH" herbstluftwm
     '';
+
+    # Work around for https://github.com/dunst-project/dunst/discussions/1254
+    systemd.user.services.dunst_fullscreen = {
+      Unit = {
+        Description = "Redraw dunst when a fullscreen window is active.";
+        After = [ "graphical-session-pre.target" ];
+      };
+
+      Service = {
+        ExecStart = ''
+          $HOME/bin/fullscreen_focused_hook
+        '';
+      };
+
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
   };
 }
