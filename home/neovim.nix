@@ -65,7 +65,6 @@ let
         nnoremap <silent> <leader>ca  <cmd>lua vim.lsp.buf.code_action()<CR>
 
         lua << EOF
-          local lspconfig = require('lspconfig')
           local completion = require('completion')
 
           local on_attach_setup = function(client, bufnr)
@@ -101,23 +100,29 @@ let
             buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
           end
 
-          lspconfig.pylsp.setup{
+          vim.lsp.config('pylsp', {
             cmd = { "${pkgs.python3.pkgs.python-lsp-server}/bin/pylsp" },
+            filetypes = { 'python' },
             settings = {
               pylsp = {
                 plugins = {
                   pycodestyle = {
-                    maxLineLength = 88, -- As used by Black
+                    maxLineLength = 88,
                   },
                 }
               },
             },
             on_attach = on_attach_setup,
-          }
-          lspconfig.texlab.setup{
+          })
+
+          vim.lsp.config('texlab', {
             cmd = { "${pkgs.texlab}/bin/texlab" },
+            filetypes = { 'tex', 'plaintex', 'bib' },
             on_attach = on_attach_setup,
-          }
+          })
+
+          vim.lsp.enable('pylsp')
+          vim.lsp.enable('texlab')
         EOF
           "local ncm2 = require('ncm2')
             "on_init = ncm2.register_lsp_source
