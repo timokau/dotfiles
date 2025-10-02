@@ -17,7 +17,15 @@ with lib;
 let
   escapedVimString = str: "'${replaceStrings ["'"] ["''"] str}'";
   stringListToVim = list: "[" + (concatStringsSep "," (map escapedVimString list)) + "]";
-
+  wrapfiller = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    name = "wrapfiller";
+    src = pkgs.fetchFromGitHub {
+      owner = "rickhowe";
+      repo = "wrapfiller";
+      rev = "7fa1efc70b64d957bc5be1587210b00423c38ebf";
+      hash = "sha256-GqmMgSFTE4HGq39Rr+2+NcAs7Tpap5AD7fxUaPAK+KY=";
+    };
+  };
   pluginRules = let
   in with pkgs.vimPlugins; [
     # {
@@ -31,6 +39,14 @@ let
     #     let g:slime_python_ipython = 1
     #   '';
     # }
+    {
+      p = wrapfiller;
+      # https://github.com/rickhowe/wrapfiller
+      startup = true;
+      preLoad = ''
+        let g:WrapFiller = 0 " Disable by default, as it often hangs vim on resize
+      '';
+    }
     {
       # TODO instead supply a set of packageConfiguration snippets that depend
       # on a set of packages each (to make it possible to depend on lspconfig
