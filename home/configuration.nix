@@ -278,6 +278,7 @@ with pkgs.lib; {
       allowUnfreePredicate = (pkg: elem (pkg.pname or (builtins.parseDrvName pkg.name).name) [
         # unfree whitelist
         "spotify"
+        "copilot.vim"
         "spotify-unwrapped"
         "steam-runtime" # not actually used, but needed by steam-run
 
