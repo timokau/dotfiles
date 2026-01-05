@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    taskwarrior
+    taskwarrior2
     tasksh
     (timewarrior.overrideDerivation (oldAttrs: { patches = oldAttrs.patches ++ [
       # Apply a patch that allows excluding tags (with -tag syntax)

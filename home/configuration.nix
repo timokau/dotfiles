@@ -81,11 +81,11 @@ with pkgs.lib; {
     in with pkgs; [
       ripgrep-all # search through various files (mainly pdfs)
       zip # creating archives
-      poppler_utils # work with pdfs
+      poppler-utils # work with pdfs
       watson # time tracking
       umlet # quick diagram sketching
       rmapi # interface with remarkable tablet
-      zotero_7 # reference management
+      zotero # reference management
       libreoffice # office suite
       pdfpc # latex beamer presentations
       entr # run command on file changes (nicer interface than inotify)
@@ -136,7 +136,7 @@ with pkgs.lib; {
       speedtest-cli # connection speed test
       fasd # cli navigation
       mpd
-      mpc_cli # mpd cli client
+      mpc # mpd cli client
       jq # cli json handling
       pass # password manager
       nixpkgs-review # reviewing nix PRs
@@ -176,7 +176,7 @@ with pkgs.lib; {
         '';
       })
       gimp # image editing
-      tdesktop # telegram chat
+      telegram-desktop # telegram chat
       spotify # music
       scrot # screenshots
       evince # more fully featured (and bloated) pdf viewer
@@ -254,7 +254,7 @@ with pkgs.lib; {
       enableSshSupport = true;
       # work around https://github.com/rycee/home-manager/issues/908
       extraConfig = ''
-        pinentry-program ${pkgs.pinentry.gtk2}/bin/pinentry
+        pinentry-program ${pkgs.pinentry-gtk2}/bin/pinentry
       '';
       # defaultCacheTtl = 86400;
       # allow-loopback-pinentry
