@@ -274,6 +274,18 @@ with pkgs.lib; {
       enableZshIntegration = true;
     };
 
+    # https://github.com/NixOS/nixpkgs/pull/478026
+    nixpkgs.overlays = [(final: prev: {
+      herbstluftwm = prev.herbstluftwm.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+          (prev.fetchpatch {
+            url = "https://github.com/herbstluftwm/herbstluftwm/commit/8ff75588a750704ae06ad59b843eb88138c95653.patch";
+            hash = "sha256-GyLTV7+lUpa82h/rGS1FqJclF8J0CZVVd3xhDg1WNRQ=";
+          })
+        ];
+      });
+    })];
+
     nixpkgs.config = {
       allowUnfreePredicate = (pkg: elem (pkg.pname or (builtins.parseDrvName pkg.name).name) [
         # unfree whitelist

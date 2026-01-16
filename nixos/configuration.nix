@@ -102,6 +102,7 @@ in
     ripgrep
     home-manager # manage user configurations
     virt-manager
+    android-tools # adb
   ]);
 
   # disable system sounds
@@ -129,7 +130,6 @@ in
     };
   };
 
-  programs.adb.enable = true;
   # programs.command-not-found.enable = true;
 
   fonts = {
