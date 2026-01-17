@@ -272,6 +272,10 @@ in
           # ö (German keyboard) maps to meta when held
           ";" = "overload(meta, ;)";
         };
+        shift = {
+          # Shift + original esc = original capslock behavior
+          esc = "capslock";
+        };
       };
     };
   };
