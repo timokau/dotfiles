@@ -41,9 +41,6 @@ echo "Switching system"
 sudo nixos-rebuild -I nixpkgs="$NIXPKGS" switch
 exit_code=$?
 
-# This sometimes gets killed during system updates
-systemctl --user restart keyboardconfig
-
 echo "Switching home"
 nix-shell --packages home-manager --run 'home-manager --show-trace switch' || exit $?
 

@@ -592,26 +592,7 @@ with pkgs.lib; {
       };
     };
 
-    # Do not let home-manager manage the keyboard. Home-manager uses
-    # `setxkbmap` otherwise, which interferes with the keyboardconfig script.
-    home.keyboard = null;
-    systemd.user.services.keyboardconfig = {
-      Unit = {
-        Description = "Adjust keyboard layout";
-        After = [ "graphical-session-pre.target" ];
-      };
-
-      Service = {
-        ExecStart = ''
-          ${config.home.file."bin/keyboardconfig".source}
-        '';
-        Restart = "on-failure";
-      };
-
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
-    };
+    home.keyboard.layout = "de";
 
     # TODO udiskie, unclutter, xscreensaver
 

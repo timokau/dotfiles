@@ -261,6 +261,21 @@ in
     };
   };
 
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = [ "*" ]; # Apply to all devices
+      settings = {
+        main = {
+          # escape when pressed, control when held
+          capslock = "overload(control, esc)";
+          # ö (German keyboard) maps to meta when held
+          ";" = "overload(meta, ;)";
+        };
+      };
+    };
+  };
+
   environment.shells = with pkgs; [
     bashInteractive
     zsh

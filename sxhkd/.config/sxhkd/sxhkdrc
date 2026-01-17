@@ -105,9 +105,6 @@ super + Escape
 	pkill -USR1 -x sxhkd; \
 	notify-send --urgency=low --app-name='sxhkd' 'configuration reloaded';
 
-super + n
-	/home/timo/bin/keyboardconfig
-
 super + b : {plus,minus}
 	brightnessctl --min-value=1 s 5%{+,-}
 
