@@ -78,7 +78,23 @@ with pkgs.lib; {
         ];
         build-system = with pkgs.python3.pkgs; [setuptools];
       };
+
+      # https://nixos.wiki/wiki/Flakes#Using_flakes_with_stable_Nix
+      # The packaged tools are generally more up to date than the nixpkgs version
+      nix-ai-tools-pkgs = (import (
+        fetchTarball {
+          url = "https://github.com/edolstra/flake-compat/archive/ff81ac966bb2cae68946d5ed5fc4994f96d0ffec.tar.gz";
+          sha256 = "19d2z6xsvpxm184m41qrpi1bplilwipgnzv9jy17fgw421785q1m";
+      }) {
+        src = pkgs.fetchFromGitHub {
+          owner = "numtide";
+          repo = "nix-ai-tools";
+          rev = "0834199f3e346305e5d03444224c99d30d85980d";
+          hash = "sha256-MaW/fN0xnYwzrs02k7K9d3zON9WCgXaDl1F9q1OYgrM=";
+        };
+      }).defaultNix.outputs.packages.${pkgs.stdenv.hostPlatform.system};
     in with pkgs; [
+      nix-ai-tools-pkgs.claude-code
       ripgrep-all # search through various files (mainly pdfs)
       zip # creating archives
       poppler-utils # work with pdfs
