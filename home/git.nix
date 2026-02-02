@@ -46,6 +46,10 @@ in {
       # use ssh-ident to start ssh-agent as necessary
       core.sshCommand = "BINARY_SSH=${pkgs.openssh}/bin/ssh ${pkgs.ssh-ident}/bin/ssh-ident";
       core.hooksPath = "~/.config/git/hooks"; # Use global hooks. Overrides local hooks.
+      # Global excludes
+      core.excludesFile = "${pkgs.writeText "excludes" ''
+        CLAUDE.local.md
+      ''}";
       commit.verbose = true; # show diff when committing
     };
     # signing = TODO
