@@ -49,6 +49,7 @@ in {
       # Global excludes
       core.excludesFile = "${pkgs.writeText "excludes" ''
         CLAUDE.local.md
+        .claude/
       ''}";
       commit.verbose = true; # show diff when committing
     };
