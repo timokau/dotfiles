@@ -7,11 +7,11 @@ read
 
 # This overwrites the old config. Old files are not removed automatically. If
 # you remove a file from this list, you should delete it manually.
-sudo install --owner=root --group=root --mode=644 nixos/*.nix nixos/server_address nixpkgs.nix /etc/nixos
+sudo install --owner=root --group=root --mode=644 nixos/*.nix nixos/server_address /etc/nixos
 
 echo "Rebuilding"
 
-NIXPKGS="$(nix-instantiate --eval ./nixpkgs.nix | tr --delete '"' )"
+NIXPKGS="$(nix-instantiate --eval -E 'toString (import ./npins).nixpkgs' | tr --delete '"' )"
 # set nixpkgs in NIX_PATH explicitly once, then it gets encoded as the default in the system configuration
 export NIX_PATH="nixpkgs=$NIXPKGS:$NIX_PATH"
 
