@@ -164,6 +164,7 @@ with pkgs.lib; {
       # ssh-ident
       # moreutils
       home-manager
+      npins # nix pins for dotfiles
       sbt # scala build manager, needed for university lecture
       source-code-pro # needed for gui neovim (FIXME)
       direnv # directory specific environments (used by lorri)
