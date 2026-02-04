@@ -19,12 +19,7 @@ in
         url = "https://github.com/edolstra/flake-compat/archive/ff81ac966bb2cae68946d5ed5fc4994f96d0ffec.tar.gz";
         sha256 = "19d2z6xsvpxm184m41qrpi1bplilwipgnzv9jy17fgw421785q1m";
     }) {
-      src = pkgs.fetchFromGitHub {
-        owner = "marienz";
-        repo = "nix-doom-emacs-unstraightened";
-        rev = "f43726780f6f9990ccc0af7e05cd43be24b1d3d5";
-        hash = "sha256-3a7DCdYs3MIxsF4wXpEknsAjRk4CUyhVkhUReFwyQEI=";
-      };
+      src = (import ../npins).nix-doom-emacs-unstraightened.outPath;
     }).defaultNix;
     # Pass the nixpkgs that the nix-doom-emacs-unstraightened flake uses through
     # it's own overlay to get a nixpkgs version that has the ndeu packages.

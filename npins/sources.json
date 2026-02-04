@@ -13,6 +13,19 @@
       "url": "https://github.com/numtide/nix-ai-tools/archive/a23961fc90c59a0cd7f4886c0bcc0efd796a8287.tar.gz",
       "hash": "sha256-2re/gbzb2fZHpQp6u7mM5rBVhf55McYdwOeGdYgJNKo="
     },
+    "nix-doom-emacs-unstraightened": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "marienz",
+        "repo": "nix-doom-emacs-unstraightened"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "f43726780f6f9990ccc0af7e05cd43be24b1d3d5",
+      "url": "https://github.com/marienz/nix-doom-emacs-unstraightened/archive/f43726780f6f9990ccc0af7e05cd43be24b1d3d5.tar.gz",
+      "hash": "sha256-3a7DCdYs3MIxsF4wXpEknsAjRk4CUyhVkhUReFwyQEI="
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
