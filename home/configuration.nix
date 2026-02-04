@@ -86,12 +86,7 @@ with pkgs.lib; {
           url = "https://github.com/edolstra/flake-compat/archive/ff81ac966bb2cae68946d5ed5fc4994f96d0ffec.tar.gz";
           sha256 = "19d2z6xsvpxm184m41qrpi1bplilwipgnzv9jy17fgw421785q1m";
       }) {
-        src = pkgs.fetchFromGitHub {
-          owner = "numtide";
-          repo = "nix-ai-tools";
-          rev = "a23961fc90c59a0cd7f4886c0bcc0efd796a8287";
-          hash = "sha256-2re/gbzb2fZHpQp6u7mM5rBVhf55McYdwOeGdYgJNKo=";
-        };
+        src = (import ../npins).nix-ai-tools.outPath;
       }).defaultNix.outputs.packages.${pkgs.stdenv.hostPlatform.system};
     in with pkgs; [
       nix-ai-tools-pkgs.claude-code

@@ -1,5 +1,18 @@
 {
   "pins": {
+    "nix-ai-tools": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "numtide",
+        "repo": "nix-ai-tools"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "a23961fc90c59a0cd7f4886c0bcc0efd796a8287",
+      "url": "https://github.com/numtide/nix-ai-tools/archive/a23961fc90c59a0cd7f4886c0bcc0efd796a8287.tar.gz",
+      "hash": "sha256-2re/gbzb2fZHpQp6u7mM5rBVhf55McYdwOeGdYgJNKo="
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
