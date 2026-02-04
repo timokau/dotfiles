@@ -14,12 +14,9 @@ in
   config = let
     # Use flake-compat to get the outputs of nix-doom-emacs-unstraightened [1]
     # https://nixos.wiki/wiki/Flakes#Using_flakes_with_stable_Nix
-    ndeu-flake-compat = (import (
-      fetchTarball {
-        url = "https://github.com/edolstra/flake-compat/archive/ff81ac966bb2cae68946d5ed5fc4994f96d0ffec.tar.gz";
-        sha256 = "19d2z6xsvpxm184m41qrpi1bplilwipgnzv9jy17fgw421785q1m";
-    }) {
-      src = (import ../npins).nix-doom-emacs-unstraightened.outPath;
+    sources = import ../npins;
+    ndeu-flake-compat = (import sources.flake-compat {
+      src = sources.nix-doom-emacs-unstraightened.outPath;
     }).defaultNix;
     # Pass the nixpkgs that the nix-doom-emacs-unstraightened flake uses through
     # it's own overlay to get a nixpkgs version that has the ndeu packages.
