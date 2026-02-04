@@ -89,8 +89,8 @@ with pkgs.lib; {
         src = pkgs.fetchFromGitHub {
           owner = "numtide";
           repo = "nix-ai-tools";
-          rev = "5c7ae84b6d1dae04a293897ce65a3bced63bc6d8";
-          hash = "sha256-n9gZ6jpVgr5m3IRMzrSKJ+9ObrAdbuqwbC+GUaUan0I=";
+          rev = "a23961fc90c59a0cd7f4886c0bcc0efd796a8287";
+          hash = "sha256-2re/gbzb2fZHpQp6u7mM5rBVhf55McYdwOeGdYgJNKo=";
         };
       }).defaultNix.outputs.packages.${pkgs.stdenv.hostPlatform.system};
     in with pkgs; [
