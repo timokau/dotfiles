@@ -33,14 +33,11 @@
         "owner": "marienz",
         "repo": "nix-doom-emacs-unstraightened"
       },
-      "branch": "master",
+      "branch": "main",
       "submodules": false,
-      "revision": "4f919c59dab8ff8f60dfc62c2754a45249a540e2",
-      "url": "https://github.com/marienz/nix-doom-emacs-unstraightened/archive/4f919c59dab8ff8f60dfc62c2754a45249a540e2.tar.gz",
-      "hash": "sha256-3LsX1+YZrzDQGWd8bpKdwn++X2uxJkGTTBqBeafraNc=",
-      "frozen": true,
-      "frozenDate": "2026-02-04",
-      "comment": "Pinned due to https://github.com/marienz/nix-doom-emacs-unstraightened/issues/114"
+      "revision": "c48c8a9499cbfb65158597a9c9ae0fed4e511bae",
+      "url": "https://github.com/marienz/nix-doom-emacs-unstraightened/archive/c48c8a9499cbfb65158597a9c9ae0fed4e511bae.tar.gz",
+      "hash": "sha256-Ms87nT97V7MmGLLXTcK4dK4dyeNrD/g8PUeKq7MS8QA="
     },
     "nixpkgs": {
       "type": "Channel",
