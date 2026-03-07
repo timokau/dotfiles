@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "fc8bf0ae9c6ac6835d01d04cc58e1f9ec717815c",
-      "url": "https://github.com/numtide/nix-ai-tools/archive/fc8bf0ae9c6ac6835d01d04cc58e1f9ec717815c.tar.gz",
-      "hash": "sha256-H8a7ykDwume9z4Y1JueO+FTGlzKS/+xsJh+13V20wLA="
+      "revision": "856b24f862d0a19b7764f35ee9a7546309e605a0",
+      "url": "https://github.com/numtide/nix-ai-tools/archive/856b24f862d0a19b7764f35ee9a7546309e605a0.tar.gz",
+      "hash": "sha256-+AiWgqbKkjU1W/S/U7ktSoScMa4+z9APtJx+3gEDcCQ="
     },
     "nix-doom-emacs-unstraightened": {
       "type": "Git",
@@ -35,15 +35,15 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "be3ecb81a85be302e27d46ff32a1e251e444327d",
-      "url": "https://github.com/marienz/nix-doom-emacs-unstraightened/archive/be3ecb81a85be302e27d46ff32a1e251e444327d.tar.gz",
-      "hash": "sha256-T3UEKNTGqBl44AQ0+0OIpiWMXeQ8+4QW/akSc4yeL2A="
+      "revision": "07eab5999957583fc0ced20e83ccf9c1b097be9f",
+      "url": "https://github.com/marienz/nix-doom-emacs-unstraightened/archive/07eab5999957583fc0ced20e83ccf9c1b097be9f.tar.gz",
+      "hash": "sha256-KU2Qs60vsoi8ysJ6Ufae1FhMJDJXgtLGM0qSIyPc/tQ="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre958232.80bdc1e5ce51/nixexprs.tar.xz",
-      "hash": "sha256-kx4m0PT8acdAYUXesEkNtGJaZbarQn/C//NNbV4weX8="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre958961.aca4d95fce49/nixexprs.tar.xz",
+      "hash": "sha256-nbKkTH2oRlWaAjeDh/QMraqjfj/C2xJFa53twFzRd8o="
     }
   },
   "version": 7
