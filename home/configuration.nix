@@ -85,7 +85,20 @@ with pkgs.lib; {
       nix-ai-tools-pkgs = (import sources.flake-compat {
         src = sources.nix-ai-tools.outPath;
       }).defaultNix.outputs.packages.${pkgs.stdenv.hostPlatform.system};
+
+      # Update less to 692 to fix kitty terminal input regression in 686-691
+      # https://github.com/NixOS/nixpkgs/pull/482131#issuecomment-4020142255
+      less-692 = assert lib.versionOlder pkgs.less.version "692";
+        pkgs.less.overrideAttrs (old: rec {
+          version = "692";
+          src = pkgs.fetchurl {
+            url = "https://www.greenwoodsoftware.com/less/less-${version}.tar.gz";
+            hash = "sha256-YTAPYDeY7PHXeGVweJ8P8/WhrPB1pvufdWg30WbjfRQ=";
+          };
+        });
+
     in with pkgs; [
+      less-692
       nix-ai-tools-pkgs.claude-code
       ripgrep-all # search through various files (mainly pdfs)
       zip # creating archives
